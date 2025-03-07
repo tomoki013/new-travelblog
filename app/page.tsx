@@ -4,32 +4,9 @@ import { Card, CardContent } from "@/components/ui/card";
 import { ArrowRight, Calendar, MapPin } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
+import getAllPosts from "@/lib/markdown";
 
 const Home = () => {
-	const featuredPosts = [
-		{
-			id: 1,
-			title: 'kyoto',
-			excerpt: 'kyoto',
-			image: '/images/India/tajmahal.jpg',
-			location: 'kyoto',
-			date: '2021-03-16',
-			category: 'asia',
-		},
-	]
-
-	const tourismInfo = [
-		{
-			id: 1,
-			title: 'kyoto',
-			excerpt: 'kyoto',
-			image: '/images/India/tajmahal.jpg',
-			location: 'kyoto',
-			date: '2021-03-16',
-			category: 'asia',
-		},
-	]
-
   	return (
 		<div className="flex flex-col">
 			
@@ -63,7 +40,7 @@ const Home = () => {
 				</div>
 			</section>
 
-			{/* Featured Posts */}
+			{/* Diary Posts */}
 			<section className="container py-16 p-2">
 				<div className="mb-10 flex items-center justify-between">
 					<h2 className="text-3xl font-bold">最新の旅行日記</h2>
@@ -76,8 +53,8 @@ const Home = () => {
 					</Link>
 				</div>
 				<div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
-					{featuredPosts.map((post) => (
-						<Card key={post.id} className="overflow-hidden transition-all hover:shadow-lg">
+					{getAllPosts('diary').slice(0, 3).map((post) => (
+						<Card key={post.slug} className="overflow-hidden transition-all hover:shadow-lg">
 							<div className="relative h-48 w-full">
 								<Image
 									src={post.image}
@@ -102,7 +79,7 @@ const Home = () => {
 										{post.location}
 									</span>
 									<Link
-										href={`/diary/${post.id}`}
+										href={`/diary/${post.slug}`}
 										className="text-sm font-medium text-primary hover:underline"
 									>
 										続きを読む
@@ -128,8 +105,8 @@ const Home = () => {
 						</Link>
 					</div>
 					<div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
-						{tourismInfo.map((info) => (
-							<Link key={info.id} href={`/tourism/${info.id}`}>
+						{getAllPosts('tourism').slice(0, 8).map((info) => (
+							<Link key={info.slug} href={`/tourism/${info.slug}`}>
 								<div className="group relative h-64 overflow-hidden rounded-lg">
 									<Image
 										src={info.image}
@@ -138,7 +115,7 @@ const Home = () => {
 										style={{ objectFit: 'cover' }}
 										className="transition-transform duration-300 group-hover:scale-110"
 									/>
-									<div className="absolute inset-0 bg-gradient-to-tfrom-black/70 to-transparent" />
+									<div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent" />
 									<div className="absolute bottom-0 left-0 p-4 text-white">
 										<Badge className="mb-2">{info.category}</Badge>
 										<h3 className="text-lg font-bold">{info.title}</h3>
