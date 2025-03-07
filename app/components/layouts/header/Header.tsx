@@ -41,7 +41,7 @@ const Header = () => {
             <div className="container flex h-16 items-center justify-between">
                 <div className="flex items-center gap-2">
                     <Link href="/" className="flex items-center gap-2">
-                        <span className="text-2xl font-bold">旅行日記</span>
+                        <span className="text-2xl font-bold">ともきちの旅行日記</span>
                         <span className="text-sm font-medium text-muted-foreground">Travel Diary</span>
                     </Link>
                 </div>

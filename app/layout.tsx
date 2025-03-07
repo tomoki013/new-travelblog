@@ -15,7 +15,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  	title: "旅行日記 | Travel Diary",
+  	title: "ともきちの旅行日記 | Travel Diary",
   	description: "日本と世界の旅行記録と観光情報",
 };
 
