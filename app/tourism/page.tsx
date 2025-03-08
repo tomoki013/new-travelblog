@@ -32,7 +32,7 @@ const TourismPage = () => {
             </div>
 
             {/* Featured Regions */}
-            <section className="mb-16">
+            {/* <section className="mb-16">
                 <h2 className="mb-6 text-2xl font-bold">人気の観光地</h2>
                 <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6">
                     {regions.map((region) => (
@@ -53,7 +53,7 @@ const TourismPage = () => {
                         </Link>
                     ))}
                 </div>
-            </section>
+            </section> */}
 
             {/* Tourism Information Tabs */}
             <Tabs defaultValue="all" className="mb-10">

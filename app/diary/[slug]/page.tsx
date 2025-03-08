@@ -6,7 +6,8 @@ import { Bookmark, Calendar, MapPin, Share2 } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import Markdown from 'markdown-to-jsx';
+import ReactMarkdown from 'react-markdown';
+import remarkGfm from "remark-gfm";
 
 export async function generateStaticParams() {
     const posts = getAllPosts('diary')
@@ -62,7 +63,11 @@ const DiaryPostPage = ({ params }: { params: { slug: string }}) => {
                         </div>
 
                         <div className="prose prose-lg max-w-none dark;prose-invert">
-                            <Markdown>{post.content}</Markdown>
+                            <ReactMarkdown
+                                remarkPlugins={[remarkGfm]}
+                            >
+                                {post.content}
+                            </ReactMarkdown>
                         </div>
 
                         <div className="mt-8 flex flex-wrap gap-2">
@@ -75,7 +80,7 @@ const DiaryPostPage = ({ params }: { params: { slug: string }}) => {
 
                         <Separator className="my-8" />
                         
-                        <div className="flex items-center justify-between">
+                        {/* <div className="flex items-center justify-between">
                             <div className="flex items-center">
                                 <div className="relative mr-4 h-10 w-10 overflow-hidden rounded-full">
                                     <Image
@@ -100,7 +105,8 @@ const DiaryPostPage = ({ params }: { params: { slug: string }}) => {
                                     <span className="sr-only">保存</span>
                                 </Button>
                             </div>
-                        </div>
+                        </div> */}
+
                     </article>
                 </div>
 
