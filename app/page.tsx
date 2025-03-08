@@ -128,7 +128,7 @@ const Home = () => {
 			</section>
 
 			{/* Newsletter */}
-			<section className="container py-16 mx-auto">
+			{/* <section className="container py-16 mx-auto">
 				<div className="rounded-xl bg-primary p-8 text-primary-foreground sm:p-12">
 					<div className="mx-auto max-w-2xl text-center">
 						<h2 className="mb-4 text-3xl font-bold">旅の最新情報をお届けします</h2>
@@ -146,7 +146,8 @@ const Home = () => {
 						</form>
 					</div>
 				</div>
-			</section>
+			</section> */}
+
 		</div>
   	);
 }
