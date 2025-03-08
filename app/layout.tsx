@@ -32,6 +32,19 @@ export default function RootLayout({
 				<meta name="google-site-verification" content="qd9h_oeUkXKK0F-u4U5Z-c540MUq_Agst3K0rF8ERdM" />
 				{/* GA */}
 				<meta name="google-adsense-account" content="ca-pub-8687520805381056" />
+				{/* Google tag (gtag.js) */}
+				<script async src="https://www.googletagmanager.com/gtag/js?id=G-XYSW6RY98H"></script>
+				<script
+					dangerouslySetInnerHTML={{
+						__html:`
+							window.dataLayer = window.dataLayer || [];
+							function gtag(){dataLayer.push(arguments);}
+							gtag('js', new Date());
+						
+							gtag('config', 'G-XYSW6RY98H');
+						`,
+					}}>
+				</script>
 				
 			</head>
       		<body
