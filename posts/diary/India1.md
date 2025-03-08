@@ -2,7 +2,7 @@
 title: "今度はインドへ！日本との違いに驚きの連続！"
 date: "2024-09-24"
 excerpt: "インド旅行の始まりはベトナム観光！関空からハノイ経由でインドへ向かう途中、7時間のトランジットを活かして旧市街を散策。ベトナムサンドウィッチやベトナムコーヒーを楽しみながら、次なる冒険へと旅立ちます。"
-image: "/images/India/dong-kinh-nghia-thuc-square.jpg"
+image: "/images/Vietnam/dong-kinh-nghia-thuc-square.jpg"
 location: "ベトナム-ハノイ"
 category: '海外旅行'
 tags: ["海外", "アジア", "インド"]
@@ -24,7 +24,7 @@ tags: ["海外", "アジア", "インド"]
 市街地に向かうために空港の外へ出た私たちはバスで市街地へ行くことにしました。  
 ノイバイ国際空港からハノイの市街地までは86番のバスがおすすめです。  
 
-![86番バスの写真](/images/India/vietnam-bus.jpg)
+![86番バスの写真](/images/Vietnam/vietnam-bus.jpg)
 
 86番のバスは空港から旧市街などの観光地を通り、ハノイ駅まで行きます。  
 料金は一律45000ベトナムドン(≒270円)と安く、また冷房もしっかり効いています。  
@@ -43,18 +43,18 @@ tags: ["海外", "アジア", "インド"]
 お昼ごろの旧市街は思ったよりも静かで人通りも少なく、お店も閉まっているところがちらほらありました。  
 歩いて10分ほどで目的の店に到着。"Bánh mì phố"というお店です。  
 
-![ベトナムサンドウィッチの店](/images/India/banh-mi-pho.jpg)
+![ベトナムサンドウィッチの店](/images/Vietnam/banh-mi-pho.jpg)
 
 さっそく注文。私はコンボ2というセットメニューを頼みました。  
 
-![ベトナムサンドウィッチの写真](/images/India/banh-mi.jpg)
-![コンボ2のセットドリンク](/images/India/lemon-tea.jpg)
+![ベトナムサンドウィッチの写真](/images/Vietnam/banh-mi.jpg)
+![コンボ2のセットドリンク](/images/Vietnam/lemon-tea.jpg)
 
 購入した商品を受け取り、近くのホエンキアム湖のほとりで景色を楽しみながら食事を楽しむことにしました。  
 まだまだ暑いベトナムでしたが日陰になっており涼しく、またとても雰囲気のいい場所でした。  
 ぜひ皆さんも旧市街に行った際はここで食べてみてください。  
 
-![ホエンキエム湖の物売りの写真](/images/India/vietnam-vender.jpg)
+![ホエンキエム湖の物売りの写真](/images/Vietnam/vietnam-vender.jpg)
 
 ただ、こんな感じで物売りが何回もやってくるのでお気をつけてください（笑）。  
 
@@ -64,11 +64,11 @@ tags: ["海外", "アジア", "インド"]
 すぐ近くにあった"ハイランズコーヒー(Cà phê Highlands)"に入ります。  
 こちらのカフェにはテラス席があり、下にある"ドンキンギアントゥック広場(Quảng trường Đông Kinh Nghĩa Thục)"を見下ろすことができました。  
 
-![ハイランズコーヒーのテラス席から見たドンキンギアントゥック広場](/images/India/dong-kinh-nghia-thuc-square.jpg)
+![ハイランズコーヒーのテラス席から見たドンキンギアントゥック広場](/images/Vietnam/dong-kinh-nghia-thuc-square.jpg)
 
 ここでは定番のベトナムコーヒーを注文。テラス席に出て飲みます。  
 
-![ハイランズコーヒーで注文したベトナムコーヒー](/images/India/vietnam-coffee.jpg)
+![ハイランズコーヒーで注文したベトナムコーヒー](/images/Vietnam/vietnam-coffee.jpg)
 
 ベトナムコーヒーの感想は...濃い！！！  
 初めて飲むベトナムコーヒーはその濃さに非常に驚きました。  
@@ -83,4 +83,4 @@ tags: ["海外", "アジア", "インド"]
 インドについて早速ピンチに！？  
 次回からのインド旅行本編もぜひお楽しみに！  
 
-![旧市街のお菓子屋さんの写真](/images/India/vietnam-general-store.jpg)
+![旧市街のお菓子屋さんの写真](/images/Vietnam/vietnam-general-store.jpg)
