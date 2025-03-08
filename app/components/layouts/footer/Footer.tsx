@@ -1,6 +1,7 @@
 import { Separator } from "@radix-ui/react-dropdown-menu"
-import { Facebook, Instagram, Mail, Twitter } from "lucide-react"
+import { Mail } from "lucide-react"
 import Link from "next/link"
+import * as Elements from '@/app/components/elements/index';
 
 const Footer = () => {
     return (
@@ -11,18 +12,14 @@ const Footer = () => {
                         <h3 className="text-lg font-medium">ともきちの旅行日記</h3>
                         <p className="text-sm text-muted-foreground">日本と世界の旅行記録と観光情報を発信するブログサイトです。</p>
                         <div className="flex space-x-3">
-                            <Link href='#'className="text-muted-foreground hover:text-foreground">
-                                <Instagram className="h-5 w-5" />
-                                <span className="sr-only">Instagram</span>
-                            </Link>
-                            <Link href='#'className="text-muted-foreground hover:text-foreground">
-                                <Twitter className="h-5 w-5" />
-                                <span className="sr-only">Instagram</span>
-                            </Link>
-                            <Link href='#'className="text-muted-foreground hover:text-foreground">
-                                <Facebook className="h-5 w-5" />
-                                <span className="sr-only">Instagram</span>
-                            </Link>
+                            <Elements.InstagramIcon />
+                            <span className="sr-only">Instagram</span>
+                            <Elements.YouTubeIcon />
+                            <span className="sr-only">YouTube</span>
+                            <Elements.TikTokIcon />
+                            <span className="sr-only">TikTok</span>
+                            <Elements.GitHubIcon />
+                            <span className="sr-only">GitHub</span>
                         </div>
                     </div>
                     <div className="space-y-3">
