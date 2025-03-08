@@ -16,7 +16,8 @@ export async function generateStaticParams() {
     }))
 }
 
-const TourismPostPage = async ({ params }: { params: { slug: string }}) => {
+const TourismPostPage = async (props: { params: Promise<{ slug: string }>}) => {
+    const params = await props.params;
     const post = await getPostBySlug('tourism', params.slug)
 
     if (!post) {

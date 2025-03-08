@@ -16,7 +16,8 @@ export async function generateStaticParams() {
     }))
 }
 
-const DiaryPostPage = async ({ params }: { params: { slug: string }}) => {
+const DiaryPostPage = async (props: { params: Promise<{ slug: string }>}) => {
+    const params = await props.params;
     const post = await getPostBySlug('diary', params.slug)
 
     if (!post) {
@@ -62,7 +63,7 @@ const DiaryPostPage = async ({ params }: { params: { slug: string }}) => {
                             />
                         </div>
 
-                        <div className="prose prose-lg max-w-none dark;prose-invert">
+                        <div className="prose prose-lg max-w-none dark:prose-invert">
                             <ReactMarkdown
                                 remarkPlugins={[remarkGfm]}
                             >
