@@ -16,8 +16,8 @@ export async function generateStaticParams() {
     }))
 }
 
-const TourismPostPage = ({ params }: { params: { slug: string }}) => {
-    const post = getPostBySlug('tourism', params.slug)
+const TourismPostPage = async ({ params }: { params: { slug: string }}) => {
+    const post = await getPostBySlug('tourism', params.slug)
 
     if (!post) {
         notFound()
