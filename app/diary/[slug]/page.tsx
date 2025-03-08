@@ -16,8 +16,8 @@ export async function generateStaticParams() {
     }))
 }
 
-const DiaryPostPage = ({ params }: { params: { slug: string }}) => {
-    const post = getPostBySlug('diary', params.slug)
+const DiaryPostPage = async ({ params }: { params: { slug: string }}) => {
+    const post = await getPostBySlug('diary', params.slug)
 
     if (!post) {
         notFound()
