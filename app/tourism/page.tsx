@@ -15,12 +15,12 @@ const TourismPage = () => {
         { id: 'transportation', name: '交通情報' },
     ]
 
-    const regions = [
-        {city: 'パリ', image: '/images/India/tajmahal.jpg'},
-        {city: 'マドリード', image: '/images/India/tajmahal.jpg'},
-        {city: 'バンコク', image: '/images/Thai/wat-arun-3.jpg'},
-        {city: 'デリー', image: '/images/India/tajmahal.jpg'},
-    ]
+    // const regions = [
+    //     {city: 'パリ', image: '/images/India/tajmahal.jpg'},
+    //     {city: 'マドリード', image: '/images/India/tajmahal.jpg'},
+    //     {city: 'バンコク', image: '/images/Thai/wat-arun-3.jpg'},
+    //     {city: 'デリー', image: '/images/India/tajmahal.jpg'},
+    // ]
 
     const posts = getAllPosts('tourism');
 
