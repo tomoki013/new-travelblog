@@ -63,7 +63,7 @@ const DiaryPage = () => {
 
             {/* Tabs */}
             <Tabs defaultValue="all" className="mb-10">
-                <TabsList className="grid w-full grid-cols-3">
+                <TabsList className="grid w-full grid-cols-3 h-auto">
                     <TabsTrigger value="all">すべて</TabsTrigger>
                     <TabsTrigger value="国内旅行">国内旅行</TabsTrigger>
                     <TabsTrigger value="海外旅行">海外旅行</TabsTrigger>

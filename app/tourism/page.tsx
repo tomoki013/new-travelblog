@@ -57,7 +57,7 @@ const TourismPage = () => {
 
             {/* Tourism Information Tabs */}
             <Tabs defaultValue="all" className="mb-10">
-                <TabsList className="mb-8 grid w-full grid-cols-2 sm:grid-cols-5">
+                <TabsList className="mb-8 grid w-full grid-cols-2 sm:grid-cols-5 h-auto">
                     {categories.map((category) => (
                         <TabsTrigger key={category.id} value={category.id}>
                             {category.name}

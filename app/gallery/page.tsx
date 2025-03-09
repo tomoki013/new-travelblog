@@ -2,7 +2,8 @@
 
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Badge, Heart, MapPin } from "lucide-react";
+import { Heart, MapPin } from "lucide-react";
+import { Badge } from "@/components/ui/badge";
 import Image from "next/image";
 import { useState } from "react";
 
@@ -141,7 +142,7 @@ const GalleryPage = () => {
             </div>
 
             <Tabs defaultValue="all" className="mb-8">
-                <TabsList className="mb-8 grid w-full grid-dols-2 sm:grid-cols-5">
+                <TabsList className="mb-8 grid w-full grid-dols-2 sm:grid-cols-5 h-auto">
                     {categories.map((category) => (
                         <TabsTrigger key={category.id} value={category.id}>
                             {category.name}
