@@ -3,7 +3,7 @@ import getAllPosts from "@/lib/markdown"
 import * as Elements from '@/app/components/elements/index';
 import * as Sections from '@/app/components/sections/index';
 
-export const categories = [
+const categories = [
     { id: 'all', name: 'すべて' },
     { id: 'sightseeing', name: '観光スポット' },
     { id: 'food', name: 'グルメ' },
