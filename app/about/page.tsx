@@ -28,26 +28,26 @@ const AboutPage = () => {
         },
     ]
     
-    const team = [
-        {
-          name: '山田 太郎',
-          role: '編集長',
-          image: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&auto=format&fit=crop&w=300&q=80',
-          description: '10年以上の旅行ライター経験を持ち、50カ国以上を訪問。',
-        },
-        {
-          name: '佐藤 美咲',
-          role: 'フォトグラファー',
-          image: 'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixlib=rb-1.2.1&auto=format&fit=crop&w=300&q=80',
-          description: 'プロフェッショナルフォトグラファーとして、世界中の絶景を撮影。',
-        },
-        {
-          name: '田中 健一',
-          role: '観光情報ライター',
-          image: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?ixlib=rb-1.2.1&auto=format&fit=crop&w=300&q=80',
-          description: '国内の隠れた名所を探求し、詳細な観光情報を提供。',
-        },
-    ]
+    // const team = [
+    //     {
+    //       name: '山田 太郎',
+    //       role: '編集長',
+    //       image: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&auto=format&fit=crop&w=300&q=80',
+    //       description: '10年以上の旅行ライター経験を持ち、50カ国以上を訪問。',
+    //     },
+    //     {
+    //       name: '佐藤 美咲',
+    //       role: 'フォトグラファー',
+    //       image: 'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixlib=rb-1.2.1&auto=format&fit=crop&w=300&q=80',
+    //       description: 'プロフェッショナルフォトグラファーとして、世界中の絶景を撮影。',
+    //     },
+    //     {
+    //       name: '田中 健一',
+    //       role: '観光情報ライター',
+    //       image: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?ixlib=rb-1.2.1&auto=format&fit=crop&w=300&q=80',
+    //       description: '国内の隠れた名所を探求し、詳細な観光情報を提供。',
+    //     },
+    // ]
 
     return (
         <div className="flex flex-col">
@@ -90,7 +90,7 @@ const AboutPage = () => {
             </section>
 
             {/* Team Section */}
-            <section className="bg-muted py-16">
+            {/* <section className="bg-muted py-16">
                 <div className="container">
                     <h2 className="mb-12 text-center text-3xl font-bold">チームメンバー</h2>
                     <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
@@ -113,7 +113,7 @@ const AboutPage = () => {
                         ))}
                     </div>
                 </div>
-            </section>
+            </section> */}
 
             {/* Contact Section */}
             <section className="container py-16">
