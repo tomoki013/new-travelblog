@@ -2,8 +2,10 @@ import Image from "next/image";
 import Link from "next/link";
 
 export const regions = [
-    {city: 'パリ', image: '/images/India/tajmahal.jpg'},
-    {city: 'マドリード', image: '/images/India/tajmahal.jpg'},
+    {city: 'パリ', image: '/images/France/eiffel-tower-4.jpg'},
+    {city: 'マドリード', image: '/images/Spain/plaza-mayor-1.jpg'},
+    {city: 'バルセロナ', image: '/images/Spain/sagrada-familia-1.jpg'},
+    {city: 'トレド', image: '/images/Spain/toledo-view-1.jpg'},
     {city: 'バンコク', image: '/images/Thai/wat-arun-3.jpg'},
     {city: 'デリー', image: '/images/India/tajmahal.jpg'},
 ]
@@ -13,7 +15,7 @@ const FeaturedRegions = () => {
         <section className="my-16">
             <h2 className="mb-6 text-2xl font-bold">人気の観光地</h2>
             <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6">
-                {regions.slice(0, 8).map((region) => (
+                {regions.slice(0, 6).map((region) => (
                     <Link key={region.city} href={`/tourism/region/${region.city.toLowerCase()}`}>
                         <div className="group relative h-32 overflow-hidden rounded-lg">
                             <Image
