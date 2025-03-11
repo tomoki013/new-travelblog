@@ -1,15 +1,11 @@
 // 'use client';
 
-import { Badge } from "@/components/ui/badge";
-import { Card, CardContent } from "@/components/ui/card";
 // import { Input } from "@/components/ui/input";
 // import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Calendar, MapPin } from "lucide-react";
-import Image from "next/image";
-import Link from "next/link";
 // import { useState } from "react";
 import getAllPosts from "@/lib/markdown";
+import * as Elements from '@/app/components/elements/index';
 
 const DiaryPage = () => {
     // const [searchQuery, setSearchQuery] = useState('');
@@ -71,7 +67,7 @@ const DiaryPage = () => {
                 <TabsContent value="all">
                     <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
                         {filteredPosts.map((post) => (
-                            <PostCard key={post.slug} post={post} />
+                            <Elements.PostCard key={post.slug} post={post} />
                         ))}
                     </div>
                     {filteredPosts.length === 0 && (
@@ -86,7 +82,7 @@ const DiaryPage = () => {
                             //     post.excerpt.toLowerCase().includes(searchQuery.toLowerCase()) ||
                             //     post.location.toLowerCase().includes(searchQuery.toLowerCase()))
                             .map((post) => (
-                                <PostCard key={post.slug} post={post} />
+                                <Elements.PostCard key={post.slug} post={post} />
                             ))
                         }
                     </div>
@@ -99,61 +95,13 @@ const DiaryPage = () => {
                             //     post.excerpt.toLowerCase().includes(searchQuery.toLowerCase()) ||
                             //     post.location.toLowerCase().includes(searchQuery.toLowerCase()))
                             .map((post) => (
-                                <PostCard key={post.slug} post={post} />
+                                <Elements.PostCard key={post.slug} post={post} />
                             ))
                         }
                     </div>
                 </TabsContent>
             </Tabs>
         </div>
-    );
-}
-
-interface Post {
-    slug: string;
-    title: string;
-    excerpt: string;
-    image: string;
-    location: string;
-    date: string;
-    category: string;
-}
-
-function PostCard({ post }: { post: Post }) {
-    return (
-        <Card className='overflow-hidden transition-all hover:shadow-lg'>
-            <div className="relative h-48 w-full">
-                <Image
-                    src={post.image}
-                    alt={post.title}
-                    fill
-                    style={{ objectFit: 'cover' }}
-                />
-            </div>
-            <CardContent className="p-6">
-                <div className="mb-3 flex items-center justify-between">
-                    <Badge variant='outline'>{post.category}</Badge>
-                    <span className="flex items-center text-xs text-muted-foreground">
-                        <Calendar className="mr-1 h-3 w-3" />
-                        {post.date}
-                    </span>
-                </div>
-                <h3 className="mb-2 text-xl font-bold">{post.title}</h3>
-                <p className="mb-4 text-sm text-muted-foreground">{post.excerpt}</p>
-                <div className="flex items-center justify-between">
-                    <span className="flex items-center text-xs text-muted-foreground">
-                        <MapPin className="mr-1 h-3 w-3" />
-                        {post.location}
-                    </span>
-                    <Link
-                        href={`/diary/${post.slug}`}
-                        className="text-sm font-medium text-primary hover:underline"
-                    >
-                        続きを読む
-                    </Link>
-                </div>
-            </CardContent>
-        </Card>
     );
 }
 

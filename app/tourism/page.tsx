@@ -1,26 +1,17 @@
-import { Card, CardContent } from "@/components/ui/card"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
-import { ArrowRight, MapPin } from "lucide-react"
-import { Badge } from "@/components/ui/badge"
-import Image from "next/image"
-import Link from "next/link"
 import getAllPosts from "@/lib/markdown"
+import * as Elements from '@/app/components/elements/index';
+import * as Sections from '@/app/components/sections/index';
+
+export const categories = [
+    { id: 'all', name: 'すべて' },
+    { id: 'sightseeing', name: '観光スポット' },
+    { id: 'food', name: 'グルメ' },
+    { id: 'accommodation', name: '宿泊施設' },
+    { id: 'transportation', name: '交通情報' },
+]
 
 const TourismPage = () => {
-    const categories = [
-        { id: 'all', name: 'すべて' },
-        { id: 'sightseeing', name: '観光スポット' },
-        { id: 'food', name: 'グルメ' },
-        { id: 'accommodation', name: '宿泊施設' },
-        { id: 'transportation', name: '交通情報' },
-    ]
-
-    // const regions = [
-    //     {city: 'パリ', image: '/images/India/tajmahal.jpg'},
-    //     {city: 'マドリード', image: '/images/India/tajmahal.jpg'},
-    //     {city: 'バンコク', image: '/images/Thai/wat-arun-3.jpg'},
-    //     {city: 'デリー', image: '/images/India/tajmahal.jpg'},
-    // ]
 
     const posts = getAllPosts('tourism');
 
@@ -32,28 +23,7 @@ const TourismPage = () => {
             </div>
 
             {/* Featured Regions */}
-            {/* <section className="mb-16">
-                <h2 className="mb-6 text-2xl font-bold">人気の観光地</h2>
-                <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6">
-                    {regions.map((region) => (
-                        <Link key={region.city} href={`/tourism/region/${region.city.toLowerCase()}`}>
-                            <div className="group relative h-32 overflow-hidden rounded-lg">
-                                <Image
-                                    src={region.image}
-                                    alt={region.city}
-                                    fill
-                                    style={{ objectFit: 'cover' }}
-                                    className="transition-transform duration-300 group-hover:scale-110"
-                                />
-                                <div className="absolute inset-0 bg-black/40 transition-opacity group-hover:bg-black/60" />
-                                <div className="absolute inset-0 flex items-center justify-center">
-                                    <span className="text-lg font-bold text-white">{region.city}</span>
-                                </div>
-                            </div>
-                        </Link>
-                    ))}
-                </div>
-            </section> */}
+            <Sections.FeaturedRegions />
 
             {/* Tourism Information Tabs */}
             <Tabs defaultValue="all" className="mb-10">
@@ -68,7 +38,7 @@ const TourismPage = () => {
                 <TabsContent value="all">
                     <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
                         {posts.map((post) => (
-                            <TourismCard key={post.slug} info={post} />
+                            <Elements.TourismCard key={post.slug} info={post} />
                         ))}
                     </div>
                 </TabsContent>
@@ -79,7 +49,7 @@ const TourismPage = () => {
                             {posts
                                 .filter((post) => post.category.includes(category.name))
                                 .map((post) => (
-                                    <TourismCard key={post.slug} info={post} />
+                                    <Elements.TourismCard key={post.slug} info={post} />
                                 ))}
                         </div>
                     </TabsContent>
@@ -105,50 +75,6 @@ const TourismPage = () => {
                 </div>
             </section>
         </div>
-    );
-}
-
-interface TourismInfo {
-    slug: string;
-    title: string;
-    excerpt: string;
-    image: string;
-    location: string;
-    category: string;
-}
-
-function TourismCard({ info }: { info: TourismInfo }) {
-    return (
-        <Card className="overflow-hidden transition-all hover:shadow-lg">
-            <div className="relative h-48 w-full">
-                <Image
-                    src={info.image}
-                    alt={info.title}
-                    fill
-                    style={{ objectFit: 'cover' }}
-                />
-            </div>
-            <CardContent className="p-6">
-                <div className="mb-3">
-                    <Badge>{info.category}</Badge>
-                </div>
-                <h3 className="mb-2 text-xl font-bold">{info.title}</h3>
-                <p className="mb-4 text-sm text-muted-foreground">{info.excerpt}</p>
-                <div className="flex items-center justify-between">
-                    <span className="flex items-center text-xs text-muted-foreground">
-                        <MapPin className="mr-1 h-3 w-3" />
-                        {info.location}
-                    </span>
-                    <Link
-                        href={`/tourism/${info.slug}`}
-                        className="flex items-center text-sm font-medium text-primary hover:underline"
-                    >
-                        詳細を見る
-                        <ArrowRight className="ml-1 h-3 w-3" />
-                    </Link>
-                </div>
-            </CardContent>
-        </Card>
     );
 }
 
