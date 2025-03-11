@@ -8,6 +8,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
+import * as Elements from '@/app/components/elements/index';
 
 export async function generateStaticParams() {
     const posts = getAllPosts('tourism')
@@ -26,14 +27,9 @@ const TourismPostPage = async (props: { params: Promise<{ slug: string }>}) => {
 
     return (
         <div className="container py-12">
-            <div className="mb-8">
-                <Link
-                    href='/tourism'
-                    className="inline-flex items-center text-sm font-medium text-muted-foreground hover:text-foreground"
-                >
-                    観光情報一覧に戻る
-                </Link>
-            </div>
+            <Elements.ListLink href="/tourism">
+                観光情報一覧に戻る
+            </Elements.ListLink>
 
             <div className="grid gap-10 lg:grid-cols-3">
                 <div className="lg:col-span-2">

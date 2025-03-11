@@ -2,7 +2,7 @@
 
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Heart, MapPin } from "lucide-react";
+import { MapPin } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import Image from "next/image";
 import { useState } from "react";
@@ -232,10 +232,10 @@ const GalleryPage = () => {
                         </div>
                         <div className="flex items-center justify-between">
                             <Badge>{selectedImage.category}</Badge>
-                            <div className="flex items-center gap-1 text-sm">
+                            {/* <div className="flex items-center gap-1 text-sm">
                                 <Heart className="h-4 w-4 text-red-500" fill='currentColor' />
                                 <span>{selectedImage.likes}</span>
-                            </div>
+                            </div> */}
                         </div>
                         <p className="text-muted-foreground">{selectedImage.description}</p>
                     </DialogContent>
@@ -278,10 +278,10 @@ function PhotoCard({ photo, onClick }: { photo: Photo; onClick: () => void }) {
                         <MapPin className="mr-1 h-3 w-3" />
                         {photo.location}
                     </span>
-                    <div className="flex items-center gap-1 text-xs">
+                    {/* <div className="flex items-center gap-1 text-xs">
                         <Heart className="h-3 w-3" fill='currentColor' />
                         <span>{photo.likes}</span>
-                    </div>
+                    </div> */}
                 </div>
             </div>
         </div>
