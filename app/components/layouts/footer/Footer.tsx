@@ -40,6 +40,11 @@ const Footer = () => {
                                     写真ギャラリー
                                 </Link>
                             </li>
+                            <li>
+                                <Link href='/roulette' className="text-muted-foreground hover:text-foreground">
+                                    旅行先ルーレット
+                                </Link>
+                            </li>
                         </ul>
                     </div>
                     <div className="space-y-3">

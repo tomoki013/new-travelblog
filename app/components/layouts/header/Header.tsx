@@ -27,6 +27,10 @@ const routes = [
         path: '/gallery',
     },
     {
+        name: '旅行先ルーレット',
+        path: '/roulette',
+    },
+    {
         name: 'お問い合わせ',
         path: '/contact',
     },

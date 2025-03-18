@@ -1,20 +1,6 @@
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
-import getAllPosts from "@/lib/markdown"
-import * as Elements from '@/app/components/elements/index';
 import * as Sections from '@/app/components/sections/index';
 
-const categories = [
-    { id: 'all', name: 'すべて' },
-    { id: 'sightseeing', name: '観光スポット' },
-    { id: 'food', name: 'グルメ' },
-    { id: 'accommodation', name: '宿泊施設' },
-    { id: 'transportation', name: '交通情報' },
-]
-
 const TourismPage = () => {
-
-    const posts = getAllPosts('tourism');
-
     return (
         <div className="container py-12">
             <div className="mb-12 text-center">
@@ -26,35 +12,7 @@ const TourismPage = () => {
             <Sections.FeaturedRegions />
 
             {/* Tourism Information Tabs */}
-            <Tabs defaultValue="all" className="mb-10">
-                <TabsList className="mb-8 grid w-full grid-cols-2 sm:grid-cols-5 h-auto">
-                    {categories.map((category) => (
-                        <TabsTrigger key={category.id} value={category.id}>
-                            {category.name}
-                        </TabsTrigger>
-                    ))}
-                </TabsList>
-
-                <TabsContent value="all">
-                    <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
-                        {posts.map((post) => (
-                            <Elements.TourismCard key={post.slug} info={post} />
-                        ))}
-                    </div>
-                </TabsContent>
-
-                {categories.slice(1).map((category) => (
-                    <TabsContent key={category.id} value={category.id}>
-                        <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
-                            {posts
-                                .filter((post) => post.category.includes(category.name))
-                                .map((post) => (
-                                    <Elements.TourismCard key={post.slug} info={post} />
-                                ))}
-                        </div>
-                    </TabsContent>
-                ))}
-            </Tabs>
+            <Sections.Posts type="tourism" />
 
             {/* Travel Tips */}
             <section className="mt-16 rounded-xl bg-muted p-8">
