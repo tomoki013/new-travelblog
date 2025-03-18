@@ -27,7 +27,7 @@ const RegionPage = async (props: { params: Promise<{ city: string }>}) => {
                 {posts
                     .filter((post) => post.location.includes(decodedCity))
                     .map((post) => (
-                        <Elements.TourismCard key={post.slug} info={post} />
+                        <Elements.PostCard key={post.slug} post={post} />
                     ))
                 }
             </div>

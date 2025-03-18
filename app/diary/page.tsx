@@ -2,16 +2,12 @@
 
 // import { Input } from "@/components/ui/input";
 // import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 // import { useState } from "react";
-import getAllPosts from "@/lib/markdown";
-import * as Elements from '@/app/components/elements/index';
+import * as Sections from '@/app/components/sections/index';
 
 const DiaryPage = () => {
     // const [searchQuery, setSearchQuery] = useState('');
     // const [categoryFilter, setCategoryFilter] = useState('all');
-
-    const filteredPosts = getAllPosts('diary');
 
     // const filteredPosts = posts.filter((post) => {
     //     const matchesSearch =
@@ -23,9 +19,6 @@ const DiaryPage = () => {
 
     //     return matchesSearch && matchesCategory;
     // });
-
-    const domesticPosts = filteredPosts.filter((post) => post.category === '国内旅行');
-    const internationalPosts = filteredPosts.filter((post) => post.category === '海外旅行');
 
     return (
         <div className="container py-12">
@@ -58,7 +51,7 @@ const DiaryPage = () => {
             </div> */}
 
             {/* Tabs */}
-            <Tabs defaultValue="all" className="mb-10">
+            {/* <Tabs defaultValue="all" className="mb-10">
                 <TabsList className="grid w-full grid-cols-3 h-auto">
                     <TabsTrigger value="all">すべて</TabsTrigger>
                     <TabsTrigger value="国内旅行">国内旅行</TabsTrigger>
@@ -100,7 +93,10 @@ const DiaryPage = () => {
                         }
                     </div>
                 </TabsContent>
-            </Tabs>
+            </Tabs> */}
+
+            <Sections.Posts type="diary" />
+
         </div>
     );
 }
