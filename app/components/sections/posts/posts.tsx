@@ -6,6 +6,8 @@ const diaryCategories = [
     {id: 'all', name: 'すべて'},
     {id: 'domestic', name: '国内旅行'},
     {id: 'international', name: '海外旅行'},
+    {id: 'singleTrip', name: '一人旅'},
+    {id: 'others', name: 'その他'},
 ]
 
 const tourismCategories = [
@@ -18,14 +20,34 @@ const tourismCategories = [
 
 interface PostsProps {
     type: 'diary' | 'tourism'
+    filter?: 'region'
+    filterItem?: React.ReactNode
 }
 
 const Posts = ({
-    type
+    type,
+    filter,
+    filterItem,
 }: PostsProps) => {
-    const categories = type === 'diary' ?  diaryCategories : type === 'tourism' ? tourismCategories : diaryCategories;
-    console.log(categories);
-    const posts = type === 'diary' ? getAllPosts('diary') : type === 'tourism' ? getAllPosts('tourism') : getAllPosts('diary');
+    // カテゴリーの取得
+    const categories = type === 'diary'
+        ? diaryCategories : type === 'tourism'
+        ? tourismCategories : diaryCategories;
+
+    // 投稿の取得
+    const posts = type === 'diary'
+        ? getAllPosts('diary') : type === 'tourism'
+        ? getAllPosts('tourism') : getAllPosts('diary');
+
+    // filterとfilterItemが存在する場合のみフィルタリング
+    const filteredPosts = filter && filterItem
+        ? posts.filter((filteredPost) => {
+            if (filter === 'region' && typeof filterItem === 'string') {
+                return filteredPost.location.includes(filterItem);
+            }
+            return false;
+        })
+        : posts;
 
     return (
         <Tabs defaultValue="all" className="mb-10">
@@ -39,7 +61,7 @@ const Posts = ({
 
             <TabsContent value="all">
                 <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
-                    {posts.map((post) => (
+                    {filteredPosts.map((post) => (
                         <Elements.PostCard key={post.slug} post={post} />
                     ))}
                 </div>
@@ -48,7 +70,7 @@ const Posts = ({
             {categories.map((category) => (
                 <TabsContent key={category.id} value={category.id}>
                     <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
-                        {posts
+                        {filteredPosts
                             .filter((post) => post.category?.includes(category.name))
                             .map((post) => (
                                 <Elements.PostCard key={post.slug} post={post} />

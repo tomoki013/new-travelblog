@@ -50,51 +50,7 @@ const DiaryPage = () => {
                 </Select>
             </div> */}
 
-            {/* Tabs */}
-            {/* <Tabs defaultValue="all" className="mb-10">
-                <TabsList className="grid w-full grid-cols-3 h-auto">
-                    <TabsTrigger value="all">すべて</TabsTrigger>
-                    <TabsTrigger value="国内旅行">国内旅行</TabsTrigger>
-                    <TabsTrigger value="海外旅行">海外旅行</TabsTrigger>
-                </TabsList>
-                <TabsContent value="all">
-                    <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
-                        {filteredPosts.map((post) => (
-                            <Elements.PostCard key={post.slug} post={post} />
-                        ))}
-                    </div>
-                    {filteredPosts.length === 0 && (
-                        <div className="mt-8 text-center text-muted-foreground">検索条件に一致する記事が見つかりませんでした。</div>
-                    )}
-                </TabsContent>
-                <TabsContent value="国内旅行">
-                    <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
-                        {domesticPosts
-                            // .filter(post =>
-                            //     post.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-                            //     post.excerpt.toLowerCase().includes(searchQuery.toLowerCase()) ||
-                            //     post.location.toLowerCase().includes(searchQuery.toLowerCase()))
-                            .map((post) => (
-                                <Elements.PostCard key={post.slug} post={post} />
-                            ))
-                        }
-                    </div>
-                </TabsContent>
-                <TabsContent value="海外旅行">
-                    <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
-                        {internationalPosts
-                            // .filter(post =>
-                            //     post.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-                            //     post.excerpt.toLowerCase().includes(searchQuery.toLowerCase()) ||
-                            //     post.location.toLowerCase().includes(searchQuery.toLowerCase()))
-                            .map((post) => (
-                                <Elements.PostCard key={post.slug} post={post} />
-                            ))
-                        }
-                    </div>
-                </TabsContent>
-            </Tabs> */}
-
+            {/* Diary Posts */}
             <Sections.Posts type="diary" />
 
         </div>
