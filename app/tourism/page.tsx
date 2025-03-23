@@ -11,7 +11,7 @@ const TourismPage = () => {
             {/* Featured Regions */}
             <Sections.FeaturedRegions />
 
-            {/* Tourism Information Tabs */}
+            {/* Tourism Information */}
             <Sections.Posts type="tourism" />
 
             {/* Travel Tips */}

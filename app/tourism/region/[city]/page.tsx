@@ -1,4 +1,3 @@
-import getAllPosts from "@/lib/markdown";
 import * as Elements from '@/app/components/elements/index';
 import * as Sections from '@/app/components/sections/index';
 import { regions } from "@/app/components/sections/regions/FeaturedRegions";
@@ -14,8 +13,6 @@ const RegionPage = async (props: { params: Promise<{ city: string }>}) => {
         </div>;
     }
 
-    const posts = getAllPosts('tourism');
-
     return (
         <div className="container py-12">
 
@@ -23,14 +20,8 @@ const RegionPage = async (props: { params: Promise<{ city: string }>}) => {
                 <h1 className="mb-4 text-4xl font-bold">{decodedCity}観光情報</h1>
             </div>
 
-            <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
-                {posts
-                    .filter((post) => post.location.includes(decodedCity))
-                    .map((post) => (
-                        <Elements.PostCard key={post.slug} post={post} />
-                    ))
-                }
-            </div>
+            {/* Tourism Information */}
+            <Sections.Posts type='tourism' filter='region' filterItem={decodedCity} />
 
             {/* Featured Regions */}
             <Sections.FeaturedRegions />
