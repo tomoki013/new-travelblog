@@ -1,5 +1,11 @@
 import Link from 'next/link';
 import * as Sections from '@/app/components/sections/index';
+import { Metadata } from 'next';
+
+export const metadata: Metadata = {
+    title: "ともきちの旅行日記 | Travel Diary",
+    description: "日本と世界の旅行記録と観光情報",
+};
 
 const RoulettePage = () => {
     return (
