@@ -6,6 +6,12 @@ import { MapPin } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import Image from "next/image";
 import { useState } from "react";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+    title: "ともきちの旅行日記 | Travel Diary",
+    description: "日本と世界の旅行記録と観光情報",
+};
 
 const GalleryPage = () => {
     const [selectedImage, setSelectedImage] = useState<Photo | null>(null);

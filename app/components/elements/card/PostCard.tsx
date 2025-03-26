@@ -14,7 +14,7 @@ interface Post {
     category: string;
 }
 
-const PostCard = ({ post }: { post: Post }) => {
+const PostCard = ({ post, linkPrefix }: { post: Post; linkPrefix: string }) => {
     return (
         <Card className='overflow-hidden transition-all hover:shadow-lg'>
             <div className="relative h-48 w-full">
@@ -41,7 +41,7 @@ const PostCard = ({ post }: { post: Post }) => {
                         {post.location}
                     </span>
                     <Link
-                        href={`/diary/${post.slug}`}
+                        href={`/${linkPrefix}/${post.slug}`}
                         className="text-sm font-medium text-primary hover:underline"
                     >
                         続きを読む

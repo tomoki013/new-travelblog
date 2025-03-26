@@ -6,6 +6,7 @@ import { Calendar, MapPin } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
+import type { Metadata } from "next";
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from "remark-gfm";
 import * as Elements from '@/app/components/elements/index';
@@ -15,6 +16,20 @@ export async function generateStaticParams() {
     return posts.map((posts) => ({
         slug: posts.slug,
     }))
+}
+
+// 動的にメタデータを生成
+export async function generateMetadata({ params }: { params: { slug: string } }): Promise<Metadata> {
+    const post = await getPostBySlug('tourism', params.slug);
+
+    if (!post) {
+        notFound();
+    }
+
+    return {
+        title: post.title,
+        description: post.excerpt,
+    };
 }
 
 const DiaryPostPage = async (props: { params: Promise<{ slug: string }>}) => {

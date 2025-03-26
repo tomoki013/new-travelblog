@@ -16,6 +16,7 @@ const tourismCategories = [
     {id: 'food', name: 'グルメ'},
     {id: 'accommodation', name: '宿泊施設'},
     {id: 'transportation', name: '交通情報'},
+    {id: 'pilgrimage', name: '聖地巡礼'},
 ]
 
 interface PostsProps {
@@ -51,7 +52,7 @@ const Posts = ({
 
     return (
         <Tabs defaultValue="all" className="mb-10">
-            <TabsList className="mb-8 grid w-full grid-cols-2 sm:grid-cols-5 h-auto">
+            <TabsList className="mb-8 grid w-full grid-cols-2 sm:grid-cols-6 h-auto">
                 {categories.map((category) => (
                     <TabsTrigger key={category.id} value={category.id}>
                         {category.name}
@@ -62,7 +63,7 @@ const Posts = ({
             <TabsContent value="all">
                 <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
                     {filteredPosts.map((post) => (
-                        <Elements.PostCard key={post.slug} post={post} />
+                        <Elements.PostCard key={post.slug} post={post} linkPrefix={type} />
                     ))}
                 </div>
             </TabsContent>
@@ -73,7 +74,7 @@ const Posts = ({
                         {filteredPosts
                             .filter((post) => post.category?.includes(category.name))
                             .map((post) => (
-                                <Elements.PostCard key={post.slug} post={post} />
+                                <Elements.PostCard key={post.slug} post={post} linkPrefix={type} />
                             ))}
                     </div>
                 </TabsContent>
