@@ -19,9 +19,9 @@ export async function generateStaticParams() {
 }
 
 // 動的にメタデータを生成
-export async function generateMetadata({ params }: { params: { slug: string } }): Promise<Metadata> {
-    const awaitParams = await params;
-    const post = await getPostBySlug('tourism', awaitParams.slug);
+export async function generateMetadata(props: { params: Promise<{ slug: string }> }): Promise<Metadata> {
+    const params = await props.params;
+    const post = await getPostBySlug('tourism', params.slug);
 
     if (!post) {
         notFound();
