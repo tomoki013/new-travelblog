@@ -4,6 +4,6 @@ module.exports = {
     changefreq: 'weekly',
     generateRobotsTxt: true,
     sitemapSize: 7000,
-    outDir: './out',
+    outDir: './public',
     // 他のオプション（例：exclude, changefreq, priority など）も必要に応じて追加
 }
