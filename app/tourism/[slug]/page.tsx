@@ -6,7 +6,7 @@ import { Calendar, MapPin } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-// import type { Metadata } from "next";
+import type { Metadata } from "next";
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
 import * as Elements from '@/app/components/elements/index';
@@ -19,19 +19,19 @@ export async function generateStaticParams() {
 }
 
 // 動的にメタデータを生成
-// export async function generateMetadata(props: { params: Promise<{ slug: string }> }): Promise<Metadata> {
-//     const params = await props.params;
-//     const post = await getPostBySlug('tourism', params.slug);
+export async function generateMetadata(props: { params: Promise<{ slug: string }> }): Promise<Metadata> {
+    const params = await props.params;
+    const post = await getPostBySlug('tourism', params.slug);
 
-//     if (!post) {
-//         notFound();
-//     }
+    if (!post) {
+        notFound();
+    }
 
-//     return {
-//         title: post?.title,
-//         description: post?.excerpt,
-//     };
-// }
+    return {
+        title: post?.title,
+        description: post?.excerpt,
+    };
+}
 
 const TourismPostPage = async (props: { params: Promise<{ slug: string }>}) => {
     const params = await props.params;
