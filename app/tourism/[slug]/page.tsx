@@ -28,8 +28,8 @@ export async function generateStaticParams() {
 //     }
 
 //     return {
-//         title: post.title,
-//         description: post.excerpt,
+//         title: post?.title,
+//         description: post?.excerpt,
 //     };
 // }
 
