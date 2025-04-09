@@ -6,12 +6,12 @@ import { MapPin } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import Image from "next/image";
 import { useState } from "react";
-import { Metadata } from "next";
+// import { Metadata } from "next";
 
-export const metadata: Metadata = {
-    title: "ともきちの旅行日記 | 写真ギャラリー– 写真で次の旅先を見つけよう",
-    description: "ともきちの旅行日記の「写真ギャラリー」では、世界各国の美しい風景や旅先の瞬間を切り取った写真を多数掲載。お気に入りの一枚から次に行きたい旅行先を見つけたり、旅のインスピレーションを得られるコンテンツが満載です。写真を眺めながら、あなたの次の冒険を計画してみませんか？",
-};
+// export const metadata: Metadata = {
+//     title: "ともきちの旅行日記 | 写真ギャラリー– 写真で次の旅先を見つけよう",
+//     description: "ともきちの旅行日記の「写真ギャラリー」では、世界各国の美しい風景や旅先の瞬間を切り取った写真を多数掲載。お気に入りの一枚から次に行きたい旅行先を見つけたり、旅のインスピレーションを得られるコンテンツが満載です。写真を眺めながら、あなたの次の冒険を計画してみませんか？",
+// };
 
 const GalleryPage = () => {
     const [selectedImage, setSelectedImage] = useState<Photo | null>(null);
