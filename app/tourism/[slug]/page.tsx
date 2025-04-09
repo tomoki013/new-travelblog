@@ -38,6 +38,15 @@ export async function generateMetadata(props: { params: Promise<{ slug: string }
 const TourismPostPage = async (props: { params: Promise<{ slug: string }>}) => {
     const params = await props.params;
     const post = await getPostBySlug('tourism', params.slug)
+    const relatedPosts = getAllPosts('tourism')
+        .filter((p) => p.slug !== post.slug)
+        .sort((a, b) => {
+            if (a.category === post.category && b.category !== post.category) return -1;
+            if (a.category !== post.category && b.category === post.category) return 1;
+            if (a.location === post.location && b.location !== post.location) return -1;
+            if (a.location !== post.location && b.location === post.location) return 1;
+            return 0;
+        });
 
     const author = members.find((member) => member.name === post.author);
 
@@ -156,7 +165,7 @@ const TourismPostPage = async (props: { params: Promise<{ slug: string }>}) => {
                         <div className="rounded-lg border bg-card p-6">
                             <h3 className="mb-4 text-lg font-medium">関連する記事</h3>
                             <div className="space-y-4">
-                                {getAllPosts('tourism').slice(0, 3).map((relatedPost) => (
+                                {relatedPosts.slice(0, 3).map((relatedPost) => (
                                     <div key={relatedPost.slug} className="flex gap-3">
                                         <div className="relative h-16 w-16 flex-shrink-0 overflow-hidden rounded-md">
                                             <Image
