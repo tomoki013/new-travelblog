@@ -5,8 +5,7 @@ excerpt: "タイのバンコク三大寺院の一つ、ワット・ポーを徹�
 image: "/images/Thai/wat-pho-1.jpg"
 location: "タイ-バンコク"
 category: '海外旅行,観光スポット'
-author: '山田 花子'
-authorImage: '/images/India/tajmahal.jpg'
+author: 'ともきち'
 tags: ["海外", "アジア", "タイ"]
 ---
 

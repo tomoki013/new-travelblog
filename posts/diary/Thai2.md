@@ -5,6 +5,7 @@ excerpt: "タイ旅行2日目、タリンチャン水上マーケットを訪れ
 image: "/images/Thai/wat-arun-3.jpg"
 location: "タイ-バンコク"
 category: '海外旅行'
+author: 'ともきち'
 tags: ["海外", "アジア", "タイ"]
 ---
 

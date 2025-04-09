@@ -6,7 +6,6 @@ image: "/images/France/louvre-1.jpg"
 location: "フランス-パリ"
 category: '海外旅行, 一人旅'
 author: 'ともきち'
-authorImage: '/images/Introduce/introduce.jpg'
 tags: ["海外", "ヨーロッパ旅行", "フランス", "パリ", "ルーブル美術館", "凱旋門", "エッフェル塔", "シャンパンフラッシュ"]
 ---
 

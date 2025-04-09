@@ -6,6 +6,5 @@ image: "/images//"
 location: ""
 category: '海外旅行'
 author: 'ともきち'
-authorImage: '/images/Introduce/introduce.jpg'
 tags: ["海外"]
 ---

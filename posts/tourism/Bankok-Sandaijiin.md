@@ -5,8 +5,7 @@ excerpt: "バンコク三大寺院「ワット・プラケオ」「ワット・�
 image: "/images/Thai/wat-arun-3.jpg"
 location: "タイ-バンコク"
 category: '海外旅行, 観光スポット'
-author: '山田 花子'
-authorImage: '/images/India/tajmahal.jpg'
+author: 'ともきち'
 tags: ["海外", "アジア", "タイ"]
 ---
 

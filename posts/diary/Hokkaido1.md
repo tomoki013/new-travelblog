@@ -5,8 +5,7 @@ excerpt: "北海道旅行のスタート！新千歳空港で絶品ラーメン�
 image: "/images/Hokkaido/sapporo-tv-tower.jpg"
 location: "北海道-札幌"
 category: '国内旅行'
-author: '山田 花子'
-authorImage: '/images/India/tajmahal.jpg'
+author: 'ともきち'
 tags: ["日本", "北海道"]
 ---
 

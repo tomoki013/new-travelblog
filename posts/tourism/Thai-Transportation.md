@@ -5,8 +5,7 @@ excerpt: "初めてでも安心！バンコク観光におすすめの交通手�
 image: "/images/Thai/suvarnabhumi-1.jpg"
 location: "タイ-バンコク"
 category: '海外旅行,交通情報'
-author: '山田 花子'
-authorImage: '/images/India/tajmahal.jpg'
+author: 'ともきち'
 tags: ["海外", "アジア", "タイ"]
 ---
 

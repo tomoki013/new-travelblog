@@ -5,8 +5,7 @@ excerpt: "インドのe-VISA申請手順、必要書類、注意点、さらに�
 image: "/images/India/tajmahal.jpg"
 location: "インド"
 category: '海外旅行'
-author: '山田 花子'
-authorImage: '/images/India/tajmahal.jpg'
+author: 'ともきち'
 tags: ["海外","インド"]
 ---
 

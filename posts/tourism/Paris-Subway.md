@@ -6,7 +6,6 @@ image: "/images/France/airport-station.jpg"
 location: "フランス-パリ"
 category: '海外旅行,交通情報'
 author: 'ともきち'
-authorImage: '/images/Introduce/introduce.jpg'
 tags: ["海外", "ヨーロッパ", "フランス"]
 ---
 

@@ -14,7 +14,6 @@ export interface Post {
     category: string
     location: string
     author: string
-    authorImage: string
     tags: string[]
 }
 
@@ -42,7 +41,6 @@ export function getPostBySlug(type: PostType, slug: string): Post {
         category: data.category,
         location: data.location,
         author: data.author,
-        authorImage: data.authorImage,
         tags: data.tags || [],
     }
 }

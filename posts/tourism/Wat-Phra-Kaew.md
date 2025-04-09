@@ -5,8 +5,7 @@ excerpt: "タイ旅行の必見スポット、ワット・プラ・ケオ（エ�
 image: "/images/Thai/thai-royal-palace.jpg"
 location: "タイ-バンコク"
 category: '海外旅行,観光スポット'
-author: '山田 花子'
-authorImage: '/images/India/tajmahal.jpg'
+author: 'ともきち'
 tags: ["海外", "アジア", "タイ"]
 ---
 
