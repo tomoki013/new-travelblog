@@ -35,11 +35,16 @@ export async function generateStaticParams() {
 
 const DiaryPostPage = async (props: { params: Promise<{ slug: string }>}) => {
     const params = await props.params;
-    const post = await getPostBySlug('diary', params.slug)
+    const post = await getPostBySlug('diary', params.slug);
+    const allPosts = getAllPosts('diary');
 
     if (!post) {
-        notFound()
+        notFound();
     }
+
+    const currentIndex = allPosts.findIndex((p) => p.slug === params.slug);
+    const prevPost = allPosts[currentIndex - 1] || null;
+    const nextPost = allPosts[currentIndex + 1] || null;
 
     return (
         <div className="container py-12">
@@ -50,7 +55,19 @@ const DiaryPostPage = async (props: { params: Promise<{ slug: string }>}) => {
             <div className="grid gap-10 lg:grid-cols-3">
                 <div className="lg:col-span-2">
                     <article>
-                        <div className="mb-6">
+                        <div className="flex justify-between">
+                            {prevPost && (
+                                <Link href={`/diary/${prevPost.slug}`} className="text-sm font-medium hover:underline">
+                                    ← {prevPost.title}
+                                </Link>
+                            )}
+                            {nextPost && (
+                                <Link href={`/diary/${nextPost.slug}`} className="text-sm font-medium hover:underline">
+                                    {nextPost.title} →
+                                </Link>
+                            )}
+                        </div>
+                        <div className="my-6">
                             <Badge className="mb-3">{post.category}</Badge>
                             <h1 className="mb-4 text-3xl font-bold sm:text-4xl">{post.title}</h1>
                             <div className="flex flex-wrap items-center gap-4 text-sm text-muted-foreground">
@@ -92,34 +109,19 @@ const DiaryPostPage = async (props: { params: Promise<{ slug: string }>}) => {
                         </div>
 
                         <Separator className="my-8" />
-                        
-                        {/* <div className="flex items-center justify-between">
-                            <div className="flex items-center">
-                                <div className="relative mr-4 h-10 w-10 overflow-hidden rounded-full">
-                                    <Image
-                                        src={post.authorImage}
-                                        alt={post.author}
-                                        fill
-                                        style={{ objectFit: 'cover' }}
-                                    />
-                                </div>
-                                <div>
-                                    <p className="text-sm font-medium">{post.author}</p>
-                                    <p className="text-xs text-muted-foreground">旅行ブロガー</p>
-                                </div>
-                            </div>
-                            <div className="flex space-x-2">
-                                <Button variant='outline' size='icon'>
-                                    <Share2 className="h-4 w-4" />
-                                    <span className="sr-only">シェア</span>
-                                </Button>
-                                <Button variant='outline' size='icon'>
-                                    <Bookmark className="h-4 w-4" />
-                                    <span className="sr-only">保存</span>
-                                </Button>
-                            </div>
-                        </div> */}
 
+                        <div className="flex justify-between">
+                            {prevPost && (
+                                <Link href={`/diary/${prevPost.slug}`} className="text-sm font-medium hover:underline">
+                                    ← {prevPost.title}
+                                </Link>
+                            )}
+                            {nextPost && (
+                                <Link href={`/diary/${nextPost.slug}`} className="text-sm font-medium hover:underline">
+                                    {nextPost.title} →
+                                </Link>
+                            )}
+                        </div>
                     </article>
                 </div>
 
