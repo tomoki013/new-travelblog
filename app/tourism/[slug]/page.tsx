@@ -149,7 +149,6 @@ const TourismPostPage = async (props: { params: Promise<{ slug: string }>}) => {
                                 <Sections.TableOfContents />
                             </div>
                         </div>
-
                         <div className="rounded-lg border bg-card p-6">
                             <h3 className="mb-4 text-lg font-medium">関連する記事</h3>
                             <div className="space-y-4">
