@@ -290,7 +290,278 @@ tags: ["海外","インド"]
 次は3ページ目です。  
 もう一息なのでがんばっていきましょう！  
 
-<!-- ## 3ページ目、Applicant's Address Details
+## 3ページ目、Applicant's Address Details
 
 **House No./Street（部屋番号、番地）**
-> 部屋番号、番地など -->
+> 部屋番号、番地など（例えば1-2-3）
+
+**Village/Town/City（市区町村）**
+> 市区町村（例えば東京都渋谷区）
+
+**State/Province/District（都道府県）**
+> 都道府県（例えばTOKYO）
+
+**Country/Region（国）**
+> JAPAN
+
+**Pin/Zip Code（郵便番号）**
+> 郵便番号（例えば123-4567）
+
+**Mobile No.（携帯電話番号）**
+> 国番号+携帯電話番号（例えば+81-90-1234-5678）  
+> 日本の場合、頭の0を外して+81をつけます
+
+**Phone No.（固定電話番号）**
+> 固定電話を持っていなければ携帯電話番号を再度入力
+
+**Email ID（メールアドレス）**
+> メールアドレスが自動入力されているか確認
+
+### Family Details
+
+**Father's Name（父親の名前）**
+> 父親のフルネーム（例えばTARO SATO）
+
+**Father's Nationality/Region（父親の国籍）**
+> 父親の国籍（例えばJAPAN）
+
+**Father's Place & Country/Region of Birth（父親の出生地と国）**
+> 父親の出生地と国（例えばTOKYO, JAPAN）
+
+**Father's Previous Nationality/Region（父親の以前の国籍）**
+> 国籍変更がなければ現在の国籍と同じ
+
+**Mother's Name（母親の名前）**
+> 母親のフルネーム（例えばHANAKO SATO）
+
+**Mother's Nationality/Region（母親の国籍）**
+> 母親の国籍（例えばJAPAN）
+
+**Mother's Place & Country/Region of Birth（母親の出生地と国）**
+> 母親の出生地と国（例えばOSAKA, JAPAN）
+
+**Mother's Previous Nationality/Region（母親の以前の国籍）**
+> 国籍変更がなければ現在の国籍と同じ
+
+**Applicant's Marital Status（婚姻状況）**
+> MARRIED（既婚）  
+> SINGLE（未婚）  
+> DIVORCED（離婚）  
+> WIDOWED（死別）  
+> SEPARATED（別居）  
+
+**If Married, Please provide name of the Spouse（配偶者の名前）**
+> 既婚の場合は配偶者のフルネーム
+
+**Spouse's Nationality/Region（配偶者の国籍）**
+> 既婚の場合は配偶者の国籍
+
+**Spouse's Previous Nationality/Region（配偶者の以前の国籍）**
+> 国籍変更がなければ現在の国籍と同じ
+
+**Were your Grandfather/ Grandmother (paternal/maternal) Pakistan Nationals or Belong to Pakistan held area.（祖父母がパキスタン国籍または管轄地域出身か）**
+> YES  
+> NO
+
+**Save and Continue or Save and Temporary Exit**
+> Save and Temporary Exitをクリックして一度保存
+
+## 4ページ目、Profession / Occupation Details
+
+**Present Occupation（現在の職業）**
+> リストから選択（例：BUSINESSMEN、TEACHER、IT PROFESSIONAL、STUDENTなど）
+
+**Employer Name/Business（勤務先名/事業名）**
+> 勤務先の会社名、もしくは学校名（例えばTOKYO UNIVERSITY）
+
+**Designation（役職）**
+> 役職（例えばMANAGER）なければStudentやNAなど
+
+**Address（勤務先住所）**
+> 勤務先の住所
+
+**Phone No.（勤務先電話番号）**
+> 勤務先の電話番号（例えば+81-3-1234-5678）
+
+**Past Occupation, if any（以前の職業）**
+> 以前の職業があれば入力、なければNA
+
+**Are/were you in a Military/Semi-Military/Police/Security. Organization?**
+> 軍隊、準軍事組織、警察、セキュリティ組織に所属したことがあるか  
+> YES  
+> NO  
+> Yesの場合は追加情報を入力
+
+**Organization（組織名）**
+> 組織名を入力
+
+**Designation（役職）**
+> 役職を入力
+
+**Rank（階級）**
+> 階級を入力
+
+**Place of Posting（配属地）**
+> 配属地を入力
+
+**Save and Continue or Save and Temporary Exit**
+> Save and Temporary Exitをクリックして一度保存
+
+## 5ページ目、Visit Details
+
+**Places to be visited（訪問予定地）**
+> 訪問予定の都市名をコンマ区切りで入力（例えばDELHI, AGRA, JAIPUR）
+
+**Purpose of Visit（訪問目的）**
+> TOURISM（観光）が自動選択されているはず
+
+**Duration of Visa (in Days)（ビザの期間）**
+> 30, 365, 1825のいずれかが自動選択されているはず
+
+**No. of Entries（入国回数）**
+> Double（2回入国可能）  
+> Multiple（複数回入国可能）  
+> 選択したビザによって自動選択されているはず
+
+*Expected Date of Arrival（入国予定日）**
+> 1ページ目で入力した日付が表示されているはず
+
+**Port of Exit from India（出国予定空港）**
+> リストから選択（入国する空港と同じでも別の空港でも可）
+
+**Expected Date of Departure from India（出国予定日）**
+> 予定している出国日を入力
+
+**Save and Continue or Save and Temporary Exit**
+> Save and Temporary Exitをクリックして一度保存
+
+## 6ページ目、Previous Visa/Currently valid visa Details
+
+**Have you ever visited India before?（インドに行ったことがあるか）**
+> YES  
+> NO  
+> YESの場合は以下も入力
+
+**Address where you stayed in India（以前のインド滞在先住所）**
+> 以前の滞在先の住所を入力
+
+**Cities previously visited in India（以前訪問した都市）**
+> 以前訪問した都市をコンマ区切りで入力
+
+**Last Indian Visa No/Currently valid Indian Visa No.（以前のビザ番号）**
+> 以前のビザ番号を入力
+
+**Type of Visa（ビザの種類）**
+> 以前取得したビザの種類を選択
+
+**Place of Issue（発行場所）**
+> 以前のビザの発行場所を入力
+
+**Date of Issue（発行日）**
+> 以前のビザの発行日を入力
+
+**Has permission to visit or to extend stay in India previously been refused?（以前にインド訪問を拒否されたことがあるか）**
+> YES  
+> NO  
+> YESの場合は以下も入力
+
+**If so, when and by whom (Mention Control No. and date）**
+> 拒否された時期と理由を入力
+
+**Save and Continue or Save and Temporary Exit**
+> Save and Temporary Exitをクリックして一度保存
+
+## 7ページ目、Reference
+
+### Reference in India
+
+**Reference Name in India（インド国内の連絡先名）**
+> ホテル名もしくは知人の名前（例えばHOTEL TAJ）
+
+**Address（住所）**
+> ホテルもしくは知人の住所
+
+**Phone（電話番号）**
+> ホテルもしくは知人の電話番号
+
+### Reference in Home Country
+
+**Reference Name in Home Country（自国の連絡先名）**
+> 家族や友人の名前（例えばJIRO SUZUKI）
+
+**Address（住所）**
+> 家族や友人の住所
+
+**Phone（電話番号）**
+> 家族や友人の電話番号
+
+**Save and Continue or Save and Temporary Exit**
+> Save and Temporary Exitをクリックして一度保存
+
+## 最終ページ、Review & Submit
+
+ここまで入力してきた内容が表示されます。すべての情報が正しいか確認してください。修正が必要な場合は該当ページに戻って修正可能です。
+
+情報に問題がなければ、以下の手順で進みます：
+
+1. **写真のアップロード**
+   - 顔写真のJPEGデータをアップロード
+   - 写真のサイズは10KB〜1MBの間
+   - 背景は白、カラー写真、顔がはっきり見えるもの
+
+2. **パスポートのアップロード**
+   - パスポートの顔写真ページをPDFでアップロード
+   - ファイルサイズは10KB〜300KBの間
+
+3. **確認のチェックボックス**
+   - すべての情報が正確であることを確認するチェックボックスにチェック
+
+4. **送信**
+   - SUBMITボタンをクリック
+
+5. **支払い**
+   - 支払い画面に移動
+   - クレジットカード（VISAかMASTER）かPayPalで支払い
+   - 30日ビザの場合は26ドル（25ドル+1ドルの手数料）
+   - 1年/5年ビザの場合も同じく26ドル（25ドル+1ドルの手数料）
+
+6. **申請完了**
+   - 支払いが完了すると申請完了
+   - 申請IDと受付番号を必ずメモしておく
+   - 申請状況は「インドビザオンライン」のサイトで確認可能
+
+## ビザ取得後の注意点
+
+### ビザの確認方法
+
+申請から72時間以内（通常は24時間以内）にメールでビザが送られてきます。届いたeビザをプリントアウトして持参しましょう。
+
+### 入国時に必要なもの
+
+1. **パスポート**（有効期限が6ヶ月以上残っているもの）
+2. **プリントアウトしたeビザ**
+3. **入国カード**（機内で配布されるか、空港で記入可能）
+4. **復路または第三国への航空券**（提示を求められる場合あり）
+
+### インド入国時のチェックポイント
+
+1. **入国審査**
+   - eビザとパスポートを提示
+   - 指紋と顔写真の撮影があります
+   - 入国目的や滞在先を聞かれることがあります
+
+2. **税関申告**
+   - 申告が必要な物品（高額な電子機器や多額の現金など）がある場合は申告
+
+## まとめ
+
+インドのe-VISA申請は複雑で時間がかかりますが、この記事で紹介した手順に沿って進めれば、問題なく取得できるはずです。
+
+私自身、最初は戸惑いましたが、慎重に一つ一つ進めることで無事にビザを取得することができました。特に以下の点に注意しましょう：
+
+- **早めの申請**：トラブル対応の時間も考慮して、少なくとも出発の2週間前には申請を始める
+- **正確な情報入力**：パスポートと完全に一致する情報を入力
+- **こまめな保存**：入力途中でSave and Temporary Exitを使ってデータを保存
+- **写真とパスポートの準備**：規定に合った写真とパスポートPDFを用意
+
+皆さんのインド旅行が素晴らしいものになりますように！
