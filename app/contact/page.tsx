@@ -1,3 +1,10 @@
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+    title: 'ともきちの旅行日記｜お問い合わせ',
+    description: '旅行に関するご質問、サイトへのご意見やご感想、さらにはコラボレーションや広告掲載のお問い合わせなど、どんなご相談もお気軽にご連絡ください。迅速かつ丁寧な対応を心がけております。',
+};
+
 const ContactPage = () => {
     return (
         <div className="flex items-center justify-center h-screen">

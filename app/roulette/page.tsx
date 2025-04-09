@@ -3,8 +3,8 @@ import * as Sections from '@/app/components/sections/index';
 import { Metadata } from 'next';
 
 export const metadata: Metadata = {
-    title: "ともきちの旅行日記 | Travel Diary",
-    description: "日本と世界の旅行記録と観光情報",
+    title: "ともきちの旅行日記 | 旅行先ルーレット–迷ったら運命の旅先を！",
+    description: "ともきちの旅行日記「旅行先ルーレット」では、迷った時に役立つルーレット機能で、運命の旅行先を選択。選ばれた場所に関連する観光情報や旅行記記事もチェックでき、次の旅のインスピレーションに最適なコンテンツです。",
 };
 
 const RoulettePage = () => {

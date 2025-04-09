@@ -2,8 +2,8 @@ import * as Sections from '@/app/components/sections/index';
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-    title: "ともきちの旅行日記 | Travel Diary",
-    description: "日本と世界の旅行記録と観光情報",
+    title: "ともきちの旅行日記 | 観光情報– 国内外のおすすめ旅行スポット＆ガイド",
+    description: "ともきちの旅行日記「観光情報」では、日本各地や海外の人気観光スポット、グルメ、宿泊施設、交通情報を分かりやすくご紹介。実際の旅行記レポートも満載で、次の旅の計画に役立つ最新情報をお届けします。",
 };
 
 const TourismPage = () => {

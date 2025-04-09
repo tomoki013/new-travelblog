@@ -1,8 +1,14 @@
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Camera, Globe, MapPin, Users } from "lucide-react"
+import { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
+
+export const metadata: Metadata = {
+    title: 'ともきちの旅行日記｜About-旅の記録と発見の物語',
+    description: 'ともきちの旅行日記「About」ページでは、旅の感動や発見を共有するミッションについてご紹介。私たちは、詳細な旅行記事、美しい写真、実用的な観光情報を通じて、あなたの次の冒険のインスピレーションを提供します。取材依頼やコラボレーションもお気軽にどうぞ。',
+}
 
 const AboutPage = () => {
     const features = [
