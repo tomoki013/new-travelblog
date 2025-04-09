@@ -10,6 +10,7 @@ import { notFound } from "next/navigation";
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from "remark-gfm";
 import * as Elements from '@/app/components/elements/index';
+import { members } from "@/lib/member";
 
 export async function generateStaticParams() {
     const posts = getAllPosts('diary')
@@ -37,6 +38,8 @@ const DiaryPostPage = async (props: { params: Promise<{ slug: string }>}) => {
     const params = await props.params;
     const post = await getPostBySlug('diary', params.slug);
     const allPosts = getAllPosts('diary');
+
+    const author = members.find((member) => member.name === post.author);
 
     if (!post) {
         notFound();
@@ -121,6 +124,36 @@ const DiaryPostPage = async (props: { params: Promise<{ slug: string }>}) => {
                                     {nextPost.title} →
                                 </Link>
                             )}
+                        </div>
+                        
+                        <Separator className="my-8" />
+                        
+                        <div className="flex items-center justify-between">
+                            <div className="flex items-center border p-2 rounded-lg bg-card">
+                                <div className="relative mr-4 h-10 w-10 overflow-hidden rounded-full">
+                                    <Image
+                                        src={author?.image || '/favicon.ico'}
+                                        alt={author?.name || 'ともきちの旅行日記'}
+                                        fill
+                                        style={{ objectFit: 'cover' }}
+                                    />
+                                </div>
+                                <div>
+                                    <p className="text-sm font-medium">{author?.name || 'ともきちの旅行日記'}</p>
+                                    <p className="text-xs text-muted-foreground">{author?.role || ''}</p>
+                                    <p className="text-xs font-medium">{author?.description || ''}</p>
+                                </div>
+                            </div>
+                            {/* <div className="flex space-x-2">
+                                <Button variant='outline' size='icon'>
+                                    <Share2 className="h-4 w-4" />
+                                    <span className="sr-only">シェア</span>
+                                </Button>
+                                <Button variant='outline' size='icon'>
+                                    <Bookmark className="h-4 w-4" />
+                                    <span className="sr-only">保存</span>
+                                </Button>
+                            </div> */}
                         </div>
                     </article>
                 </div>

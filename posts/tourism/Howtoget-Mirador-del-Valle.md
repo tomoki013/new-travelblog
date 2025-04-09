@@ -6,7 +6,6 @@ image: "/images/Spain/toledo-view-1.jpg"
 location: "スペイン-トレド"
 category: '海外旅行, 観光スポット, 交通情報'
 author: 'ともきち'
-authorImage: '/images/Introduce/introduce.jpg'
 tags: ["海外", "ヨーロッパ", "スペイン", "トレド展望台"]
 ---
 

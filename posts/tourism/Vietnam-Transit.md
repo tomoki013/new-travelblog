@@ -5,8 +5,7 @@ excerpt: "ハノイでの短いトランジット時間も有効活用！ノイ�
 image: "/images/Vietnam/vietnam-old-town.jpg"
 location: "ベトナム-ハノイ"
 category: '海外旅行,観光スポット'
-author: '山田 花子'
-authorImage: '/images/India/tajmahal.jpg'
+author: 'ともきち'
 tags: ["海外", "アジア", "ベトナム"]
 ---
 

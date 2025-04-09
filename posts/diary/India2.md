@@ -5,6 +5,7 @@ excerpt: "インド旅行の始まりと最初のトラブルを描いたブロ�
 image: "/images/India/indian-gate-1.jpg"
 location: "インド-ニューデリー"
 category: '海外旅行'
+author: 'ともきち'
 tags: ["海外", "アジア", "インド"]
 ---
 

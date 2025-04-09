@@ -5,8 +5,7 @@ excerpt: "バンコク三大寺院の一つ、ワット・アルン（暁の寺�
 image: "/images/Thai/wat-arun-2.jpg"
 location: "タイ-バンコク"
 category: '海外旅行,観光スポット'
-author: '山田 花子'
-authorImage: '/images/India/tajmahal.jpg'
+author: 'ともきち'
 tags: ["海外", "アジア", "タイ"]
 ---
 

@@ -11,6 +11,7 @@ import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
 import * as Elements from '@/app/components/elements/index';
 import * as Sections from '@/app/components/sections/index';
+import { members } from "@/lib/member";
 
 export async function generateStaticParams() {
     const posts = getAllPosts('tourism')
@@ -37,6 +38,8 @@ export async function generateMetadata(props: { params: Promise<{ slug: string }
 const TourismPostPage = async (props: { params: Promise<{ slug: string }>}) => {
     const params = await props.params;
     const post = await getPostBySlug('tourism', params.slug)
+
+    const author = members.find((member) => member.name === post.author);
 
     if (!post) {
         notFound()
@@ -112,22 +115,23 @@ const TourismPostPage = async (props: { params: Promise<{ slug: string }>}) => {
 
                         <Separator className="my-8" />
                         
-                        {/* <div className="flex items-center justify-between">
-                            <div className="flex items-center">
+                        <div className="flex items-center justify-between">
+                            <div className="flex items-center border p-2 rounded-lg bg-card">
                                 <div className="relative mr-4 h-10 w-10 overflow-hidden rounded-full">
                                     <Image
-                                        src={post.authorImage}
-                                        alt={post.author}
+                                        src={author?.image || '/favicon.ico'}
+                                        alt={author?.name || 'ともきちの旅行日記'}
                                         fill
                                         style={{ objectFit: 'cover' }}
                                     />
                                 </div>
                                 <div>
-                                    <p className="text-sm font-medium">{post.author}</p>
-                                    <p className="text-xs text-muted-foreground">旅行ブロガー</p>
+                                    <p className="text-sm font-medium">{author?.name || 'ともきちの旅行日記'}</p>
+                                    <p className="text-xs text-muted-foreground">{author?.role || ''}</p>
+                                    <p className="text-xs font-medium">{author?.description || ''}</p>
                                 </div>
                             </div>
-                            <div className="flex space-x-2">
+                            {/* <div className="flex space-x-2">
                                 <Button variant='outline' size='icon'>
                                     <Share2 className="h-4 w-4" />
                                     <span className="sr-only">シェア</span>
@@ -136,8 +140,8 @@ const TourismPostPage = async (props: { params: Promise<{ slug: string }>}) => {
                                     <Bookmark className="h-4 w-4" />
                                     <span className="sr-only">保存</span>
                                 </Button>
-                            </div>
-                        </div> */}
+                            </div> */}
+                        </div>
 
                     </article>
                 </div>

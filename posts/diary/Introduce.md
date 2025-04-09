@@ -5,6 +5,7 @@ excerpt: "初めまして！ともきちです。旅行が大好きで、大学�
 image: "/images/Introduce/introduce.jpg"
 location: "京都-京都"
 category: 'その他'
+author: 'ともきち'
 ---
 
 ## 自己紹介します

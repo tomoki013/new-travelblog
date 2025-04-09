@@ -5,6 +5,7 @@ excerpt: "インド旅行シリーズ、寝台列車での快適な旅からバ�
 image: "/images/India/train-view-1.jpg"
 location: "インド-ジャイプル、バラナシ"
 category: '海外旅行'
+author: 'ともきち'
 tags: ["海外", "アジア", "インド"]
 ---
 

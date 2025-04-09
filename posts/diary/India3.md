@@ -5,6 +5,7 @@ excerpt: "インド旅行2日目！初めてのインド旅行でみたタージ
 image: "/images/India/tajmahal.jpg"
 location: "インド-アグラ,ジャイプル"
 category: '海外旅行'
+author: 'ともきち'
 tags: ["海外", "アジア", "インド"]
 ---
 

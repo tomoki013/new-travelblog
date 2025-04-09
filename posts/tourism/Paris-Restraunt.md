@@ -6,7 +6,6 @@ image: "/images/France/french1.jpg"
 location: "フランス-パリ"
 category: '海外旅行,グルメ'
 author: 'ともきち'
-authorImage: '/images/Introduce/introduce.jpg'
 tags: ["海外", "ヨーロッパ", "フランス", "パリ", "おすすめレストラン"]
 ---
 

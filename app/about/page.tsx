@@ -4,6 +4,7 @@ import { Camera, Globe, MapPin, Users } from "lucide-react"
 import { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
+import { members } from "@/lib/member";
 
 export const metadata: Metadata = {
     title: 'ともきちの旅行日記｜About-旅の記録と発見の物語',
@@ -33,27 +34,6 @@ const AboutPage = () => {
           description: '役立つ観光スポット情報やローカルな情報を発信します。',
         },
     ]
-    
-    // const team = [
-    //     {
-    //       name: '山田 太郎',
-    //       role: '編集長',
-    //       image: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&auto=format&fit=crop&w=300&q=80',
-    //       description: '10年以上の旅行ライター経験を持ち、50カ国以上を訪問。',
-    //     },
-    //     {
-    //       name: '佐藤 美咲',
-    //       role: 'フォトグラファー',
-    //       image: 'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixlib=rb-1.2.1&auto=format&fit=crop&w=300&q=80',
-    //       description: 'プロフェッショナルフォトグラファーとして、世界中の絶景を撮影。',
-    //     },
-    //     {
-    //       name: '田中 健一',
-    //       role: '観光情報ライター',
-    //       image: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?ixlib=rb-1.2.1&auto=format&fit=crop&w=300&q=80',
-    //       description: '国内の隠れた名所を探求し、詳細な観光情報を提供。',
-    //     },
-    // ]
 
     return (
         <div className="flex flex-col">
@@ -83,7 +63,7 @@ const AboutPage = () => {
                     <p className="mb-8 text0lg text-muted-foreground">旅行を通じて、人々の視野を広げ、異文化理解を深め、かけがえのない思い出作りのお手伝いをすることです。私たちは、詳細な旅行情報と美しい写真で、あなたの次の旅行のインスピレーションを提供します。</p>
                     <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-4">
                         {features.map((feature) => (
-                            <Card key={feature.title}>
+                            <Card key={feature.title} className="overflow-hidden shadow-md transition-transform duration-300 hover:scale-105">
                                 <CardContent className="flex flex-col items-center p-6 text-center">
                                     <div className="mb-4 text-primary">{feature.icon}</div>
                                     <h3 className="mb-2 text-xl font-bold">{feature.title}</h3>
@@ -96,16 +76,16 @@ const AboutPage = () => {
             </section>
 
             {/* Team Section */}
-            {/* <section className="bg-muted py-16">
+            <section className="bg-muted py-16">
                 <div className="container">
                     <h2 className="mb-12 text-center text-3xl font-bold">チームメンバー</h2>
-                    <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
-                        {team.map((member) => (
+                    <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3 p-4">
+                        {members.map((member) => (
                             <Card key={member.name} className="overflow-hidden">
                                 <div className="relative h-64 w-full">
                                     <Image
-                                        src='/images/India/tajmahal.jpg'
-                                        alt=""
+                                        src={member.image}
+                                        alt={member.name}
                                         fill
                                         style={{ objectFit: 'cover' }}
                                     />
@@ -119,7 +99,7 @@ const AboutPage = () => {
                         ))}
                     </div>
                 </div>
-            </section> */}
+            </section>
 
             {/* Contact Section */}
             <section className="container py-16">

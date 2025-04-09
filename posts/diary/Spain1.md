@@ -6,7 +6,6 @@ image: "/images/Korea/monument.jpg"
 location: "韓国-ソウル, フランス-パリ"
 category: '海外旅行, 一人旅'
 author: 'ともきち'
-authorImage: '/images/Introduce/introduce.jpg'
 tags: ["海外", "ヨーロッパ旅行", "韓国", "フランス", "パリ", "トランジット"]
 ---
 

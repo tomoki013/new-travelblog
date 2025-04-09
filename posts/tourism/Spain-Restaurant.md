@@ -6,7 +6,6 @@ image: "/images/Spain/ajilo.jpg"
 location: "スペイン-マドリード,バルセロナ,トレド"
 category: '海外旅行,グルメ'
 author: 'ともきち'
-authorImage: '/images/Introduce/introduce.jpg'
 tags: ["海外", "ヨーロッパ", "スペイン", "マドリード", "バルセロナ", "トレド", "おすすめレストラン"]
 ---
 

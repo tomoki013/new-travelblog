@@ -5,6 +5,7 @@ excerpt: "北海道旅行2日目は海鮮丼でスタートし、小樽運河や
 image: "/images/Hokkaido/susukino-crossing.jpg"
 location: "北海道-札幌,小樽"
 category: '国内旅行'
+author: 'ともきち'
 tags: ["日本", "北海道"]
 ---
 

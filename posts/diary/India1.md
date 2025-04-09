@@ -5,6 +5,7 @@ excerpt: "インド旅行の始まりはベトナム観光！関空からハノ�
 image: "/images/Vietnam/dong-kinh-nghia-thuc-square.jpg"
 location: "ベトナム-ハノイ"
 category: '海外旅行'
+author: 'ともきち'
 tags: ["海外", "アジア", "インド"]
 ---
 
