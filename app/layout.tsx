@@ -24,6 +24,10 @@ export default function RootLayout({
 }: Readonly<{
   	children: React.ReactNode;
 }>) {
+	// 現在の時間を取得してテーマを設定
+	const currentHour = new Date().getHours();
+	const defaultTheme = currentHour >= 18 || currentHour < 6 ? "dark" : "light";
+
   	return (
     	<html lang="ja">
 			<head>
@@ -52,7 +56,7 @@ export default function RootLayout({
       		>
 				<ThemeProvider
 					attribute='class'
-					defaultTheme="dark"
+					defaultTheme={defaultTheme}
 					enableSystem
 					disableTransitionOnChange
 				>

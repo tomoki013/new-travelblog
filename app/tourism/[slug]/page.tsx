@@ -10,6 +10,7 @@ import type { Metadata } from "next";
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
 import * as Elements from '@/app/components/elements/index';
+import * as Sections from '@/app/components/sections/index';
 
 export async function generateStaticParams() {
     const posts = getAllPosts('tourism')
@@ -75,9 +76,27 @@ const TourismPostPage = async (props: { params: Promise<{ slug: string }>}) => {
                             />
                         </div>
 
+                        <div className="md:hidden mb-4">
+                            <div className="max-h-64 overflow-y-auto">
+                                <Sections.TableOfContents />
+                            </div>
+                        </div>
+
                         <div className="prose prose-lg max-w-none dark:prose-invert">
                             <ReactMarkdown
                                 remarkPlugins={[remarkGfm]}
+                                components={{
+                                    h2: ({ children }) => {
+                                        const text = String(children).trim(); // 修正: trimで余計な空白を削除
+                                        const id = text.replace(/\s+/g, "-"); // 空白をハイフンに変換
+                                        return <h2 id={id}>{children}</h2>;
+                                    },
+                                    h3: ({ children }) => {
+                                        const text = String(children).trim(); // 修正: trimで余計な空白を削除
+                                        const id = text.replace(/\s+/g, "-"); // 空白をハイフンに変換
+                                        return <h3 id={id}>{children}</h3>;
+                                    },
+                                }}
                             >
                                 {post.content}
                             </ReactMarkdown>
@@ -125,6 +144,12 @@ const TourismPostPage = async (props: { params: Promise<{ slug: string }>}) => {
 
                 <div>
                     <div className="sticky top-20 space-y-8">
+                        <div className="hidden md:block">
+                            <div className="max-h-64 overflow-y-auto">
+                                <Sections.TableOfContents />
+                            </div>
+                        </div>
+
                         <div className="rounded-lg border bg-card p-6">
                             <h3 className="mb-4 text-lg font-medium">関連する記事</h3>
                             <div className="space-y-4">

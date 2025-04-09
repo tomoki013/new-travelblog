@@ -1,7 +1,7 @@
 ---
 title: "ベトナムハノイの旧市街、トランジットでも満喫できる？"
 date: "2024-09-24"
-excerpt: "metaタグ用description"
+excerpt: "ハノイでの短いトランジット時間も有効活用！ノイバイ国際空港から旧市街へ、バスやタクシーで簡単にアクセスし、地元市場やエッグコーヒー、ホエンキアム湖など魅力溢れるスポットを効率よく楽しむための完全ガイドです。"
 image: "/images/Vietnam/vietnam-old-town.jpg"
 location: "ベトナム-ハノイ"
 category: '海外旅行,観光スポット'
