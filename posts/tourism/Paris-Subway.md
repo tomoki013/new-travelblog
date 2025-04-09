@@ -1,7 +1,7 @@
 ---
 title: "パリのメトロについて解説！：乗り方、チケットの種類、購入方法"
 date: "2025-02-14"
-excerpt: "description"
+excerpt: "2025年の新料金体系を徹底解説！パリのメトロ、RER、バス、トラムなどの乗り方や各種チケット、そして旅行者におすすめの「Navigo Easy」の購入方法まで、パリの交通情報を分かりやすくまとめました。"
 image: "/images/France/airport-station.jpg"
 location: "フランス-パリ"
 category: '海外旅行,交通情報'
