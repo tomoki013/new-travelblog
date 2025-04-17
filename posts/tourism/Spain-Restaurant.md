@@ -15,7 +15,7 @@ tags: ["海外", "ヨーロッパ", "スペイン", "マドリード", "バル�
 
 ## 🍷 マドリードのおすすめレストラン
 
-### **La Casa del Abuelo**
+### 1. **La Casa del Abuelo**
 
 ![La Casa del Abueloの写真](/images/Spain/la-casa-del-abuelo.jpg)
 
@@ -23,7 +23,7 @@ tags: ["海外", "ヨーロッパ", "スペイン", "マドリード", "バル�
 
 ---
 
-### **Restaurante Loredo**
+### 2. **Restaurante Loredo**
 
 ![Restaurante Loredoの写真](/images/Spain/loredo.jpg)
 
@@ -31,7 +31,7 @@ tags: ["海外", "ヨーロッパ", "スペイン", "マドリード", "バル�
 
 ---
 
-### **Mesón del Champiñón**
+### 3. **Mesón del Champiñón**
 
 ![Mesón del Champiñónの写真](/images/Spain/meson-del-champignon.jpg)
 
@@ -39,7 +39,7 @@ tags: ["海外", "ヨーロッパ", "スペイン", "マドリード", "バル�
 
 ---
 
-### **Puerto Rico**
+### 4. **Puerto Rico**
 
 ![Puerto Ricoの写真](/images/Spain/puerto-rico.jpg)
 
@@ -49,7 +49,7 @@ tags: ["海外", "ヨーロッパ", "スペイン", "マドリード", "バル�
 
 ## 🥘 バルセロナのおすすめレストラン
 
-### **casalolea**
+### 1. **casalolea**
 
 ![casaloleaの写真](/images/Spain/casalolea.jpg)
 
@@ -57,7 +57,7 @@ tags: ["海外", "ヨーロッパ", "スペイン", "マドリード", "バル�
 
 ---
 
-### **teleferic**
+### 2. **teleferic**
 
 ![telefericの写真](/images/Spain/teleferic.jpg)
 
@@ -65,7 +65,7 @@ tags: ["海外", "ヨーロッパ", "スペイン", "マドリード", "バル�
 
 ---
 
-### **la pallaresa**
+### 3. **la pallaresa**
 
 ![la pallaresaの写真](/images/Spain/la-pallaresa.jpg)
 
@@ -73,7 +73,7 @@ tags: ["海外", "ヨーロッパ", "スペイン", "マドリード", "バル�
 
 ---
 
-### **l’Arrosseria Xativa Sant Antoni**
+### 4. **l’Arrosseria Xativa Sant Antoni**
 
 ![l’Arrosseria Xativa Sant Antoniの写真](/images/Spain/l’arrosseria-xativa-sant-antoni.jpg)
 
@@ -83,7 +83,7 @@ tags: ["海外", "ヨーロッパ", "スペイン", "マドリード", "バル�
 
 ## 🍺 トレドのおすすめレストラン
 
-### **Cervecería La Abadía**
+### 1. **Cervecería La Abadía**
 
 ![Cervecería La Abadíaの写真](/images/Spain/cerveceria-la-abadia.jpg)
 
