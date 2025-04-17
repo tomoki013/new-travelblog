@@ -5,7 +5,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { MapPin } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import Image from "next/image";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 // import { Metadata } from "next";
 
 // export const metadata: Metadata = {
@@ -13,150 +13,53 @@ import { useState } from "react";
 //     description: "ともきちの旅行日記の「写真ギャラリー」では、世界各国の美しい風景や旅先の瞬間を切り取った写真を多数掲載。お気に入りの一枚から次に行きたい旅行先を見つけたり、旅のインスピレーションを得られるコンテンツが満載です。写真を眺めながら、あなたの次の冒険を計画してみませんか？",
 // };
 
+interface Photo {
+    id: number;
+    title: string;
+    description: string;
+    image: string;
+    location: string;
+    category: string;
+    likes: number;
+}
+
 const GalleryPage = () => {
     const [selectedImage, setSelectedImage] = useState<Photo | null>(null);
+    const [photos, setPhotos] = useState<Photo[]>([]);
 
-    const photos = [
-        {
-            id: 14,
-            title: 'トレド旧市街',
-            description: 'トレド旧市街',
-            image: '/images/Spain/toledo-view-1.jpg',
-            location: 'スペイン-トレド',
-            category: '街並み',
-            likes: 124,
-        },
-        {
-            id: 13,
-            title: 'エッフェル塔と夕陽',
-            description: 'エッフェル塔と夕陽',
-            image: '/images/France/eiffel-tower-4.jpg',
-            location: 'フランス-パリ',
-            category: '街並み',
-            likes: 124,
-        },
-        {
-            id: 12,
-            title: 'タージマハル',
-            description: 'タージマハル',
-            image: '/images/India/tajmahal.jpg',
-            location: 'インド-アグラ',
-            category: '寺院',
-            likes: 124,
-        },
-        {
-            id: 11,
-            title: 'アンベール城',
-            description: 'アンベール城',
-            image: '/images/India/amber-palace-1.jpg',
-            location: 'インド-ジャイプル',
-            category: '城',
-            likes: 98,
-        },
-        {
-            id: 10,
-            title: 'バラナシの祭り',
-            description: 'バラナシの祭り',
-            image: '/images/India/festival-2.jpg',
-            location: 'インド-バラナシ',
-            category: '街並み',
-            likes: 156,
-        },
-        {
-            id: 9,
-            title: 'インド門',
-            description: 'インド門',
-            image: '/images/India/indian-gate-1.jpg',
-            location: 'インド-ニューデリー',
-            category: '都市',
-            likes: 210,
-        },
-        {
-            id: 8,
-            title: 'ロータス寺院',
-            description: 'ロータス寺院',
-            image: '/images/India/lotus-temple.jpg',
-            location: 'インド-ニューデリー',
-            category: '寺院',
-            likes: 87,
-        },
-        {
-            id: 7,
-            title: 'ハワー・マハル',
-            description: 'ハワー・マハル',
-            image: '/images/India/pink-city-1.jpg',
-            location: 'インド-ジャイプル',
-            category: '都市',
-            likes: 132,
-        },
-        {
-            id: 6,
-            title: 'チャオプラヤー川',
-            description: 'チャオプラヤー川',
-            image: '/images/Thai/thai-hotel-2.jpg',
-            location: 'タイ-バンコク',
-            category: '街並み',
-            likes: 145,
-        },
-        {
-            id: 5,
-            title: 'ワット・プラ・ケオ',
-            description: 'ワット・プラ・ケオ',
-            image: '/images/Thai/wat-arkeow-2.jpg',
-            location: 'タイ-バンコク',
-            category: '寺院',
-            likes: 118,
-        },
-        {
-            id: 4,
-            title: 'ワット・アルン',
-            description: 'ワット・アルン',
-            image: '/images/Thai/wat-arun-3.jpg',
-            location: 'タイ-バンコク',
-            category: '寺院',
-            likes: 176,
-        },
-        {
-            id: 3,
-            title: 'ベトナムの交差点',
-            description: 'ベトナムの交差点',
-            image: '/images/Vietnam/dong-kinh-nghia-thuc-square.jpg',
-            location: 'ベトナム-ハノイ',
-            category: '街並み',
-            likes: 92,
-        },
-        {
-            id: 2,
-            title: '札幌テレビ塔',
-            description: '札幌テレビ塔',
-            image: '/images/Hokkaido/sapporo-tv-tower.jpg',
-            location: '北海道-札幌',
-            category: '都市',
-            likes: 104,
-        },
-        {
-            id: 1,
-            title: '小樽運河',
-            description: '小樽運河',
-            image: '/images/Hokkaido/otaru-canal.jpg',
-            location: '北海道-小樽',
-            category: '街並み',
-            likes: 167,
-        },
-    ].sort((a, b) => b.id - a.id);
+    useEffect(() => {
+        const loadPhotos = async () => {
+            try {
+                const response = await fetch('/api/galleryPhotos');
+                if (!response.ok) {
+                    throw new Error('HTTP error! status: ${response.status}');
+                }
+                const data: Photo[] = await response.json();
+                setPhotos(data);
+            } catch (error) {
+                console.error('Failed to load photos:', error);
+            }
+        };
+
+        loadPhotos();
+    }, []);
       
-        const categories = [
-          { id: 'all', name: 'すべて' },
-          { id: 'nature', name: '自然' },
-          { id: 'temple', name: '寺院・神社' },
-          { id: 'city', name: '都市' },
-          { id: 'beach', name: 'ビーチ' },
-        ]
-      
-        const naturePhotos = photos.filter(photo => ['自然', 'ビーチ'].includes(photo.category))
-        const templePhotos = photos.filter(photo => ['寺院', '神社', '城'].includes(photo.category))
-        const cityPhotos = photos.filter(photo => ['都市', '街並み'].includes(photo.category))
-        const beachPhotos = photos.filter(photo => photo.category === 'ビーチ')
+    const categories = [
+        { id: 'all', name: 'すべて' },
+        { id: 'nature', name: '自然' },
+        { id: 'temple', name: '寺院・神社' },
+        { id: 'city', name: '街並み' },
+        { id: 'tourism', name: '観光地' },
+        { id: 'food', name: 'グルメ' },
+        { id: 'transport', name: '公共交通・商業施設' },
+    ]
+    
+    const naturePhotos = photos.filter(photo => ['自然'].includes(photo.category))
+    const templePhotos = photos.filter(photo => ['寺院', '神社', '城', '王宮', '慰霊碑'].includes(photo.category))
+    const cityPhotos = photos.filter(photo => ['都市', '街並み', '祭り', '市場', '広場'].includes(photo.category))
+    const tourismPhotos = photos.filter(photo => ['タワー', '美術館', '聖堂', '建築', '闘牛場', '教会'].includes(photo.category))
+    const foodPhotos = photos.filter(photo => ['グルメ', 'スイーツ'].includes(photo.category))
+    const transportPhotos = photos.filter(photo => ['空港', '公共交通', '商業施設'].includes(photo.category))
 
     return (
         <div className="container py-12">
@@ -166,7 +69,7 @@ const GalleryPage = () => {
             </div>
 
             <Tabs defaultValue="all" className="mb-8">
-                <TabsList className="mb-8 grid w-full grid-dols-2 sm:grid-cols-5 h-auto">
+                <TabsList className="mb-8 grid w-full grid-dols-2 sm:grid-cols-7 h-auto">
                     {categories.map((category) => (
                         <TabsTrigger key={category.id} value={category.id}>
                             {category.name}
@@ -221,10 +124,34 @@ const GalleryPage = () => {
                         ))}
                     </div>
                 </TabsContent>
-
-                <TabsContent value="beach">
+                
+				<TabsContent value="tourism">
                     <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
-                        {beachPhotos.map((photo) => (
+                        {tourismPhotos.map((photo) => (
+                            <PhotoCard
+                                key={photo.id}
+                                photo={photo}
+                                onClick={() => setSelectedImage(photo)}
+                            />
+                        ))}
+                    </div>
+                </TabsContent>
+
+                <TabsContent value="food">
+                    <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
+                        {foodPhotos.map((photo) => (
+                            <PhotoCard
+                                key={photo.id}
+                                photo={photo}
+                                onClick={() => setSelectedImage(photo)}
+                            />
+                        ))}
+                    </div>
+                </TabsContent>
+                
+                <TabsContent value="transport">
+                    <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
+                        {transportPhotos.map((photo) => (
                             <PhotoCard
                                 key={photo.id}
                                 photo={photo}
