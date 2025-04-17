@@ -1,4 +1,5 @@
 import { Metadata } from "next";
+import Link from "next/link";
 
 export const metadata: Metadata = {
     title: 'ともきちの旅行日記｜お問い合わせ',
@@ -7,10 +8,16 @@ export const metadata: Metadata = {
 
 const ContactPage = () => {
     return (
-        <div className="flex items-center justify-center h-screen">
-            <div className="rounded-lg p-8 bg-white shadow-lg">
-                <h1 className="text-black text-4xl font-bold">準備中...</h1>
-                <h1 className="text-black text-4xl font-bold">しばらくお待ちください。</h1>
+        <div className="flex items-center justify-center min-h-screen bg-gray-100 dark:bg-gray-900">
+            <div className="rounded-xl p-10 bg-white shadow-2xl max-w-lg w-full dark:bg-gray-800">
+                <h1 className="text-gray-800 text-3xl font-extrabold mb-6 text-center dark:text-gray-100">お問い合わせ</h1>
+                <p className="text-gray-600 text-base mb-4 leading-relaxed dark:text-gray-300">
+                    ご連絡は以下のメールアドレスまでお願いいたします：
+                    <Link href="mailto:gaomuyouxi81@gmail.com" className="text-blue-600 font-medium hover:underline ml-2 dark:text-blue-400">gaomuyouxi81@gmail.com</Link>
+                </p>
+                <p className="text-gray-600 text-base leading-relaxed dark:text-gray-300">
+                    現在、お問い合わせフォームは作成中です。完成までしばらくお待ちください。
+                </p>
             </div>
         </div>
     );

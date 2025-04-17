@@ -7,7 +7,7 @@ const Footer = () => {
     return (
         <footer className="w-full border-t bg-background p-2">
             <div className="container py-10">
-                <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 md:grid-cols-4">
+                <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 md:grid-cols-5">
                     <div className="space-y-3">
                         <h3 className="text-lg font-medium">ともきちの旅行日記</h3>
                         <p className="text-sm text-muted-foreground">日本と世界の旅行記録と観光情報を発信するブログサイトです。</p>
@@ -73,6 +73,12 @@ const Footer = () => {
                         <Link href='/contact' className="inline-flex items-center text-sm text-muted-foreground hover:text-foreground">
                             <Mail className="mr-2 h-4 w-4" />
                             お問い合わせフォーム
+                        </Link>
+                    </div>
+                    <div className="space-y-3">
+                        <h3 className="text-lg font-medium">エキストラ</h3>
+                        <Link href='/clock' className="text-muted-foreground hover:text-foreground">
+                            世界時計
                         </Link>
                     </div>
                 </div>
