@@ -27,12 +27,13 @@ export async function GET() {
 
 export async function POST(req: Request) {
     try {
-        const newPhoto: Omit<Photo, 'id'> = await req.json();
-        const maxId = Math.max(...photosData.map(photo => photo.id));
+        const newPhoto = await req.json() as Omit<Photo, 'id'>; // 型アサーションを追加
+        const photos = photosData as Photo[]; // photosData に型アサーションを追加
+        const maxId = photos.length > 0 ? Math.max(...photos.map(photo => photo.id)) : 0; // 空配列の場合を考慮
         const newId = maxId + 1;
 
-        const photoWithId: Photo = { id: newId, ...newPhoto };
-        const updatedPhotos = [...photosData, photoWithId];
+        const photoWithId: Photo = { id: newId, ...newPhoto }; // 型エラー解消
+        const updatedPhotos = [...photos, photoWithId];
 
         const filePath = path.join(process.cwd(), 'public', 'data', 'galleryPhoto.json');
         fs.writeFileSync(filePath, JSON.stringify(updatedPhotos, null, 2), 'utf-8');
