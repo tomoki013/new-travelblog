@@ -76,10 +76,29 @@ const Footer = () => {
                         </Link>
                     </div>
                     <div className="space-y-3">
-                        <h3 className="text-lg font-medium">エキストラ</h3>
-                        <Link href='/clock' className="text-muted-foreground hover:text-foreground">
-                            世界時計
-                        </Link>
+                        <h3 className="text-lg font-medium">アプリ</h3>
+                        <ul className="space-y-2 text-sm">
+                            <li>
+                                <Link href='/clock' className="text-muted-foreground hover:text-foreground">
+                                    世界時計
+                                </Link>
+                            </li>
+                            {/* <li>
+                                <Link href='/calculator/currency' className="text-muted-foreground hover:text-foreground">
+                                    為替計算
+                                </Link>
+                            </li> */}
+                            <li>
+                                <Link href='/calculator/expense' className="text-muted-foreground hover:text-foreground">
+                                    旅費計算
+                                </Link>
+                            </li>
+                            <li>
+                                <Link href='/calculator/tax' className="text-muted-foreground hover:text-foreground">
+                                    税金計算
+                                </Link>
+                            </li>
+                        </ul>
                     </div>
                 </div>
                 <Separator className="my-6" />
