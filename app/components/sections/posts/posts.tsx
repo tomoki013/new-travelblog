@@ -1,6 +1,6 @@
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import * as Elements from '@/app/components/elements/index';
-import getAllPosts from "@/lib/markdown";
+import getAllPosts from '@/lib/markdown';
 
 const diaryCategories = [
     {id: 'all', name: 'すべて'},
@@ -20,62 +20,59 @@ const tourismCategories = [
 ]
 
 interface PostsProps {
-    type: 'diary' | 'tourism'
-    filter?: 'region'
-    filterItem?: React.ReactNode
+    type: 'diary' | 'tourism';
+    filter?: 'region';
+    filterItem?: React.ReactNode;
 }
 
 const Posts = ({
     type,
     filter,
-    filterItem,
+    filterItem
 }: PostsProps) => {
-    // カテゴリーの取得
-    const categories = type === 'diary'
-        ? diaryCategories : type === 'tourism'
-        ? tourismCategories : diaryCategories;
-
-    // 投稿の取得
-    const posts = type === 'diary'
-        ? getAllPosts('diary') : type === 'tourism'
-        ? getAllPosts('tourism') : getAllPosts('diary');
-
-    // filterとfilterItemが存在する場合のみフィルタリング
-    const filteredPosts = filter && filterItem
-        ? posts.filter((filteredPost) => {
-            if (filter === 'region' && typeof filterItem === 'string') {
-                return filteredPost.location.includes(filterItem);
-            }
-            return false;
-        })
-        : posts;
-
     return (
         <Tabs defaultValue="all" className="mb-10">
             <TabsList className="mb-8 grid w-full grid-cols-2 sm:grid-cols-6 h-auto">
-                {categories.map((category) => (
-                    <TabsTrigger key={category.id} value={category.id}>
-                        {category.name}
+                {(type === 'diary' ? diaryCategories : tourismCategories).map(cat => (
+                    <TabsTrigger key={cat.id} value={cat.id}>
+                        {cat.name}
                     </TabsTrigger>
                 ))}
             </TabsList>
-
+            
             <TabsContent value="all">
                 <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
-                    {filteredPosts.map((post) => (
+                    {( (type === 'diary' ? getAllPosts('diary') : getAllPosts('tourism'))
+                        .filter(post => {
+                            if (filter === 'region' && typeof filterItem === 'string') {
+                                return post.location.includes(filterItem as string);
+                            }
+                            return true;
+                        })
+                    ).map(post => (
                         <Elements.PostCard key={post.slug} post={post} linkPrefix={type} />
                     ))}
                 </div>
             </TabsContent>
-
-            {categories.map((category) => (
-                <TabsContent key={category.id} value={category.id}>
+                
+            {(type === 'diary' ? diaryCategories : tourismCategories).map(cat => (
+                <TabsContent key={cat.id} value={cat.id}>
                     <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
-                        {filteredPosts
-                            .filter((post) => post.category?.includes(category.name))
-                            .map((post) => (
+                        {(() => {
+                            const filteredPosts = (type === 'diary' ? getAllPosts('diary') : getAllPosts('tourism'))
+                                .filter(post => {
+                                    if (filter === 'region' && typeof filterItem === 'string') {
+                                        return post.location.includes(filterItem as string) && post.category?.includes(cat.name);
+                                    }
+                                    return post.category?.includes(cat.name);
+                                });
+                            if (filteredPosts.length === 0) {
+                                return <p className="col-span-full text-center">該当する記事がありません。</p>;
+                            }
+                            return filteredPosts.map(post => (
                                 <Elements.PostCard key={post.slug} post={post} linkPrefix={type} />
-                            ))}
+                            ));
+                        })()}
                     </div>
                 </TabsContent>
             ))}

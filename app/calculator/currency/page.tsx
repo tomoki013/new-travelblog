@@ -169,3 +169,13 @@
 // }
 
 // export default CurrencyCalculatorPage;
+
+import message from "@/app/api/convert/route";
+
+const CurrencyCalculatorPage = () => {
+    return (
+        <p>{message}</p>
+    )
+}
+
+export default CurrencyCalculatorPage;
