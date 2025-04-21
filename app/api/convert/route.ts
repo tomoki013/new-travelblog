@@ -52,3 +52,6 @@
 //         return NextResponse.json({ error: 'サーバー側でエラーが発生しました' }, { status: 500 });
 //     }
 // }
+
+const message = "Hello, World! This is a test message from the convert API route.";
+export default message;
