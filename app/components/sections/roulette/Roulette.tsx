@@ -6,7 +6,7 @@ import { motion, AnimatePresence } from "framer-motion"
 import { Compass } from "lucide-react"
 import Image from "next/image"
 import { useRef, useState } from "react"
-// import * as Sections from '@/app/components/sections/index';
+import Posts from "@/app/components/sections/posts/posts"
 
 interface Destination {
     name: string
@@ -216,9 +216,15 @@ const Roulette = () => {
                 </div>
             </div>
 
-            {/* {selectedDestination && (
-                <Sections.Posts type='tourism' filter='region' filterItem={selectedDestination?.name} />
-            )} */}
+            {selectedDestination && (
+                <Posts
+                    type='tourism'
+                    filter='region'
+                    filterItem={selectedDestination.name.split('（')[0]} // '（'以降を削除
+                    inputClassName="hidden"
+                    tabListClassName="hidden"
+                />
+            )}
         </>
     );
 }
