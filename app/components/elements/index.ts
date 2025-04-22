@@ -5,6 +5,7 @@ import YouTubeIcon from "./icons/YouTubeIcon";
 import PostCard from "./card/PostCard";
 import ListLink from "./link/ListLink";
 import SearchBox from "./searchBox/SearchBox";
+import LoadingAnimation from "./loadingAnimation/LoadingAnimation";
 
 export {
     GitHubIcon,
@@ -14,4 +15,5 @@ export {
     PostCard,
     ListLink,
     SearchBox,
+    LoadingAnimation,
 };

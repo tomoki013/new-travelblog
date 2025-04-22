@@ -6,6 +6,7 @@ import { MapPin } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import Image from "next/image";
 import { useEffect, useState } from "react";
+import * as Elements from "@/app/components/elements/index";
 // import { Metadata } from "next";
 
 // export const metadata: Metadata = {
@@ -26,10 +27,12 @@ interface Photo {
 const GalleryPage = () => {
     const [selectedImage, setSelectedImage] = useState<Photo | null>(null);
     const [photos, setPhotos] = useState<Photo[]>([]);
+    const [isLoading, setIsLoading] = useState(true);
 
     useEffect(() => {
         const loadPhotos = async () => {
             try {
+                setIsLoading(true);
                 const response = await fetch('/api/galleryPhotos');
                 if (!response.ok) {
                     throw new Error('HTTP error! status: ${response.status}');
@@ -38,6 +41,8 @@ const GalleryPage = () => {
                 setPhotos(data);
             } catch (error) {
                 console.error('Failed to load photos:', error);
+            } finally {
+                setIsLoading(false);
             }
         };
 
@@ -68,103 +73,107 @@ const GalleryPage = () => {
                 <p className="mx-auto max-w-2xl text-muted-foreground">日本各地で撮影した美しい風景や文化的な瞬間を写真で紹介します。</p>
             </div>
 
-            <Tabs defaultValue="all" className="mb-8">
-                <TabsList className="mb-8 grid w-full grid-dols-2 sm:grid-cols-7 h-auto">
-                    {categories.map((category) => (
-                        <TabsTrigger key={category.id} value={category.id}>
-                            {category.name}
-                        </TabsTrigger>
-                    ))}
-                </TabsList>
+            {isLoading ? (
+                <Elements.LoadingAnimation />
+            ) : (
+                <Tabs defaultValue="all" className="mb-8">
+                    <TabsList className="mb-8 grid w-full grid-dols-2 sm:grid-cols-7 h-auto">
+                        {categories.map((category) => (
+                            <TabsTrigger key={category.id} value={category.id}>
+                                {category.name}
+                            </TabsTrigger>
+                        ))}
+                    </TabsList>
 
-                <TabsContent value="all">
-                    <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
-                        {photos.map((photo) => (
-                            <PhotoCard
-                                key={photo.id}
-                                photo={photo}
-                                onClick={() => setSelectedImage(photo)}
-                            />
-                        ))}
-                    </div>
-                </TabsContent>
+                    <TabsContent value="all">
+                        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
+                            {photos.map((photo) => (
+                                <PhotoCard
+                                    key={photo.id}
+                                    photo={photo}
+                                    onClick={() => setSelectedImage(photo)}
+                                />
+                            ))}
+                        </div>
+                    </TabsContent>
 
-                <TabsContent value="nature">
-                    <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
-                        {naturePhotos.map((photo) => (
-                            <PhotoCard
-                                key={photo.id}
-                                photo={photo}
-                                onClick={() => setSelectedImage(photo)}
-                            />
-                        ))}
-                    </div>
-                </TabsContent>
+                    <TabsContent value="nature">
+                        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
+                            {naturePhotos.map((photo) => (
+                                <PhotoCard
+                                    key={photo.id}
+                                    photo={photo}
+                                    onClick={() => setSelectedImage(photo)}
+                                />
+                            ))}
+                        </div>
+                    </TabsContent>
 
-                <TabsContent value="temple">
-                    <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
-                        {templePhotos.map((photo) => (
-                            <PhotoCard
-                                key={photo.id}
-                                photo={photo}
-                                onClick={() => setSelectedImage(photo)}
-                            />
-                        ))}
-                    </div>
-                </TabsContent>
+                    <TabsContent value="temple">
+                        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
+                            {templePhotos.map((photo) => (
+                                <PhotoCard
+                                    key={photo.id}
+                                    photo={photo}
+                                    onClick={() => setSelectedImage(photo)}
+                                />
+                            ))}
+                        </div>
+                    </TabsContent>
 
-                <TabsContent value="city">
-                    <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
-                        {cityPhotos.map((photo) => (
-                            <PhotoCard
-                                key={photo.id}
-                                photo={photo}
-                                onClick={() => setSelectedImage(photo)}
-                            />
-                        ))}
-                    </div>
-                </TabsContent>
-                
-				<TabsContent value="tourism">
-                    <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
-                        {tourismPhotos.map((photo) => (
-                            <PhotoCard
-                                key={photo.id}
-                                photo={photo}
-                                onClick={() => setSelectedImage(photo)}
-                            />
-                        ))}
-                    </div>
-                </TabsContent>
+                    <TabsContent value="city">
+                        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
+                            {cityPhotos.map((photo) => (
+                                <PhotoCard
+                                    key={photo.id}
+                                    photo={photo}
+                                    onClick={() => setSelectedImage(photo)}
+                                />
+                            ))}
+                        </div>
+                    </TabsContent>
+                    
+                    <TabsContent value="tourism">
+                        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
+                            {tourismPhotos.map((photo) => (
+                                <PhotoCard
+                                    key={photo.id}
+                                    photo={photo}
+                                    onClick={() => setSelectedImage(photo)}
+                                />
+                            ))}
+                        </div>
+                    </TabsContent>
 
-                <TabsContent value="food">
-                    <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
-                        {foodPhotos.map((photo) => (
-                            <PhotoCard
-                                key={photo.id}
-                                photo={photo}
-                                onClick={() => setSelectedImage(photo)}
-                            />
-                        ))}
-                    </div>
-                </TabsContent>
-                
-                <TabsContent value="transport">
-                    <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
-                        {transportPhotos.map((photo) => (
-                            <PhotoCard
-                                key={photo.id}
-                                photo={photo}
-                                onClick={() => setSelectedImage(photo)}
-                            />
-                        ))}
-                    </div>
-                </TabsContent>
-            </Tabs>
+                    <TabsContent value="food">
+                        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
+                            {foodPhotos.map((photo) => (
+                                <PhotoCard
+                                    key={photo.id}
+                                    photo={photo}
+                                    onClick={() => setSelectedImage(photo)}
+                                />
+                            ))}
+                        </div>
+                    </TabsContent>
+                    
+                    <TabsContent value="transport">
+                        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
+                            {transportPhotos.map((photo) => (
+                                <PhotoCard
+                                    key={photo.id}
+                                    photo={photo}
+                                    onClick={() => setSelectedImage(photo)}
+                                />
+                            ))}
+                        </div>
+                    </TabsContent>
+                </Tabs>
+            )}
 
             <Dialog open={!!selectedImage} onOpenChange={() => setSelectedImage(null)}>
                 {selectedImage && (
-                    <DialogContent className="max-w-4xl">
+                    <DialogContent className="max-w-4xl max-h-screen overflow-auto">
                         <DialogHeader>
                             <DialogTitle>{selectedImage.title}</DialogTitle>
                             <DialogDescription className="flex items-center text-sm">
