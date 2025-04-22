@@ -7,6 +7,7 @@ import { ArrowRight, Calculator, Calendar, Camera, Clock, Compass, MapPin, Recei
 import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useState } from "react";
+import * as Elements from "@/app/components/elements/index";
 
 interface Post {
     slug: string;
@@ -21,15 +22,18 @@ interface Post {
 const Home = () => {
     const [diaryPosts, setDiaryPosts] = useState<Post[]>([]);
     const [tourismPosts, setTourismPosts] = useState<Post[]>([]);
+    const [isLoading, setIsLoading] = useState<boolean>(true); // ローディング状態を管理
 
     useEffect(() => {
         const fetchPosts = async () => {
+            setIsLoading(true); // ローディング開始
             const diaryResponse = await fetch('/api/posts?type=diary');
             const tourismResponse = await fetch('/api/posts?type=tourism');
             const diaryData = await diaryResponse.json();
             const tourismData = await tourismResponse.json();
             setDiaryPosts(diaryData.posts);
             setTourismPosts(tourismData.posts);
+            setIsLoading(false); // ローディング終了
         };
 
         fetchPosts();
@@ -124,43 +128,47 @@ const Home = () => {
                         <ArrowRight className="ml-1 h-4 w-4" />
                     </Link>
                 </div>
-                <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
-                    {diaryPosts.slice(0, 3).map((post) => (
-                        <Card key={post.slug} className="overflow-hidden transition-all hover:shadow-lg">
-                            <div className="relative h-48 w-full">
-                                <Image
-                                    src={post.image}
-                                    alt={post.title}
-                                    fill
-                                    style={{ objectFit: 'cover' }}
-                                />
-                            </div>
-                            <CardContent className="p-6">
-                                <div className="mb-3 flex items-center justify-between">
-                                    <Badge variant='outline'>{post.category}</Badge>
-                                    <span className="flex items-center text-xs text-muted-foreground">
-                                        <Calendar className="mr-1 h-3 w-3" />
-                                        {post.date}
-                                    </span>
+                {isLoading ? ( // ローディング中はスピナーを表示
+                    <Elements.LoadingAnimation />
+                ) : (
+                    <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
+                        {diaryPosts.slice(0, 3).map((post) => (
+                            <Card key={post.slug} className="overflow-hidden transition-all hover:shadow-lg">
+                                <div className="relative h-48 w-full">
+                                    <Image
+                                        src={post.image}
+                                        alt={post.title}
+                                        fill
+                                        style={{ objectFit: 'cover' }}
+                                    />
                                 </div>
-                                <h3 className="mb-2 text-xl font-bold">{post.title}</h3>
-                                <p className="mb-2 text-sm text-muted-foreground">{post.excerpt}</p>
-                                <div className="flex items-center justify-between">
-                                    <span className="flex items-center text-xs text-muted-foreground">
-                                        <MapPin className="mr-1 h-3 w-3" />
-                                        {post.location}
-                                    </span>
-                                    <Link
-                                        href={`/diary/${post.slug}`}
-                                        className="text-sm font-medium text-primary hover:underline"
-                                    >
-                                        続きを読む
-                                    </Link>
-                                </div>
-                            </CardContent>
-                        </Card>
-                    ))}
-                </div>
+                                <CardContent className="p-6">
+                                    <div className="mb-3 flex items-center justify-between">
+                                        <Badge variant='outline'>{post.category}</Badge>
+                                        <span className="flex items-center text-xs text-muted-foreground">
+                                            <Calendar className="mr-1 h-3 w-3" />
+                                            {post.date}
+                                        </span>
+                                    </div>
+                                    <h3 className="mb-2 text-xl font-bold">{post.title}</h3>
+                                    <p className="mb-2 text-sm text-muted-foreground">{post.excerpt}</p>
+                                    <div className="flex items-center justify-between">
+                                        <span className="flex items-center text-xs text-muted-foreground">
+                                            <MapPin className="mr-1 h-3 w-3" />
+                                            {post.location}
+                                        </span>
+                                        <Link
+                                            href={`/diary/${post.slug}`}
+                                            className="text-sm font-medium text-primary hover:underline"
+                                        >
+                                            続きを読む
+                                        </Link>
+                                    </div>
+                                </CardContent>
+                            </Card>
+                        ))}
+                    </div>
+                )}
             </section>
 
             {/* Tourism Information */}
@@ -176,26 +184,30 @@ const Home = () => {
                             <ArrowRight className="ml-1 h-4 w-4" />
                         </Link>
                     </div>
-                    <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
-                        {tourismPosts.slice(0, 8).map((info) => (
-                            <Link key={info.slug} href={`/tourism/${info.slug}`}>
-                                <div className="group relative h-64 overflow-hidden rounded-lg">
-                                    <Image
-                                        src={info.image}
-                                        alt={info.title}
-                                        fill
-                                        style={{ objectFit: 'cover' }}
-                                        className="transition-transform duration-300 group-hover:scale-110"
-                                    />
-                                    <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent" />
-                                    <div className="absolute bottom-0 left-0 p-4 text-white">
-                                        <Badge className="mb-2">{info.category}</Badge>
-                                        <h3 className="text-lg font-bold">{info.title}</h3>
+                    {isLoading ? ( // ローディング中はスピナーを表示
+                        <Elements.LoadingAnimation />
+                    ) : (
+                        <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+                            {tourismPosts.slice(0, 8).map((info) => (
+                                <Link key={info.slug} href={`/tourism/${info.slug}`}>
+                                    <div className="group relative h-64 overflow-hidden rounded-lg">
+                                        <Image
+                                            src={info.image}
+                                            alt={info.title}
+                                            fill
+                                            style={{ objectFit: 'cover' }}
+                                            className="transition-transform duration-300 group-hover:scale-110"
+                                        />
+                                        <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent" />
+                                        <div className="absolute bottom-0 left-0 p-4 text-white">
+                                            <Badge className="mb-2">{info.category}</Badge>
+                                            <h3 className="text-lg font-bold">{info.title}</h3>
+                                        </div>
                                     </div>
-                                </div>
-                            </Link>
-                        ))}
-                    </div>
+                                </Link>
+                            ))}
+                        </div>
+                    )}
                 </div>
             </section>
 
