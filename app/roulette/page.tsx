@@ -29,7 +29,6 @@ const RoulettePage = () => {
 
             {/* ルーレット */}
             <Sections.Roulette />
-            <Sections.Posts type='tourism' />
         </div>
     );
 }

@@ -1,12 +1,40 @@
+'use client';
+
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { ArrowRight, Calculator, Calendar, Camera, Clock, Compass, MapPin, Receipt } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
-import getAllPosts from "@/lib/markdown";
+import { useEffect, useState } from "react";
+
+interface Post {
+    slug: string;
+    image: string;
+    title: string;
+    category: string;
+    date: string;
+    excerpt: string;
+    location: string;
+}
 
 const Home = () => {
+    const [diaryPosts, setDiaryPosts] = useState<Post[]>([]);
+    const [tourismPosts, setTourismPosts] = useState<Post[]>([]);
+
+    useEffect(() => {
+        const fetchPosts = async () => {
+            const diaryResponse = await fetch('/api/posts?type=diary');
+            const tourismResponse = await fetch('/api/posts?type=tourism');
+            const diaryData = await diaryResponse.json();
+            const tourismData = await tourismResponse.json();
+            setDiaryPosts(diaryData.posts);
+            setTourismPosts(tourismData.posts);
+        };
+
+        fetchPosts();
+    }, []);
+
     return (
         <div className="flex flex-col">
             
@@ -97,7 +125,7 @@ const Home = () => {
                     </Link>
                 </div>
                 <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
-                    {getAllPosts('diary').slice(0, 3).map((post) => (
+                    {diaryPosts.slice(0, 3).map((post) => (
                         <Card key={post.slug} className="overflow-hidden transition-all hover:shadow-lg">
                             <div className="relative h-48 w-full">
                                 <Image
@@ -149,7 +177,7 @@ const Home = () => {
                         </Link>
                     </div>
                     <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
-                        {getAllPosts('tourism').slice(0, 8).map((info) => (
+                        {tourismPosts.slice(0, 8).map((info) => (
                             <Link key={info.slug} href={`/tourism/${info.slug}`}>
                                 <div className="group relative h-64 overflow-hidden rounded-lg">
                                     <Image
