@@ -1,6 +1,9 @@
+'use client';
+
+import { useEffect, useState } from 'react';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import * as Elements from '@/app/components/elements/index';
-import getAllPosts from '@/lib/markdown';
+import type { Post } from '@/lib/markdown';
 
 const diaryCategories = [
     {id: 'all', name: 'すべて'},
@@ -9,7 +12,7 @@ const diaryCategories = [
     {id: 'singleTrip', name: '一人旅'},
     {id: 'diving', name: 'ダイビング'},
     {id: 'others', name: 'その他'},
-]
+];
 
 const tourismCategories = [
     {id: 'all', name: 'すべて'},
@@ -18,7 +21,7 @@ const tourismCategories = [
     {id: 'accommodation', name: '宿泊施設'},
     {id: 'transportation', name: '交通情報'},
     {id: 'pilgrimage', name: '聖地巡礼'},
-]
+];
 
 interface PostsProps {
     type: 'diary' | 'tourism';
@@ -31,54 +34,108 @@ const Posts = ({
     filter,
     filterItem
 }: PostsProps) => {
+    const [posts, setPosts] = useState<Post[]>([]);
+    const [searchQuery, setSearchQuery] = useState<string>('');
+    const [filteredPosts, setFilteredPosts] = useState<Post[]>([]);
+    const [isLoading, setIsLoading] = useState<boolean>(true); // ローディング状態を管理
+
+    useEffect(() => {
+        const fetchPosts = async () => {
+            setIsLoading(true); // ローディング開始
+            const res = await fetch(`/api/posts?type=${type}`);
+            const data = await res.json();
+            setPosts(data.posts);
+            setIsLoading(false); // ローディング終了
+        };
+        fetchPosts();
+    }, [type]);
+
+    useEffect(() => {
+        const keywords = searchQuery.toLowerCase().split(/\s+/).filter(Boolean);
+
+        const matchesAllKeywords = (text: string | undefined) =>
+            keywords.every(keyword => text?.toLowerCase().includes(keyword));
+
+        const tagMatches = posts.filter(post =>
+            post.tags?.some(tag => matchesAllKeywords(tag))
+        );
+        const categoryMatches = posts.filter(
+            post => !tagMatches.includes(post) && matchesAllKeywords(post.category)
+        );
+        const titleMatches = posts.filter(
+            post => !tagMatches.includes(post) && !categoryMatches.includes(post) && matchesAllKeywords(post.title)
+        );
+        const descriptionMatches = posts.filter(
+            post => !tagMatches.includes(post) && !categoryMatches.includes(post) && !titleMatches.includes(post) && matchesAllKeywords(post.excerpt)
+        );
+        const contentMatches = posts.filter(
+            post => !tagMatches.includes(post) && !categoryMatches.includes(post) && !titleMatches.includes(post) && !descriptionMatches.includes(post) && matchesAllKeywords(post.content)
+        );
+
+        setFilteredPosts([...tagMatches, ...categoryMatches, ...titleMatches, ...descriptionMatches, ...contentMatches]);
+    }, [searchQuery, posts]);
+
     return (
-        <Tabs defaultValue="all" className="mb-10">
-            <TabsList className="mb-8 grid w-full grid-cols-2 sm:grid-cols-6 h-auto">
-                {(type === 'diary' ? diaryCategories : tourismCategories).map(cat => (
-                    <TabsTrigger key={cat.id} value={cat.id}>
-                        {cat.name}
-                    </TabsTrigger>
-                ))}
-            </TabsList>
-            
-            <TabsContent value="all">
-                <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
-                    {( (type === 'diary' ? getAllPosts('diary') : getAllPosts('tourism'))
-                        .filter(post => {
-                            if (filter === 'region' && typeof filterItem === 'string') {
-                                return post.location.includes(filterItem as string);
-                            }
-                            return true;
-                        })
-                    ).map(post => (
-                        <Elements.PostCard key={post.slug} post={post} linkPrefix={type} />
-                    ))}
+        <div>
+            {isLoading ? ( // ローディング中はスピナーを表示
+                <div className="flex justify-center items-center h-64">
+                    <Elements.LoadingAnimation />
                 </div>
-            </TabsContent>
-                
-            {(type === 'diary' ? diaryCategories : tourismCategories).map(cat => (
-                <TabsContent key={cat.id} value={cat.id}>
-                    <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
-                        {(() => {
-                            const filteredPosts = (type === 'diary' ? getAllPosts('diary') : getAllPosts('tourism'))
+            ) : (
+                <>
+                <input
+                    type="text"
+                    placeholder="検索キーワードを入力"
+                    value={searchQuery}
+                    onChange={(e) => setSearchQuery(e.target.value)}
+                    className="mb-4 w-full p-2 border border-gray-300 rounded"
+                />
+                <Tabs defaultValue="all" className="mb-10">
+                    <TabsList className="mb-8 grid w-full grid-cols-2 sm:grid-cols-6 h-auto">
+                        {(type === 'diary' ? diaryCategories : tourismCategories).map(cat => (
+                            <TabsTrigger key={cat.id} value={cat.id}>
+                                {cat.name}
+                            </TabsTrigger>
+                        ))}
+                    </TabsList>
+                    
+                    <TabsContent value="all">
+                        <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
+                            {filteredPosts
                                 .filter(post => {
-                                    if (filter === 'region' && typeof filterItem === 'string') {
-                                        return post.location.includes(filterItem as string) && post.category?.includes(cat.name);
+                                    if (filter === 'region' && filterItem && typeof filterItem === 'string') {
+                                        return post.location.includes(filterItem as string);
                                     }
-                                    return post.category?.includes(cat.name);
-                                });
-                            if (filteredPosts.length === 0) {
-                                return <p className="col-span-full text-center">該当する記事がありません。</p>;
-                            }
-                            return filteredPosts.map(post => (
-                                <Elements.PostCard key={post.slug} post={post} linkPrefix={type} />
-                            ));
-                        })()}
-                    </div>
-                </TabsContent>
-            ))}
-        </Tabs>
+                                    return true;
+                                })
+                                .map(post => (
+                                    <Elements.PostCard key={post.slug} post={post} linkPrefix={type} />
+                                ))}
+                        </div>
+                    </TabsContent>
+                        
+                    {(type === 'diary' ? diaryCategories : tourismCategories).map(cat => (
+                        <TabsContent key={cat.id} value={cat.id}>
+                            <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
+                                {(() => {
+                                    const categoryFilteredPosts = filteredPosts.filter(post => {
+                                        if (filter === 'region' && filterItem && typeof filterItem === 'string') {
+                                            return post.location.includes(filterItem as string) && post.category?.includes(cat.name);
+                                        }
+                                        return post.category?.includes(cat.name);
+                                    });
+                                    return categoryFilteredPosts.map(post => (
+                                        <Elements.PostCard key={post.slug} post={post} linkPrefix={type} />
+                                    ));
+                                })()}
+                            </div>
+                        </TabsContent>
+                    ))}
+                </Tabs>
+                </>
+            )}
+        </div>
     );
-}
+};
 
 export default Posts;

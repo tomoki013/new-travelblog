@@ -1,5 +1,4 @@
 import * as Sections from '@/app/components/sections/index';
-import * as Elements from '@/app/components/elements/index';
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
@@ -17,9 +16,6 @@ const TourismPage = () => {
 
             {/* Featured Regions */}
             <Sections.FeaturedRegions />
-
-            {/* Search Box */}
-            <Elements.SearchBox type="tourism" />
 
             {/* Tourism Information */}
             <Sections.Posts type="tourism" />
