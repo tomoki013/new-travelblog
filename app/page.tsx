@@ -235,7 +235,7 @@ const Home = () => {
                                 主要都市の現地時刻をリアルタイムで確認できます。
                             </p>
                             <Button asChild size="lg">
-                                <Link href="/world-clock" className="inline-flex items-center">
+                                <Link href="/clock" className="inline-flex items-center">
                                     <Clock className="mr-2 h-5 w-5" />
                                     世界時計を見る
                                 </Link>

@@ -7,6 +7,7 @@ const diaryCategories = [
     {id: 'domestic', name: '国内旅行'},
     {id: 'international', name: '海外旅行'},
     {id: 'singleTrip', name: '一人旅'},
+    {id: 'diving', name: 'ダイビング'},
     {id: 'others', name: 'その他'},
 ]
 

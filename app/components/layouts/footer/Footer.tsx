@@ -103,7 +103,7 @@ const Footer = () => {
                 </div>
                 <Separator className="my-6" />
                 <div className="flex flex-col items-center justify-between gap-4 sm:flex-row">
-                    <p className="text-sm text-muted-foreground">&copy; 2024-{new Date().getFullYear()} ともきちの旅行日記 All rights reserved.</p>
+                    <p className="text-sm text-muted-foreground">&copy; 2024-{new Date().getFullYear()} ともきちの旅行日記. All rights reserved.</p>
                     <div className="flex items-center space-x-4 text-sm text-muted-foreground">
                         <Link href='/privacy' className="hover:text-foreground">
                             プライバシーポリシー
