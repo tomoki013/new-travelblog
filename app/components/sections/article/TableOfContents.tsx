@@ -1,6 +1,6 @@
 "use client"
 
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import { Link2 } from 'lucide-react'
 import { cn } from '@/lib/utils'
 import Link from 'next/link';
@@ -9,6 +9,7 @@ const TableOfContents = () => {
 
     const [headings, setHeadings] = useState<{ id: string; text: string; level: number }[]>([])
     const [activeId, setActiveId] = useState<string>("")
+    const navRef = useRef<HTMLDivElement>(null)
 
     useEffect(() => {
         const articleElement = document.querySelector("article")
@@ -31,6 +32,14 @@ const TableOfContents = () => {
                 entries.forEach((entry) => {
                     if (entry.isIntersecting) {
                         setActiveId(entry.target.id)
+                        const activeLink = navRef.current?.querySelector(`a[href="#${entry.target.id}"]`)
+                        if (activeLink) {
+                            activeLink.scrollIntoView({
+                                behavior: "smooth",
+                                block: "nearest",
+                                inline: "nearest",
+                            })
+                        }
                     }
                 })
             },
@@ -65,7 +74,7 @@ const TableOfContents = () => {
                 <Link2 className="h-4 w-4 text-primary" />
                 <h3 className="text-lg font-medium">目次</h3>
             </div>
-            <nav className="space-y-1">
+            <nav className="space-y-1" ref={navRef}>
                 {headings.map((heading) => (
                     <Link
                         key={heading.id} // 修正済み: idが空の場合も一意な値を使用

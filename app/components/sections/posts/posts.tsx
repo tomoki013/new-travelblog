@@ -27,12 +27,16 @@ interface PostsProps {
     type: 'diary' | 'tourism';
     filter?: 'region';
     filterItem?: React.ReactNode;
+    inputClassName?: string;
+    tabListClassName?: string;
 }
 
 const Posts = ({
     type,
     filter,
-    filterItem
+    filterItem,
+    inputClassName,
+    tabListClassName,
 }: PostsProps) => {
     const [posts, setPosts] = useState<Post[]>([]);
     const [searchQuery, setSearchQuery] = useState<string>('');
@@ -88,10 +92,10 @@ const Posts = ({
                     placeholder="検索キーワードを入力"
                     value={searchQuery}
                     onChange={(e) => setSearchQuery(e.target.value)}
-                    className="mb-4 w-full p-2 border border-gray-300 rounded"
+                    className={`" mb-4 w-full p-2 border border-gray-300 rounded" ${inputClassName}`}
                 />
                 <Tabs defaultValue="all" className="mb-10">
-                    <TabsList className="mb-8 grid w-full grid-cols-2 sm:grid-cols-6 h-auto">
+                    <TabsList className={`" mb-8 grid w-full grid-cols-2 sm:grid-cols-6 h-auto" ${tabListClassName}`}>
                         {(type === 'diary' ? diaryCategories : tourismCategories).map(cat => (
                             <TabsTrigger key={cat.id} value={cat.id}>
                                 {cat.name}
