@@ -29,16 +29,19 @@ const TableOfContents = () => {
 
         const observer = new IntersectionObserver(
             (entries) => {
+                const isMobile = window.innerWidth <= 768; // モバイルサイズの判定
                 entries.forEach((entry) => {
                     if (entry.isIntersecting) {
                         setActiveId(entry.target.id)
-                        const activeLink = navRef.current?.querySelector(`a[href="#${entry.target.id}"]`)
-                        if (activeLink) {
-                            activeLink.scrollIntoView({
-                                behavior: "smooth",
-                                block: "nearest",
-                                inline: "nearest",
-                            })
+                        if (!isMobile) { // モバイルサイズの場合はオートスクロールを無効化
+                            const activeLink = navRef.current?.querySelector(`a[href="#${entry.target.id}"]`)
+                            if (activeLink) {
+                                activeLink.scrollIntoView({
+                                    behavior: "smooth",
+                                    block: "nearest",
+                                    inline: "nearest",
+                                })
+                            }
                         }
                     }
                 })
