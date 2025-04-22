@@ -8,6 +8,7 @@ import { Menu, X } from "lucide-react"
 import Link from "next/link"
 import { usePathname } from "next/navigation"
 import { useState } from "react"
+import Breadcrumbs from "../breadcrumbs/Breadcrumbs";
 
 const routes = [
     {
@@ -42,7 +43,7 @@ const Header = () => {
 
     return (
         <header className="sticky top-0 z-50 w-full border-b bg-background/95 background-blur supports-[backdrop-filter]:bg-background/60">
-            <div className="container flex h-16 items-center justify-between">
+            <div className="container flex h-15 items-center justify-between">
                 <div className="flex items-center gap-2">
                     <Link href="/" className="flex items-center gap-2">
                         <span className="text-2xl font-bold">ともきちの旅行日記</span>
@@ -106,6 +107,10 @@ const Header = () => {
                     </nav>
                 </div>
             )}
+
+            {/* パンくずリスト */}
+            <Breadcrumbs />
+            
         </header>
     );
 }
