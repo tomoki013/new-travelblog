@@ -105,35 +105,46 @@ const Posts = ({
                     
                     <TabsContent value="all">
                         <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
-                            {filteredPosts
-                                .filter(post => {
+                            {(() => {
+                                const regionFilteredPosts = filteredPosts.filter(post => {
                                     if (filter === 'region' && filterItem && typeof filterItem === 'string') {
                                         return post.location.includes(filterItem as string);
                                     }
                                     return true;
-                                })
-                                .map(post => (
-                                    <Elements.PostCard key={post.slug} post={post} linkPrefix={type} />
-                                ))}
+                                });
+                                return regionFilteredPosts.length === 0 ? (
+                                    <p className="text-center col-span-full">該当の記事がありません。</p>
+                                ) : (
+                                    regionFilteredPosts.map(post => (
+                                        <Elements.PostCard key={post.slug} post={post} linkPrefix={type} />
+                                    ))
+                                );
+                            })()}
                         </div>
                     </TabsContent>
-                        
+
                     {(type === 'diary' ? diaryCategories : tourismCategories).map(cat => (
-                        <TabsContent key={cat.id} value={cat.id}>
-                            <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
-                                {(() => {
-                                    const categoryFilteredPosts = filteredPosts.filter(post => {
-                                        if (filter === 'region' && filterItem && typeof filterItem === 'string') {
-                                            return post.location.includes(filterItem as string) && post.category?.includes(cat.name);
-                                        }
-                                        return post.category?.includes(cat.name);
-                                    });
-                                    return categoryFilteredPosts.map(post => (
-                                        <Elements.PostCard key={post.slug} post={post} linkPrefix={type} />
-                                    ));
-                                })()}
-                            </div>
-                        </TabsContent>
+                        cat.id !== 'all' && ( // "すべて" タブを除外
+                            <TabsContent key={cat.id} value={cat.id}>
+                                <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
+                                    {(() => {
+                                        const categoryFilteredPosts = filteredPosts.filter(post => {
+                                            if (filter === 'region' && filterItem && typeof filterItem === 'string') {
+                                                return post.location.includes(filterItem as string) && post.category?.includes(cat.name);
+                                            }
+                                            return post.category?.includes(cat.name);
+                                        });
+                                        return categoryFilteredPosts.length === 0 ? (
+                                            <p className="text-center col-span-full">該当の記事がありません。</p>
+                                        ) : (
+                                            categoryFilteredPosts.map(post => (
+                                                <Elements.PostCard key={post.slug} post={post} linkPrefix={type} />
+                                            ))
+                                        );
+                                    })()}
+                                </div>
+                            </TabsContent>
+                        )
                     ))}
                 </Tabs>
                 </>
