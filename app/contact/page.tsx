@@ -33,6 +33,7 @@ import {
     CardTitle,
 } from "@/components/ui/card"
 import { Mail } from 'lucide-react'
+import Link from 'next/link'
 
 const formSchema = z.object({
     name: z.string().min(2, {
@@ -57,6 +58,7 @@ const formSchema = z.object({
 
 const ContactPage = () => {
     const [isSubmitted, setIsSubmitted] = useState(false)
+    const [errorMessage, setErrorMessage] = useState<string | null>(null)
 
     const form = useForm<z.infer<typeof formSchema>>({
         resolver: zodResolver(formSchema),
@@ -70,6 +72,7 @@ const ContactPage = () => {
     })
 
     function onSubmit(values: z.infer<typeof formSchema>) {
+        setErrorMessage(null); // エラーメッセージをリセット
         fetch('/api/send-email', {
             method: 'POST',
             headers: {
@@ -81,11 +84,12 @@ const ContactPage = () => {
             if (response.ok) {
                 setIsSubmitted(true);
             } else {
-                console.error('メール送信に失敗しました。');
+                setErrorMessage('メール送信に失敗しました。もう一度お試しください。');
             }
         })
         .catch((error) => {
             console.error('エラーが発生しました:', error);
+            setErrorMessage('エラーが発生しました。ネットワーク接続を確認してください。');
         });
     }
 
@@ -112,7 +116,7 @@ const ContactPage = () => {
                                 <Mail className="mr-3 h-5 w-5 text-primary" />
                                 <div>
                                     <h3 className="text-sm font-medium">メール</h3>
-                                    <p className="text-sm text-muted-foreground">gaomuyouxi81@gmail.com</p>
+                                    <Link href="mailto:gaomuyouxi81@gmail.com" className="text-sm text-muted-foreground">gaomuyouxi81@gmail.com</Link>
                                 </div>
                             </div>
                             {/* <div className="flex items-start">
@@ -166,6 +170,11 @@ const ContactPage = () => {
                                 </CardDescription>
                             </CardHeader>
                             <CardContent>
+                                {errorMessage && (
+                                    <div className="mb-4 text-sm text-red-600">
+                                        {errorMessage}
+                                    </div>
+                                )}
                                 <Form {...form}>
                                     <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
                                         <div className="grid gap-4 sm:grid-cols-2">

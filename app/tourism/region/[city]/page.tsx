@@ -1,6 +1,6 @@
 import * as Elements from '@/app/components/elements/index';
 import * as Sections from '@/app/components/sections/index';
-import { regions } from "@/app/components/sections/regions/FeaturedRegions";
+import { regions } from '@/app/components/sections/regions/data';
 // import { Metadata } from 'next';
 
 // export async function generateMetadata({ params }: { params: { city: string } }): Promise<Metadata> {
