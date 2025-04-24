@@ -174,7 +174,7 @@ const GalleryPage = () => {
 
             <Dialog open={!!selectedImage} onOpenChange={() => setSelectedImage(null)}>
                 {selectedImage && (
-                    <DialogContent className="max-w-4xl max-h-screen overflow-y-auto mx-2">
+                    <DialogContent className="max-w-4xl max-h-[90vh] overflow-y-auto mx-2">
                         <div
                             dangerouslySetInnerHTML={{
                                 __html: ReactDOMServer.renderToString(<PopupContent photo={selectedImage} />),
