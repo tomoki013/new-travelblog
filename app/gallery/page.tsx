@@ -1,12 +1,13 @@
 'use client';
 
-import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from "@/components/ui/dialog";
+import { Dialog, DialogContent } from "@/components/ui/dialog";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { MapPin } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import Image from "next/image";
 import { useEffect, useState } from "react";
 import * as Elements from "@/app/components/elements/index";
+import ReactDOMServer from "react-dom/server";
 // import { Metadata } from "next";
 
 // export const metadata: Metadata = {
@@ -173,31 +174,12 @@ const GalleryPage = () => {
 
             <Dialog open={!!selectedImage} onOpenChange={() => setSelectedImage(null)}>
                 {selectedImage && (
-                    <DialogContent className="max-w-4xl max-h-screen overflow-auto">
-                        <DialogHeader>
-                            <DialogTitle>{selectedImage.title}</DialogTitle>
-                            <DialogDescription className="flex items-center text-sm">
-                                <MapPin className="mr-1 h-3 w-3" />
-                                {selectedImage.location}
-                            </DialogDescription>
-                        </DialogHeader>
-                        <div className="relative aspect-video w-full overflow-hidden rounded-md">
-                            <Image
-                                src={selectedImage.image}
-                                alt={selectedImage.title}
-                                fill
-                                style={{ objectFit: 'cover' }}
-                                className="rounded-md"
-                            />
-                        </div>
-                        <div className="flex items-center justify-between">
-                            <Badge>{selectedImage.category}</Badge>
-                            {/* <div className="flex items-center gap-1 text-sm">
-                                <Heart className="h-4 w-4 text-red-500" fill='currentColor' />
-                                <span>{selectedImage.likes}</span>
-                            </div> */}
-                        </div>
-                        <p className="text-muted-foreground">{selectedImage.description}</p>
+                    <DialogContent className="max-w-4xl max-h-screen overflow-y-auto mx-2">
+                        <div
+                            dangerouslySetInnerHTML={{
+                                __html: ReactDOMServer.renderToString(<PopupContent photo={selectedImage} />),
+                            }}
+                        />
                     </DialogContent>
                 )}
             </Dialog>
@@ -214,6 +196,35 @@ interface Photo {
     category: string;
     likes: number;
 }
+
+const PopupContent = ({ photo }: { photo: Photo }) => (
+    <div>
+        <div>
+            <h1 className="text-2xl font-bold">{photo.title}</h1>
+            <p className="flex items-center text-sm text-muted-foreground">
+                <MapPin className="mr-1 h-3 w-3" />
+                {photo.location}
+            </p>
+        </div>
+        <div className="relative aspect-video w-full overflow-hidden rounded-md my-4">
+            <Image
+                src={photo.image}
+                alt={photo.title}
+                fill
+                style={{ objectFit: 'cover' }}
+                className="rounded-md"
+            />
+        </div>
+        <div className="flex items-center justify-between mb-4">
+            <Badge>{photo.category}</Badge>
+            {/* <div className="flex items-center gap-1 text-sm">
+                <Heart className="h-4 w-4 text-red-500" fill='currentColor' />
+                <span>{photo.likes}</span>
+            </div> */}
+        </div>
+        <p className="text-muted-foreground">{photo.description}</p>
+    </div>
+);
 
 function PhotoCard({ photo, onClick }: { photo: Photo; onClick: () => void }) {
     return (
