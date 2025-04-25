@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server';
-import photosData from '../../../public/data/galleryPhoto.json';
+import photosData from '../../../public/data/galleryPhoto/galleryPhoto.json';
 import fs from 'fs';
 import path from 'path';
 
