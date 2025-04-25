@@ -122,3 +122,8 @@
         @apply bg-background text-foreground;
     }
 }
+
+* {
+    box-sizing: border-box;
+    word-break: auto-phrase;
+}
