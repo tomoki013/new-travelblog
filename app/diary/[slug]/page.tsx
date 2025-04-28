@@ -2,7 +2,7 @@ import { Badge } from "@/components/ui/badge";
 // import { Button } from "@/components/ui/button";
 import getAllPosts, { getPostBySlug } from "@/lib/markdown";
 import { Separator } from "@radix-ui/react-select";
-import { Calendar, MapPin } from "lucide-react";
+import { ArrowLeft, ArrowRight, Calendar, MapPin } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
@@ -116,12 +116,14 @@ const DiaryPostPage = async (props: { params: Promise<{ slug: string }>}) => {
                         <div className="flex justify-between">
                             {prevPost && (
                                 <Link href={`/diary/${prevPost.slug}`} className="text-sm font-medium hover:underline">
-                                    ← {prevPost.title}
+                                    <ArrowLeft className="mr-1 h-4 w-4" />
+                                    {prevPost.title}
                                 </Link>
                             )}
                             {nextPost && (
                                 <Link href={`/diary/${nextPost.slug}`} className="text-sm font-medium hover:underline">
-                                    {nextPost.title} →
+                                    {nextPost.title}
+                                    <ArrowRight className="ml-1 h-4 w-4" />
                                 </Link>
                             )}
                         </div>
@@ -159,7 +161,7 @@ const DiaryPostPage = async (props: { params: Promise<{ slug: string }>}) => {
                 </div>
 
                 <div>
-                    <div className="sticky top-20 space-y-8">
+                    <div className="sticky top-24 space-y-8">
                         <div className="rounded-lg border bg-card p-6">
                             <h3 className="mb-4 text-lg font-medium">最新の記事</h3>
                             <div className="space-y-4">

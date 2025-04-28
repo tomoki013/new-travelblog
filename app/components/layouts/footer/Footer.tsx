@@ -29,7 +29,7 @@ const Footer = () => {
             <div className="container py-10">
                 <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 md:grid-cols-5">
                     <div className="space-y-3">
-                        <h3 className="text-lg font-medium">ともきちの旅行日記</h3>
+                        <Link href="/" className="text-lg font-medium">ともきちの旅行日記</Link>
                         <p className="text-sm text-muted-foreground">日本と世界の旅行記録と観光情報を発信するブログサイトです。</p>
                         <div className="flex space-x-3">
                             <Elements.InstagramIcon />
