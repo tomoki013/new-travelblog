@@ -156,7 +156,7 @@ const TourismPostPage = async (props: { params: Promise<{ slug: string }>}) => {
                 </div>
 
                 <div>
-                    <div className="sticky top-20 space-y-8">
+                    <div className="sticky top-24 space-y-8">
                         <div className="hidden md:block">
                             <div className="max-h-64 overflow-y-auto">
                                 <Sections.TableOfContents />

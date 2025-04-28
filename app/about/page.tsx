@@ -5,6 +5,7 @@ import { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import { members } from "@/lib/member";
+import { Badge } from "@/components/ui/badge";
 
 export const metadata: Metadata = {
     title: 'ともきちの旅行日記｜About-旅の記録と発見の物語',
@@ -92,7 +93,7 @@ const AboutPage = () => {
                                 </div>
                                 <CardContent className="p-6">
                                     <h3 className="mb-1 text-xl font-bold">{member.name}</h3>
-                                    <p className="mb-3 text-sm text-primary">{member.role}</p>
+                                    <Badge className="mb-3">{member.role}</Badge>
                                     <p className="text-muted-foreground">{member.description}</p>
                                 </CardContent>
                             </Card>
