@@ -6,6 +6,7 @@ import * as Elements from '@/app/components/elements/index';
 export const contentsList = [
     { name: "旅行日記", pass: "/diary" },
     { name: "観光情報", pass: "/tourism" },
+    { name: "旅程＆費用レポート", pass: "/itinerary" },
     { name: "写真ギャラリー", pass: "/gallery" },
 ];
 

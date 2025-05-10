@@ -8,7 +8,6 @@ import type { Metadata } from "next";
 import * as Elements from '@/app/components/elements/index';
 import * as Sections from '@/app/components/sections/index';
 import { members } from "@/lib/member";
-import Article from '@/app/components/sections/article/Article';
 
 export async function generateStaticParams() {
     const posts = getAllPosts('tourism')
@@ -58,7 +57,7 @@ const TourismPostPage = async (props: { params: Promise<{ slug: string }>}) => {
             </Elements.ListLink>
 
             <div className="grid gap-10 lg:grid-cols-3">
-                <Article
+                <Sections.Article
                     post={post}
                     author={author}
                 />

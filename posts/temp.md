@@ -1,6 +1,6 @@
 ---
 title: "title"
-date: "2024-03-03"
+dates: ["2024-03-03"]
 excerpt: "description"
 image: "/images//"
 location: ""

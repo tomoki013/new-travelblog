@@ -10,7 +10,7 @@ interface Post {
     excerpt: string;
     image: string;
     location: string;
-    date: string;
+    dates: string[];
     category: string;
 }
 
@@ -30,7 +30,7 @@ const PostCard = ({ post, linkPrefix }: { post: Post; linkPrefix: string }) => {
                     <Badge variant='outline'>{post.category}</Badge>
                     <span className="flex items-center text-xs text-muted-foreground">
                         <Calendar className="mr-1 h-3 w-3" />
-                        {post.date}
+                        {post.dates.join("～")}
                     </span>
                 </div>
                 <h3 className="mb-2 text-xl font-bold">{post.title}</h3>
