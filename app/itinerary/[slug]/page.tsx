@@ -1,12 +1,17 @@
 import * as Elements from '@/app/components/elements/index';
 import * as Sections from '@/app/components/sections/index';
 import { Badge } from '@/components/ui/badge';
-import { getPostBySlug } from '@/lib/markdown';
+import getAllPosts, { getPostBySlug } from '@/lib/markdown';
 import { members } from '@/lib/member';
+import Image from 'next/image';
+import Link from 'next/link';
 
 const ItineraryPostPage = async (props: { params: Promise<{ slug: string }>}) => {
     const params = await props.params;
-    const post = await getPostBySlug('itinerary', params.slug)
+    const post = await getPostBySlug('itinerary', params.slug);
+    const diaryPosts = getAllPosts('diary').filter((diaryPost) =>
+        diaryPost.slug.includes(params.slug)
+    );
 
     const author = members.find((member) => member.name === post.author) || { name: "ともきちの旅行日記", role: "", image: "/favicon.ico", description: "" };
     
@@ -28,31 +33,31 @@ const ItineraryPostPage = async (props: { params: Promise<{ slug: string }>}) =>
                                 <Sections.TableOfContents />
                             </div>
                         </div>
-                        {/* <div className="rounded-lg border bg-card p-6">
-                            <h3 className="mb-4 text-lg font-medium">関連する記事</h3>
+                        <div className="rounded-lg border bg-card p-6">
+                            <h3 className="mb-4 text-lg font-medium">関連する旅行日記</h3>
                             <div className="space-y-4">
-                                {relatedPosts.slice(0, 3).map((relatedPost) => (
-                                    <div key={relatedPost.slug} className="flex gap-3">
+                                {diaryPosts.slice(0, 3).map((diaryPost) => (
+                                    <div key={diaryPost.slug} className="flex gap-3">
                                         <div className="relative h-16 w-16 flex-shrink-0 overflow-hidden rounded-md">
                                             <Image
-                                                src={relatedPost.image}
-                                                alt={relatedPost.title}
+                                                src={diaryPost.image}
+                                                alt={diaryPost.title}
                                                 fill
                                                 style={{ objectFit: 'cover' }}
                                             />
                                         </div>
                                         <div>
                                             <h4 className="text-sm font-medium">
-                                                <Link href={`/tourism/${relatedPost.slug}`} className="hover:underline">
-                                                    {relatedPost.title}
+                                                <Link href={`/tourism/${diaryPost.slug}`} className="hover:underline">
+                                                    {diaryPost.title}
                                                 </Link>
                                             </h4>
-                                            <p className="text-xs text-muted-foreground">{relatedPost.date}</p>
+                                            <p className="text-xs text-muted-foreground">{diaryPost.dates}</p>
                                         </div>
                                     </div>
                                 ))}
                             </div>
-                        </div> */}
+                        </div>
 
                         <div className="rounded-lg border bg-card p-6">
                             <h3 className="mb-4 text-lg font-medium">人気のタグ</h3>

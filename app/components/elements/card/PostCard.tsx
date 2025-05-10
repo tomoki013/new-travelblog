@@ -3,16 +3,7 @@ import { Badge } from "@/components/ui/badge";
 import Image from "next/image";
 import { Calendar, MapPin } from "lucide-react";
 import Link from "next/link";
-
-interface Post {
-    slug: string;
-    title: string;
-    excerpt: string;
-    image: string;
-    location: string;
-    dates: string[];
-    category: string;
-}
+import { Post } from "@/lib/types";
 
 const PostCard = ({ post, linkPrefix }: { post: Post; linkPrefix: string }) => {
     return (
