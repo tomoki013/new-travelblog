@@ -60,13 +60,15 @@ const DiaryPostPage = async (props: { params: Promise<{ slug: string }>}) => {
                     <article>
                         <div className="flex justify-between">
                             {prevPost && (
-                                <Link href={`/diary/${prevPost.slug}`} className="text-sm font-medium hover:underline">
-                                    ← {prevPost.title}
+                                <Link href={`/diary/${prevPost.slug}`} className="flex items-center text-sm font-medium hover:underline">
+                                    <ArrowLeft className="ml-1 h-4 w-4" />
+                                    {prevPost.title}
                                 </Link>
                             )}
                             {nextPost && (
-                                <Link href={`/diary/${nextPost.slug}`} className="text-sm font-medium hover:underline">
-                                    {nextPost.title} →
+                                <Link href={`/diary/${nextPost.slug}`} className="flex items-center text-sm font-medium hover:underline">
+                                    {nextPost.title}
+                                    <ArrowRight className="ml-1 h-4 w-4" />
                                 </Link>
                             )}
                         </div>
@@ -115,13 +117,13 @@ const DiaryPostPage = async (props: { params: Promise<{ slug: string }>}) => {
 
                         <div className="flex justify-between">
                             {prevPost && (
-                                <Link href={`/diary/${prevPost.slug}`} className="text-sm font-medium hover:underline">
+                                <Link href={`/diary/${prevPost.slug}`} className="flex items-center text-sm font-medium hover:underline">
                                     <ArrowLeft className="mr-1 h-4 w-4" />
                                     {prevPost.title}
                                 </Link>
                             )}
                             {nextPost && (
-                                <Link href={`/diary/${nextPost.slug}`} className="text-sm font-medium hover:underline">
+                                <Link href={`/diary/${nextPost.slug}`} className="flex items-center text-sm font-medium hover:underline">
                                     {nextPost.title}
                                     <ArrowRight className="ml-1 h-4 w-4" />
                                 </Link>
