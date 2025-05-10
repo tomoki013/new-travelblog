@@ -3,7 +3,7 @@
 import { useEffect, useState } from 'react';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import * as Elements from '@/app/components/elements/index';
-import type { Post } from '@/lib/markdown';
+import { Post } from '@/lib/types';
 
 const diaryCategories = [
     {id: 'all', name: 'すべて'},

@@ -3,6 +3,14 @@ import Posts from "./posts/posts";
 import Roulette from "./roulette/Roulette";
 import Article from "./article/Article";
 import TableOfContents from "./article/TableOfContents";
+import HeroSection from "./heroSections/HeroSection";
+import RouletteHeroSection from "./heroSections/RouletteHeroSection";
+import DiaryPostsHeroSection from "./heroSections/DiaryPostsHeroSection";
+import TourismInformationHeroSection from "./heroSections/TourismInformationHeroSection";
+import PhotoGalleryHeroSection from "./heroSections/PhotoGalleryHeroSection";
+import AppHeroSection from "./heroSections/AppHeroSection";
+import WorldClockHeroSection from "./heroSections/WorldClockHeroSection";
+import ItineraryHeroSection from "./heroSections/ItineraryHeroSection";
 
 export {
     FeaturedRegions,
@@ -10,4 +18,12 @@ export {
     Roulette,
     Article,
     TableOfContents,
+    HeroSection,
+    RouletteHeroSection,
+    DiaryPostsHeroSection,
+    TourismInformationHeroSection,
+    PhotoGalleryHeroSection,
+    AppHeroSection,
+    WorldClockHeroSection,
+    ItineraryHeroSection,
 }

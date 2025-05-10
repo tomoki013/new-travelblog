@@ -6,17 +6,7 @@ import Link from "next/link";
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
 import * as Sections from "@/app/components/sections/index";
-
-interface Post {
-    slug: string;
-    title: string;
-    category: string;
-    dates: string[];
-    location: string;
-    image: string;
-    content: string;
-    tags: string[];
-}
+import { Post } from "@/lib/types";
 
 interface Author {
     name: string;

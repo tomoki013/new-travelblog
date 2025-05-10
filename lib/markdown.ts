@@ -1,21 +1,9 @@
 import fs from 'fs';
 import path from 'path';
 import matter from 'gray-matter';
+import { Post } from './types';
 
 type PostType = 'diary' | 'tourism' | 'itinerary'
-
-export interface Post {
-    slug: string
-    title: string
-    dates: string[] // 型を配列に変更
-    content: string
-    excerpt: string
-    image: string
-    category: string
-    location: string
-    author: string
-    tags: string[]
-}
 
 const postsDirectory = path.join(process.cwd(), 'posts');
 
