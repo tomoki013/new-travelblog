@@ -5,12 +5,13 @@ import Image from "next/image";
 import Link from "next/link";
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
+import * as Sections from "@/app/components/sections/index";
 
 interface Post {
     slug: string;
     title: string;
     category: string;
-    date: string;
+    dates: string[];
     location: string;
     image: string;
     content: string;
@@ -29,9 +30,10 @@ interface ArticleProps {
     author: Author;
     prevPost?: { slug: string; title: string } | null;
     nextPost?: { slug: string; title: string } | null;
+    navHidden?: string;
 }
 
-const Article = ({ post, author, prevPost = null, nextPost = null }: ArticleProps) => {
+const Article = ({ post, author, prevPost = null, nextPost = null, navHidden }: ArticleProps) => {
     return (
         <div className="lg:col-span-2">
             <article>
@@ -55,7 +57,7 @@ const Article = ({ post, author, prevPost = null, nextPost = null }: ArticleProp
                     <div className="flex flex-wrap items-center gap-4 text-sm text-muted-foreground">
                         <div className="flex items-center">
                             <Calendar className="mr-1 h-4 w-4" />
-                            {post.date}
+                            {post.dates.join("～")}
                         </div>
                         <div className="flex items-center">
                             <MapPin className="mr-1 h-4 w-4" />
@@ -72,6 +74,13 @@ const Article = ({ post, author, prevPost = null, nextPost = null }: ArticleProp
                         priority
                     />
                 </div>
+
+                <div className={`" md:hidden mb-4" ${navHidden}`}>
+                    <div className="max-h-64 overflow-y-auto">
+                        <Sections.TableOfContents />
+                    </div>
+                </div>
+
                 <div className="prose prose-lg max-w-none dark:prose-invert">
                     <ReactMarkdown
                         remarkPlugins={[remarkGfm]}

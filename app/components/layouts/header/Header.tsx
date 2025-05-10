@@ -24,12 +24,12 @@ const routes = [
         path: '/tourism',
     },
     {
-        name: '写真ギャラリー',
-        path: '/gallery',
+        name: '旅程＆費用レポート',
+        path: '/itinerary',
     },
     {
-        name: '旅行先ルーレット',
-        path: '/roulette',
+        name: '写真ギャラリー',
+        path: '/gallery',
     },
     {
         name: 'お問い合わせ',

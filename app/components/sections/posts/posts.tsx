@@ -24,8 +24,8 @@ const tourismCategories = [
 ];
 
 interface PostsProps {
-    type: 'diary' | 'tourism';
-    filter?: 'region';
+    type: 'diary' | 'tourism' | 'itinerary';
+    filter?: 'region' | 'author';
     filterItem?: React.ReactNode;
     inputClassName?: string;
     tabListClassName?: string;
