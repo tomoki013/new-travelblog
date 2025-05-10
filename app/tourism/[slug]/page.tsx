@@ -87,7 +87,7 @@ const TourismPostPage = async (props: { params: Promise<{ slug: string }>}) => {
                                                     {relatedPost.title}
                                                 </Link>
                                             </h4>
-                                            <p className="text-xs text-muted-foreground">{relatedPost.date}</p>
+                                            <p className="text-xs text-muted-foreground">{relatedPost.dates}</p>
                                         </div>
                                     </div>
                                 ))}
