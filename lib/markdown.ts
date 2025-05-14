@@ -30,6 +30,7 @@ export function getPostBySlug(type: PostType, slug: string): Post {
         location: data.location,
         author: data.author,
         tags: data.tags || [],
+        budget: data.budget,
     }
 }
 

@@ -1,13 +1,12 @@
 import { Badge } from "@/components/ui/badge";
-// import { Button } from "@/components/ui/button";
 import getAllPosts, { getPostBySlug } from "@/lib/markdown";
 import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 // import type { Metadata } from "next";
 import * as Elements from '@/app/components/elements/index';
-import { members } from "@/lib/member";
 import * as Sections from '@/app/components/sections/index';
+import { members } from "@/lib/member";
 
 export async function generateStaticParams() {
     const posts = getAllPosts('diary')
@@ -81,7 +80,7 @@ const DiaryPostPage = async (props: { params: Promise<{ slug: string }>}) => {
                                                     {relatedPost.title}
                                                 </Link>
                                             </h4>
-                                            <p className="text-xs text-muted-foreground">{relatedPost.dates}</p>
+                                            <p className="text-xs text-muted-foreground">{relatedPost.dates.join("～")}</p>
                                         </div>
                                     </div>
                                 ))}
