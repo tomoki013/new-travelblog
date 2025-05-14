@@ -9,7 +9,7 @@ const ItineraryPage = () => {
             </div>
 
             {/* Itinerary */}
-            <Sections.Posts type='itinerary' tabListClassName="hidden" />
+            <Sections.Posts type='itinerary' budgetClassName='block' />
 
         </div>
     )

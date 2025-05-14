@@ -1,46 +1,32 @@
 import * as Sections from "@/app/components/sections/index";
 
 const Home = () => {
+    const sections = [
+        // { Component: Sections.SearchHeroSection },
+        { Component: Sections.DiaryPostsHeroSection },
+        { Component: Sections.TourismInformationHeroSection },
+        { Component: Sections.ItineraryHeroSection },
+        { Component: Sections.PhotoGalleryHeroSection },
+        { Component: Sections.RouletteHeroSection },
+        { Component: Sections.WorldClockHeroSection },
+        { Component: Sections.AppHeroSection },
+    ];
+
     return (
         <div className="flex flex-col">
-            
-            {/* ヒーローセクション */}
+            {/* Hero Section */}
             <Sections.HeroSection />
 
-            {/* Diary Posts */}
-            <section className="bg-muted relative overflow-hidden py-16 p-2">
-                <Sections.DiaryPostsHeroSection />
-            </section>
-
-            {/* Tourism Information */}
-            <section className="relative overflow-hidden py-16 p-2">
-                <Sections.TourismInformationHeroSection />
-            </section>
-            
-            {/* Itinerary Hero Section */}
-            <section className="bg-muted relative overflow-hidden py-16 p-2">
-                <Sections.ItineraryHeroSection />
-            </section>
-
-            {/* Photo Gallery Hero Section */}
-            <section className="relative overflow-hidden py-16 p-2">
-                <Sections.PhotoGalleryHeroSection />
-            </section>
-
-            {/* Roulette Hero Section */}
-            <section className="bg-muted relative overflow-hidden py-16 p-2">
-                <Sections.RouletteHeroSection />
-            </section>
-
-            {/* World Clock Hero Section */}
-            <section className="relative overflow-hidden py-16 p-2">
-                <Sections.WorldClockHeroSection />
-            </section>
-
-            {/* Travel Tools Hero Section */}
-            <section className="bg-muted relative overflow-hidden py-16 p-2">
-                <Sections.AppHeroSection />
-            </section>
+            {sections.map((section, index) => (
+                <section
+                    key={index}
+                    className={`relative overflow-hidden py-16 p-2 ${
+                        index % 2 === 0 ? "bg-muted" : ""
+                    }`}
+                >
+                    <section.Component />
+                </section>
+            ))}
 
             {/* Newsletter */}
             {/* <section className="container py-16 mx-auto">
@@ -62,9 +48,8 @@ const Home = () => {
                     </div>
                 </div>
             </section> */}
-
         </div>
     );
-}
+};
 
 export default Home;

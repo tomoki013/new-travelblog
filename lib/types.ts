@@ -9,4 +9,5 @@ export interface Post {
     location: string
     author: string
     tags: string[]
+    budget?: number
 }

@@ -11,6 +11,8 @@ import PhotoGalleryHeroSection from "./heroSections/PhotoGalleryHeroSection";
 import AppHeroSection from "./heroSections/AppHeroSection";
 import WorldClockHeroSection from "./heroSections/WorldClockHeroSection";
 import ItineraryHeroSection from "./heroSections/ItineraryHeroSection";
+import HeadsUp from "./headsUp/HeadsUp";
+import SearchHeroSection from "./heroSections/SearchHeroSection";
 
 export {
     FeaturedRegions,
@@ -26,4 +28,6 @@ export {
     AppHeroSection,
     WorldClockHeroSection,
     ItineraryHeroSection,
+    HeadsUp,
+    SearchHeroSection,
 }

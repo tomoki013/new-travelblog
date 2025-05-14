@@ -56,6 +56,8 @@ const TourismPostPage = async (props: { params: Promise<{ slug: string }>}) => {
                 観光情報一覧に戻る
             </Elements.ListLink>
 
+            <Sections.HeadsUp dates={post.dates} />
+
             <div className="grid gap-10 lg:grid-cols-3">
                 <Sections.Article
                     post={post}
@@ -87,7 +89,7 @@ const TourismPostPage = async (props: { params: Promise<{ slug: string }>}) => {
                                                     {relatedPost.title}
                                                 </Link>
                                             </h4>
-                                            <p className="text-xs text-muted-foreground">{relatedPost.dates}</p>
+                                            <p className="text-xs text-muted-foreground">{relatedPost.dates.join("～")}</p>
                                         </div>
                                     </div>
                                 ))}

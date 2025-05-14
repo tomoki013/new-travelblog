@@ -6,11 +6,25 @@ import { members } from '@/lib/member';
 import Image from 'next/image';
 import Link from 'next/link';
 
+const generateDateRange = (startDate: string, endDate: string): string[] => {
+    const start = new Date(startDate);
+    const end = new Date(endDate);
+    const dateRange: string[] = [];
+
+    for (let date = start; date <= end; date.setDate(date.getDate() + 1)) {
+        dateRange.push(date.toISOString().split('T')[0]);
+    }
+
+    return dateRange;
+};
+
 const ItineraryPostPage = async (props: { params: Promise<{ slug: string }>}) => {
     const params = await props.params;
     const post = await getPostBySlug('itinerary', params.slug);
+
+    const dateRange = generateDateRange(post.dates[0], post.dates[post.dates.length - 1]);
     const diaryPosts = getAllPosts('diary').filter((diaryPost) =>
-        diaryPost.slug.includes(params.slug)
+        dateRange.some((date) => diaryPost.dates.includes(date))
     );
 
     const author = members.find((member) => member.name === post.author) || { name: "ともきちの旅行日記", role: "", image: "/favicon.ico", description: "" };
@@ -21,7 +35,10 @@ const ItineraryPostPage = async (props: { params: Promise<{ slug: string }>}) =>
                 旅程＆費用レポート一覧に戻る
             </Elements.ListLink>
 
+            <Sections.HeadsUp dates={post.dates} />
+
             <div className="grid gap-10 lg:grid-cols-3">
+                
                 <Sections.Article
                     post={post}
                     author={author}
@@ -52,7 +69,7 @@ const ItineraryPostPage = async (props: { params: Promise<{ slug: string }>}) =>
                                                     {diaryPost.title}
                                                 </Link>
                                             </h4>
-                                            <p className="text-xs text-muted-foreground">{diaryPost.dates}</p>
+                                            <p className="text-xs text-muted-foreground">{diaryPost.dates.join("～")}</p>
                                         </div>
                                     </div>
                                 ))}
