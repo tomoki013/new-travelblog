@@ -1,8 +1,8 @@
 import * as Sections from "@/app/components/sections/index";
 import { members } from "@/lib/member";
 
-const AuthorPage = (props: { params: { author: string } }) => {
-    const params = props.params;
+const AuthorPage = async (props: { params: Promise<{ author: string }>}) => {
+    const params = await props.params;
     const decodedAuthor = decodeURIComponent(params.author).replace(/\}$/g, ''); // 余分な`}`を削除
     const authorMember = members.find((member) => member.name === decodedAuthor);
 
