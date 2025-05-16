@@ -1,8 +1,6 @@
 "use client";
 
-import { Badge } from "@/components/ui/badge";
 import { ArrowRight } from "lucide-react";
-import Image from "next/image";
 import Link from "next/link";
 import * as Elements from "@/app/components/elements/index";
 import { useEffect, useState } from "react";
@@ -41,22 +39,12 @@ const TourismInformationHeroSection = () => {
             ) : (
                 <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
                     {tourismPosts.slice(0, 8).map((info) => (
-                        <Link key={info.slug} href={`/tourism/${info.slug}`}>
-                            <div className="group relative h-64 overflow-hidden rounded-lg">
-                                <Image
-                                    src={info.image}
-                                    alt={info.title}
-                                    fill
-                                    style={{ objectFit: 'cover' }}
-                                    className="transition-transform duration-300 group-hover:scale-110"
-                                />
-                                <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent" />
-                                <div className="absolute bottom-0 left-0 p-4 text-white">
-                                    <Badge className="mb-2">{info.category}</Badge>
-                                    <h3 className="text-lg font-bold">{info.title}</h3>
-                                </div>
-                            </div>
-                        </Link>
+                        <Elements.PostCard
+                            key={info.slug}
+                            post={info}
+                            linkPrefix="tourism"
+                            postCardType={2}
+                        />
                     ))}
                 </div>
             )}

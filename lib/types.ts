@@ -10,4 +10,5 @@ export interface Post {
     author: string
     tags: string[]
     budget?: number
+    type: 'diary' | 'tourism' | 'itinerary'; // 投稿のタイプを追加
 }

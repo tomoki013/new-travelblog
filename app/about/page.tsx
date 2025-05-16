@@ -82,21 +82,23 @@ const AboutPage = () => {
                     <h2 className="mb-12 text-center text-3xl font-bold">チームメンバー</h2>
                     <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3 p-4">
                         {members.map((member) => (
-                            <Card key={member.name} className="overflow-hidden">
-                                <div className="relative h-64 w-full">
-                                    <Image
-                                        src={member.image}
-                                        alt={member.name}
-                                        fill
-                                        style={{ objectFit: 'cover' }}
-                                    />
-                                </div>
-                                <CardContent className="p-6">
-                                    <h3 className="mb-1 text-xl font-bold">{member.name}</h3>
-                                    <Badge className="mb-3">{member.role}</Badge>
-                                    <p className="text-muted-foreground">{member.description}</p>
-                                </CardContent>
-                            </Card>
+                            <Link href={`/personal/${member.name}`} key={member.name} className="group hover:shadow-lg">
+                                <Card className="overflow-hidden">
+                                    <div className="relative h-64 w-full">
+                                        <Image
+                                            src={member.image}
+                                            alt={member.name}
+                                            fill
+                                            style={{ objectFit: 'cover' }}
+                                        />
+                                    </div>
+                                    <CardContent className="p-6">
+                                        <h3 className="mb-1 text-xl font-bold">{member.name}</h3>
+                                        <Badge className="mb-3">{member.role}</Badge>
+                                        <p className="text-muted-foreground">{member.description}</p>
+                                    </CardContent>
+                                </Card>
+                            </Link>
                         ))}
                     </div>
                 </div>

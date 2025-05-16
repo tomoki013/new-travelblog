@@ -31,7 +31,8 @@ export function getPostBySlug(type: PostType, slug: string): Post {
         author: data.author,
         tags: data.tags || [],
         budget: data.budget,
-    }
+        type, // フォルダに基づいてtypeを設定
+    };
 }
 
 export default function getAllPosts(type: PostType): Post[] {

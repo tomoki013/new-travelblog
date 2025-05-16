@@ -7,6 +7,13 @@ import { Post } from '@/lib/types';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Input } from '@/components/ui/input';
 
+const allCategories = [
+    {id: 'all', name: 'すべて'},
+    {id: 'diary', name: '旅行日記'},
+    {id: 'tourism', name: '観光情報'},
+    {id: 'itinerary', name: '旅程＆費用レポート'},
+]
+
 const diaryCategories = [
     {id: 'all', name: 'すべて'},
     {id: 'domestic', name: '国内旅行'},
@@ -33,7 +40,7 @@ const itineraryCategories = [
 ];
 
 interface PostsProps {
-    type: 'diary' | 'tourism' | 'itinerary';
+    type: 'all' | 'diary' | 'tourism' | 'itinerary';
     filter?: 'region' | 'author';
     filterItem?: React.ReactNode;
     inputClassName?: string;
@@ -55,10 +62,13 @@ const Posts = ({
     const [isLoading, setIsLoading] = useState<boolean>(true); // ローディング状態を管理
     const [budgetFilter, setBudgetFilter] = useState<string>('all'); // 予算フィルターの状態を追加
 
+    // const tabCount = (type === 'diary' ? diaryCategories : type === 'tourism' ? tourismCategories : type === 'itinerary' ? itineraryCategories : allCategories).length;
+    // const gridColsClass = `grid-cols-${Math.min(tabCount, 6)}`; // 最大6列に制限
+
     useEffect(() => {
         const fetchPosts = async () => {
             setIsLoading(true); // ローディング開始
-            const res = await fetch(`/api/posts?type=${type}`);
+            const res = await fetch(`/api/posts${type === 'all' ? '' : `?type=${type}`}`); // typeが指定されていない場合はクエリを省略
             const data = await res.json();
             setPosts(data.posts);
             setIsLoading(false); // ローディング終了
@@ -89,7 +99,7 @@ const Posts = ({
         );
 
         const budgetFilteredPosts = [...tagMatches, ...categoryMatches, ...titleMatches, ...descriptionMatches, ...contentMatches].filter(post => {
-            if (!post.budget) return true; // budgetがundefinedの場合は除外
+            if (!post.budget) return true;
             if (budgetFilter === 'all') return true;
             if (budgetFilter === '10万円以下') return post.budget <= 100000;
             if (budgetFilter === '15万円以下') return post.budget <= 150000;
@@ -133,8 +143,8 @@ const Posts = ({
                     </section>
                 </div>
                 <Tabs defaultValue="all" className="mb-10">
-                    <TabsList className={`" mb-8 grid w-full grid-cols-2 sm:grid-cols-6 h-auto " ${tabListClassName}`}>
-                        {(type === 'diary' ? diaryCategories : type === 'itinerary' ? itineraryCategories : tourismCategories).map(cat => (
+                    <TabsList className={`" mb-8 grid w-full h-auto grid-cols-2 sm:grid-cols-6 " ${tabListClassName}`}>
+                        {(type === 'diary' ? diaryCategories : type === 'tourism' ? tourismCategories : type === 'itinerary' ? itineraryCategories : allCategories).map(cat => (
                             <TabsTrigger key={cat.id} value={cat.id}>
                                 {cat.name}
                             </TabsTrigger>
@@ -148,35 +158,41 @@ const Posts = ({
                                     if (filter === 'region' && filterItem && typeof filterItem === 'string') {
                                         return post.location.includes(filterItem as string);
                                     }
+                                    if (filter === 'author' && filterItem && typeof filterItem === 'string') {
+                                        return post.author === filterItem;
+                                    }
                                     return true;
                                 });
                                 return regionFilteredPosts.length === 0 ? (
                                     <p className="text-center col-span-full">該当の記事がありません。</p>
                                 ) : (
                                     regionFilteredPosts.map(post => (
-                                        <Elements.PostCard key={post.slug} post={post} linkPrefix={type} />
+                                        <Elements.PostCard key={post.slug} post={post} linkPrefix={post.type || ''} />
                                     ))
                                 );
                             })()}
                         </div>
                     </TabsContent>
 
-                    {(type === 'diary' ? diaryCategories : type === 'itinerary' ? itineraryCategories : tourismCategories).map(cat => (
+                    {(type === 'diary' ? diaryCategories : type === 'tourism' ? tourismCategories : type === 'itinerary' ? itineraryCategories : allCategories).map(cat => (
                         cat.id !== 'all' && ( // "すべて" タブを除外
                             <TabsContent key={cat.id} value={cat.id}>
-                                <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
+                                <div className={`grid gap-8 sm:grid-cols-2 lg:grid-cols-3`}>
                                     {(() => {
                                         const categoryFilteredPosts = filteredPosts.filter(post => {
                                             if (filter === 'region' && filterItem && typeof filterItem === 'string') {
                                                 return post.location.includes(filterItem as string) && post.category?.includes(cat.name);
                                             }
-                                            return post.category?.includes(cat.name);
+                                            if (filter === 'author' && filterItem && typeof filterItem === 'string') {
+                                                return post.author === filterItem && post.type === cat.id;
+                                            }
+                                            return post.category?.includes(cat.name) || post.type === cat.id;
                                         });
                                         return categoryFilteredPosts.length === 0 ? (
                                             <p className="text-center col-span-full">該当の記事がありません。</p>
                                         ) : (
                                             categoryFilteredPosts.map(post => (
-                                                <Elements.PostCard key={post.slug} post={post} linkPrefix={type} />
+                                                <Elements.PostCard key={post.slug} post={post} linkPrefix={post.type || ''} />
                                             ))
                                         );
                                     })()}
