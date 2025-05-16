@@ -113,7 +113,7 @@ const Article = ({ post, author, prevPost = null, nextPost = null, navHidden }: 
                 </div>
                 <Separator className="my-8" />
                 <div className="flex items-center justify-between">
-                    <div className="flex items-center border p-2 rounded-lg bg-card">
+                    <Link href={`/personal/${author.name}}`} className="flex items-center border p-2 rounded-lg bg-card">
                         <div className="relative mr-4 h-10 w-10 overflow-hidden rounded-full">
                             <Image
                                 src={author.image}
@@ -127,7 +127,7 @@ const Article = ({ post, author, prevPost = null, nextPost = null, navHidden }: 
                             <p className="text-xs text-muted-foreground">{author.role}</p>
                             <p className="text-xs font-medium">{author.description}</p>
                         </div>
-                    </div>
+                    </Link>
                 </div>
             </article>
         </div>

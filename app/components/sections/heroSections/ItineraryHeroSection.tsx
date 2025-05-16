@@ -1,14 +1,12 @@
 "use client";
 
-import { Calendar, FileText, MapPin } from "lucide-react";
+import { FileText } from "lucide-react";
 import * as Elements from "@/app/components/elements/index";
 import { useEffect, useState } from "react";
 import { Post } from "@/lib/types";
 import Link from "next/link";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import Image from "next/image";
-import { Card } from "@/components/ui/card";
 
 const ItineraryHeroSection = () => {
     const [itineraryPosts, setItineraryPosts] = useState<Post[]>([]);
@@ -53,40 +51,12 @@ const ItineraryHeroSection = () => {
                     ) : (
                     <div className="space-y-4">
                         {itineraryPosts.slice(0, 2).map((post) => (
-                            <Card key={post.slug} className="overflow-hidden transition-all hover:shadow-lg">
-                                <Link href={`/itinerary/${post.slug}`}>
-                                    <div className="grid gap-4 p-6 sm:grid-cols-3">
-                                        <div className="relative aspect-[4/3] sm:col-span-1">
-                                            <Image
-                                                src={post.image}
-                                                alt={post.title}
-                                                fill
-                                                className="rounded-lg object-cover"
-                                            />
-                                        </div>
-                                        <div className="sm:col-span-2">
-                                            <div className="mb-2 flex items-center gap-2">
-                                                <Badge variant="outline">{post.category}</Badge>
-                                                <Badge variant="secondary">予算 {post.budget?.toLocaleString()}円</Badge>
-                                            </div>
-                                            <h3 className="mb-2 line-clamp-2 text-lg font-bold">{post.title}</h3>
-                                            <p className="mb-2 line-clamp-2 text-sm text-muted-foreground">
-                                                {post.excerpt}
-                                            </p>
-                                            <div className="flex items-center gap-4 text-sm text-muted-foreground">
-                                                <span className="flex items-center gap-1">
-                                                    <Calendar className="h-4 w-4" />
-                                                    {post.dates.join("～")}
-                                                </span>
-                                                <span className="flex items-center gap-1">
-                                                    <MapPin className="h-4 w-4" />
-                                                    {post.location}
-                                                </span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </Link>
-                            </Card>
+                            <Elements.PostCard
+                                key={post.slug}
+                                post={post}
+                                linkPrefix="itinerary"
+                                postCardType={3}
+                            />
                         ))}
                     </div>
                     )}
