@@ -3,6 +3,7 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { ThemeProvider } from "@/components/theme-provider";
 import * as layouts from '@/app/components/layouts/index';
+import * as Sections from "@/app/components/sections/index";
 
 const geistSans = Geist({
   	variable: "--font-geist-sans",
@@ -68,6 +69,7 @@ export default function RootLayout({
 						<main className="flex-1">{children}</main>
 						<layouts.Footer />
 					</div>
+					<Sections.ItineraryBanner />
 				</ThemeProvider>
       		</body>
     	</html>

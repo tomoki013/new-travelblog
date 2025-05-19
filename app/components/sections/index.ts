@@ -13,6 +13,7 @@ import WorldClockHeroSection from "./heroSections/WorldClockHeroSection";
 import ItineraryHeroSection from "./heroSections/ItineraryHeroSection";
 import HeadsUp from "./headsUp/HeadsUp";
 import SearchHeroSection from "./heroSections/SearchHeroSection";
+import ItineraryBanner from "./banner/ItineraryBanner";
 
 export {
     FeaturedRegions,
@@ -30,4 +31,5 @@ export {
     ItineraryHeroSection,
     HeadsUp,
     SearchHeroSection,
+    ItineraryBanner,
 }

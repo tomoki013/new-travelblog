@@ -5,6 +5,8 @@ import YouTubeIcon from "./icons/YouTubeIcon";
 import PostCard from "./card/PostCard";
 import ListLink from "./link/ListLink";
 import LoadingAnimation from "./loadingAnimation/LoadingAnimation";
+import ItineraryLink from "./link/ItineraryLink";
+import Slide from "./slide/Slide";
 
 export {
     GitHubIcon,
@@ -14,4 +16,6 @@ export {
     PostCard,
     ListLink,
     LoadingAnimation,
+    ItineraryLink,
+    Slide,
 };
