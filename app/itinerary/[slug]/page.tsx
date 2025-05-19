@@ -42,6 +42,7 @@ const ItineraryPostPage = async (props: { params: Promise<{ slug: string }>}) =>
                 <Sections.Article
                     post={post}
                     author={author}
+                    isItinerary='hidden'
                 />
                 <div>
                     <div className="sticky top-24 space-y-8">

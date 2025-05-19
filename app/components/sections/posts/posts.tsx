@@ -62,8 +62,8 @@ const Posts = ({
     const [isLoading, setIsLoading] = useState<boolean>(true); // ローディング状態を管理
     const [budgetFilter, setBudgetFilter] = useState<string>('all'); // 予算フィルターの状態を追加
 
-    // const tabCount = (type === 'diary' ? diaryCategories : type === 'tourism' ? tourismCategories : type === 'itinerary' ? itineraryCategories : allCategories).length;
-    // const gridColsClass = `grid-cols-${Math.min(tabCount, 6)}`; // 最大6列に制限
+    const tabCount = (type === 'diary' ? diaryCategories : type === 'tourism' ? tourismCategories : type === 'itinerary' ? itineraryCategories : allCategories).length;
+    const gridColsClass = `grid-cols-${Math.min(tabCount, 6)}`; // 最大6列に制限
 
     useEffect(() => {
         const fetchPosts = async () => {
@@ -143,7 +143,7 @@ const Posts = ({
                     </section>
                 </div>
                 <Tabs defaultValue="all" className="mb-10">
-                    <TabsList className={`" mb-8 grid w-full h-auto grid-cols-2 sm:grid-cols-6 " ${tabListClassName}`}>
+                    <TabsList className={`" mb-8 grid w-full h-auto grid-cols-2 sm:${gridColsClass} ${tabListClassName} "`}>
                         {(type === 'diary' ? diaryCategories : type === 'tourism' ? tourismCategories : type === 'itinerary' ? itineraryCategories : allCategories).map(cat => (
                             <TabsTrigger key={cat.id} value={cat.id}>
                                 {cat.name}

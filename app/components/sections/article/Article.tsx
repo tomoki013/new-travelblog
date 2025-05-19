@@ -5,6 +5,7 @@ import Image from "next/image";
 import Link from "next/link";
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
+import * as Elements from "@/app/components/elements/index";
 import * as Sections from "@/app/components/sections/index";
 import { Post } from "@/lib/types";
 
@@ -21,9 +22,18 @@ interface ArticleProps {
     prevPost?: { slug: string; title: string } | null;
     nextPost?: { slug: string; title: string } | null;
     navHidden?: string;
+    isItinerary?: string;
 }
 
-const Article = ({ post, author, prevPost = null, nextPost = null, navHidden }: ArticleProps) => {
+const Article = ({
+    post,
+    author,
+    prevPost = null,
+    nextPost = null,
+    navHidden,
+    isItinerary,
+}: ArticleProps
+) => {
     return (
         <div className="lg:col-span-2">
             <article>
@@ -129,6 +139,7 @@ const Article = ({ post, author, prevPost = null, nextPost = null, navHidden }: 
                         </div>
                     </Link>
                 </div>
+                <Elements.ItineraryLink isItinerary={isItinerary} />
             </article>
         </div>
     );
