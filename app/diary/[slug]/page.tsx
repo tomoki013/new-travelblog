@@ -45,6 +45,32 @@ const DiaryPostPage = async (props: { params: Promise<{ slug: string }>}) => {
     const prevPost = allPosts[currentIndex - 1] || null;
     const nextPost = allPosts[currentIndex + 1] || null;
 
+    // 日付範囲を生成する関数
+    function generateDateRange(start: string, end: string): string[] {
+        const result: string[] = [];
+        const current = new Date(start);
+        const last = new Date(end);
+        while (current <= last) {
+            result.push(current.toISOString().split('T')[0]);
+            current.setDate(current.getDate() + 1);
+        }
+        return result;
+    }
+
+    const itineraryPosts = getAllPosts('itinerary');
+    let itineraryPost = null;
+    let itineraryClass = "block";
+    if (post.dates && post.dates.length > 0) {
+        itineraryPost = itineraryPosts.find((itPost) => {
+            if (!itPost.dates || itPost.dates.length < 2) return false;
+            const range = generateDateRange(itPost.dates[0], itPost.dates[itPost.dates.length - 1]);
+            return post.dates.some(date => range.includes(date));
+        });
+    }
+    if (!itineraryPost) {
+        itineraryClass = "hidden";
+    }
+
     return (
         <div className="container py-12">
             <Elements.ListLink href="/diary">
@@ -84,6 +110,29 @@ const DiaryPostPage = async (props: { params: Promise<{ slug: string }>}) => {
                                         </div>
                                     </div>
                                 ))}
+                            </div>
+                        </div>
+                        <div className={`" rounded-lg border bg-card p-6 ${itineraryClass} "`}>
+                            <h3 className="mb-4 text-lg font-medium">旅程＆費用レポート</h3>
+                            <div className="space-y-4">
+                                <div className="flex gap-3">
+                                    <div className="relative h-16 w-16 flex-shrink-0 overflow-hidden rounded-md">
+                                        <Image
+                                            src={itineraryPost?.image || "/favicon.ico"}
+                                            alt={itineraryPost?.title || "favicon"}
+                                            fill
+                                            style={{ objectFit: 'cover' }}
+                                        />
+                                    </div>
+                                    <div>
+                                        <h4 className="text-sm font-medium">
+                                            <Link href={`/itinerary/${itineraryPost?.slug}`} className="hover:underline">
+                                                {itineraryPost?.title}
+                                            </Link>
+                                        </h4>
+                                        <p className="text-xs text-muted-foreground">{itineraryPost?.dates.join("～")}</p>
+                                    </div>
+                                </div>
                             </div>
                         </div>
 

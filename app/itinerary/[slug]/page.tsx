@@ -66,7 +66,7 @@ const ItineraryPostPage = async (props: { params: Promise<{ slug: string }>}) =>
                                         </div>
                                         <div>
                                             <h4 className="text-sm font-medium">
-                                                <Link href={`/tourism/${diaryPost.slug}`} className="hover:underline">
+                                                <Link href={`/diary/${diaryPost.slug}`} className="hover:underline">
                                                     {diaryPost.title}
                                                 </Link>
                                             </h4>
