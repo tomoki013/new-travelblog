@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
+import Script from "next/script";
 import { ThemeProvider } from "@/components/theme-provider";
 import * as layouts from '@/app/components/layouts/index';
 import * as Sections from "@/app/components/sections/index";
@@ -38,10 +39,14 @@ export default function RootLayout({
 				{/* GA */}
 				<meta name="google-adsense-account" content="ca-pub-8687520805381056" />
 				{/* 自動広告 */}
-				<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8687520805381056"
-	 crossOrigin="anonymous"></script>
+				<Script
+					async
+					src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8687520805381056"
+	 				crossOrigin="anonymous"
+					strategy="afterInteractive"
+	 			></Script>
 				{/* Google tag (gtag.js) */}
-				<script async src="https://www.googletagmanager.com/gtag/js?id=G-XYSW6RY98H"></script>
+				<Script async src="https://www.googletagmanager.com/gtag/js?id=G-XYSW6RY98H"></Script>
 				<script
 					dangerouslySetInnerHTML={{
 						__html:`
