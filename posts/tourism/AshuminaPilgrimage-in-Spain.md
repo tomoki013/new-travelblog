@@ -2,7 +2,7 @@
 title: "あしゅみな聖地巡礼旅！ in スペイン！"
 dates: ["2025-02-27"]
 excerpt: "「AbemaTVの『乃木坂世界旅 今野さんほっといてよ！』で齋藤飛鳥さん＆星野みなみさん（あしゅみな）が訪れたスペインの聖地巡礼レポート！オペラ座、サンタ・エウラリア、サン・ミゲル市場、トレドなど2人の足跡をたどって、スペインの魅力をたっぷり紹介しています。乃木坂ファン＆旅行好き必見！」"
-image: "/images/Spain/toledo-view-1.jpg"
+image: "/images/Spain/toledo-view.jpg"
 location: "スペイン-マドリード,トレド"
 category: '海外旅行, あしゅみな聖地巡礼'
 author: 'ともきち'
@@ -16,14 +16,14 @@ AbemaTVで放送された「#乃木坂世界旅 今野さんほっといてよ�
 
 ## ① テアトル・レアル（オペラ座）
 
-![今野さんほっといてよスタートの地、テアトル・レアルのオペラ座の写真](/images/Spain/teatro-real.jpg)
+![今野さんほっといてよスタートの地、テアトル・レアルのオペラ座の写真](/images/Spain/theatre-real.jpg)
 
 旅は齋藤飛鳥さんのソロスタートから始まります。オペラ座前の広場がその第一歩。
 ここから、朝食をとるために「サンタ・エウラリア」へ向かいます。
 
 ### 【途中の花屋さん】
 
-![テアトル・レアルからサンタ・エウラリアの途中にある目印の花屋さんの写真](/images/Spain/flower-shop.jpg)
+![テアトル・レアルからサンタ・エウラリアの途中にある目印の花屋さんの写真](/images/Spain/florists-near-santa-eulalia.jpg)
 
 通り道にあった花屋さんがとてもカラフルで、街の雰囲気にぴったりでした。スペインらしい彩りが素敵です。
 
@@ -31,13 +31,13 @@ AbemaTVで放送された「#乃木坂世界旅 今野さんほっといてよ�
 
 ## ② サンタ・エウラリア
 
-![サンタ・エウラリアの写真](/images/Spain/santa-eulalia1.jpg)
+![サンタ・エウラリアの写真](/images/Spain/santa-eulalia.jpg)
 
 次はパン好きの星野みなみさんのために、齋藤飛鳥さんが選んだカフェ「サンタ・エウラリア」。
 内装はオシャレで、パンはふんわり＆香ばしく、まさに絶品！
 2人が座っていたと思われる席もチェックできました。
 
-![サンタ・エウラリアで齋藤飛鳥と星野みなみが座った場所の写真](/images/Spain/santa-eulalia2.jpg)
+![サンタ・エウラリアで齋藤飛鳥と星野みなみが座った場所の写真](/images/Spain/the-table-where-they-would-have-sat.jpg)
 
 ---
 
@@ -70,7 +70,7 @@ llaollaoのヨーグルトアイスはさっぱりしていて暑い日にはぴ
 
 ## ⑥ ラスベンタス闘牛場
 
-![ラスベンタス闘牛場の写真](/images/Spain/plaza-de-toros-de-las-ventas-1.jpg)
+![ラスベンタス闘牛場の写真](/images/Spain/las-ventas-bullring.jpg)
 
 スペインらしいスポットとして訪れたのが「ラスベンタス闘牛場」。
 実際に中に入った2人は、少し想像と違ったようで途中でリタイアしていましたね。
@@ -79,7 +79,7 @@ llaollaoのヨーグルトアイスはさっぱりしていて暑い日にはぴ
 
 ## ⑦ トレド
 
-![トレドの写真](/images/Spain/toledo-view-1.jpg)
+![トレドの写真](/images/Spain/toledo-view.jpg)
 
 「スペイン滞在が1日ならトレドに行け」という言葉があるほど美しい街、トレドにも2人は訪れました。
 
@@ -105,7 +105,7 @@ llaollaoのヨーグルトアイスはさっぱりしていて暑い日にはぴ
 ### ZINGS Taurine and souvenirs shop in Madrid Spain
 
 ![ZINGS Taurine and souvenirs shop in Madrid Spain](/images/Spain/zings.jpg)
-![二人が買ったTシャツ](/images/Spain/t-shirt.jpg)
+![二人が買ったTシャツ](/images/Spain/zings-cloth.jpg)
 
 ぜひ二人とお揃いのTシャツを買ってみてください！
 

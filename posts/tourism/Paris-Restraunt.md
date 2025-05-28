@@ -2,7 +2,7 @@
 title: "パリおすすめレストラン＆カフェ特集🍷🥐  "
 dates: ["2025-02-20"]
 excerpt: "パリ旅行で訪れたいおすすめのレストラン＆カフェ5選をご紹介。エッフェル塔近くのビストロから、スイーツが絶品の老舗カフェ、クレープの名店まで、美味しいと雰囲気が両方楽しめるスポットを厳選しました。"
-image: "/images/France/french1.jpg"
+image: "/images/France/steak-at-le-vieux-bistrot.jpg"
 location: "フランス-パリ"
 category: '海外旅行,グルメ'
 author: 'ともきち'
@@ -15,7 +15,7 @@ Bonjour（こんにちは）！今回は、パリ旅行中に実際に訪れて�
 
 ## 1. Le Camp de Mars 
 
-![Le Camp de Marsの写真](/images/France/le-camp-de-mars.jpg)
+![Le Camp de Marsの写真](/images/France/dinner-with-eiffel-tower.jpg)
 
 エッフェル塔からほど近いこのビストロは、まさに「これぞパリ！」という雰囲気。観光客向けかと思いきや、料理のクオリティは本格派。ステーキやダックコンフィなど、フランス伝統料理をしっかり味わえます。スタッフもフレンドリーで、言葉がわからなくても優しく対応してくれました。  
 
@@ -24,6 +24,7 @@ Bonjour（こんにちは）！今回は、パリ旅行中に実際に訪れて�
 ## 2. Carette  
 
 ![Caretteの写真](/images/France/carette.jpg)
+![Caretteの写真](/images/France/carrette-macarons-and-chocolate-mousse.jpg)
 
 パリジャンたちにも人気の老舗カフェ「Carette」。トロカデロ広場にある本店は、朝から晩まで活気があり、テラス席からはエッフェル塔もちらっと見えます。マカロンやモンブランなどスイーツが絶品で、紅茶やカフェラテとの相性も抜群。朝食セットも充実していて、優雅な1日の始まりにぴったりです。  
 
@@ -31,7 +32,7 @@ Bonjour（こんにちは）！今回は、パリ旅行中に実際に訪れて�
 
 ## 3. Coup de Torchon  
 
-![Coup de Torchonの写真](/images/France/le-coup-de-torchon.jpg)
+![Coup de Torchonの写真](/images/France/coup-de-torchon.jpg)
 
 モンパルナスにある隠れ家のようなビストロ。店内は落ち着いた大人の雰囲気で、地元の人たちが集う穴場的存在。季節の素材を使った料理が多く、ワインリストも充実。まさに知る人ぞ知る名店です。  
 
@@ -39,7 +40,7 @@ Bonjour（こんにちは）！今回は、パリ旅行中に実際に訪れて�
 
 ## 4. Le Vieux Bistro  
 
-![Le Vieux Bistroの写真](/images/France/le-vieux-bistro.jpg)
+![Le Vieux Bistroの写真](/images/France/le-vieux-bistrot.jpg)
 
 ノートルダム大聖堂の近くにあるクラシカルなフレンチレストラン。石造りの外観に木の温もりを感じる内装で、まるで中世にタイムスリップしたような気分。お料理はどれも丁寧な味付けで、特にエスカルゴと鴨料理が絶品でした。予約必須の人気店です！  
 
