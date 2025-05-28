@@ -6,11 +6,11 @@ import { FaChevronLeft, FaChevronRight } from "react-icons/fa";
 
 const images = [
     "/images/India/tajmahal.jpg",
-    "/images/France/eiffel-tower-4.jpg",
-    "/images/Spain/toledo-view-1.jpg",
+    "/images/France/eiffel-tower-and-sunset.jpg",
+    "/images/Spain/toledo-view.jpg",
     "/images/Thai/wat-arun-4.jpg",
-    "/images/France/louvre-1.jpg",
-    "/images/Spain/sagrada-familia2.jpg",
+    "/images/France/louvre-museum1.jpg",
+    "/images/Spain/sagrada-familia.jpg",
     // 必要に応じて画像パスを追加
 ];
 

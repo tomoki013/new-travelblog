@@ -34,7 +34,7 @@ const PhotoGalleryHeroSection = () => {
                         </div>
                         <div className="relative aspect-square overflow-hidden rounded-lg">
                             <Image
-                                src="/images/Spain/toledo-view-1.jpg"
+                                src="/images/Spain/toledo-view.jpg"
                                 alt="トレド旧市街の景色"
                                 fill
                                 style={{ objectFit: 'cover' }}
@@ -43,7 +43,7 @@ const PhotoGalleryHeroSection = () => {
                     </div>
                     <div className="relative aspect-video overflow-hidden rounded-lg">
                         <Image
-                            src="/images/France/eiffel-tower-4.jpg"
+                            src="/images/France/eiffel-tower-and-sunset.jpg"
                             alt="夕陽とエッフェル塔"
                             fill
                             style={{ objectFit: 'cover' }}

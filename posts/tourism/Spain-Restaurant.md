@@ -2,7 +2,7 @@
 title: "スペインおすすめレストランガイド"
 dates: ["2025-02-27"]
 excerpt: "スペイン各都市の特色を活かした絶品グルメを堪能できる、食の旅ガイド。マドリードの老舗タパスバー、バルセロナの洗練された創作料理、トレドの伝統的なビアレストランなど、旅の計画に役立つおすすめレストランを厳選紹介。"
-image: "/images/Spain/ajilo.jpg"
+image: "/images/Spain/la-casa-del-abuelo's-ajilo.jpg"
 location: "スペイン-マドリード,バルセロナ,トレド"
 category: '海外旅行,グルメ'
 author: 'ともきち'
@@ -33,7 +33,7 @@ tags: ["海外", "ヨーロッパ", "スペイン", "マドリード", "バル�
 
 ### 3. **Mesón del Champiñón**
 
-![Mesón del Champiñónの写真](/images/Spain/meson-del-champignon.jpg)
+![Mesón del Champiñónの写真](/images/Spain/meson-del-champinon.jpg)
 
 マッシュルーム料理専門のユニークなバル。名物は、ガーリックとハーブがたっぷり効いた鉄板焼きのマッシュルーム。中に詰められたソーセージがジューシーで、ビールとの相性も抜群です。地下にある店内は、洞窟のような独特の雰囲気で、まるで別世界に迷い込んだかのよう。観光の途中の軽食にも最適です。
 
@@ -51,7 +51,7 @@ tags: ["海外", "ヨーロッパ", "スペイン", "マドリード", "バル�
 
 ### 1. **casalolea**
 
-![casaloleaの写真](/images/Spain/casalolea.jpg)
+![casaloleaの写真](/images/Spain/casa-lolea.jpg)
 
 洗練されたモダンな空間で、クリエイティブなタパス料理を楽しめるレストラン。どの料理も見た目が美しく、味のバランスも抜群。例えば「イベリコ豚のカルパッチョ」や「トリュフ香るスクランブルエッグ」など、グルメな一皿が揃っています。スタッフのサービスも丁寧で、デートや特別な日のディナーにぴったりです。
 
@@ -75,7 +75,7 @@ tags: ["海外", "ヨーロッパ", "スペイン", "マドリード", "バル�
 
 ### 4. **l’Arrosseria Xativa Sant Antoni**
 
-![l’Arrosseria Xativa Sant Antoniの写真](/images/Spain/l’arrosseria-xativa-sant-antoni.jpg)
+![l’Arrosseria Xativa Sant Antoniの写真](/images/Spain/l’arrosseria-xativa-sant-antoni's-paella.jpg)
 
 パエリア専門のレストランとして地元でも有名。特に魚介の旨味が凝縮された「マリスコパエリア（海鮮パエリア）」は絶品で、パリッと焼きあがったおこげ部分がたまらない美味しさ。店内は広々としていてグループ利用にも◎。週末は混み合うので、事前予約をおすすめします。
 
