@@ -46,6 +46,7 @@ interface PostsProps {
     inputClassName?: string;
     tabListClassName?: string;
     budgetClassName?: string;
+    gridColsClass: string;
 }
 
 const Posts = ({
@@ -55,15 +56,13 @@ const Posts = ({
     inputClassName,
     tabListClassName,
     budgetClassName,
+    gridColsClass = 'sm:grid-cols-6',
 }: PostsProps) => {
     const [posts, setPosts] = useState<Post[]>([]);
     const [searchQuery, setSearchQuery] = useState<string>('');
     const [filteredPosts, setFilteredPosts] = useState<Post[]>([]);
     const [isLoading, setIsLoading] = useState<boolean>(true); // ローディング状態を管理
     const [budgetFilter, setBudgetFilter] = useState<string>('all'); // 予算フィルターの状態を追加
-
-    const tabCount = (type === 'diary' ? diaryCategories : type === 'tourism' ? tourismCategories : type === 'itinerary' ? itineraryCategories : allCategories).length;
-    const gridColsClass = `grid-cols-${Math.min(tabCount, 6)}`; // 最大6列に制限
 
     useEffect(() => {
         const fetchPosts = async () => {
@@ -143,7 +142,7 @@ const Posts = ({
                     </section>
                 </div>
                 <Tabs defaultValue="all" className="mb-10">
-                    <TabsList className={`" mb-8 grid w-full h-auto grid-cols-2 sm:${gridColsClass} ${tabListClassName} "`}>
+                    <TabsList className={`mb-8 grid w-full h-auto grid-cols-2 ${gridColsClass} ${tabListClassName}`}>
                         {(type === 'diary' ? diaryCategories : type === 'tourism' ? tourismCategories : type === 'itinerary' ? itineraryCategories : allCategories).map(cat => (
                             <TabsTrigger key={cat.id} value={cat.id}>
                                 {cat.name}

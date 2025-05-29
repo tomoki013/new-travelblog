@@ -32,7 +32,7 @@ const AuthorPage = async (props: { params: Promise<{ author: string }>}) => {
                 </Elements.ListLink>
             </div>
 
-            <Sections.Posts type="all" filter="author" filterItem={decodedAuthor} />
+            <Sections.Posts type="all" filter="author" filterItem={decodedAuthor} gridColsClass="sm:grid-cols-4" />
 
         </div>
     );
