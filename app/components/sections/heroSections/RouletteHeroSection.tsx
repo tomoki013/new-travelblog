@@ -26,7 +26,7 @@ const RouletteHeroSection = () => {
                 <div className="relative">
                     <div className="relative aspect-square max-w-md overflow-hidden rounded-full border-8 border-primary/20">
                         <Image
-                            src="/images/France/eiffel-tower-4.jpg"
+                            src="/images/France/eiffel-tower-and-sunset.jpg"
                             alt="エッフェル塔と夕陽"
                             fill
                             style={{ objectFit: 'cover' }}

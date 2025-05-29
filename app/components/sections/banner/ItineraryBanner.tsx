@@ -11,9 +11,12 @@ const ItineraryBanner = () => {
     const pathname = usePathname();
     const isItinerary = pathname.startsWith("/itinerary");
     const isBlog = pathname.startsWith("/diary/") || pathname.startsWith("/tourism/");
+    const isContact = pathname.startsWith("/contact");
+    const isPrivacy = pathname.startsWith("/privacy");
+    const isTerms = pathname.startsWith("/terms");
 
-    if (isItinerary || isBlog) {
-        return null; // 旅程＆費用レポートページ、ブログページでは表示しない
+    if (isItinerary || isBlog || isContact || isPrivacy || isTerms) {
+        return null; // 旅程＆費用レポートページ、ブログページ、お問い合わせページ、プライバシーポリシー、利用規約では表示しない
     }
 
     return (

@@ -18,7 +18,7 @@ const TourismPage = () => {
             <Sections.FeaturedRegions />
 
             {/* Tourism Information */}
-            <Sections.Posts type="tourism" />
+            <Sections.Posts type="tourism" gridColsClass='sm:grid-cols-6' />
 
             {/* Travel Tips */}
             <section className="mt-16 rounded-xl bg-muted p-8">

@@ -46,7 +46,7 @@ const PostCard = ({ post, linkPrefix, postCardType }: { post: Post; linkPrefix: 
                                 </div>
                                 <h3 className="mb-2 line-clamp-2 text-lg font-bold">{post.title}</h3>
                                 <p className="mb-2 line-clamp-2 text-sm text-muted-foreground">
-                                    {post.excerpt}
+                                    {post.excerpt.length > 120 ? post.excerpt.slice(0, 120) + '...' : post.excerpt}
                                 </p>
                                 <div className="flex items-center gap-4 text-sm text-muted-foreground">
                                     <span className="flex items-center gap-1">
@@ -81,7 +81,9 @@ const PostCard = ({ post, linkPrefix, postCardType }: { post: Post; linkPrefix: 
                             </span>
                         </div>
                         <h3 className="mb-2 text-xl font-bold">{post.title}</h3>
-                        <p className="mb-4 text-sm text-muted-foreground">{post.excerpt}</p>
+                        <p className="mb-4 text-sm text-muted-foreground">
+                            {post.excerpt.length > 120 ? post.excerpt.slice(0, 120) + '...' : post.excerpt}
+                        </p>
                         <div className="flex items-center justify-between">
                             <span className="flex items-center text-xs text-muted-foreground">
                                 <MapPin className="mr-1 h-3 w-3" />
