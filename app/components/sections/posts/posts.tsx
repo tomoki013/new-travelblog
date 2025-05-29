@@ -46,7 +46,7 @@ interface PostsProps {
     inputClassName?: string;
     tabListClassName?: string;
     budgetClassName?: string;
-    gridColsClass: string;
+    gridColsClass?: string;
 }
 
 const Posts = ({
