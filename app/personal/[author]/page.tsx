@@ -1,6 +1,6 @@
 import * as Elements from "@/app/components/elements/index";
 import * as Sections from "@/app/components/sections/index";
-import { members } from "@/public/data/member/member";
+import { members } from "@/data/member";
 import Image from "next/image";
 
 const AuthorPage = async (props: { params: Promise<{ author: string }>}) => {

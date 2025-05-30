@@ -2,7 +2,7 @@ import * as Elements from '@/app/components/elements/index';
 import * as Sections from '@/app/components/sections/index';
 import { Badge } from '@/components/ui/badge';
 import getAllPosts, { getPostBySlug } from '@/lib/markdown';
-import { members } from '@/public/data/member/member';
+import { members } from '@/data/member';
 import Image from 'next/image';
 import Link from 'next/link';
 
