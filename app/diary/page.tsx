@@ -15,7 +15,7 @@ const DiaryPage = () => {
             </div>
 
             {/* Diary Posts */}
-            <Sections.Posts type="diary" gridColsClass='sm:grid-cols-6' />
+            <Sections.Posts type="diary" />
 
         </div>
     );
