@@ -4,7 +4,7 @@ import { Camera, Globe, MapPin, Users } from "lucide-react"
 import { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
-import { members } from "@/public/data/member/member";
+import { members } from "@/data/member";
 import { Badge } from "@/components/ui/badge";
 
 export const metadata: Metadata = {

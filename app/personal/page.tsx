@@ -1,6 +1,6 @@
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent } from "@/components/ui/card";
-import { members } from "@/public/data/member/member";
+import { members } from "@/data/member";
 import Image from "next/image";
 import Link from "next/link";
 

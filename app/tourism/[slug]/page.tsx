@@ -7,7 +7,7 @@ import { notFound } from "next/navigation";
 import type { Metadata } from "next";
 import * as Elements from '@/app/components/elements/index';
 import * as Sections from '@/app/components/sections/index';
-import { members } from "@/public/data/member/member";
+import { members } from "@/data/member";
 
 export async function generateStaticParams() {
     const posts = getAllPosts('tourism')
