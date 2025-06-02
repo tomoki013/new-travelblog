@@ -3,7 +3,8 @@ import * as Sections from '@/app/components/sections/index';
 import { regions } from '@/data/cities';
 import { Metadata } from 'next';
 
-export async function generateMetadata({ params }: { params: { city: string } }): Promise<Metadata> {
+export async function generateMetadata(props: { params: Promise<{ city: string }>}): Promise<Metadata> {
+    const params = await props.params;
     const decodedCity = await decodeURIComponent(params.city);
 
     const metadata = regions.find(region => region.city.toLowerCase() === decodedCity.toLowerCase());
