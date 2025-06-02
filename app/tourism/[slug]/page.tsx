@@ -9,10 +9,6 @@ import * as Elements from '@/app/components/elements/index';
 import * as Sections from '@/app/components/sections/index';
 import { members } from "@/data/member";
 
-type Props = {
-    params: { slug: string };
-}
-
 async function getPostData(slug: string) {
     const post = await getPostBySlug('tourism', slug);
     if (!post) {
@@ -23,7 +19,7 @@ async function getPostData(slug: string) {
 
 // 動的にメタデータを生成
 export async function generateMetadata(
-    { params }: Props,
+    { params }: { params: { slug: string } },
 ): Promise<Metadata> {
     const slug = params.slug;
     const post = await getPostData(slug);

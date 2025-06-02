@@ -8,10 +8,6 @@ import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import { Metadata } from 'next';
 
-type Props = {
-    params: { slug: string };
-}
-
 async function getPostData(slug: string) {
     const post = await getPostBySlug('itinerary', slug);
     if (!post) {
@@ -22,7 +18,7 @@ async function getPostData(slug: string) {
 
 // 動的にメタデータを生成
 export async function generateMetadata(
-    { params }: Props,
+    { params }: { params: { slug: string } },
 ): Promise<Metadata> {
     const slug = params.slug;
     const post = await getPostData(slug);
