@@ -17,9 +17,8 @@ async function getPostData(slug: string) {
 }
 
 // 動的にメタデータを生成
-export async function generateMetadata(
-    { params }: { params: { slug: string } },
-): Promise<Metadata> {
+export async function generateMetadata(props: { params: Promise<{ slug: string }>}): Promise<Metadata> {
+    const params = await props.params;
     const slug = params.slug;
     const post = await getPostData(slug);
 
