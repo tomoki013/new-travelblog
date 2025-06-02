@@ -52,8 +52,8 @@ export async function generateMetadata(
     }
 }
 
-const DiaryPostPage = async (props: { params: Promise<{ slug: string }>}) => {
-    const params = await props.params;
+const DiaryPostPage = async (props: { params: { slug: string } }) => {
+    const { params } = props;
     const post = await getPostBySlug('diary', params.slug);
     const allPosts = getAllPosts('diary');
 
