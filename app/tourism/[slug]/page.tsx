@@ -49,8 +49,8 @@ export async function generateMetadata(
     }
 }
 
-const TourismPostPage = async (props: { params: { slug: string } }) => {
-    const { params } = props;
+const TourismPostPage = async (props: { params: Promise<{ slug: string }>}) => {
+    const params = await props.params;
     const post = await getPostBySlug('tourism', params.slug)
     const relatedPosts = getAllPosts('tourism')
         .filter((p) => p.slug !== post.slug)

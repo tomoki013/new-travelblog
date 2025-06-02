@@ -6,47 +6,47 @@ import { notFound } from "next/navigation";
 import * as Elements from '@/app/components/elements/index';
 import * as Sections from '@/app/components/sections/index';
 import { members } from "@/data/member";
-// import type { Metadata } from "next";
+import type { Metadata } from "next";
 
-// async function getPostData(slug: string) {
-//     const post = await getPostBySlug('diary', slug);
-//     if (!post) {
-//         notFound();
-//     }
-//     return post;
-// }
+async function getPostData(slug: string) {
+    const post = await getPostBySlug('diary', slug);
+    if (!post) {
+        notFound();
+    }
+    return post;
+}
 
-// // 動的にメタデータを生成
-// export async function generateMetadata(
-//     { params }: { params: { slug: string } },
-// ): Promise<Metadata> {
-//     const slug = params.slug;
-//     const post = await getPostData(slug);
+// 動的にメタデータを生成
+export async function generateMetadata(
+    { params }: { params: { slug: string } },
+): Promise<Metadata> {
+    const slug = params.slug;
+    const post = await getPostData(slug);
 
-//     return {
-//         title: post.title,
-//         description: post.excerpt,
-//         authors: [{ name: post.author }],
-//         openGraph: {
-//             title: post.title,
-//             description: post.excerpt,
-//             type: 'article',
-//             images: [
-//                 {
-//                     url: post.image,
-//                     width: 1200,
-//                     height: 630,
-//                     alt: post.title,
-//                 },
-//             ],
-//         },
-//         twitter: {
-//             title: post.title,
-//             description: post.excerpt,
-//             images: [post.image],
-//         },
-//     }
-// }
+    return {
+        title: post.title,
+        description: post.excerpt,
+        authors: [{ name: post.author }],
+        openGraph: {
+            title: post.title,
+            description: post.excerpt,
+            type: 'article',
+            images: [
+                {
+                    url: post.image,
+                    width: 1200,
+                    height: 630,
+                    alt: post.title,
+                },
+            ],
+        },
+        twitter: {
+            title: post.title,
+            description: post.excerpt,
+            images: [post.image],
+        },
+    }
+}
 
 const DiaryPostPage = async (props: { params: Promise<{ slug: string }>}) => {
     const params = await props.params;
