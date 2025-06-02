@@ -60,8 +60,8 @@ const generateDateRange = (startDate: string, endDate: string): string[] => {
     return dateRange;
 };
 
-const ItineraryPostPage = async (props: { params: { slug: string } }) => {
-    const { params } = props;
+const ItineraryPostPage = async (props: { params: Promise<{ slug: string }>}) => {
+    const params = await props.params;
     const post = await getPostBySlug('itinerary', params.slug);
 
     const dateRange = generateDateRange(post.dates[0], post.dates[post.dates.length - 1]);
