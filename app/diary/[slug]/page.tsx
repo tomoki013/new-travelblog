@@ -48,8 +48,8 @@ import { members } from "@/data/member";
 //     }
 // }
 
-const DiaryPostPage = async (props: { params: { slug: string } }) => {
-    const { params } = props;
+const DiaryPostPage = async (props: { params: Promise<{ slug: string }>}) => {
+    const params = await props.params;
     const post = await getPostBySlug('diary', params.slug);
     const allPosts = getAllPosts('diary');
 
