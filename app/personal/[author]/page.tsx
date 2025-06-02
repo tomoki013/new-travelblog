@@ -6,9 +6,8 @@ import { Metadata } from "next";
 import { notFound } from "next/navigation";
 
 // 動的にメタデータを生成
-export async function generateMetadata(
-    { params }: { params: { author: string } }
-): Promise<Metadata> {
+export async function generateMetadata(props: { params: Promise<{ author: string }>}): Promise<Metadata> {
+    const params = await props.params;
     const decodedAuthor = decodeURIComponent(params.author).replace(/\}$/g, '');
     const authorMember = members.find((member) => member.name === decodedAuthor);
     if (!authorMember) {
