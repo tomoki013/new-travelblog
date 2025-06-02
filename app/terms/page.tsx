@@ -1,4 +1,22 @@
 import { Separator } from "@radix-ui/react-select";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+    title: '利用規約',
+    description: 'ともきちの旅行日記の利用規約です。サイトの利用条件や禁止事項、免責事項などを詳しく説明しています。',
+    openGraph: {
+        title: '利用規約',
+        description: 'ともきちの旅行日記の利用規約です。サイトの利用条件や禁止事項、免責事項などを詳しく説明しています。',
+    },
+    twitter: {
+        title: '利用規約',
+        description: 'ともきちの旅行日記の利用規約です。サイトの利用条件や禁止事項、免責事項などを詳しく説明しています。',
+    },
+    robots: {
+        index: false,
+        follow: true,
+    },
+}
 
 const TermsPage = () => {
     return (

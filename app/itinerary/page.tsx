@@ -1,4 +1,18 @@
 import * as Sections from '@/app/components/sections/index';
+import { Metadata } from 'next';
+
+export const metadata: Metadata = {
+  	title: '旅程＆費用レポート–日本各地の観光・グルメ・宿泊・交通情報',
+  	description: 'ともきちの旅行日記の「旅程＆費用レポート」では、日本各地の観光スポット、グルメ、宿泊施設、交通手段など、旅行計画に役立つ情報を詳しく紹介しています。',
+  	openGraph: {
+  	  	title: '旅程＆費用レポート–日本各地の観光・グルメ・宿泊・交通情報',
+  	  	description: 'ともきちの旅行日記の「旅程＆費用レポート」では、日本各地の観光スポット、グルメ、宿泊施設、交通手段など、旅行計画に役立つ情報を詳しく紹介しています。',
+  	},
+  	twitter: {
+  	  	title: '旅程＆費用レポート–日本各地の観光・グルメ・宿泊・交通情報',
+  	  	description: 'ともきちの旅行日記の「旅程＆費用レポート」では、日本各地の観光スポット、グルメ、宿泊施設、交通手段など、旅行計画に役立つ情報を詳しく紹介しています。',
+  	},
+}
 
 const ItineraryPage = () => {
     return (

@@ -1,37 +1,20 @@
-"use client"
+import WorldClockClient from "./WorldClockClient"
+import { Metadata } from 'next'
 
-import { useEffect, useState } from 'react';
-import { Card } from '@/components/ui/card';
-import { Clock, MapPin } from 'lucide-react';
-import WorldClock from './worldClock/WorldClock';
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import * as Elements from '@/app/components/elements/index';
+export const metadata: Metadata = {
+    title: '世界時計',
+    description: '世界各地の現地時刻をリアルタイムで確認できる無料ツール。旅行の計画や海外の友人との連絡に便利にお使いください。',
+    openGraph: {
+        title: '世界時計',
+        description: '世界各地の現地時刻をリアルタイムで確認できる無料ツール。旅行の計画や海外の友人との連絡に便利にお使いください。',
+    },
+    twitter: {
+        title: '世界時計',
+        description: '日本と世世界各地の現地時刻をリアルタイムで確認できる無料ツール。旅行の計画や海外の友人との連絡に便利にお使いください。界の美しい風景、文化、食べ物を通じて、新しい旅の発見をお届けする旅行ブログ。',
+    },
+}
 
 const WorldClockPage = () => {
-    interface City {
-        name: string;
-        country: string;
-        timeZone: string;
-        region: string; // 地域を追加
-    }
-
-    const [cities, setCities] = useState<City[]>([]);
-    const [isLoading, setLoading] = useState(true);
-
-    useEffect(() => {
-        const fetchCities = async () => {
-            setLoading(true);
-            const response = await fetch('/api/cities');
-            const data = await response.json();
-            setCities(data);
-            setLoading(false);
-        };
-
-        fetchCities();
-    }, []);
-
-    const regions = ['すべて', 'アジア', 'ヨーロッパ', '北米', '南米', 'オセアニア', 'アフリカ']; // タブのリスト
-
     return (
         <div className="container py-12">
             <div className="mb-12 text-center">
@@ -40,54 +23,7 @@ const WorldClockPage = () => {
                     世界各地の現地時刻をリアルタイムで確認できます。旅行の計画や、海外の友人との連絡に便利にお使いください。
                 </p>
             </div>
-
-            {isLoading ? (
-                <div className="flex justify-center items-center h-64">
-                    <Elements.LoadingAnimation />
-                </div>
-            ) : (
-                <Tabs defaultValue="すべて" className="mb-10">
-                    <TabsList className="mb-8 grid w-full grid-cols-2 sm:grid-cols-7 h-auto">
-                        {regions.map(region => (
-                            <TabsTrigger key={region} value={region}>
-                                {region}
-                            </TabsTrigger>
-                        ))}
-                    </TabsList>
-
-                    {/* タブコンテンツ */}
-                    {regions.map(region => (
-                        <TabsContent key={region} value={region}>
-                            <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
-                                {cities
-                                    .filter(city => region === 'すべて' || city.region === region)
-                                    .map(city => (
-                                        <Card key={city.name} className="overflow-hidden">
-                                            <div className="relative">
-                                                <div className="p-6">
-                                                    <div className="mb-4 flex items-center justify-between">
-                                                        <div className="flex items-center gap-2">
-                                                            <Clock className="h-5 w-5 text-primary" />
-                                                            <h2 className="text-xl font-bold">{city.name}</h2>
-                                                        </div>
-                                                        <div className="flex items-center text-sm text-muted-foreground">
-                                                            <MapPin className="mr-1 h-4 w-4" />
-                                                            {city.country}
-                                                        </div>
-                                                    </div>
-                                                    <WorldClock name={city.name} timeZone={city.timeZone} />
-                                                </div>
-                                            </div>
-                                        </Card>
-                                    ))}
-                                {cities.filter(city => region === 'すべて' || city.region === region).length === 0 && (
-                                    <p className="text-center col-span-full">該当する都市がありません。</p>
-                                )}
-                            </div>
-                        </TabsContent>
-                    ))}
-                </Tabs>
-            )}
+            <WorldClockClient />
         </div>
     );
 };

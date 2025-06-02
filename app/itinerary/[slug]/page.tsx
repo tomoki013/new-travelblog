@@ -5,6 +5,52 @@ import getAllPosts, { getPostBySlug } from '@/lib/markdown';
 import { members } from '@/data/member';
 import Image from 'next/image';
 import Link from 'next/link';
+import { notFound } from 'next/navigation';
+import { Metadata } from 'next';
+
+type Props = {
+    params: { slug: string };
+}
+
+async function getPostData(slug: string) {
+    const post = await getPostBySlug('itinerary', slug);
+    if (!post) {
+        notFound();
+    }
+    return post;
+}
+
+// 動的にメタデータを生成
+export async function generateMetadata(
+    { params }: Props,
+): Promise<Metadata> {
+    const slug = params.slug;
+    const post = await getPostData(slug);
+
+    return {
+        title: post.title,
+        description: post.excerpt,
+        authors: [{ name: post.author }],
+        openGraph: {
+            title: post.title,
+            description: post.excerpt,
+            type: 'article',
+            images: [
+                {
+                    url: post.image,
+                    width: 1200,
+                    height: 630,
+                    alt: post.title,
+                },
+            ],
+        },
+        twitter: {
+            title: post.title,
+            description: post.excerpt,
+            images: [post.image],
+        },
+    }
+}
 
 const generateDateRange = (startDate: string, endDate: string): string[] => {
     const start = new Date(startDate);

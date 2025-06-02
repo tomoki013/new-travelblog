@@ -3,7 +3,7 @@
 import { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { regions } from "./data";
+import { regions } from "../../../../data/cities";
 
 const FeaturedRegions = () => {
     const [currentIndex, setCurrentIndex] = useState(0);

@@ -1,5 +1,23 @@
 import { Separator } from "@radix-ui/react-select"
+import { Metadata } from "next";
 import Link from "next/link"
+
+export const metadata: Metadata = {
+    title: 'プライバシーポリシー',
+    description: 'ともきちの旅行日記のプライバシーポリシーです。個人情報の取り扱いやCookieの使用について詳しく説明しています。',
+    openGraph: {
+        title: 'プライバシーポリシー',
+        description: 'ともきちの旅行日記のプライバシーポリシーです。個人情報の取り扱いやCookieの使用について詳しく説明しています。',
+    },
+    twitter: {
+        title: 'プライバシーポリシー',
+        description: 'ともきちの旅行日記のプライバシーポリシーです。個人情報の取り扱いやCookieの使用について詳しく説明しています。',
+    },
+    robots: {
+        index: false,
+        follow: true,
+    },
+}
 
 const PrivacyPage = () => {
     return (
