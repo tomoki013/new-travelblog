@@ -11,16 +11,16 @@ const ItineraryLink = ({
     return (
         <Link
             href={"/itinerary"}
-            className={`" relative block w-full h-32 rounded-2xl overflow-hidden group shadow-lg m-4 ${isItinerary} "`}
+            className={`relative block w-full max-w-full h-28 md:h-32 rounded-2xl overflow-hidden overflow-x-hidden group shadow-lg ${isItinerary}`}
         >
             {/* 背景画像 */}
             <div
-                  className="absolute inset-0 bg-cover bg-center transition-transform duration-300 group-hover:scale-101 z-10"
-                  style={{ backgroundImage: "url('/images/Thai/wat-arun-4.jpg')" }}
+                className="absolute inset-0 bg-cover bg-center transition-transform duration-300 group-hover:scale-101 z-10"
+                style={{ backgroundImage: "url('/images/Thai/wat-arun-4.jpg')" }}
             ></div>
 
             {/* テキスト */}
-            <div className="absolute inset-0 flex items-center justify-center gap-12 z-11">
+            <div className="absolute inset-0 flex items-center justify-center gap-4 z-11">
                 <span className="text-white text-3xl font-bold drop-shadow-md">
                     旅程＆費用レポート公開中！
                 </span>
