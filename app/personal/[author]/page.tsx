@@ -44,30 +44,30 @@ const AuthorPage = async (props: { params: Promise<{ author: string }>}) => {
 
     return (
         <div className="container py-12">
-            <div className="mb-12 flex justify-center items-center gap-4">
-                <div className="mb-4 flex justify-center">
-                    <Image
-                        src={authorMember?.image || "/favicon.ico"}
-                        alt={authorMember?.name || "ともきちの旅行日記"}
-                        width={100}
-                        height={100}
-                        className="rounded-full object-cover"
-                    />
+            <div className="mb-12 flex flex-col md:flex-row justify-center items-center gap-8">
+                <div className="flex-shrink-0 flex justify-center mb-4 md:mb-0">
+                    <div className="relative w-48 h-48">
+                        <Image
+                            src={authorMember?.image || '/favicon.ico'}
+                            alt={authorMember?.name || 'ともきちの旅行日記'}
+                            className="rounded-full shadow-lg object-cover"
+                            fill
+                            sizes="192px"
+                            priority
+                        />
+                    </div>
                 </div>
-                <div className="flex flex-col items-center">
+                <div className="flex flex-col items-center md:items-start text-center md:text-left">
                     <h1 className="mb-4 text-4xl font-bold">{authorMember?.name}</h1>
-                    <p className="mx-auto max-w-2xl text-muted-foreground">{authorMember?.description}</p>
+                    <p className="mx-auto md:mx-0 max-w-2xl text-muted-foreground">{authorMember?.description}</p>
                 </div>
             </div>
-
-            <div className="flex justify-center">
+            <div className="flex justify-center mb-8">
                 <Elements.ListLink href="/personal">
                     著者一覧へ
                 </Elements.ListLink>
             </div>
-
             <Sections.Posts type="all" filter="author" filterItem={decodedAuthor} gridColsClass="sm:grid-cols-4" />
-
         </div>
     );
 };

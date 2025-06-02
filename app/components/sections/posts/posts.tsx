@@ -153,7 +153,7 @@ const Posts = ({
                     <TabsContent value="all">
                         <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
                             {(() => {
-                                const regionFilteredPosts = filteredPosts.filter(post => {
+                                const categoryFilteredPosts = filteredPosts.filter(post => {
                                     if (filter === 'region' && filterItem && typeof filterItem === 'string') {
                                         return post.location.includes(filterItem as string);
                                     }
@@ -162,10 +162,10 @@ const Posts = ({
                                     }
                                     return true;
                                 });
-                                return regionFilteredPosts.length === 0 ? (
+                                return categoryFilteredPosts.length === 0 ? (
                                     <p className="text-center col-span-full">該当の記事がありません。</p>
                                 ) : (
-                                    regionFilteredPosts.map(post => (
+                                    categoryFilteredPosts.map(post => (
                                         <Elements.PostCard key={post.slug} post={post} linkPrefix={post.type || ''} />
                                     ))
                                 );

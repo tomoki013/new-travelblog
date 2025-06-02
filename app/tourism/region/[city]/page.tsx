@@ -2,6 +2,7 @@ import * as Elements from '@/app/components/elements/index';
 import * as Sections from '@/app/components/sections/index';
 import { regions } from '@/data/cities';
 import { Metadata } from 'next';
+import Image from 'next/image';
 
 export async function generateMetadata(props: { params: Promise<{ city: string }>}): Promise<Metadata> {
     const params = await props.params;
@@ -52,21 +53,29 @@ const RegionPage = async (props: { params: Promise<{ city: string }>}) => {
 
     return (
         <div className="container py-12">
-
+            {/* 地域画像 */}
+            <div className="flex justify-center mb-8">
+                <div className="relative w-full max-w-xl h-72">
+                    <Image
+                        src={region.image || '/favicon.ico'}
+                        alt={region.title || decodedCity}
+                        className="rounded-lg shadow-lg object-cover"
+                        fill
+                        sizes="(max-width: 768px) 100vw, 600px"
+                        priority
+                    />
+                </div>
+            </div>
             <div className="mb-12 text-center">
                 <h1 className="mb-4 text-4xl font-bold">{decodedCity}観光情報</h1>
             </div>
-
             {/* Tourism Information */}
             <Sections.Posts type='tourism' filter='region' filterItem={decodedCity} />
-
             {/* Featured Regions */}
             <Sections.FeaturedRegions />
-
             <Elements.ListLink href="/tourism">
                 観光情報一覧に戻る
             </Elements.ListLink>
-
         </div>
     );
 }
