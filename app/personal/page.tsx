@@ -1,8 +1,22 @@
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent } from "@/components/ui/card";
 import { members } from "@/data/member";
+import { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
+
+export const metadata: Metadata = {
+    title: '著者一覧',
+    description: '本ブログの著者一覧ページです。',
+    openGraph: {
+        title: '著者一覧',
+        description: '本ブログの著者一覧ページです。',
+    },
+    twitter: {
+        title: '著者一覧',
+        description: '本ブログの著者一覧ページです。',
+    },
+}
 
 const personalPage = () => {
     return (

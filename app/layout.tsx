@@ -17,9 +17,36 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  	title: "ともきちの旅行日記 | Travel Diary",
-  	description: "日本と世界の旅行記録と観光情報",
-};
+  	title: {
+  	  	default: 'ともきちの旅行日記 | Travel Diary',
+  	  	template: '%s | ともきちの旅行日記',
+  	},
+  	description: 'ともきちの旅行日記は、日本国内外の旅先体験を写真とコラムで詳細に紹介するブログです。観光スポットやグルメ、穴場レポートを網羅し、文化体験記事や現地グルメコラム、旅費計算・世界時計・旅行先ルーレット・税金計算・予算管理機能など多彩なツールで旅行準備から思い出の記録までサポートし、旅のプラン立案を支援。',
+  	authors: [{ name: 'ともきち' }],
+  	viewport: 'width=device-width, initial-scale=1.0',
+  	openGraph: {
+  	  	title: 'ともきちの旅行日記 | Travel Diary',
+  	  	description: '日本と世界の美しい風景、文化、食べ物を通じて、新しい旅の発見をお届けする旅行ブログ。',
+  	  	url: 'https://tomokichidiary.netlify.app/',
+  	  	siteName: 'ともきちの旅行日記',
+  	  	type: 'website',
+  	  	images: [
+  	  	  	{
+  	  	  	  	url: 'favicon.ico',
+  	  	  	  	width: 1200,
+  	  	  	  	height: 630,
+  	  	  	  	alt: 'ともきちの旅行日記',
+  	  	  	},
+  	  	],
+  	},
+  	twitter: {
+  	  	card: 'summary_large_image',
+  	  	title: 'ともきちの旅行日記 | Travel Diary',
+  	  	description: '日本と世界の美しい風景、文化、食べ物を通じて、新しい旅の発見をお届けする旅行ブログ。',
+  	  	images: ['favicon.ico'],
+  	},
+  	metadataBase: new URL('https://tomokichidiary.netlify.app'),
+}
 
 export default function RootLayout({
   	children,

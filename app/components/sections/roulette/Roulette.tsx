@@ -7,7 +7,7 @@ import { Compass } from "lucide-react"
 import Image from "next/image"
 import { useRef, useState } from "react"
 import Posts from "@/app/components/sections/posts/posts"
-import { regions, regionProps } from "../regions/data";
+import { regions, regionProps } from "../../../../data/cities";
 
 const Roulette = () => {
     const [spinning, setSpinning] = useState(false)

@@ -2,6 +2,41 @@ import * as Elements from "@/app/components/elements/index";
 import * as Sections from "@/app/components/sections/index";
 import { members } from "@/data/member";
 import Image from "next/image";
+import { Metadata } from "next";
+import { notFound } from "next/navigation";
+
+// 動的にメタデータを生成
+export async function generateMetadata(
+    { params }: { params: { author: string } }
+): Promise<Metadata> {
+    const decodedAuthor = decodeURIComponent(params.author).replace(/\}$/g, '');
+    const authorMember = members.find((member) => member.name === decodedAuthor);
+    if (!authorMember) {
+        notFound();
+    }
+    return {
+        title: '著者紹介: ' + authorMember.name,
+        description: authorMember.description,
+        authors: [{ name: authorMember.name }],
+        openGraph: {
+            title: '著者紹介: ' + authorMember.name,
+            description: authorMember.description,
+            images: [
+                {
+                    url: authorMember.image,
+                    width: 1200,
+                    height: 630,
+                    alt: authorMember.name,
+                },
+            ],
+        },
+        twitter: {
+            title: '著者紹介: ' + authorMember.name,
+            description: authorMember.description,
+            images: [authorMember.image],
+        },
+    };
+}
 
 const AuthorPage = async (props: { params: Promise<{ author: string }>}) => {
     const params = await props.params;

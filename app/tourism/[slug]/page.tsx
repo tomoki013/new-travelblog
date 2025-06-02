@@ -9,26 +9,48 @@ import * as Elements from '@/app/components/elements/index';
 import * as Sections from '@/app/components/sections/index';
 import { members } from "@/data/member";
 
-export async function generateStaticParams() {
-    const posts = getAllPosts('tourism')
-    return posts.map((posts) => ({
-        slug: posts.slug,
-    }))
+type Props = {
+    params: { slug: string };
 }
 
-// 動的にメタデータを生成
-export async function generateMetadata(props: { params: Promise<{ slug: string }> }): Promise<Metadata> {
-    const params = await props.params;
-    const post = await getPostBySlug('tourism', params.slug);
-
+async function getPostData(slug: string) {
+    const post = await getPostBySlug('tourism', slug);
     if (!post) {
         notFound();
     }
+    return post;
+}
+
+// 動的にメタデータを生成
+export async function generateMetadata(
+    { params }: Props,
+): Promise<Metadata> {
+    const slug = params.slug;
+    const post = await getPostData(slug);
 
     return {
-        title: post?.title,
-        description: post?.excerpt,
-    };
+        title: post.title,
+        description: post.excerpt,
+        authors: [{ name: post.author }],
+        openGraph: {
+            title: post.title,
+            description: post.excerpt,
+            type: 'article',
+            images: [
+                {
+                    url: post.image,
+                    width: 1200,
+                    height: 630,
+                    alt: post.title,
+                },
+            ],
+        },
+        twitter: {
+            title: post.title,
+            description: post.excerpt,
+            images: [post.image],
+        },
+    }
 }
 
 const TourismPostPage = async (props: { params: Promise<{ slug: string }>}) => {
