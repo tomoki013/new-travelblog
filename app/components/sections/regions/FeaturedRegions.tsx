@@ -3,7 +3,7 @@
 import { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { regions } from "../../../../data/cities";
+import { regions } from "../../../../data/regions";
 
 const FeaturedRegions = () => {
     const [currentIndex, setCurrentIndex] = useState(0);
@@ -43,7 +43,7 @@ const FeaturedRegions = () => {
                         <Link key={region.city} href={`/tourism/region/${region.city.toLowerCase()}`}>
                             <div className="group relative h-32 overflow-hidden rounded-lg">
                                 <Image
-                                    src={region.image}
+                                    src={region.images[0]}
                                     alt={region.city}
                                     fill
                                     style={{ objectFit: 'cover' }}

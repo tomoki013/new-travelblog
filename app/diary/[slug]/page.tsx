@@ -101,6 +101,7 @@ const DiaryPostPage = async (props: { params: Promise<{ slug: string }>}) => {
                         navHidden="hidden"
                     />
                     <Elements.ItineraryLink />
+                    <Sections.SearchHeroSection />
                 </div>
                 <div>
                     <div className="sticky top-24 space-y-8">

@@ -6,7 +6,7 @@ import { motion, AnimatePresence } from "framer-motion"
 import { Compass } from "lucide-react"
 import Image from "next/image"
 import { useRef, useState } from "react"
-import { regions, regionProps } from "../../../../data/cities";
+import { regions, regionProps } from "@/data/regions";
 import * as Sections from "@/app/components/sections/index";
 
 const Roulette = () => {
@@ -111,7 +111,7 @@ const Roulette = () => {
                                     transition={{ type: 'spring', duration: 0.5 }}
                                 >
                                     <Image
-                                        src={selectedDestination.image}
+                                        src={selectedDestination.images[0]}
                                         alt={selectedDestination.city}
                                         fill
                                         style={{ objectFit: 'cover' }}

@@ -3,12 +3,13 @@
 import { Button } from "@/components/ui/button";
 import { useRouter } from 'next/navigation'; // Import useRouter
 import * as Elements from '@/app/components/elements/index';
+import { popularKeywords } from "@/data/popularKeywords";
 
 const SearchHeroSection = () => {
     const router = useRouter();
 
     return (
-        <div className="container relative z-10">
+        <div className="container relative z-10 my-2">
             <div className="mb-10">
                 <div className="rounded-xl bg-background/80 backdrop-blur-lg shadow-lg p-8 border">
                     <div className="mb-6 text-center">
@@ -20,7 +21,7 @@ const SearchHeroSection = () => {
                     <Elements.SearchBox className="mb-2" mode="url" />
                     <div className="mt-4 flex flex-wrap gap-2">
                         <p className="text-sm text-muted-foreground">人気のキーワード：</p>
-                        {["京都", "温泉", "グルメ", "格安旅行", "週末旅行", "海外"].map((tag) => (
+                        {popularKeywords.map((tag) => (
                             <Button
                                 key={tag}
                                 variant="outline"

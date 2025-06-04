@@ -3,19 +3,33 @@
 import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
 import { FaChevronLeft, FaChevronRight } from "react-icons/fa";
+import { regions } from "@/data/regions";
 
-const images = [
+const homeImages = [
     "/images/India/tajmahal.jpg",
     "/images/France/eiffel-tower-and-sunset.jpg",
     "/images/Spain/toledo-view.jpg",
     "/images/Thai/wat-arun-4.jpg",
     "/images/France/louvre-museum1.jpg",
     "/images/Spain/sagrada-familia.jpg",
-    // 必要に応じて画像パスを追加
 ];
 
-const Slide = () => {
+interface SlideProps {
+    showControls?: boolean;
+    showIndicators?: boolean;
+    imageType?: string;
+}
+
+const Slide = ({
+    showControls = true,
+    showIndicators = true,
+    imageType = '',
+}: SlideProps) => {
     const [current, setCurrent] = useState(0);
+    // imageTypeが指定されていればregionsから該当cityの画像配列を、なければhomeImages
+    const images = imageType
+        ? regions.filter(r => r.city === imageType).flatMap(r => r.images)
+        : homeImages;
     const total = images.length;
     const timeoutRef = useRef<NodeJS.Timeout | null>(null);
 
@@ -49,31 +63,37 @@ const Slide = () => {
             ))}
             <div className="absolute inset-0 bg-black/40" />
             {/* スライド操作ボタン */}
-            <button
-                onClick={prevSlide}
-                aria-label="前へ"
-                className="absolute left-4 top-1/2 z-20 -translate-y-1/2 bg-black/40 text-white rounded-full p-3 hover:bg-white/80 hover:text-black shadow-lg transition-colors"
-            >
-                <FaChevronLeft size={28} />
-            </button>
-            <button
-                onClick={nextSlide}
-                aria-label="次へ"
-                className="absolute right-4 top-1/2 z-20 -translate-y-1/2 bg-black/40 text-white rounded-full p-3 hover:bg-white/80 hover:text-black shadow-lg transition-colors"
-            >
-                <FaChevronRight size={28} />
-            </button>
+            {showControls && (
+                <>
+                    <button
+                        onClick={prevSlide}
+                        aria-label="前へ"
+                        className="absolute left-4 top-1/2 z-20 -translate-y-1/2 bg-black/40 text-white rounded-full p-3 hover:bg-white/80 hover:text-black shadow-lg transition-colors"
+                    >
+                        <FaChevronLeft size={28} />
+                    </button>
+                    <button
+                        onClick={nextSlide}
+                        aria-label="次へ"
+                        className="absolute right-4 top-1/2 z-20 -translate-y-1/2 bg-black/40 text-white rounded-full p-3 hover:bg-white/80 hover:text-black shadow-lg transition-colors"
+                    >
+                        <FaChevronRight size={28} />
+                    </button>
+                </>
+            )}
             {/* インジケーター */}
-            <div className="absolute bottom-4 left-1/2 z-20 flex -translate-x-1/2 gap-2">
-                {images.map((_, idx) => (
-                    <span
-                        key={idx}
-                        className={`block h-2 w-2 rounded-full transition-colors duration-300 ${
-                        idx === current ? "bg-white" : "bg-white/50"
-                        }`}
-                    ></span>
-                ))}
-            </div>
+            {showIndicators && (
+                <div className="absolute bottom-4 left-1/2 z-20 flex -translate-x-1/2 gap-2">
+                    {images.map((_, idx) => (
+                        <span
+                            key={idx}
+                            className={`block h-2 w-2 rounded-full transition-colors duration-300 ${
+                                idx === current ? "bg-white" : "bg-white/50"
+                            }`}
+                        ></span>
+                    ))}
+                </div>
+            )}
         </div>
     )
 }
