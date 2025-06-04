@@ -1,9 +1,22 @@
+"use client";
+
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Search } from "lucide-react";
+import { useRouter } from 'next/navigation'; // Import useRouter
+import { useState } from 'react'; // Import useState
 
 const SearchHeroSection = () => {
+    const [searchKeyword, setSearchKeyword] = useState('');
+    const [selectedCategory, setSelectedCategory] = useState('all'); // Default to 'all'
+    const router = useRouter();
+
+    const handleSearch = () => {
+        // Navigate to a search results page with query parameters
+        router.push(`/search?keyword=${encodeURIComponent(searchKeyword)}&category=${selectedCategory}`);
+    };
+
     return (
         <div className="container relative z-10">
             <div className="mb-10">
@@ -20,10 +33,17 @@ const SearchHeroSection = () => {
                             <Input
                                 placeholder="キーワードを入力..."
                                 className="pl-10"
+                                value={searchKeyword}
+                                onChange={(e) => setSearchKeyword(e.target.value)}
+                                onKeyDown={(e) => {
+                                    if (e.key === 'Enter') {
+                                        handleSearch();
+                                    }
+                                }}
                             />
                         </div>
                         <div className="md:col-span-3">
-                            <Select>
+                            <Select value={selectedCategory} onValueChange={setSelectedCategory}>
                                 <SelectTrigger>
                                     <SelectValue placeholder="カテゴリー" />
                                 </SelectTrigger>
@@ -36,13 +56,21 @@ const SearchHeroSection = () => {
                             </Select>
                         </div>
                         <div className="md:col-span-3">
-                            <Button className="w-full">検索</Button>
+                            <Button className="w-full" onClick={handleSearch}>検索</Button>
                         </div>
                     </div>
                     <div className="mt-4 flex flex-wrap gap-2">
                         <p className="text-sm text-muted-foreground">人気のキーワード：</p>
                         {['京都', '温泉', 'グルメ', '格安旅行', '週末旅行', '海外'].map((tag) => (
-                            <Button key={tag} variant="outline" size="sm">
+                            <Button
+                                key={tag}
+                                variant="outline"
+                                size="sm"
+                                onClick={() => {
+                                    // Optional: Clicking a popular keyword could also trigger a search
+                                    router.push(`/search?keyword=${encodeURIComponent(tag)}&category=all`);
+                                }}
+                            >
                                 {tag}
                             </Button>
                         ))}
