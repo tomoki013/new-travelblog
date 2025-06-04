@@ -4,9 +4,12 @@ import { Button } from "@/components/ui/button";
 import { useRouter } from 'next/navigation'; // Import useRouter
 import * as Elements from '@/app/components/elements/index';
 import { popularKeywords } from "@/data/popularKeywords";
+import { useState } from "react"; // Import useState
 
 const SearchHeroSection = () => {
     const router = useRouter();
+    // 検索キーワード状態をここで管理
+    const [keyword, setKeyword] = useState('');
 
     return (
         <div className="container relative z-10 my-2">
@@ -18,7 +21,12 @@ const SearchHeroSection = () => {
                             旅行日記、観光情報、費用レポートなど、すべての記事から検索できます
                         </p>
                     </div>
-                    <Elements.SearchBox className="mb-2" mode="url" />
+                    <Elements.SearchBox
+                        className="mb-2"
+                        mode="url"
+                        initialKeyword={keyword}
+                        onSearch={(k) => setKeyword(k)}
+                    />
                     <div className="mt-4 flex flex-wrap gap-2">
                         <p className="text-sm text-muted-foreground">人気のキーワード：</p>
                         {popularKeywords.map((tag) => (
@@ -27,6 +35,7 @@ const SearchHeroSection = () => {
                                 variant="outline"
                                 size="sm"
                                 onClick={() => {
+                                    setKeyword(tag);
                                     router.push(`/search?keyword=${encodeURIComponent(tag)}&category=all`);
                                 }}
                             >

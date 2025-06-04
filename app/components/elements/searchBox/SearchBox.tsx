@@ -6,7 +6,7 @@ import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Search } from "lucide-react";
 import { useRouter } from 'next/navigation';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 interface SearchBoxProps {
     initialKeyword?: string;
@@ -36,6 +36,11 @@ const SearchBox = ({
     const [selectedCategory, setSelectedCategory] = useState(initialCategory);
     const router = useRouter();
 
+    // initialKeywordが変化したらInputにも反映
+    useEffect(() => {
+        setSearchKeyword(initialKeyword);
+    }, [initialKeyword]);
+
     // URLパラメータで検索
     const handleSearch = () => {
         if (mode === 'realtime' && onSearch) {
@@ -61,6 +66,14 @@ const SearchBox = ({
         setSelectedCategory(value);
         if (mode === 'realtime' && onSearch) {
             onSearch(searchKeyword, value);
+        } else if (mode === 'url') {
+            // カテゴリ変更時にもURLを即時反映
+            const url = `/search?keyword=${encodeURIComponent(searchKeyword)}&category=${value}`;
+            if (typeof window !== 'undefined' && window.location.pathname === '/search') {
+                router.replace(url);
+            } else {
+                router.push(url);
+            }
         }
     };
 
@@ -80,7 +93,7 @@ const SearchBox = ({
                     }}
                 />
             </div>
-            {mode !== 'realtime' && (
+            {mode === 'url' && (
                 <div className="w-full sm:w-[180px]">
                     <Select value={selectedCategory} onValueChange={handleCategoryChange}>
                         <SelectTrigger className="w-full">
@@ -94,7 +107,7 @@ const SearchBox = ({
                     </Select>
                 </div>
             )}
-            {mode !== 'realtime' && (
+            {mode === 'url' && (
                 <div className="w-full sm:w-[120px]">
                     <Button className="w-full" onClick={handleSearch}>検索</Button>
                 </div>

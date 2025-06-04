@@ -90,7 +90,7 @@ const AboutPage = () => {
                     <h2 className="mb-12 text-center text-3xl font-bold">チームメンバー</h2>
                     <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3 p-4">
                         {members.map((member) => (
-                            <Link href={`/personal/${member.name}`} key={member.name} className="group hover:shadow-lg">
+                            <Link href={`/personal/${encodeURIComponent(member.name)}`} key={member.name} className="group hover:shadow-lg">
                                 <Card className="overflow-hidden">
                                     <div className="relative h-64 w-full">
                                         <Image
