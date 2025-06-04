@@ -6,7 +6,7 @@ export interface Post {
     excerpt: string
     image: string
     category: string[]
-    location: string
+    location: string[]
     author: string
     tags: string[]
     budget?: number

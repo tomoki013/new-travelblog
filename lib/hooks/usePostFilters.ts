@@ -3,7 +3,7 @@ import { useState, useEffect, useMemo, useCallback } from 'react';
 import { Post } from '@/lib/types';
 import { useRouter, usePathname, useSearchParams } from 'next/navigation';
 import {
-    allCategories as defaultAllCategories, // 'allCategories' だと PostsWrapper 内の変数と衝突するためエイリアス
+    allCategories as defaultAllCategories,
     diaryCategories,
     tourismCategories,
     itineraryCategories,
@@ -15,8 +15,69 @@ interface UsePostFiltersParams {
     initialCategory?: string;
     initialBudget?: string;
     syncWithUrl?: boolean;
-    pageTypeForTabs?: 'all' | 'diary' | 'tourism' | 'itinerary'; // 表示するタブの種類を決定
+    pageTypeForTabs?: 'all' | 'diary' | 'tourism' | 'itinerary';
 }
+
+// スコア計算ロジックをフックの外、またはフックの最上部に定義
+const calculatePostScore = (post: Post, searchKeywordsArray: string[]): number => {
+    // キーワードが指定されていない場合は、全ての記事にデフォルトスコア1を付与 (または0にして後続処理で扱う)
+    if (searchKeywordsArray.length === 0) return 1;
+
+    let score = 0;
+    const lowerKeywords = searchKeywordsArray.map(k => k.toLowerCase());
+
+    // 複数のキーワード全てにヒットするかどうかをチェックするヘルパー関数
+    // textInputが文字列配列の場合(tags, category)、いずれかの要素にキーワードが含まれればOK (OR検索的に)
+    // AND検索にしたい場合は、全キーワードが同一要素内にあるか、または全キーワードが配列内のいずれかの要素にヒットするかを調整する必要がある。
+    // ここでは、各キーワードがtextInput内のいずれかの要素に含まれていれば良い、というAND検索に近い形で実装。
+    const checkMatch = (textInput: string | string[] | undefined): boolean => {
+        if (!textInput) return false;
+        const textsToSearch = Array.isArray(textInput)
+            ? textInput.map(t => t.toLowerCase())
+            : [textInput.toLowerCase()];
+
+        // 全てのキーワードが、与えられたテキスト（群）のいずれかに部分一致するか
+        return lowerKeywords.every(keyword =>
+            textsToSearch.some(text => text.includes(keyword))
+        );
+    };
+
+    // 各フィールドの重み付け (この値は調整可能です)
+    const weights = {
+        title: 10,
+        location: 7,
+        tags: 5,
+        category: 5, // フロントマターのcategoryフィールド
+        excerpt: 3,
+        content: 1,
+        author: 1,
+    };
+
+    if (checkMatch(post.title)) {
+        score += weights.title;
+    }
+    if (post.location && checkMatch(post.location)) { // post.location は string[] を想定
+        score += weights.location;
+    }
+    if (post.tags && checkMatch(post.tags)) { // post.tags は string[]
+        score += weights.tags;
+    }
+    if (post.category && checkMatch(post.category)) { // post.category は string[] を想定
+        score += weights.category;
+    }
+    if (checkMatch(post.excerpt)) {
+        score += weights.excerpt;
+    }
+    if (checkMatch(post.content)) {
+        score += weights.content;
+    }
+    if (checkMatch(post.author)) {
+        score += weights.author;
+    }
+
+    return score;
+};
+
 
 export const usePostFilters = ({
     basePosts,
@@ -24,7 +85,7 @@ export const usePostFilters = ({
     initialCategory = 'all',
     initialBudget = 'all',
     syncWithUrl = false,
-    pageTypeForTabs = 'all', // デフォルトは全カテゴリタブ
+    pageTypeForTabs = 'all',
 }: UsePostFiltersParams) => {
     const router = useRouter();
     const pathname = usePathname();
@@ -41,7 +102,6 @@ export const usePostFilters = ({
     const [activeTab, setActiveTab] = useState(() => getInitialState('category', initialCategory));
     const [budget, setBudget] = useState(() => getInitialState('budget', initialBudget));
 
-    // URLパラメータの変更を監視し、内部状態を更新（syncWithUrlがtrueの場合）
     useEffect(() => {
         if (syncWithUrl) {
             setKeyword(searchParams.get('keyword') || initialKeyword);
@@ -54,7 +114,7 @@ export const usePostFilters = ({
         if (!syncWithUrl) return;
         const current = new URLSearchParams(Array.from(searchParams.entries()));
         Object.entries(newParams).forEach(([key, value]) => {
-            if (value && value !== 'all') { // 'all' はデフォルトなのでURLから削除
+            if (value && value !== 'all') {
                 current.set(key, value);
             } else {
                 current.delete(key);
@@ -62,8 +122,7 @@ export const usePostFilters = ({
         });
         const search = current.toString();
         const query = search ? `?${search}` : '';
-        // router.push(`${pathname}${query}`, { scroll: false }); // pushだと履歴が残る
-        router.replace(`${pathname}${query}`, { scroll: false }); // replaceで履歴が残らないようにする
+        router.replace(`${pathname}${query}`, { scroll: false });
     }, [syncWithUrl, router, pathname, searchParams]);
 
     const handleKeywordChange = (newKeyword: string) => {
@@ -92,44 +151,49 @@ export const usePostFilters = ({
         }
     }, [pageTypeForTabs]);
 
-    const getCategoryNameById = (id: string, categories: { id: string; name: string }[]) => {
+    const getCategoryNameById = useCallback((id: string, categories: { id: string; name: string }[]) => {
         const category = categories.find(cat => cat.id === id);
         return category ? category.name : '';
-    };
-
-    // lib/hooks/usePostFilters.ts の filterロジック修正箇所 (一部抜粋)
+    }, []);
 
     const filteredPosts = useMemo(() => {
         const searchKeywordsArray = keyword.toLowerCase().split(/\s+/).filter(Boolean);
-        const matchesAllSearchKeywords = (text: string | undefined) =>
-            searchKeywordsArray.every(k => text?.toLowerCase().includes(k));
-    
-        return basePosts.filter(post => {
-            // Keyword filter
-            const keywordMatch = searchKeywordsArray.length === 0 || (
-                matchesAllSearchKeywords(post.title) ||
-                post.tags?.some(tag => matchesAllSearchKeywords(tag)) ||
-                post.category?.some(cat => matchesAllSearchKeywords(cat)) || // string[] を想定
-                matchesAllSearchKeywords(post.excerpt) ||
-                matchesAllSearchKeywords(post.content)
-            );
-            if (!keywordMatch) return false;
-        
-            // Budget filter (変更なし)
+
+        // 1. スコアリング
+        const scoredPosts = basePosts.map(post => ({
+            ...post,
+            score: calculatePostScore(post, searchKeywordsArray),
+        }));
+
+        // 2. キーワードによるフィルタリング（スコアが0より大きいもの）
+        //    およびスコアによるソート
+        const keywordFilteredAndSortedPosts = scoredPosts
+            .filter(post => {
+                // キーワードが入力されている場合、スコアが0の記事は除外
+                if (searchKeywordsArray.length > 0 && post.score === 0) {
+                    return false;
+                }
+                return true;
+            })
+            .sort((a, b) => b.score - a.score); // スコアの高い順にソート
+
+        // 3. 予算とカテゴリタブでさらにフィルタリング
+        return keywordFilteredAndSortedPosts.filter(post => {
+            // Budget filter
             if (budget && budget !== 'all') {
-                 if (!post.budget) return false;
-                 if (budget === '10万円以下' && post.budget > 100000) return false;
-                 if (budget === '15万円以下' && post.budget > 150000) return false;
-                 if (budget === '20万円以下' && post.budget > 200000) return false;
-                 if (budget === '30万円以上' && post.budget <= 300000) return false;
+                if (!post.budget) return false;
+                if (budget === '10万円以下' && post.budget > 100000) return false;
+                if (budget === '15万円以下' && post.budget > 150000) return false;
+                if (budget === '20万円以下' && post.budget > 200000) return false;
+                if (budget === '30万円以上' && post.budget <= 300000) return false;
             }
-        
+
             // Category tab filter
             if (activeTab === 'all') return true;
-        
+
             const tabCategoryName = getCategoryNameById(activeTab, categoriesToDisplayForTabs);
-        
-            if (pageTypeForTabs === 'all') { // 検索ページ
+
+            if (pageTypeForTabs === 'all') {
                 // 記事のタイプ自体がタブIDと一致するか、または記事のカテゴリにタブ名が含まれるか
                 return post.type === activeTab || (post.category && post.category.includes(tabCategoryName));
             }
@@ -137,7 +201,7 @@ export const usePostFilters = ({
             // 記事のカテゴリにタブ名が含まれるか
             return post.category && post.category.includes(tabCategoryName);
         });
-    }, [keyword, activeTab, budget, basePosts, pageTypeForTabs, categoriesToDisplayForTabs]);
+    }, [keyword, activeTab, budget, basePosts, pageTypeForTabs, categoriesToDisplayForTabs, getCategoryNameById]);
 
     return {
         keyword,

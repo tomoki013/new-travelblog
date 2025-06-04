@@ -27,7 +27,7 @@ export function getPostBySlug(type: PostType, slug: string): Post {
         excerpt: data.excerpt,
         image: data.image,
         category: typeof data.category === 'string' ? data.category.split(',').map(c => c.trim()) : [], // 文字列なら配列に変換
-        location: data.location,
+        location: Array.isArray(data.location) ? data.location : [data.location], // 配列に変換
         author: data.author,
         tags: data.tags || [],
         budget: data.budget,
