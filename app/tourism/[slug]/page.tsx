@@ -76,10 +76,13 @@ const TourismPostPage = async (props: { params: Promise<{ slug: string }>}) => {
             <Sections.HeadsUp dates={post.dates} />
 
             <div className="grid gap-10 lg:grid-cols-3">
-                <Sections.Article
-                    post={post}
-                    author={author}
-                />
+                <div className="lg:col-span-2">
+                    <Sections.Article
+                        post={post}
+                        author={author}
+                    />
+                    <Elements.ItineraryLink />
+                </div>
                 <div>
                     <div className="sticky top-24 space-y-8">
                         <div className="hidden md:block">

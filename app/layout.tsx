@@ -58,12 +58,8 @@ export default function RootLayout({
 }: Readonly<{
   	children: React.ReactNode;
 }>) {
-	// 現在の時間を取得してテーマを設定
-	const currentHour = new Date().getHours();
-	const defaultTheme = currentHour >= 18 || currentHour < 6 ? "dark" : "light";
-
   	return (
-    	<html lang="ja">
+    	<html lang="ja" suppressHydrationWarning>
 			<head>
 
 				{/* GSC */}
@@ -79,25 +75,21 @@ export default function RootLayout({
 	 			></Script>
 				{/* Google tag (gtag.js) */}
 				<Script async src="https://www.googletagmanager.com/gtag/js?id=G-XYSW6RY98H"></Script>
-				<script
-					dangerouslySetInnerHTML={{
-						__html:`
-							window.dataLayer = window.dataLayer || [];
-							function gtag(){dataLayer.push(arguments);}
-							gtag('js', new Date());
-						
-							gtag('config', 'G-XYSW6RY98H');
-						`,
-					}}>
-				</script>
-				
+				<Script id="google-analytics">
+					{`
+						window.dataLayer = window.dataLayer || [];
+						function gtag(){dataLayer.push(arguments);}
+						gtag('js', new Date());
+						gtag('config', 'G-XYSW6RY98H');
+					`}
+				</Script>
 			</head>
       		<body
         		className={`${geistSans.variable} ${geistMono.variable} antialiased p-2`}
       		>
 				<ThemeProvider
 					attribute='class'
-					defaultTheme={defaultTheme}
+					defaultTheme='light'
 					enableSystem
 					disableTransitionOnChange
 				>

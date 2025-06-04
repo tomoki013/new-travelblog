@@ -95,13 +95,16 @@ const DiaryPostPage = async (props: { params: Promise<{ slug: string }>}) => {
             </Elements.ListLink>
 
             <div className="grid gap-10 lg:grid-cols-3">
-                <Sections.Article
-                    post={post}
-                    author={author}
-                    prevPost={prevPost}
-                    nextPost={nextPost}
-                    navHidden="hidden"
-                />
+                <div className="lg:col-span-2">
+                    <Sections.Article
+                        post={post}
+                        author={author}
+                        prevPost={prevPost}
+                        nextPost={nextPost}
+                        navHidden="hidden"
+                    />
+                    <Elements.ItineraryLink />
+                </div>
                 <div>
                     <div className="sticky top-24 space-y-8">
                         <div className="rounded-lg border bg-card p-6">
