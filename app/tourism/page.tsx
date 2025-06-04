@@ -26,7 +26,10 @@ const TourismPage = () => {
             <Sections.FeaturedRegions />
 
             {/* Tourism Information */}
-            <Sections.Posts type="tourism" />
+            <Sections.Posts
+                apiFetchType="tourism" // 地域情報は観光記事がメインと仮定
+                tabsGridColsClass="sm:grid-cols-2 md:grid-cols-6"
+            />
 
             {/* Travel Tips */}
             <section className="mt-16 rounded-xl bg-muted p-8">

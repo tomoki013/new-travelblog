@@ -1,66 +1,46 @@
-// /app/search/page.tsx
+// app/search/page.tsx
 "use client";
 
+import { useSearchParams } from 'next/navigation';
+import * as Elements from '@/app/components/elements/index';
 import * as Sections from '@/app/components/sections/index';
-import { useSearchParams } from 'next/navigation'; // To read URL query parameters
-import { Suspense } from 'react'; // For better UX with useSearchParams
+import { Suspense } from 'react';
 
-// A wrapper component to handle useSearchParams, as it needs to be in a Client Component
-const SearchResultsContent = () => {
+const getCategoryDisplayName = (categoryValue: string) => {
+    return categoryValue === 'all' ? 'すべてのカテゴリー' : categoryValue === 'diary' ? '旅行日記' : categoryValue === 'tourism' ? '観光情報' : categoryValue === 'itinerary' ? '旅程＆費用レポート' : 'その他';
+};
+
+const SearchPageContent = () => {
     const searchParams = useSearchParams();
-    const keyword = searchParams.get('keyword') || '';
-    const category = searchParams.get('category') as 'all' | 'diary' | 'tourism' | 'itinerary' || 'all';
-
-    // Determine the correct category for the Posts component
-    // The `Posts` component expects `type` to be one of 'all', 'diary', 'tourism', 'itinerary'.
-    // If the category from URL is one of these, use it directly. Otherwise, default to 'all'.
-    const postType = ['all', 'diary', 'tourism', 'itinerary'].includes(category)
-        ? category as 'all' | 'diary' | 'tourism' | 'itinerary'
-        : 'all';
+    const keyword = searchParams.get('keyword') || undefined; // undefinedを許容
+    const category = searchParams.get('category') || undefined; // undefinedを許容
 
     return (
         <div className="container py-12">
             <div className="mb-12 text-center">
-                {/* <Sections.SearchHeroSection /> */}
+                {/* <Elements.SearchBox /> */}
                 <h1 className="mb-4 text-4xl font-bold">
-                    検索結果: {keyword && `「${keyword}」`} {category !== 'all' && `(カテゴリー: ${getCategoryDisplayName(category)})`}
+                    検索結果{keyword && `:「${keyword}」`} {category && category !== 'all' && ` (カテゴリ: ${getCategoryDisplayName(category)})`}
                 </h1>
-                {(!keyword && category === 'all') && (
+                {(!keyword && (!category || category === 'all')) && (
                     <p className="mx-auto max-w-2xl text-muted-foreground">
                         検索キーワードまたはカテゴリーを入力してください。
                     </p>
                 )}
             </div>
             <Sections.Posts
-                type={postType} // Use the determined postType
-                initialSearchQuery={keyword} // Pass the keyword
-                initialCategoryFilter={category} // Pass the specific category filter
-                inputClassName='hidden'
-                tabListClassName='hidden'
-                // You might need to adjust the Posts component to accept these initial filters
-                // or modify how filtering is applied based on URL params.
+                apiFetchType="all"
+                syncWithUrl={true}
+                showSearchInput={false}
+                showCategoryTabs={false}
             />
         </div>
     );
 };
 
-// Helper function to get a display name for the category
-const getCategoryDisplayName = (categoryValue: string) => {
-    switch (categoryValue) {
-        case 'diary': return '旅行日記';
-        case 'tourism': return '観光情報';
-        case 'itinerary': return '旅程＆費用レポート';
-        default: return 'すべて';
-    }
-};
-
-const SearchPage = () => {
-    return (
-        // Suspense is recommended when using useSearchParams
-        <Suspense fallback={<div className="container py-12 text-center">読み込み中...</div>}>
-            <SearchResultsContent />
-        </Suspense>
-    );
-};
-
+const SearchPage = () => (
+    <Suspense fallback={<Elements.LoadingAnimation />}> {/* Suspenseでラップ */}
+        <SearchPageContent />
+    </Suspense>
+);
 export default SearchPage;

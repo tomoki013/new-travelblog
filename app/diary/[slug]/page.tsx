@@ -7,6 +7,7 @@ import * as Elements from '@/app/components/elements/index';
 import * as Sections from '@/app/components/sections/index';
 import { members } from "@/data/member";
 import type { Metadata } from "next";
+import { cn } from "@/lib/utils";
 
 async function getPostData(slug: string) {
     const post = await getPostBySlug('diary', slug);
@@ -76,16 +77,12 @@ const DiaryPostPage = async (props: { params: Promise<{ slug: string }>}) => {
 
     const itineraryPosts = getAllPosts('itinerary');
     let itineraryPost = null;
-    let itineraryClass = "block";
     if (post.dates && post.dates.length > 0) {
         itineraryPost = itineraryPosts.find((itPost) => {
             if (!itPost.dates || itPost.dates.length < 2) return false;
             const range = generateDateRange(itPost.dates[0], itPost.dates[itPost.dates.length - 1]);
             return post.dates.some(date => range.includes(date));
         });
-    }
-    if (!itineraryPost) {
-        itineraryClass = "hidden";
     }
 
     return (
@@ -132,7 +129,10 @@ const DiaryPostPage = async (props: { params: Promise<{ slug: string }>}) => {
                                 ))}
                             </div>
                         </div>
-                        <div className={`" rounded-lg border bg-card p-6 ${itineraryClass} "`}>
+                        <div className={cn(
+                            "rounded-lg border bg-card p-6",
+                            { "hidden": !itineraryPost }
+                        )}>
                             <h3 className="mb-4 text-lg font-medium">旅程＆費用レポート</h3>
                             <div className="space-y-4">
                                 <div className="flex gap-3">

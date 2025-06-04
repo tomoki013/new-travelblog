@@ -23,7 +23,10 @@ const DiaryPage = () => {
             </div>
 
             {/* Diary Posts */}
-            <Sections.Posts type="diary" />
+            <Sections.Posts
+                apiFetchType="diary"
+                tabsGridColsClass="sm:grid-cols-2 md:grid-cols-6" // 例: 日記ページではタブを3列に
+            />
 
         </div>
     );

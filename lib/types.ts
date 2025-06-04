@@ -5,7 +5,7 @@ export interface Post {
     content: string
     excerpt: string
     image: string
-    category: string
+    category: string[]
     location: string
     author: string
     tags: string[]

@@ -67,7 +67,12 @@ const AuthorPage = async (props: { params: Promise<{ author: string }>}) => {
                     著者一覧へ
                 </Elements.ListLink>
             </div>
-            <Sections.Posts type="all" filter="author" filterItem={decodedAuthor} gridColsClass="sm:grid-cols-4" />
+            <Sections.Posts
+                apiFetchType="all"
+                specificFilterType="author"
+                specificFilterValue={decodedAuthor}
+                tabsGridColsClass="sm:grid-cols-2 md:grid-cols-4"
+            />
         </div>
     );
 };

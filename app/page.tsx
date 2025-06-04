@@ -2,7 +2,7 @@ import * as Sections from "@/app/components/sections/index";
 
 const Home = () => {
     const sections = [
-        // { Component: Sections.SearchHeroSection },
+        { Component: Sections.SearchHeroSection },
         { Component: Sections.DiaryPostsHeroSection },
         { Component: Sections.TourismInformationHeroSection },
         { Component: Sections.ItineraryHeroSection },

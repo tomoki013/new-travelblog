@@ -6,8 +6,8 @@ import { motion, AnimatePresence } from "framer-motion"
 import { Compass } from "lucide-react"
 import Image from "next/image"
 import { useRef, useState } from "react"
-import Posts from "@/app/components/sections/posts/posts"
 import { regions, regionProps } from "../../../../data/cities";
+import * as Sections from "@/app/components/sections/index";
 
 const Roulette = () => {
     const [spinning, setSpinning] = useState(false)
@@ -137,12 +137,12 @@ const Roulette = () => {
 
             {selectedDestination && (
                 <div ref={postsRef}>
-                    <Posts
-                        type='tourism'
-                        filter='region'
-                        filterItem={selectedDestination.city}
-                        inputClassName="hidden"
-                        tabListClassName="hidden"
+                    <Sections.Posts
+                        apiFetchType="tourism"
+                        showSearchInput={false}
+                        showCategoryTabs={false}
+                        specificFilterType="region"
+                        specificFilterValue={selectedDestination.city}
                     />
                 </div>
             )}
