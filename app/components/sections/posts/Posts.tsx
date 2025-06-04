@@ -1,7 +1,7 @@
 // app/components/sections/posts/PostsWrapper.tsx
 "use client";
 
-import { useEffect, useState } from 'react';
+import { Suspense, useEffect, useState } from 'react';
 import * as Elements from '@/app/components/elements/index';
 import { Post } from '@/lib/types';
 import { usePostFilters } from '@/lib/hooks/usePostFilters';
@@ -31,7 +31,7 @@ interface PostsProps {
     specificFilterValue?: string;
 }
 
-const Posts = ({
+const PostsContent = ({
     apiFetchType,
     syncWithUrl = false,
     pageTypeForTabs = apiFetchType, // デフォルトはapiFetchTypeと同じ
@@ -143,5 +143,33 @@ const Posts = ({
         </div>
     );
 };
+
+const Posts = ({
+    apiFetchType,
+    syncWithUrl = false,
+    pageTypeForTabs = apiFetchType, // デフォルトはapiFetchTypeと同じ
+    showSearchInput = true,
+    showCategoryTabs = true,
+    showBudgetFilter = false,
+    tabsGridColsClass,
+    specificFilterType,
+    specificFilterValue,
+}: PostsProps) => {
+    return (
+        <Suspense fallback={<Elements.LoadingAnimation />}>
+            <PostsContent
+                apiFetchType={apiFetchType}
+                syncWithUrl={syncWithUrl}
+                pageTypeForTabs={pageTypeForTabs}
+                showSearchInput={showSearchInput}
+                showCategoryTabs={showCategoryTabs}
+                showBudgetFilter={showBudgetFilter}
+                tabsGridColsClass={tabsGridColsClass}
+                specificFilterType={specificFilterType}
+                specificFilterValue={specificFilterValue}
+            />
+        </Suspense>
+    )
+}
 
 export default Posts;

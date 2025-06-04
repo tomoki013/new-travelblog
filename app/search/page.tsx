@@ -5,6 +5,7 @@ import { useSearchParams } from 'next/navigation';
 import * as Elements from '@/app/components/elements/index';
 import * as Sections from '@/app/components/sections/index';
 import { Suspense } from 'react';
+// import { Metadata } from 'next';
 
 const getCategoryDisplayName = (categoryValue: string) => {
     return categoryValue === 'all' ? 'すべてのカテゴリー' : categoryValue === 'diary' ? '旅行日記' : categoryValue === 'tourism' ? '観光情報' : categoryValue === 'itinerary' ? '旅程＆費用レポート' : 'その他';
