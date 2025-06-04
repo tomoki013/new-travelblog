@@ -26,7 +26,7 @@ export function getPostBySlug(type: PostType, slug: string): Post {
         content,
         excerpt: data.excerpt,
         image: data.image,
-        category: data.category,
+        category: typeof data.category === 'string' ? data.category.split(',').map(c => c.trim()) : [], // 文字列なら配列に変換
         location: data.location,
         author: data.author,
         tags: data.tags || [],

@@ -1,177 +1,147 @@
-// app/components/sections/posts/posts.tsx
-'use client';
+// app/components/sections/posts/PostsWrapper.tsx
+"use client";
 
 import { useEffect, useState } from 'react';
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import * as Elements from '@/app/components/elements/index';
 import { Post } from '@/lib/types';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { Input } from '@/components/ui/input';
-import { allCategories, diaryCategories, tourismCategories, itineraryCategories } from '@/data/categories';
-import { useFilteredPosts } from './useFilteredPosts';
+import { usePostFilters } from '@/lib/hooks/usePostFilters';
+import { PostFiltersUI } from './PostFiltersUI';
+import { PostList } from './PostList';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'; // Tabs と TabsContent をインポート
+import { useSearchParams } from 'next/navigation';
 
 interface PostsProps {
-    type: 'all' | 'diary' | 'tourism' | 'itinerary';
-    filter?: 'region' | 'author';
-    filterItem?: React.ReactNode;
-    inputClassName?: string;
-    tabListClassName?: string;
-    budgetClassName?: string;
-    gridColsClass?: string;
-    initialSearchQuery?: string; // New prop
-    initialCategoryFilter?: string; // New prop
+    // APIからどのタイプの記事を初期取得するか
+    apiFetchType: 'all' | 'diary' | 'tourism' | 'itinerary';
+    // URL同期を行うか (検索ページではtrue, 他のリストページではfalse)
+    syncWithUrl?: boolean;
+    // ページの種類に応じて表示するタブのカテゴリリストを決定
+    pageTypeForTabs?: 'all' | 'diary' | 'tourism' | 'itinerary';
+
+    // UI要素の表示/非表示フラグ
+    showSearchInput?: boolean;
+    showCategoryTabs?: boolean;
+    showBudgetFilter?: boolean;
+
+    // UI要素のクラス名カスタマイズ用
+    tabsGridColsClass?: string; // TabsListのグリッドカラム数
+
+    // ページ固有の事前フィルタリング用 (例: /tourism/region/[city] の場合)
+    specificFilterType?: 'region' | 'author';
+    specificFilterValue?: string;
 }
 
-const Posts = ({
-    type,
-    filter,
-    filterItem,
-    inputClassName,
-    tabListClassName,
-    budgetClassName,
-    gridColsClass = 'sm:grid-cols-6',
-    initialSearchQuery = '', // Default to empty
-    initialCategoryFilter = 'all', // Default to 'all'
+const PostsWrapper = ({
+    apiFetchType,
+    syncWithUrl = false,
+    pageTypeForTabs = apiFetchType, // デフォルトはapiFetchTypeと同じ
+    showSearchInput = true,
+    showCategoryTabs = true,
+    showBudgetFilter = false,
+    tabsGridColsClass,
+    specificFilterType,
+    specificFilterValue,
 }: PostsProps) => {
-    const [posts, setPosts] = useState<Post[]>([]);
-    const [searchQuery, setSearchQuery] = useState<string>(initialSearchQuery); // Initialize with prop
-    const [isLoading, setIsLoading] = useState<boolean>(true);
-    const [budgetFilter, setBudgetFilter] = useState<string>('all');
-    const [activeTab, setActiveTab] = useState<string>(initialCategoryFilter); // Initialize active tab
+    const [basePosts, setBasePosts] = useState<Post[]>([]);
+    const [isLoading, setIsLoading] = useState(true);
 
-    useEffect(() => {
-        // If initialCategoryFilter is passed and is a valid category for the current `type`, set it as active tab.
-        const categoriesForType = type === 'diary' ? diaryCategories :
-                                 type === 'tourism' ? tourismCategories :
-                                 type === 'itinerary' ? itineraryCategories : allCategories;
-        if (categoriesForType.some(cat => cat.id === initialCategoryFilter)) {
-            setActiveTab(initialCategoryFilter);
-        } else {
-            setActiveTab('all'); // Default to 'all' if not valid or not provided
-        }
-    }, [initialCategoryFilter, type]);
+    // 外部から渡される可能性のある初期値をuseSearchParamsから取得しないようにする
+    // usePostFilters内でsyncWithUrlがtrueの場合のみURLを読み込む
+    const searchParams = useSearchParams(); // ここで取得
+    const initialKeyword = syncWithUrl ? (searchParams.get('keyword') || '') : '';
+    const initialCategory = syncWithUrl ? (searchParams.get('category') || 'all') : 'all';
+    const initialBudget = syncWithUrl ? (searchParams.get('budget') || 'all') : 'all';
 
 
     useEffect(() => {
         const fetchPosts = async () => {
             setIsLoading(true);
-            // Fetch all posts if the search comes from the hero section,
-            // then filter client-side by the specific category passed in `initialCategoryFilter` if it's not 'all'.
-            // Or, if `type` is specific, fetch only those.
-            const fetchType = (type === 'all' && initialCategoryFilter !== 'all' && ['diary', 'tourism', 'itinerary'].includes(initialCategoryFilter))
-                ? initialCategoryFilter as 'diary' | 'tourism' | 'itinerary' // Fetch specific type if category is specific
-                : type; // Otherwise, use the general type prop
-
-            const res = await fetch(`/api/posts${fetchType === 'all' ? '' : `?type=${fetchType}`}`);
+            // apiFetchTypeに基づいてAPIから記事を取得
+            const endpoint = apiFetchType === 'all' ? '/api/posts' : `/api/posts?type=${apiFetchType}`;
+            const res = await fetch(endpoint);
             const data = await res.json();
-            setPosts(data.posts);
+
+            let postsToFilter = data.posts as Post[];
+
+            // ページ固有の事前フィルタリング (例: 地域ページや著者ページ)
+            if (specificFilterType && specificFilterValue) {
+                postsToFilter = postsToFilter.filter(post => {
+                    if (specificFilterType === 'region') return post.location.includes(specificFilterValue);
+                    if (specificFilterType === 'author') return post.author === specificFilterValue;
+                    return true;
+                });
+            }
+            setBasePosts(postsToFilter);
             setIsLoading(false);
         };
         fetchPosts();
-    }, [type, initialCategoryFilter]); // Re-fetch if type or initialCategoryFilter changes
+    }, [apiFetchType, specificFilterType, specificFilterValue]);
 
-    const postsToFilter = posts; // Start with all fetched posts
-
-    // Further filter by category if the main type is 'all' but a specific category was selected in search hero
-    // This is a client-side filter after fetching.
-    const categoryFilteredForSearch = (type === 'all' && initialCategoryFilter !== 'all')
-        ? postsToFilter.filter(post => post.type === initialCategoryFilter || post.category?.includes(getCategoryNameById(initialCategoryFilter, allCategories)))
-        : postsToFilter;
-
-
-    const filteredPostsFromHook = useFilteredPosts({
-      posts: categoryFilteredForSearch, // Use the potentially pre-filtered list
-      searchQuery,
-      budgetFilter
+    const {
+        keyword,
+        activeTab,
+        budget,
+        filteredPosts,
+        categoriesForTabs,
+        handleKeywordChange,
+        handleTabChange,
+        handleBudgetChange,
+    } = usePostFilters({
+        basePosts,
+        initialKeyword,
+        initialCategory,
+        initialBudget,
+        syncWithUrl,
+        pageTypeForTabs,
     });
 
-
-    // Helper function to get category name from id
-    const getCategoryNameById = (id: string, categories: { id: string; name: string }[]) => {
-        const category = categories.find(cat => cat.id === id);
-        return category ? category.name : '';
-    };
-
-    const categoriesToDisplay = type === 'diary' ? diaryCategories :
-                                type === 'tourism' ? tourismCategories :
-                                type === 'itinerary' ? itineraryCategories : allCategories;
+    if (isLoading && basePosts.length === 0) { // 初回ロード時のみローディング表示
+        return <Elements.LoadingAnimation />;
+    }
 
     return (
         <div>
-            {isLoading ? (
-                <div className="flex justify-center items-center h-64">
-                    <Elements.LoadingAnimation />
-                </div>
-            ) : (
-                <>
-                <div className={`relative flex gap-4 ${inputClassName ? '' : 'mb-4'}`}>
-                    <Input
-                        type="text"
-                        placeholder="記事内を検索..."
-                        value={searchQuery}
-                        onChange={(e) => setSearchQuery(e.target.value)}
-                        className={`w-full p-2 border border-gray-300 rounded ${inputClassName}`}
-                    />
-                    <section className={budgetClassName || "hidden"}>
-                        {/* Budget filter remains the same */}
-                        <Select value={budgetFilter} onValueChange={setBudgetFilter}>
-                            <SelectTrigger className="w-full sm:w-[180px]">
-                                <SelectValue placeholder="予算範囲" />
-                            </SelectTrigger>
-                            <SelectContent>
-                                <SelectItem value="all">すべて</SelectItem>
-                                <SelectItem value="10万円以下">10万円以下</SelectItem>
-                                <SelectItem value="15万円以下">15万円以下</SelectItem>
-                                <SelectItem value="20万円以下">20万円以下</SelectItem>
-                                <SelectItem value="30万円以上">30万円以上</SelectItem>
-                            </SelectContent>
-                        </Select>
-                    </section>
-                </div>
-                <Tabs value={activeTab} onValueChange={setActiveTab} className="mb-10">
-                    <TabsList className={`mb-8 grid w-full h-auto grid-cols-2 ${gridColsClass} ${tabListClassName}`}>
-                        {categoriesToDisplay.map(cat => (
+            {/* フィルターUIはTabsコンポーネントの外に配置するか、TabsListだけをPostFiltersUIに任せる */}
+            <PostFiltersUI
+                keyword={keyword}
+                onKeywordChange={handleKeywordChange}
+                activeTab={activeTab}
+                onTabChange={handleTabChange} // TabsコンポーネントのonValueChangeに渡す
+                budget={budget}
+                onBudgetChange={handleBudgetChange}
+                categories={categoriesForTabs}
+                showSearchInput={showSearchInput}
+                showCategoryTabs={false} // TabsListは下のTabsコンポーネントで直接レンダリングするためfalse
+                showBudgetFilter={showBudgetFilter}
+            />
+
+            {showCategoryTabs ? (
+                <Tabs value={activeTab} onValueChange={handleTabChange} className={`mb-10`}>
+                    <TabsList className={`mb-8 grid w-full h-auto grid-cols-2 ${tabsGridColsClass}`}>
+                        {categoriesForTabs.map(cat => (
                             <TabsTrigger key={cat.id} value={cat.id}>
                                 {cat.name}
                             </TabsTrigger>
                         ))}
                     </TabsList>
-
-                    {categoriesToDisplay.map(cat => (
+                    {/* フィルタリングされた記事リストを表示 */}
+                    {/* activeTabに関わらず、filteredPostsは常に最新なので、Contentは一つで良い */}
+                    <TabsContent value={activeTab} forceMount>
+                        {isLoading && basePosts.length > 0 ? <Elements.LoadingAnimation /> : <PostList posts={filteredPosts} />}
+                    </TabsContent>
+                     {/* すべてのタブのコンテンツをレンダリングし、CSSで表示/非表示を制御する場合 */}
+                    {/* {categoriesForTabs.map(cat => (
                         <TabsContent key={cat.id} value={cat.id}>
-                            <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
-                                {(() => {
-                                    // Apply tab-based category filtering on top of search keyword filtering
-                                    const tabCategoryName = getCategoryNameById(cat.id, categoriesToDisplay);
-                                    const finalFilteredPosts = filteredPostsFromHook.filter(post => {
-                                        if (cat.id === 'all') return true; // 'すべて' tab shows all from filteredPostsFromHook
-
-                                        // For specific category tabs
-                                        if (filter === 'region' && filterItem && typeof filterItem === 'string') {
-                                            return post.location.includes(filterItem) && (post.category?.includes(tabCategoryName) || post.type === cat.id);
-                                        }
-                                        if (filter === 'author' && filterItem && typeof filterItem === 'string') {
-                                            return post.author === filterItem && (post.category?.includes(tabCategoryName) || post.type === cat.id);
-                                        }
-                                        return post.category?.includes(tabCategoryName) || post.type === cat.id;
-                                    });
-
-                                    return finalFilteredPosts.length === 0 ? (
-                                        <p className="text-center col-span-full">該当の記事がありません。</p>
-                                    ) : (
-                                        finalFilteredPosts.map(post => (
-                                            <Elements.PostCard key={post.slug} post={post} linkPrefix={post.type || ''} />
-                                        ))
-                                    );
-                                })()}
-                            </div>
+                            <PostList posts={filteredPosts} />
                         </TabsContent>
-                    ))}
+                    ))} */}
                 </Tabs>
-                </>
+            ) : (
+                 // タブがない場合は直接リスト表示
+                isLoading && basePosts.length > 0 ? <Elements.LoadingAnimation /> : <PostList posts={filteredPosts} />
             )}
         </div>
     );
 };
 
-export default Posts;
+export default PostsWrapper;

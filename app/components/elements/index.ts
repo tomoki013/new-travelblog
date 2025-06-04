@@ -7,6 +7,7 @@ import ListLink from "./link/ListLink";
 import LoadingAnimation from "./loadingAnimation/LoadingAnimation";
 import ItineraryLink from "./link/ItineraryLink";
 import Slide from "./slide/Slide";
+import SearchBox from "./searchBox/SearchBox";
 
 export {
     GitHubIcon,
@@ -18,4 +19,5 @@ export {
     LoadingAnimation,
     ItineraryLink,
     Slide,
+    SearchBox,
 };

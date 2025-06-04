@@ -4,6 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { Calendar, MapPin } from "lucide-react";
 import { Post } from "@/lib/types";
+import { getDatePrefix } from "@/lib/dateFormat";
 
 const StandardPostCard = ({ post, linkPrefix }: { post: Post; linkPrefix: string }) => (
     <Card className='overflow-hidden transition-all hover:shadow-lg'>
@@ -20,11 +21,7 @@ const StandardPostCard = ({ post, linkPrefix }: { post: Post; linkPrefix: string
                 <Badge variant='outline'>{post.category}</Badge>
                 <span className="flex items-center text-xs text-muted-foreground">
                     <p>
-                        {post.type === "diary" || post.type === "itinerary"
-                            ? "旅行日："
-                            : post.type === "tourism"
-                            ? "更新日："
-                            : ""}
+                        {getDatePrefix(post.type)}
                     </p>
                     <Calendar className="mr-1 h-3 w-3" />
                     {post.dates.join("～")}

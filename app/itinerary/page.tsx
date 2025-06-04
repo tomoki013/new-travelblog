@@ -23,7 +23,11 @@ const ItineraryPage = () => {
             </div>
 
             {/* Itinerary */}
-            <Sections.Posts type='itinerary' budgetClassName='block' gridColsClass='sm:grid-cols-4' />
+            <Sections.Posts
+                apiFetchType="itinerary"
+                showBudgetFilter={true}
+                tabsGridColsClass="sm:grid-cols-2 md:grid-cols-4"
+            />
 
         </div>
     )

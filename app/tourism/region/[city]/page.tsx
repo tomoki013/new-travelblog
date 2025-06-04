@@ -70,7 +70,12 @@ const RegionPage = async (props: { params: Promise<{ city: string }>}) => {
                 <h1 className="mb-4 text-4xl font-bold">{decodedCity}観光情報</h1>
             </div>
             {/* Tourism Information */}
-            <Sections.Posts type='tourism' filter='region' filterItem={decodedCity} />
+            <Sections.Posts
+                apiFetchType='tourism'
+                specificFilterType='region'
+                specificFilterValue={decodedCity}
+                tabsGridColsClass='sm:grid-cols-2 md:grid-cols-6'
+            />
             {/* Featured Regions */}
             <Sections.FeaturedRegions />
             <Elements.ListLink href="/tourism">

@@ -4,6 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { Calendar, MapPin } from "lucide-react";
 import { Post } from "@/lib/types";
+import { getDatePrefix } from "@/lib/dateFormat";
 
 const HorizontalPostCard = ({ post, linkPrefix }: { post: Post; linkPrefix: string }) => (
     <Card key={post.slug} className="overflow-hidden transition-all hover:shadow-lg">
@@ -29,11 +30,7 @@ const HorizontalPostCard = ({ post, linkPrefix }: { post: Post; linkPrefix: stri
                     <div className="flex items-center gap-4 text-sm text-muted-foreground">
                         <span className="flex items-center gap-1">
                             <p>
-                                {post.type === "diary" || post.type === "itinerary"
-                                    ? "旅行日："
-                                    : post.type === "tourism"
-                                    ? "更新日："
-                                    : ""}
+                                {getDatePrefix(post.type)}
                             </p>
                             <Calendar className="h-4 w-4" />
                             {post.dates.join("～")}
