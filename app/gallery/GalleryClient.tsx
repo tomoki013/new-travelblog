@@ -85,7 +85,7 @@ const GalleryClient = () => {
         <div className="container py-12">
             <div className="mb-12 text-center">
                 <h1 className="mb-4 text-4xl font-bold">写真ギャラリー</h1>
-                <p className="mx-auto max-w-2xl text-muted-foreground">日本各地で撮影した美しい風景や文化的な瞬間を写真で紹介します。</p>
+                <p className="mx-auto max-w-2xl text-muted-foreground">世界各地で撮影した美しい風景や文化的な瞬間を写真で紹介します。次の旅のインスピレーションに！</p>
             </div>
             {isLoading ? (
                 <Elements.LoadingAnimation />
