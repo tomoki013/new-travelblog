@@ -15,7 +15,6 @@ const SearchPageContent = () => {
     return (
         <div className="container py-12">
             <div className="mb-12 text-center">
-                <Sections.SearchHeroSection />
                 <h1 className="mb-4 text-4xl font-bold">
                     検索結果{keyword && `:「${keyword}」`} {category && category !== 'all' && ` (カテゴリ: ${getCategoryDisplayName(category)})`}
                 </h1>
@@ -25,6 +24,7 @@ const SearchPageContent = () => {
                     </p>
                 )}
             </div>
+            <Sections.SearchHeroSection />
             <Sections.Posts
                 apiFetchType="all"
                 syncWithUrl={true}
