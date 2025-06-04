@@ -31,7 +31,7 @@ interface PostsProps {
     specificFilterValue?: string;
 }
 
-const PostsWrapper = ({
+const Posts = ({
     apiFetchType,
     syncWithUrl = false,
     pageTypeForTabs = apiFetchType, // デフォルトはapiFetchTypeと同じ
@@ -144,4 +144,4 @@ const PostsWrapper = ({
     );
 };
 
-export default PostsWrapper;
+export default Posts;

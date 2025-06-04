@@ -1,5 +1,5 @@
 import FeaturedRegions from "./regions/FeaturedRegions";
-import Posts from "./posts/Posts";
+import Posts from "./posts/PostsWrapprt";
 import Roulette from "./roulette/Roulette";
 import Article from "./article/Article";
 import TableOfContents from "./article/TableOfContents";
