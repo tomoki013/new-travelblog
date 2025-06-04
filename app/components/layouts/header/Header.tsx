@@ -42,7 +42,12 @@ const Header = () => {
     const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
 
     return (
-        <header className="sticky top-0 z-50 w-full border-b bg-background/95 background-blur supports-[backdrop-filter]:bg-background/60">
+        <header className={cn(
+            "sticky top-0 z-50 w-full border-b bg-background/95 background-blur supports-[backdrop-filter]:bg-background/60",
+            {
+                'supports-[backdrop-filter]:bg-background/95': mobileMenuOpen,
+            }
+        )}>
             <div className="container flex h-15 items-center justify-between">
                 <div className="flex items-center gap-2">
                     <Link href="/" className="flex items-center gap-2">
