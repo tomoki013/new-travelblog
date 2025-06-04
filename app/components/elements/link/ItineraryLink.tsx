@@ -1,17 +1,11 @@
 import Link from "next/link"
 
-interface ItineraryLinkProps {
-    isItinerary?: string;
-}
 
-const ItineraryLink = ({
-    isItinerary,
-}: ItineraryLinkProps
-) => {
+const ItineraryLink = () => {
     return (
         <Link
             href={"/itinerary"}
-            className={`relative block w-full max-w-full h-28 md:h-32 rounded-2xl overflow-hidden overflow-x-hidden group shadow-lg ${isItinerary}`}
+            className={`relative block w-full max-w-full h-28 md:h-32 rounded-2xl overflow-hidden overflow-x-hidden group shadow-lg mt-2`}
         >
             {/* 背景画像 */}
             <div

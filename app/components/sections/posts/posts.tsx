@@ -6,38 +6,8 @@ import * as Elements from '@/app/components/elements/index';
 import { Post } from '@/lib/types';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Input } from '@/components/ui/input';
-
-const allCategories = [
-    {id: 'all', name: 'すべて'},
-    {id: 'diary', name: '旅行日記'},
-    {id: 'tourism', name: '観光情報'},
-    {id: 'itinerary', name: '旅程＆費用レポート'},
-]
-
-const diaryCategories = [
-    {id: 'all', name: 'すべて'},
-    {id: 'domestic', name: '国内旅行'},
-    {id: 'international', name: '海外旅行'},
-    {id: 'singleTrip', name: '一人旅'},
-    {id: 'diving', name: 'ダイビング'},
-    {id: 'others', name: 'その他'},
-];
-
-const tourismCategories = [
-    {id: 'all', name: 'すべて'},
-    {id: 'sightseeing', name: '観光スポット'},
-    {id: 'food', name: 'グルメ'},
-    {id: 'accommodation', name: '宿泊施設'},
-    {id: 'transportation', name: '交通情報'},
-    {id: 'pilgrimage', name: '聖地巡礼'},
-];
-
-const itineraryCategories = [
-    {id: 'all', name: 'すべて'},
-    {id: 'domestic', name: '国内旅行'},
-    {id: 'international', name: '海外旅行'},
-    {id: 'singleTrip', name: '一人旅'},
-];
+import { allCategories, diaryCategories, tourismCategories, itineraryCategories } from '@/data/categories';
+import { useFilteredPosts } from './useFilteredPosts';
 
 interface PostsProps {
     type: 'all' | 'diary' | 'tourism' | 'itinerary';
@@ -60,7 +30,6 @@ const Posts = ({
 }: PostsProps) => {
     const [posts, setPosts] = useState<Post[]>([]);
     const [searchQuery, setSearchQuery] = useState<string>('');
-    const [filteredPosts, setFilteredPosts] = useState<Post[]>([]);
     const [isLoading, setIsLoading] = useState<boolean>(true); // ローディング状態を管理
     const [budgetFilter, setBudgetFilter] = useState<string>('all'); // 予算フィルターの状態を追加
 
@@ -75,40 +44,7 @@ const Posts = ({
         fetchPosts();
     }, [type]);
 
-    useEffect(() => {
-        const keywords = searchQuery.toLowerCase().split(/\s+/).filter(Boolean);
-
-        const matchesAllKeywords = (text: string | undefined) =>
-            keywords.every(keyword => text?.toLowerCase().includes(keyword));
-
-        const tagMatches = posts.filter(post =>
-            post.tags?.some(tag => matchesAllKeywords(tag))
-        );
-        const categoryMatches = posts.filter(
-            post => !tagMatches.includes(post) && matchesAllKeywords(post.category)
-        );
-        const titleMatches = posts.filter(
-            post => !tagMatches.includes(post) && !categoryMatches.includes(post) && matchesAllKeywords(post.title)
-        );
-        const descriptionMatches = posts.filter(
-            post => !tagMatches.includes(post) && !categoryMatches.includes(post) && !titleMatches.includes(post) && matchesAllKeywords(post.excerpt)
-        );
-        const contentMatches = posts.filter(
-            post => !tagMatches.includes(post) && !categoryMatches.includes(post) && !titleMatches.includes(post) && !descriptionMatches.includes(post) && matchesAllKeywords(post.content)
-        );
-
-        const budgetFilteredPosts = [...tagMatches, ...categoryMatches, ...titleMatches, ...descriptionMatches, ...contentMatches].filter(post => {
-            if (!post.budget) return true;
-            if (budgetFilter === 'all') return true;
-            if (budgetFilter === '10万円以下') return post.budget <= 100000;
-            if (budgetFilter === '15万円以下') return post.budget <= 150000;
-            if (budgetFilter === '20万円以下') return post.budget <= 200000;
-            if (budgetFilter === '30万円以上') return post.budget > 300000;
-            return true;
-        });
-
-        setFilteredPosts(budgetFilteredPosts);
-    }, [searchQuery, posts, budgetFilter]);
+    const filteredPosts = useFilteredPosts({ posts, searchQuery, budgetFilter });
 
     return (
         <div>

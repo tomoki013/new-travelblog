@@ -68,6 +68,20 @@ const ItineraryPostPage = async (props: { params: Promise<{ slug: string }>}) =>
         dateRange.some((date) => diaryPost.dates.includes(date))
     );
 
+    const itineraryPosts = getAllPosts('itinerary');
+    let itineraryPost = null;
+    let itineraryClass = "block";
+    if (post.dates && post.dates.length > 0) {
+        itineraryPost = itineraryPosts.find((itPost) => {
+            if (!itPost.dates || itPost.dates.length < 2) return false;
+            const range = generateDateRange(itPost.dates[0], itPost.dates[itPost.dates.length - 1]);
+            return post.dates.some(date => range.includes(date));
+        });
+    }
+    if (!itineraryPost) {
+        itineraryClass = "hidden";
+    }
+
     const author = members.find((member) => member.name === post.author) || { name: "ともきちの旅行日記", role: "", image: "/favicon.ico", description: "" };
     
     return (
@@ -80,11 +94,13 @@ const ItineraryPostPage = async (props: { params: Promise<{ slug: string }>}) =>
 
             <div className="grid gap-10 lg:grid-cols-3">
                 
-                <Sections.Article
-                    post={post}
-                    author={author}
-                    isItinerary='hidden'
-                />
+                <div className='lg:col-span-2'>
+                    <Sections.Article
+                        post={post}
+                        author={author}
+                        isItinerary='hidden'
+                    />
+                </div>
                 <div>
                     <div className="sticky top-24 space-y-8">
                         <div className="hidden md:block">
@@ -112,6 +128,31 @@ const ItineraryPostPage = async (props: { params: Promise<{ slug: string }>}) =>
                                                 </Link>
                                             </h4>
                                             <p className="text-xs text-muted-foreground">{diaryPost.dates.join("～")}</p>
+                                        </div>
+                                    </div>
+                                ))}
+                            </div>
+                        </div>
+                        <div className={`rounded-lg border bg-card p-6 ${itineraryClass}`}>
+                            <h3 className='mb-4 text-lg font-medium'>旅程＆費用レポート</h3>
+                            <div className='space-y-4'>
+                                {itineraryPosts.slice(0, 3).map((itineraryPost) => (
+                                    <div key={itineraryPost.slug} className="flex gap-3">
+                                        <div className="relative h-16 w-16 flex-shrink-0 overflow-hidden rounded-md">
+                                            <Image
+                                                src={itineraryPost.image || "/favicon.ico"}
+                                                alt={itineraryPost.title || "favicon"}
+                                                fill
+                                                style={{ objectFit: 'cover' }}
+                                            />
+                                        </div>
+                                        <div>
+                                            <h4 className="text-sm font-medium">
+                                                <Link href={`/itinerary/${itineraryPost.slug}`} className="hover:underline">
+                                                    {itineraryPost.title}
+                                                </Link>
+                                            </h4>
+                                            <p className="text-xs text-muted-foreground">{itineraryPost.dates.join("～")}</p>
                                         </div>
                                     </div>
                                 ))}

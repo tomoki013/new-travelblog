@@ -14,6 +14,7 @@ const Roulette = () => {
     const [selectedDestination, setSelectedDestination] = useState<regionProps | null>(null)
     const [selectedOptions, setSelectedOptions] = useState<string[]>(regions.map(d => d.city))
     const spinTimeoutRef = useRef<NodeJS.Timeout | null>(null)
+    const postsRef = useRef<HTMLDivElement | null>(null)
 
     const spinRoulette = () => {
         if (spinning || selectedOptions.length === 0) return;
@@ -21,9 +22,8 @@ const Roulette = () => {
         setSpinning(true)
         setSelectedDestination(null)
 
-        // ランダムな時間（2〜4秒）後に結果を表示
         const spinDuration = 2000 + Math.random() * 2000
-        
+
         if (spinTimeoutRef.current) {
             clearTimeout(spinTimeoutRef.current)
         }
@@ -33,6 +33,10 @@ const Roulette = () => {
             const randomIndex = Math.floor(Math.random() * availableDestinations.length)
             setSelectedDestination(availableDestinations[randomIndex])
             setSpinning(false)
+            // ルーレットが止まった後にスクロール
+            setTimeout(() => {
+                postsRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' })
+            }, 100) // Postsが描画されるタイミングに合わせて少し遅延
         }, spinDuration)
     }
     
@@ -84,8 +88,14 @@ const Roulette = () => {
                                 animate={{ opacity: 1 }}
                                 exit={{ opacity: 0 }}
                             >
+                                <Image
+                                    src="favicon.ico"
+                                    alt="ルーレット"
+                                    fill
+                                    className="h-16 w-16"
+                                />
                                 <motion.div
-                                    className="text-3xl font-bold text-white"
+                                    className="text-3xl font-bold text-black"
                                     animate={{ rotate: 360 }}
                                     transition={{ duration: 1, repeat: Infinity, ease: "linear" }}
                                 >
@@ -126,13 +136,15 @@ const Roulette = () => {
             </div>
 
             {selectedDestination && (
-                <Posts
-                    type='tourism'
-                    filter='region'
-                    filterItem={selectedDestination.city.split('（')[0]} // '（'以降を削除
-                    inputClassName="hidden"
-                    tabListClassName="hidden"
-                />
+                <div ref={postsRef}>
+                    <Posts
+                        type='tourism'
+                        filter='region'
+                        filterItem={selectedDestination.city}
+                        inputClassName="hidden"
+                        tabListClassName="hidden"
+                    />
+                </div>
             )}
         </>
     );

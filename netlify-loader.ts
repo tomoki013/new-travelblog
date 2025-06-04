@@ -2,6 +2,8 @@
 
 import type { ImageLoaderProps } from 'next/image';
 
+const isProduction = process.env.NODE_ENV === 'production';
+
 /**
 * NetlifyのImage CDNのURLを生成するためのカスタムローダー関数です。
 * @param src - 元画像のパス (例: /images/your-image.jpeg)
@@ -12,5 +14,8 @@ import type { ImageLoaderProps } from 'next/image';
 export default function netlifyLoader({ src, width }: ImageLoaderProps): string {
     // ImageLoaderPropsからqualityも受け取れますが、
     // Netlifyの基本的な画像変換では使わないため、ここでは含めていません。
-    return `/.netlify/images?url=${src}&w=${width}`;
+    if (isProduction) {
+        return `/.netlify/images?url=${src}&w=${width}`;
+    }
+    return src;
 }

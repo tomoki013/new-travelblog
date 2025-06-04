@@ -18,10 +18,10 @@ export const metadata: Metadata = {
 const RoulettePage = () => {
     return (
         <div className="container py-12">
-            <div className='container border bg-card rounded-md w-fit mx-auto p-2 mb-4'>
+            <div className='m-8 rounded-md bg-yellow-200 flex justify-center items-center border border-muted-foreground p-2 text-black'>
                 <p className='mx-auto max-w-2xl text-muted-foreground'>
                     海外旅行に出発する前には、
-                    <Link className='underline text-blue-500' href="https://www.anzen.mofa.go.jp/">
+                    <Link className='underline text-blue-500 hover:text-blue-600' href="https://www.anzen.mofa.go.jp/">
                         外務省の海外安全ホームページ
                     </Link>
                     を必ず確認し、最新の渡航情報を把握してください。現地の治安状況や危険情報を確認し、安全対策を講じることが重要です。また、旅行保険の加入や予防接種の確認も忘れずに行いましょう。安全第一で、万全の準備を整えてください。
