@@ -13,35 +13,66 @@ interface SearchBoxProps {
     initialCategory?: string;
     onSearch?: (keyword: string, category: string) => void;
     className?: string;
+    mode: 'url' | 'realtime'; // 追加: 検索挙動の切り替え
+    categories?: { id: string; name: string }[]; // カテゴリリストを外部からも受け取れるように
 }
+
+const DEFAULT_CATEGORIES = [
+    { id: 'all', name: 'すべて' },
+    { id: 'diary', name: '旅行日記' },
+    { id: 'tourism', name: '観光情報' },
+    { id: 'itinerary', name: '旅程＆費用レポート' },
+];
 
 const SearchBox = ({
     initialKeyword = '',
     initialCategory = 'all',
     onSearch,
     className = '',
+    mode = 'url', // デフォルトはURLパラメータ
+    categories = DEFAULT_CATEGORIES,
 }: SearchBoxProps) => {
     const [searchKeyword, setSearchKeyword] = useState(initialKeyword);
     const [selectedCategory, setSelectedCategory] = useState(initialCategory);
     const router = useRouter();
 
+    // URLパラメータで検索
     const handleSearch = () => {
-        if (onSearch) {
+        if (mode === 'realtime' && onSearch) {
             onSearch(searchKeyword, selectedCategory);
         } else {
-            router.push(`/search?keyword=${encodeURIComponent(searchKeyword)}&category=${selectedCategory}`);
+            const url = `/search?keyword=${encodeURIComponent(searchKeyword)}&category=${selectedCategory}`;
+            if (typeof window !== 'undefined' && window.location.pathname === '/search') {
+                router.replace(url);
+            } else {
+                router.push(url);
+            }
+        }
+    };
+
+    // リアルタイムモードなら入力ごとにonSearchを呼ぶ
+    const handleKeywordChange = (value: string) => {
+        setSearchKeyword(value);
+        if (mode === 'realtime' && onSearch) {
+            onSearch(value, selectedCategory);
+        }
+    };
+    const handleCategoryChange = (value: string) => {
+        setSelectedCategory(value);
+        if (mode === 'realtime' && onSearch) {
+            onSearch(searchKeyword, value);
         }
     };
 
     return (
-        <div className={`grid gap-4 md:grid-cols-12 ${className}`}>
-            <div className="relative md:col-span-6">
-                <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
+        <div className={`relative flex flex-col sm:flex-row gap-4 mb-4 ${className}`}>
+            <div className="relative w-full sm:w-auto flex-1">
+                <Search className="absolute right-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
                 <Input
                     placeholder="キーワードを入力..."
-                    className="pl-10"
+                    className="w-full pl-10 p-2 border rounded"
                     value={searchKeyword}
-                    onChange={(e) => setSearchKeyword(e.target.value)}
+                    onChange={(e) => handleKeywordChange(e.target.value)}
                     onKeyDown={(e) => {
                         if (e.key === 'Enter') {
                             handleSearch();
@@ -49,22 +80,25 @@ const SearchBox = ({
                     }}
                 />
             </div>
-            <div className="md:col-span-3">
-                <Select value={selectedCategory} onValueChange={setSelectedCategory}>
-                    <SelectTrigger>
-                        <SelectValue placeholder="カテゴリー" />
-                    </SelectTrigger>
-                    <SelectContent>
-                        <SelectItem value="all">すべて</SelectItem>
-                        <SelectItem value="diary">旅行日記</SelectItem>
-                        <SelectItem value="tourism">観光情報</SelectItem>
-                        <SelectItem value="itinerary">旅程＆費用レポート</SelectItem>
-                    </SelectContent>
-                </Select>
-            </div>
-            <div className="md:col-span-3">
-                <Button className="w-full" onClick={handleSearch}>検索</Button>
-            </div>
+            {mode !== 'realtime' && (
+                <div className="w-full sm:w-[180px]">
+                    <Select value={selectedCategory} onValueChange={handleCategoryChange}>
+                        <SelectTrigger className="w-full">
+                            <SelectValue placeholder="カテゴリー" />
+                        </SelectTrigger>
+                        <SelectContent>
+                            {categories.map(cat => (
+                                <SelectItem key={cat.id} value={cat.id}>{cat.name}</SelectItem>
+                            ))}
+                        </SelectContent>
+                    </Select>
+                </div>
+            )}
+            {mode !== 'realtime' && (
+                <div className="w-full sm:w-[120px]">
+                    <Button className="w-full" onClick={handleSearch}>検索</Button>
+                </div>
+            )}
         </div>
     );
 };

@@ -17,7 +17,7 @@ const SearchHeroSection = () => {
                             旅行日記、観光情報、費用レポートなど、すべての記事から検索できます
                         </p>
                     </div>
-                    <Elements.SearchBox className="mb-2" />
+                    <Elements.SearchBox className="mb-2" mode="url" />
                     <div className="mt-4 flex flex-wrap gap-2">
                         <p className="text-sm text-muted-foreground">人気のキーワード：</p>
                         {["京都", "温泉", "グルメ", "格安旅行", "週末旅行", "海外"].map((tag) => (

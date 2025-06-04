@@ -1,7 +1,7 @@
 // app/components/sections/posts/PostFiltersUI.tsx
 "use client";
 
-import { Input } from '@/components/ui/input';
+import * as Elements from '@/app/components/elements/index';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { TabsList, TabsTrigger } from '@/components/ui/tabs';
 
@@ -40,12 +40,11 @@ export const PostFiltersUI = ({
         <>
             {showSearchInput && (
                 <div className={`relative flex flex-col sm:flex-row gap-4 mb-4 ${inputClassName}`}>
-                    <Input
-                        type="text"
-                        placeholder="記事内を検索..."
-                        value={keyword}
-                        onChange={(e) => onKeywordChange(e.target.value)}
-                        className="w-full p-2 border rounded"
+                    <Elements.SearchBox
+                        initialKeyword={keyword}
+                        onSearch={onKeywordChange}
+                        className="w-full"
+                        mode="realtime"
                     />
                     {showBudgetFilter && (
                         <div className={`w-full sm:w-auto ${budgetFilterClassName}`}>
