@@ -66,7 +66,10 @@ const PostsContent = ({
             // ページ固有の事前フィルタリング (例: 地域ページや著者ページ)
             if (specificFilterType && specificFilterValue) {
                 postsToFilter = postsToFilter.filter(post => {
-                    if (specificFilterType === 'region') return post.location.includes(specificFilterValue);
+                    console.log(post.location, specificFilterValue);
+                    if (specificFilterType === 'region') {
+                        return post.location.some(loc => loc.toLowerCase().includes(specificFilterValue.toLowerCase()));
+                    }
                     if (specificFilterType === 'author') return post.author === specificFilterValue;
                     return true;
                 });

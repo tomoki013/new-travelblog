@@ -8,8 +8,9 @@ import { useState } from "react"; // Import useState
 
 const SearchHeroSection = () => {
     const router = useRouter();
-    // 検索キーワード状態をここで管理
+    // 検索キーワード状態とカテゴリー状態をここで管理
     const [keyword, setKeyword] = useState('');
+    const [selectedCategory, setSelectedCategory] = useState('all');
 
     return (
         <div className="container relative z-10 my-2">
@@ -25,7 +26,11 @@ const SearchHeroSection = () => {
                         className="mb-2"
                         mode="url"
                         initialKeyword={keyword}
-                        onSearch={(k) => setKeyword(k)}
+                        initialCategory={selectedCategory}
+                        onSearch={(k, c) => {
+                            setKeyword(k);
+                            setSelectedCategory(c);
+                        }}
                     />
                     <div className="mt-4 flex flex-wrap gap-2">
                         <p className="text-sm text-muted-foreground">人気のキーワード：</p>
@@ -36,7 +41,7 @@ const SearchHeroSection = () => {
                                 size="sm"
                                 onClick={() => {
                                     setKeyword(tag);
-                                    router.push(`/search?keyword=${encodeURIComponent(tag)}&category=all`);
+                                    router.push(`/search?keyword=${encodeURIComponent(tag)}&category=${selectedCategory}`);
                                 }}
                             >
                                 {tag}
