@@ -59,7 +59,9 @@ const RegionPage = async (props: { params: Promise<{ city: string }>}) => {
                     imageType={decodedCity}
                 />
                 <div className="relative z-10 flex h-full flex-col items-center justify-center text-center text-white">
-                    <h1 className="mb-4 text-4xl font-bold">{decodedCity}観光情報</h1>
+                    <h1 className="mb-4 text-4xl font-bold font-serif tracking-wide drop-shadow-lg">
+                        {decodedCity}観光情報
+                    </h1>
                 </div>
             </div>
             <div className='container py-12'>
