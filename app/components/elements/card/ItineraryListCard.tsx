@@ -18,7 +18,7 @@ const ItineraryListCard = ({ post, linkPrefix }: { post: Post; linkPrefix: strin
                         alt={post.title}
                         fill
                         style={{ objectFit: 'cover' }}
-                        className="transition-transform duration-300 group-hover:scale-105"
+                        className="transition-transform duration-300 group-hover:scale-102"
                     />
                 </div>
                 <CardHeader>
