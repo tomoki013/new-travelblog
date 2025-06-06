@@ -13,7 +13,7 @@ const WorldClockHeroSection = () => {
                     </h2>
                     <p className="mb-6 text-lg text-muted-foreground">
                         海外旅行の計画や、海外の友人との連絡に便利な世界時計。
-                        主要都市の現地時刻をリアルタイムで確認できます。
+                        世界各地の現地時刻をリアルタイムで確認できます。基準となる都市を選択し、各都市との時差を計算しましょう。
                     </p>
                     <Button asChild size="lg">
                         <Link href="/clock" className="inline-flex items-center">
