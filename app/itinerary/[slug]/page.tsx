@@ -95,6 +95,7 @@ const ItineraryPostPage = async (props: { params: Promise<{ slug: string }>}) =>
             <div className="grid gap-10 lg:grid-cols-3">
                 
                 <div className='lg:col-span-2'>
+                    <Sections.ItinerarySummaryDialog post={post} />
                     <Sections.Article
                         post={post}
                         author={author}
@@ -106,11 +107,6 @@ const ItineraryPostPage = async (props: { params: Promise<{ slug: string }>}) =>
                         <div className="hidden md:block">
                             <div className="max-h-64 overflow-y-auto">
                                 <Sections.TableOfContents />
-                            </div>
-                        </div>
-                        <div className="hidden md:block">
-                            <div className="max-h-64 overflow-y-auto">
-                                <Sections.ItinerarySummary post={post} />
                             </div>
                         </div>
                         <div className="rounded-lg border bg-card p-6">

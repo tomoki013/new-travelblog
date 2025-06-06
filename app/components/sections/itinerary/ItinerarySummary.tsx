@@ -3,6 +3,7 @@ import { Badge } from "@/components/ui/badge";
 import { CalendarDays, MapPin, CircleDollarSign } from "lucide-react";
 import CostBreakdown from "./CostBreakdown";
 import { Post } from "@/lib/types";
+import { DialogTitle } from "@radix-ui/react-dialog";
 
 type CostBreakdownType = { [key: string]: number };
 type SummaryType = string | undefined;
@@ -15,7 +16,9 @@ const ItinerarySummary = ({ post }: SidebarProps) => (
     <aside className="sticky top-24 space-y-8 lg:col-span-1">
         <Card>
             <CardHeader>
-            <CardTitle>旅の概要</CardTitle>
+            <DialogTitle>
+                <CardTitle>旅の概要</CardTitle>
+            </DialogTitle>
             </CardHeader>
             <CardContent className="space-y-4">
             <div className="flex items-center text-sm">
