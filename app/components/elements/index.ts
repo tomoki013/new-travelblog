@@ -8,6 +8,7 @@ import LoadingAnimation from "./loadingAnimation/LoadingAnimation";
 import ItineraryLink from "./link/ItineraryLink";
 import Slide from "./slide/Slide";
 import SearchBox from "./searchBox/SearchBox";
+import ItineraryListCard from "./card/ItineraryListCard";
 
 export {
     GitHubIcon,
@@ -20,4 +21,5 @@ export {
     ItineraryLink,
     Slide,
     SearchBox,
+    ItineraryListCard,
 };

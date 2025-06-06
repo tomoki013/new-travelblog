@@ -2,6 +2,7 @@ import ImageOverlayPostCard from "@/app/components/elements/card/ImageOverlayPos
 import HorizontalPostCard from "@/app/components/elements/card/HorizontalPostCard";
 import StandardPostCard from "@/app/components/elements/card/StandardPostCard";
 import { Post } from "@/lib/types";
+import ItineraryListCard from "../card/ItineraryListCard";
 
 interface PostCardProps {
     post: Post;
@@ -16,6 +17,9 @@ const PostCard = ({ post, linkPrefix, postCardType }: PostCardProps) => {
     }
     if (type === 3) {
         return <HorizontalPostCard post={post} linkPrefix={linkPrefix} />;
+    }
+    if (type === 4) {
+        return <ItineraryListCard post={post} linkPrefix={linkPrefix} />;
     }
     return <StandardPostCard post={post} linkPrefix={linkPrefix} />;
 };

@@ -29,6 +29,9 @@ interface PostsProps {
     // ページ固有の事前フィルタリング用 (例: /tourism/region/[city] の場合)
     specificFilterType?: 'region' | 'author';
     specificFilterValue?: string;
+
+    // ポストカードのタイプを指定
+    postCardType?: number;
 }
 
 const PostsContent = ({
@@ -41,6 +44,7 @@ const PostsContent = ({
     tabsGridColsClass,
     specificFilterType,
     specificFilterValue,
+    postCardType = 1, // デフォルトのポストカードタイプ
 }: PostsProps) => {
     const [basePosts, setBasePosts] = useState<Post[]>([]);
     const [isLoading, setIsLoading] = useState(true);
@@ -130,7 +134,7 @@ const PostsContent = ({
                     {/* フィルタリングされた記事リストを表示 */}
                     {/* activeTabに関わらず、filteredPostsは常に最新なので、Contentは一つで良い */}
                     <TabsContent value={activeTab} forceMount>
-                        {isLoading && basePosts.length > 0 ? <Elements.LoadingAnimation /> : <PostList posts={filteredPosts} />}
+                        {isLoading && basePosts.length > 0 ? <Elements.LoadingAnimation /> : <PostList posts={filteredPosts} postCardType={postCardType} />}
                     </TabsContent>
                      {/* すべてのタブのコンテンツをレンダリングし、CSSで表示/非表示を制御する場合 */}
                     {/* {categoriesForTabs.map(cat => (
@@ -141,7 +145,7 @@ const PostsContent = ({
                 </Tabs>
             ) : (
                  // タブがない場合は直接リスト表示
-                isLoading && basePosts.length > 0 ? <Elements.LoadingAnimation /> : <PostList posts={filteredPosts} />
+                isLoading && basePosts.length > 0 ? <Elements.LoadingAnimation /> : <PostList posts={filteredPosts} postCardType={postCardType} />
             )}
         </div>
     );
@@ -157,6 +161,7 @@ const Posts = ({
     tabsGridColsClass,
     specificFilterType,
     specificFilterValue,
+    postCardType = 1, // デフォルトのポストカードタイプ
 }: PostsProps) => {
     return (
         <Suspense fallback={<Elements.LoadingAnimation />}>
@@ -170,6 +175,7 @@ const Posts = ({
                 tabsGridColsClass={tabsGridColsClass}
                 specificFilterType={specificFilterType}
                 specificFilterValue={specificFilterValue}
+                postCardType={postCardType}
             />
         </Suspense>
     )

@@ -27,6 +27,7 @@ const ItineraryPage = () => {
                 apiFetchType="itinerary"
                 showBudgetFilter={true}
                 tabsGridColsClass="sm:grid-cols-2 md:grid-cols-4"
+                postCardType={4}
             />
 
         </div>
