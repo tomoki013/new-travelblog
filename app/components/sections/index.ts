@@ -15,6 +15,7 @@ import HeadsUp from "./headsUp/HeadsUp";
 import SearchHeroSection from "./heroSections/SearchHeroSection";
 import ItineraryBanner from "./banner/ItineraryBanner";
 import ItinerarySummaryDialog from "./itinerary/ItinerarySummaryDialog";
+import ItineraryHeader from "./itinerary/ItineraryHeader";
 
 export {
     FeaturedRegions,
@@ -34,4 +35,5 @@ export {
     SearchHeroSection,
     ItineraryBanner,
     ItinerarySummaryDialog,
+    ItineraryHeader,
 }

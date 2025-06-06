@@ -22,6 +22,9 @@ const ItineraryPage = () => {
                 <p className="mx-auto max-w-2xl text-muted-foreground">日本各地の観光スポット、グルメ、宿泊施設、交通情報など、旅行計画に役立つ情報をお届けします。</p>
             </div>
 
+            {/* Itinerary Header */}
+            <Sections.ItineraryHeader />
+
             {/* Itinerary */}
             <Sections.Posts
                 apiFetchType="itinerary"

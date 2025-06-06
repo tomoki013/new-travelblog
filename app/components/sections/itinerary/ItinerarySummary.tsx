@@ -13,7 +13,7 @@ type SidebarProps = {
 };
 
 const ItinerarySummary = ({ post }: SidebarProps) => (
-    <aside className="sticky top-24 space-y-8 lg:col-span-1">
+    <div className="sticky top-16 space-y-8 lg:col-span-1 mb-4">
         <Card>
             <CardHeader>
             <DialogTitle>
@@ -46,7 +46,7 @@ const ItinerarySummary = ({ post }: SidebarProps) => (
             </CardContent>
         </Card>
         {post.costs && <CostBreakdown costs={post.costs} />}
-    </aside>
+    </div>
 );
 
 export default ItinerarySummary;
