@@ -47,10 +47,9 @@ export const metadata: Metadata = {
   	metadataBase: new URL('https://tomokichidiary.netlify.app'),
 }
 
-// ビューポートの設定を独立させる
-export const viewport = { // 👈 このように分離するのが正しい書き方
-  width: 'device-width',
-  initialScale: 1,
+export const viewport = {
+  	width: 'device-width',
+  	initialScale: 1,
 };
 
 export default function RootLayout({
