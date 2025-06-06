@@ -180,7 +180,6 @@ const GalleryClient = () => {
             <Dialog open={!!selectedImage} onOpenChange={() => setSelectedImage(null)}>
                 {selectedImage && (
                     <DialogContent className="max-w-4xl max-h-[90vh] overflow-y-auto mx-2">
-                        <span className="sr-only">写真詳細ダイアログ</span>
                         <PopupContent photo={selectedImage} />
                     </DialogContent>
                 )}
