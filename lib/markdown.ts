@@ -31,6 +31,7 @@ export function getPostBySlug(type: PostType, slug: string): Post {
         author: data.author,
         tags: data.tags || [],
         budget: data.budget,
+        costs: data.costs || {},
         type, // フォルダに基づいてtypeを設定
     };
 }

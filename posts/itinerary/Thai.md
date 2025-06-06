@@ -8,6 +8,13 @@ category: '海外旅行'
 author: 'ともきち'
 tags: ["海外"]
 budget: 110613
+costs:
+    flight: 85140
+    hotel: 10324
+    transport: 2087
+    sightseeing: 5075
+    food: 3574
+    other: 4413
 ---
 
 私が実際にバンコクを旅した旅程と費用を全て公開します。  

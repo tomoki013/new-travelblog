@@ -21,7 +21,7 @@ interface ArticleProps {
     prevPost?: { slug: string; title: string } | null;
     nextPost?: { slug: string; title: string } | null;
     navHidden?: string;
-    isItinerary?: string;
+    isItinerary?: boolean;
 }
 
 const Article = ({
