@@ -1,11 +1,12 @@
 'use client';
 
-import { Dialog, DialogContent } from "@/components/ui/dialog";
-import { useEffect, useState } from "react"
+import { Dialog, DialogContent, DialogTitle, DialogDescription } from "@/components/ui/dialog";
+import { useEffect, useState } from "react";
 import ItinerarySummary from "./ItinerarySummary";
 import { Post } from "@/lib/types";
 import { Button } from "@/components/ui/button";
-import { ChevronLeft, ChevronRight } from "lucide-react";
+import { ChevronLeft, ChevronRight, FileText } from "lucide-react";
+import { Card, CardHeader } from "@/components/ui/card";
 
 const ItineraryHeader = () => {
     const [posts, setPosts] = useState<Post[]>([]);
@@ -30,14 +31,32 @@ const ItineraryHeader = () => {
 
     return (
         <>
-            <Button
+            <Card 
+                className="mb-8 w-full cursor-pointer hover:shadow-lg transition-shadow bg-secondary/50"
                 onClick={() => {
                     setOpen(true);
                     setCurrentIndex(0);
                 }}
             >
-                <span>旅の概要を一覧で見る</span>
-            </Button>
+                <CardHeader>
+                    <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
+                        <div className="flex items-center gap-4">
+                            <div className="bg-primary/10 p-3 rounded-full">
+                                <FileText className="h-8 w-8 text-primary" />
+                            </div>
+                            <div>
+                                <h2 className="text-xl font-bold">旅の概要をまとめてチェック</h2>
+                                <p className="text-muted-foreground">クリックして全ての旅程と費用の概要をモーダルで確認できます。</p>
+                            </div>
+                        </div>
+                        <Button className="cursor-pointer">
+                            <span>一覧で見る</span>
+                            <ChevronRight className="h-4 w-4 ml-2" />
+                        </Button>
+                    </div>
+                </CardHeader>
+            </Card>
+
             <Dialog open={open} onOpenChange={(v) => {
                 setOpen(v);
                 if (!v) setCurrentIndex(0);
@@ -45,45 +64,30 @@ const ItineraryHeader = () => {
                 <DialogContent className="max-h-[90vh] overflow-y-auto flex flex-col items-center">
                     {posts.length > 0 && (
                         <>
-                            <div className="flex gap-4">
-                                <span
+                             <DialogTitle className="text-xl font-bold mb-2">旅の概要 ({currentIndex + 1} / {posts.length})</DialogTitle>
+                             <DialogDescription>左右の矢印で他の旅程に切り替えられます。</DialogDescription>
+                            <div className="flex items-center gap-4 w-full justify-center mt-4">
+                                <Button
+                                    variant="outline"
+                                    size="icon"
                                     onClick={() => currentIndex > 0 && setCurrentIndex((prev) => Math.max(prev - 1, 0))}
-                                    className={`h-8 w-8 flex items-center justify-center rounded border border-input bg-background shadow-sm transition-colors cursor-pointer ${currentIndex === 0 ? 'opacity-50 cursor-not-allowed' : 'hover:bg-accent hover:text-accent-foreground'}`}
-                                    style={{ pointerEvents: currentIndex === 0 ? 'none' : 'auto' }}
-                                    aria-disabled={currentIndex === 0}
+                                    disabled={currentIndex === 0}
+                                    aria-label="前の旅程へ"
                                 >
                                     <ChevronLeft className="h-4 w-4" />
-                                </span>
-                                <span>{currentIndex + 1} / {posts.length}</span>
-                                <span
+                                </Button>
+                                <span className="text-lg font-mono w-20 text-center">{currentIndex + 1} / {posts.length}</span>
+                                <Button
+                                    variant="outline"
+                                    size="icon"
                                     onClick={() => currentIndex < posts.length - 1 && setCurrentIndex((prev) => Math.min(prev + 1, posts.length - 1))}
-                                    className={`h-8 w-8 flex items-center justify-center rounded border border-input bg-background shadow-sm transition-colors cursor-pointer ${currentIndex === posts.length - 1 ? 'opacity-50 cursor-not-allowed' : 'hover:bg-accent hover:text-accent-foreground'}`}
-                                    style={{ pointerEvents: currentIndex === posts.length - 1 ? 'none' : 'auto' }}
-                                    aria-disabled={currentIndex === posts.length - 1}
+                                    disabled={currentIndex === posts.length - 1}
+                                    aria-label="次の旅程へ"
                                 >
                                     <ChevronRight className="h-4 w-4" />
-                                </span>
+                                </Button>
                             </div>
                             <ItinerarySummary post={posts[currentIndex]} />
-                            <div className="flex gap-4">
-                                <span
-                                    onClick={() => currentIndex > 0 && setCurrentIndex((prev) => Math.max(prev - 1, 0))}
-                                    className={`h-8 w-8 flex items-center justify-center rounded border border-input bg-background shadow-sm transition-colors cursor-pointer ${currentIndex === 0 ? 'opacity-50 cursor-not-allowed' : 'hover:bg-accent hover:text-accent-foreground'}`}
-                                    style={{ pointerEvents: currentIndex === 0 ? 'none' : 'auto' }}
-                                    aria-disabled={currentIndex === 0}
-                                >
-                                    <ChevronLeft className="h-4 w-4" />
-                                </span>
-                                <span>{currentIndex + 1} / {posts.length}</span>
-                                <span
-                                    onClick={() => currentIndex < posts.length - 1 && setCurrentIndex((prev) => Math.min(prev + 1, posts.length - 1))}
-                                    className={`h-8 w-8 flex items-center justify-center rounded border border-input bg-background shadow-sm transition-colors cursor-pointer ${currentIndex === posts.length - 1 ? 'opacity-50 cursor-not-allowed' : 'hover:bg-accent hover:text-accent-foreground'}`}
-                                    style={{ pointerEvents: currentIndex === posts.length - 1 ? 'none' : 'auto' }}
-                                    aria-disabled={currentIndex === posts.length - 1}
-                                >
-                                    <ChevronRight className="h-4 w-4" />
-                                </span>
-                            </div>
                         </>
                     )}
                 </DialogContent>
