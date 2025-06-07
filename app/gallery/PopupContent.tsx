@@ -13,7 +13,7 @@ interface Photo {
     likes: number;
 }
 
-export const PopupContent = ({ photo }: { photo: Photo }) => (
+const PopupContent = ({ photo }: { photo: Photo }) => (
     <div>
         <div>
             <DialogTitle className="text-2xl font-bold">{photo.title}</DialogTitle>
@@ -37,3 +37,5 @@ export const PopupContent = ({ photo }: { photo: Photo }) => (
         <p className="text-muted-foreground">{photo.description}</p>
     </div>
 );
+
+export default PopupContent;

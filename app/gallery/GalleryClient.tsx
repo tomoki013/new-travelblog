@@ -6,7 +6,7 @@ import { useEffect, useState } from "react";
 import * as Elements from "@/app/components/elements/index";
 import { Metadata } from "next";
 import { PhotoCard } from "./PhotoCard";
-import { PopupContent } from "./PopupContent";
+import PopupContent from "./PopupContent";
 
 export const metadata: Metadata = {
     title: "写真ギャラリー– 写真で次の旅先を見つけよう",

@@ -8,30 +8,35 @@ import { Button } from "@/components/ui/button";
 import { ChevronLeft, ChevronRight, FileText } from "lucide-react";
 import { Card, CardHeader } from "@/components/ui/card";
 
+interface PopupProps {
+    itemType: 'galleryPhotos' | 'posts?type=itinerary'
+    buttonType?: 'section' | 'button' | 'none'
+}
+
 const Popup = ({
-    buttonType = 'section',
-}: {
-    buttonType?: 'section' | 'button',
-}) => {
-    const [posts, setPosts] = useState<Post[]>([]);
+    itemType,
+    buttonType = 'none',
+}: PopupProps
+) => {
+    const [items, setItems] = useState<Post[]>([]);
     const [open, setOpen] = useState(false);
     const [currentIndex, setCurrentIndex] = useState(0);
 
     useEffect(() => {
         const fetchPosts = async () => {
-            const endpoint = `/api/posts?type=itinerary`;
+            const endpoint = `/api/${itemType}`;
             const res = await fetch(endpoint);
             if (!res.ok) {
-                throw new Error('Failed to fetch posts');
+                throw new Error('Failed to fetch items');
             }
             const data = await res.json();
-            const posts = data.posts;
-            setPosts(posts);
+            const items = data.items;
+            setItems(items);
         }
         fetchPosts().catch(error => {
-            console.error('Error fetching posts:', error);
+            console.error('Error fetching items:', error);
         });
-    }, []);
+    }, [itemType]);
 
     return (
         <>
@@ -83,14 +88,19 @@ const Popup = ({
                 </div>
             )}
 
+            {/* ボタン無 */}
+            {buttonType === 'none' && (
+                <p className='hidden'></p>
+            )}
+
             <Dialog open={open} onOpenChange={(v) => {
                 setOpen(v);
                 if (!v) setCurrentIndex(0);
             }}>
                 <DialogContent className="max-h-[90vh] overflow-y-auto flex flex-col items-center">
-                    {posts.length > 0 && (
+                    {items.length > 0 && (
                         <>
-                             <DialogTitle className="text-xl font-bold mb-2">旅の概要 ({currentIndex + 1} / {posts.length})</DialogTitle>
+                             <DialogTitle className="text-xl font-bold mb-2">旅の概要 ({currentIndex + 1} / {items.length})</DialogTitle>
                              <DialogDescription>左右の矢印で他の旅程に切り替えられます。</DialogDescription>
                             <div className="flex items-center gap-4 w-full justify-center mt-4">
                                 <Button
@@ -102,18 +112,18 @@ const Popup = ({
                                 >
                                     <ChevronLeft className="h-4 w-4" />
                                 </Button>
-                                <span className="text-lg font-mono w-20 text-center">{currentIndex + 1} / {posts.length}</span>
+                                <span className="text-lg font-mono w-20 text-center">{currentIndex + 1} / {items.length}</span>
                                 <Button
                                     variant="outline"
                                     size="icon"
-                                    onClick={() => currentIndex < posts.length - 1 && setCurrentIndex((prev) => Math.min(prev + 1, posts.length - 1))}
-                                    disabled={currentIndex === posts.length - 1}
+                                    onClick={() => currentIndex < items.length - 1 && setCurrentIndex((prev) => Math.min(prev + 1, items.length - 1))}
+                                    disabled={currentIndex === items.length - 1}
                                     aria-label="次の旅程へ"
                                 >
                                     <ChevronRight className="h-4 w-4" />
                                 </Button>
                             </div>
-                            <ItineraryPopupContent post={posts[currentIndex]} />
+                            <ItineraryPopupContent post={items[currentIndex]} />
                         </>
                     )}
                 </DialogContent>
