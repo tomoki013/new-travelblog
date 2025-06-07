@@ -2,13 +2,17 @@
 
 import { Dialog, DialogContent, DialogTitle, DialogDescription } from "@/components/ui/dialog";
 import { useEffect, useState } from "react";
-import ItinerarySummary from "./ItinerarySummary";
+import ItineraryPopupContent from '../popupContent/ItineraryPopupContent';
 import { Post } from "@/lib/types";
 import { Button } from "@/components/ui/button";
 import { ChevronLeft, ChevronRight, FileText } from "lucide-react";
 import { Card, CardHeader } from "@/components/ui/card";
 
-const ItineraryHeader = () => {
+const Popup = ({
+    buttonType = 'section',
+}: {
+    buttonType?: 'section' | 'button',
+}) => {
     const [posts, setPosts] = useState<Post[]>([]);
     const [open, setOpen] = useState(false);
     const [currentIndex, setCurrentIndex] = useState(0);
@@ -31,31 +35,53 @@ const ItineraryHeader = () => {
 
     return (
         <>
-            <Card 
-                className="mb-8 w-full cursor-pointer hover:shadow-lg transition-shadow bg-secondary/50"
-                onClick={() => {
-                    setOpen(true);
-                    setCurrentIndex(0);
-                }}
-            >
-                <CardHeader>
-                    <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
-                        <div className="flex items-center gap-4">
-                            <div className="bg-primary/10 p-3 rounded-full">
-                                <FileText className="h-8 w-8 text-primary" />
+            {/* セクション風誘導アイテム */}
+            {buttonType === 'section' && (
+                <Card 
+                    className="mb-8 w-full cursor-pointer hover:shadow-lg transition-shadow bg-secondary/50"
+                    onClick={() => {
+                        setOpen(true);
+                        setCurrentIndex(0);
+                    }}
+                >
+                    <CardHeader>
+                        <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
+                            <div className="flex items-center gap-4">
+                                <div className="bg-primary/10 p-3 rounded-full">
+                                    <FileText className="h-8 w-8 text-primary" />
+                                </div>
+                                <div>
+                                    <h2 className="text-xl font-bold">旅の概要をまとめてチェック</h2>
+                                    <p className="text-muted-foreground">クリックして全ての旅程と費用の概要をモーダルで確認できます。</p>
+                                </div>
                             </div>
-                            <div>
-                                <h2 className="text-xl font-bold">旅の概要をまとめてチェック</h2>
-                                <p className="text-muted-foreground">クリックして全ての旅程と費用の概要をモーダルで確認できます。</p>
-                            </div>
+                            <Button className="cursor-pointer">
+                                <span>一覧で見る</span>
+                                <ChevronRight className="h-4 w-4 ml-2" />
+                            </Button>
                         </div>
-                        <Button className="cursor-pointer">
-                            <span>一覧で見る</span>
-                            <ChevronRight className="h-4 w-4 ml-2" />
-                        </Button>
+                    </CardHeader>
+                </Card>
+            )}
+
+            {/* 画面固定ボタン風誘導アイテム */}
+            {buttonType === 'button' && (
+                <div className="fixed bottom-6 left-6 z-50 flex flex-col items-center gap-2">
+                    {/* 吹き出し風メッセージ */}
+                    <div className="bg-secondary text-secondary-foreground rounded-full px-4 py-2 text-sm font-semibold shadow-lg animate-bounce">
+                        <p>概要はここをクリック！</p>
                     </div>
-                </CardHeader>
-            </Card>
+                    {/* フローティングボタン */}
+                    <Button
+                        onClick={() => setOpen(true)}
+                        className="rounded-full shadow-lg h-16 w-auto px-6 flex items-center justify-center gap-2 text-base cursor-pointer"
+                        aria-label="旅の概要を見る"
+                    >
+                        <FileText className="h-6 w-6" />
+                        <span>旅の概要</span>
+                    </Button>
+                </div>
+            )}
 
             <Dialog open={open} onOpenChange={(v) => {
                 setOpen(v);
@@ -87,7 +113,7 @@ const ItineraryHeader = () => {
                                     <ChevronRight className="h-4 w-4" />
                                 </Button>
                             </div>
-                            <ItinerarySummary post={posts[currentIndex]} />
+                            <ItineraryPopupContent post={posts[currentIndex]} />
                         </>
                     )}
                 </DialogContent>
@@ -96,4 +122,4 @@ const ItineraryHeader = () => {
     )
 }
 
-export default ItineraryHeader;
+export default Popup;

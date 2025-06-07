@@ -1,3 +1,4 @@
+import * as Elements from '@/app/components/elements/index';
 import * as Sections from '@/app/components/sections/index';
 import { Metadata } from 'next';
 
@@ -23,7 +24,7 @@ const ItineraryPage = () => {
             </div>
 
             {/* Itinerary Header */}
-            <Sections.ItineraryHeader />
+            <Elements.Popup />
 
             {/* Itinerary */}
             <Sections.Posts

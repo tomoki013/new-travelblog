@@ -95,7 +95,7 @@ const ItineraryPostPage = async (props: { params: Promise<{ slug: string }>}) =>
             <div className="grid gap-10 lg:grid-cols-3">
                 
                 <div className='lg:col-span-2'>
-                    <Sections.ItinerarySummaryDialog post={post} />
+                    <Elements.Popup buttonType='button' />
                     <Sections.Article
                         post={post}
                         author={author}

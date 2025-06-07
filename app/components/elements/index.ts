@@ -9,6 +9,7 @@ import ItineraryLink from "./link/ItineraryLink";
 import Slide from "./slide/Slide";
 import SearchBox from "./searchBox/SearchBox";
 import ItineraryListCard from "./card/ItineraryListCard";
+import Popup from './popup/Popup';
 
 export {
     GitHubIcon,
@@ -22,4 +23,5 @@ export {
     Slide,
     SearchBox,
     ItineraryListCard,
+    Popup,
 };
