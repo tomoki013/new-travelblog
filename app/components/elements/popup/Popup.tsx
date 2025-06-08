@@ -1,28 +1,32 @@
+// /app/components/elements/popup/Popup.tsx
 'use client';
 
 import { Dialog, DialogContent, DialogTitle, DialogDescription } from "@/components/ui/dialog";
 import { useEffect, useState } from "react";
 import ItineraryPopupContent from '../popupContent/ItineraryPopupContent';
-import { Post } from "@/lib/types";
+import PhotoGalleryPopupContent from '../popupContent/PhotoGalleryPopupContent';
+import { Post, Photo } from "@/types/types";
 import { Button } from "@/components/ui/button";
 import { ChevronLeft, ChevronRight, FileText } from "lucide-react";
 import { Card, CardHeader } from "@/components/ui/card";
 
 interface PopupProps {
-    apiFetchType: 'galleryPhotos' | 'posts'
+    apiFetchType: 'posts' | 'galleryPhotos'
     buttonType?: 'section' | 'button' | 'none'
     initialOpen?: boolean
+    initialIndex?: number
 }
 
 const Popup = ({
     apiFetchType,
     buttonType = 'none',
     initialOpen = false,
+    initialIndex = 0
 }: PopupProps
 ) => {
-    const [items, setItems] = useState<Post[]>([]);
+    const [items, setItems] = useState<Post[] | Photo[]>([]);
     const [open, setOpen] = useState(initialOpen);
-    const [currentIndex, setCurrentIndex] = useState(0);
+    const [currentIndex, setCurrentIndex] = useState(initialIndex);
 
     useEffect(() => {
         const fetchPosts = async () => {
@@ -32,7 +36,9 @@ const Popup = ({
                 throw new Error('Failed to fetch items');
             }
             const data = await res.json();
-            const popupItems = apiFetchType === 'posts' ? data.posts : data;
+            const popupItems = apiFetchType === 'posts'
+                ? (data.posts as Post[])
+                : (data as Photo[]);
             setItems(popupItems);
         }
         fetchPosts().catch(error => {
@@ -100,7 +106,7 @@ const Popup = ({
                 if (!v) setCurrentIndex(0);
             }}>
                 <DialogContent className="max-h-[90vh] overflow-y-auto flex flex-col items-center">
-                    {items?.length > 0 && (
+                    {items?.length > 0 && apiFetchType === 'posts' && (
                         <>
                              <DialogTitle className="text-xl font-bold mb-2">旅の概要 ({currentIndex + 1} / {items.length})</DialogTitle>
                              <DialogDescription>左右の矢印で他の旅程に切り替えられます。</DialogDescription>
@@ -125,7 +131,35 @@ const Popup = ({
                                     <ChevronRight className="h-4 w-4" />
                                 </Button>
                             </div>
-                            <ItineraryPopupContent post={items[currentIndex]} />
+                            <ItineraryPopupContent post={(items[currentIndex] as Post)} />
+                        </>
+                    )}
+                    {items?.length > 0 && apiFetchType === 'galleryPhotos' && (
+                        <>
+                            <DialogTitle className="text-xl font-bold mb-2">写真ギャラリー ({currentIndex + 1} / {items.length})</DialogTitle>
+                            <DialogDescription>左右の矢印で他の写真に切り替えられます。</DialogDescription>
+                            <div className="flex items-center gap-4 w-full justify-center mt-4">
+                                <Button
+                                    variant="outline"
+                                    size="icon"
+                                    onClick={() => currentIndex > 0 && setCurrentIndex((prev) => Math.max(prev - 1, 0))}
+                                    disabled={currentIndex === 0}
+                                    aria-label="前の写真へ"
+                                >
+                                    <ChevronLeft className="h-4 w-4" />
+                                </Button>
+                                <span className="text-lg font-mono w-20 text-center">{currentIndex + 1} / {items.length}</span>
+                                <Button
+                                    variant="outline"
+                                    size="icon"
+                                    onClick={() => currentIndex < items.length - 1 && setCurrentIndex((prev) => Math.min(prev + 1, items.length - 1))}
+                                    disabled={currentIndex === items.length - 1}
+                                    aria-label="次の写真へ"
+                                >
+                                    <ChevronRight className="h-4 w-4" />
+                                </Button>
+                            </div>
+                            <PhotoGalleryPopupContent photo={(items[currentIndex] as Photo)} />
                         </>
                     )}
                 </DialogContent>

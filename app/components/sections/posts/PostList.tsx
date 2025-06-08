@@ -1,6 +1,6 @@
 // app/components/sections/posts/PostList.tsx
 import * as Elements from '@/app/components/elements/index';
-import { Post } from '@/lib/types';
+import { Post } from '@/types/types';
 
 interface PostListProps {
     posts: Post[];

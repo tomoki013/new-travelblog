@@ -6,7 +6,7 @@ import ArticleContent from './ArticleContent';
 import ArticleTags from './ArticleTags';
 import ArticleAuthor from './ArticleAuthor';
 import { Separator } from "@radix-ui/react-select";
-import { Post } from "@/lib/types";
+import { Post } from "@/types/types";
 
 interface Author {
     name: string;

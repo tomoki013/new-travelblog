@@ -3,7 +3,7 @@
 import { FileText } from "lucide-react";
 import * as Elements from "@/app/components/elements/index";
 import { useEffect, useState } from "react";
-import { Post } from "@/lib/types";
+import { Post } from "@/types/types";
 import Link from "next/link";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";

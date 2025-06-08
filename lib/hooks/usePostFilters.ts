@@ -1,6 +1,6 @@
 // lib/hooks/usePostFilters.ts
 import { useState, useEffect, useMemo, useCallback } from 'react';
-import { Post } from '@/lib/types';
+import { Post } from '@/types/types';
 import { useRouter, usePathname, useSearchParams } from 'next/navigation';
 import {
     allCategories as defaultAllCategories,

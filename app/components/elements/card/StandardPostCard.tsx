@@ -3,7 +3,7 @@ import { Badge } from "@/components/ui/badge";
 import Image from "next/image";
 import Link from "next/link";
 import { Calendar, MapPin } from "lucide-react";
-import { Post } from "@/lib/types";
+import { Post } from "@/types/types";
 import { getDatePrefix } from "@/lib/dateFormat";
 
 const StandardPostCard = ({ post, linkPrefix }: { post: Post; linkPrefix: string }) => (

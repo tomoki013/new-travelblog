@@ -2,7 +2,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { CalendarDays, MapPin, CircleDollarSign } from "lucide-react";
 import CostBreakdown from "../../sections/itinerary/CostBreakdown";
-import { Post } from "@/lib/types";
+import { Post } from "@/types/types";
 import { DialogTitle } from "@radix-ui/react-dialog";
 
 type CostBreakdownType = { [key: string]: number };

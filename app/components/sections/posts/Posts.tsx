@@ -3,7 +3,7 @@
 
 import { Suspense, useEffect, useState } from 'react';
 import * as Elements from '@/app/components/elements/index';
-import { Post } from '@/lib/types';
+import { Post } from '@/types/types';
 import { usePostFilters } from '@/lib/hooks/usePostFilters';
 import { PostFiltersUI } from './PostFiltersUI';
 import { PostList } from './PostList';
