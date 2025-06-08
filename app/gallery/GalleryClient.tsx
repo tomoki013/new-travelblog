@@ -1,13 +1,12 @@
 "use client";
 
-import { Dialog, DialogContent } from "@/components/ui/dialog";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useEffect, useState } from "react";
 import * as Elements from "@/app/components/elements/index";
 import { PhotoCard } from "./PhotoCard";
 import { Photo } from "@/types/types";
-import PopupContent from "@/app/components/elements/popupContent/PhotoGalleryPopupContent";
-
+import { Dialog, DialogContent } from "@/components/ui/dialog";
+import PhotoGalleryPopupContent from "@/app/components/elements/popupContent/PhotoGalleryPopupContent";
 
 const GalleryClient = () => {
     const [selectedImage, setSelectedImage] = useState<Photo | null>(null);
@@ -43,12 +42,15 @@ const GalleryClient = () => {
         { id: 'transport', name: '公共交通・商業施設' },
     ];
 
-    const naturePhotos = photos.filter(photo => ['自然'].includes(photo.category));
-    const templePhotos = photos.filter(photo => ['寺院', '神社', '城', '王宮', '慰霊碑'].includes(photo.category));
-    const cityPhotos = photos.filter(photo => ['都市', '街並み', '祭り', '市場', '広場'].includes(photo.category));
-    const tourismPhotos = photos.filter(photo => ['タワー', '美術館', '聖堂', '建築', '闘牛場', '教会'].includes(photo.category));
-    const foodPhotos = photos.filter(photo => ['グルメ', 'スイーツ'].includes(photo.category));
-    const transportPhotos = photos.filter(photo => ['空港', '公共交通', '商業施設'].includes(photo.category));
+    const photoCollections = {
+        all: photos,
+        nature: photos.filter(p => ['自然'].includes(p.category)),
+        temple: photos.filter(p => ['寺院', '神社', '城', '王宮', '慰霊碑'].includes(p.category)),
+        city: photos.filter(p => ['都市', '街並み', '祭り', '市場', '広場'].includes(p.category)),
+        tourism: photos.filter(p => ['タワー', '美術館', '聖堂', '建築', '闘牛場', '教会'].includes(p.category)),
+        food: photos.filter(p => ['グルメ', 'スイーツ'].includes(p.category)),
+        transport: photos.filter(p => ['空港', '公共交通', '商業施設'].includes(p.category)),
+    };
 
     return (
         <div className="container py-12">
@@ -59,7 +61,7 @@ const GalleryClient = () => {
             {isLoading ? (
                 <Elements.LoadingAnimation />
             ) : (
-                <Tabs defaultValue="all" className="mb-8">
+                <Tabs defaultValue="all" className="w-full">
                     <TabsList className="mb-8 grid w-full grid-cols-2 sm:grid-cols-7 h-auto">
                         {categories.map((category) => (
                             <TabsTrigger key={category.id} value={category.id}>
@@ -67,89 +69,27 @@ const GalleryClient = () => {
                             </TabsTrigger>
                         ))}
                     </TabsList>
-                    <TabsContent value="all">
-                        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
-                            {photos.map((photo) => (
-                                <PhotoCard
-                                    key={photo.title}
-                                    photo={photo}
-                                    onClick={() => setSelectedImage(photo)}
-                                />
-                            ))}
-                        </div>
-                    </TabsContent>
-                    <TabsContent value="nature">
-                        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
-                            {naturePhotos.map((photo) => (
-                                <PhotoCard
-                                    key={photo.title}
-                                    photo={photo}
-                                    onClick={() => setSelectedImage(photo)}
-                                />
-                            ))}
-                        </div>
-                    </TabsContent>
-                    <TabsContent value="temple">
-                        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
-                            {templePhotos.map((photo) => (
-                                <PhotoCard
-                                    key={photo.title}
-                                    photo={photo}
-                                    onClick={() => setSelectedImage(photo)}
-                                />
-                            ))}
-                        </div>
-                    </TabsContent>
-                    <TabsContent value="city">
-                        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
-                            {cityPhotos.map((photo) => (
-                                <PhotoCard
-                                    key={photo.title}
-                                    photo={photo}
-                                    onClick={() => setSelectedImage(photo)}
-                                />
-                            ))}
-                        </div>
-                    </TabsContent>
-                    <TabsContent value="tourism">
-                        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
-                            {tourismPhotos.map((photo) => (
-                                <PhotoCard
-                                    key={photo.title}
-                                    photo={photo}
-                                    onClick={() => setSelectedImage(photo)}
-                                />
-                            ))}
-                        </div>
-                    </TabsContent>
-                    <TabsContent value="food">
-                        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
-                            {foodPhotos.map((photo) => (
-                                <PhotoCard
-                                    key={photo.title}
-                                    photo={photo}
-                                    onClick={() => setSelectedImage(photo)}
-                                />
-                            ))}
-                        </div>
-                    </TabsContent>
-                    <TabsContent value="transport">
-                        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
-                            {transportPhotos.map((photo) => (
-                                <PhotoCard
-                                    key={photo.title}
-                                    photo={photo}
-                                    onClick={() => setSelectedImage(photo)}
-                                />
-                            ))}
-                        </div>
-                    </TabsContent>
+                    
+                    {Object.entries(photoCollections).map(([key, photoList]) => (
+                        <TabsContent key={key} value={key}>
+                            <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
+                                {photoList.map((photo) => (
+                                    <PhotoCard
+                                        key={photo.title}
+                                        photo={photo}
+                                        onClick={() => setSelectedImage(photo)}
+                                    />
+                                ))}
+                            </div>
+                        </TabsContent>
+                    ))}
                 </Tabs>
             )}
-            <Dialog open={!!selectedImage} onOpenChange={() => setSelectedImage(null)}>
+             {/* ギャラリー内の画像クリックで拡大表示するためのDialog */}
+             <Dialog open={!!selectedImage} onOpenChange={() => setSelectedImage(null)}>
                 {selectedImage && (
                     <DialogContent className="max-w-4xl max-h-[90vh] overflow-y-auto mx-2">
-                        <PopupContent photo={selectedImage} />
+                        <PhotoGalleryPopupContent photo={selectedImage} />
                     </DialogContent>
                 )}
             </Dialog>
