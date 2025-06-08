@@ -4,41 +4,10 @@ import { Dialog, DialogContent } from "@/components/ui/dialog";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useEffect, useState } from "react";
 import * as Elements from "@/app/components/elements/index";
-import { Metadata } from "next";
 import { PhotoCard } from "./PhotoCard";
-import PopupContent from "./PopupContent";
+import { Photo } from "@/types/types";
+import PopupContent from "@/app/components/elements/popupContent/PhotoGalleryPopupContent";
 
-export const metadata: Metadata = {
-    title: "写真ギャラリー– 写真で次の旅先を見つけよう",
-    description: "ともきちの旅行日記の「写真ギャラリー」では、世界各国の美しい風景や旅先の瞬間を切り取った写真を多数掲載。お気に入りの一枚から次に行きたい旅行先を見つけたり、旅のインスピレーションを得られるコンテンツが満載です。写真を眺めながら、あなたの次の冒険を計画してみませんか？",
-    openGraph: {
-        title: '写真ギャラリー– 写真で次の旅先を見つけよう',
-        description: 'ともきちの旅行日記の「写真ギャラリー」では、世界各国の美しい風景や旅先の瞬間を切り取った写真を多数掲載。お気に入りの一枚から次に行きたい旅行先を見つけたり、旅のインスピレーションを得られるコンテンツが満載です。写真を眺めながら、あなたの次の冒険を計画してみませんか？',
-        images: [
-            {
-                url: '/images/Spain/toledo-view.jpg',
-                width: 1200,
-                height: 630,
-                alt: 'ともきちの旅行日記',
-            },
-        ],
-    },
-    twitter: {
-        title: '写真ギャラリー– 写真で次の旅先を見つけよう',
-        description: 'ともきちの旅行日記の「写真ギャラリー」では、世界各国の美しい風景や旅先の瞬間を切り取った写真を多数掲載。お気に入りの一枚から次に行きたい旅行先を見つけたり、旅のインスピレーションを得られるコンテンツが満載です。写真を眺めながら、あなたの次の冒険を計画してみませんか？',
-        images: ['/images/Spain/toledo-view.jpg'],
-    },
-};
-
-interface Photo {
-    id: number;
-    title: string;
-    description: string;
-    image: string;
-    location: string;
-    category: string;
-    likes: number;
-}
 
 const GalleryClient = () => {
     const [selectedImage, setSelectedImage] = useState<Photo | null>(null);

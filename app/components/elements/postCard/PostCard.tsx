@@ -1,7 +1,7 @@
 import ImageOverlayPostCard from "@/app/components/elements/card/ImageOverlayPostCard";
 import HorizontalPostCard from "@/app/components/elements/card/HorizontalPostCard";
 import StandardPostCard from "@/app/components/elements/card/StandardPostCard";
-import { Post } from "@/lib/types";
+import { Post } from "@/types/types";
 import ItineraryListCard from "../card/ItineraryListCard";
 
 interface PostCardProps {

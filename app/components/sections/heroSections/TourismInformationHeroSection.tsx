@@ -4,7 +4,7 @@ import { ArrowRight } from "lucide-react";
 import Link from "next/link";
 import * as Elements from "@/app/components/elements/index";
 import { useEffect, useState } from "react";
-import { Post } from "@/lib/types"; // Post型をインポート
+import { Post } from "@/types/types"; // Post型をインポート
 
 const TourismInformationHeroSection = () => {
     const [tourismPosts, setTourismPosts] = useState<Post[]>([]);

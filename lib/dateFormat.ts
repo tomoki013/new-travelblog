@@ -1,5 +1,5 @@
 // In lib/utils.ts (または新しい lib/formatters.ts など)
-import { Post } from './types'; // Post型をインポート
+import { Post } from '../types/types'; // Post型をインポート
 
 export function getDatePrefix(postType: Post['type']): string {
     switch (postType) {

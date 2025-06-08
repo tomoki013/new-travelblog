@@ -1,6 +1,6 @@
 import { Badge } from "@/components/ui/badge";
 import { Calendar, MapPin } from "lucide-react";
-import { Post } from "@/lib/types";
+import { Post } from "@/types/types";
 
 interface ArticleMetaProps {
     post: Post;

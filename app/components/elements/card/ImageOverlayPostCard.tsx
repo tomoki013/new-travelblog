@@ -1,7 +1,7 @@
 import { Badge } from "@/components/ui/badge";
 import Image from "next/image";
 import Link from "next/link";
-import { Post } from "@/lib/types";
+import { Post } from "@/types/types";
 
 const ImageOverlayPostCard = ({ post, linkPrefix }: { post: Post; linkPrefix: string }) => (
     <Link href={`/${linkPrefix}/${post.slug}`}>

@@ -2,16 +2,7 @@ import { MapPin } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import Image from "next/image";
 import { DialogTitle } from "@radix-ui/react-dialog";
-
-interface Photo {
-    id: number;
-    title: string;
-    description: string;
-    image: string;
-    location: string;
-    category: string;
-    likes: number;
-}
+import { Photo } from "@/types/types";
 
 const PhotoGalleryPopupContent = ({ photo }: { photo: Photo }) => (
     <div>

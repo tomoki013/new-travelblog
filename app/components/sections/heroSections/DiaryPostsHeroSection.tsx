@@ -4,7 +4,7 @@ import { ArrowRight } from "lucide-react";
 import Link from "next/link";
 import * as Elements from "@/app/components/elements/index";
 import { useEffect, useState } from "react";
-import { Post } from "@/lib/types";
+import { Post } from "@/types/types";
 
 const DiaryPostsHeroSection = () => {
     const [diaryPosts, setDiaryPosts] = useState<Post[]>([]);
