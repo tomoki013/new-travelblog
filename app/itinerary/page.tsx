@@ -24,7 +24,7 @@ const ItineraryPage = () => {
             </div>
 
             {/* Itinerary Header */}
-            <Elements.Popup itemType='posts?type=itinerary' buttonType='section' />
+            <Elements.Popup apiFetchType='posts' buttonType='section' />
 
             {/* Itinerary */}
             <Sections.Posts

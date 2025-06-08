@@ -9,34 +9,36 @@ import { ChevronLeft, ChevronRight, FileText } from "lucide-react";
 import { Card, CardHeader } from "@/components/ui/card";
 
 interface PopupProps {
-    itemType: 'galleryPhotos' | 'posts?type=itinerary'
+    apiFetchType: 'galleryPhotos' | 'posts'
     buttonType?: 'section' | 'button' | 'none'
+    initialOpen?: boolean
 }
 
 const Popup = ({
-    itemType,
+    apiFetchType,
     buttonType = 'none',
+    initialOpen = false,
 }: PopupProps
 ) => {
     const [items, setItems] = useState<Post[]>([]);
-    const [open, setOpen] = useState(false);
+    const [open, setOpen] = useState(initialOpen);
     const [currentIndex, setCurrentIndex] = useState(0);
 
     useEffect(() => {
         const fetchPosts = async () => {
-            const endpoint = `/api/${itemType}`;
+            const endpoint = apiFetchType === 'posts' ? `/api/${apiFetchType}?type=itinerary` : `/api/${apiFetchType}`;
             const res = await fetch(endpoint);
             if (!res.ok) {
                 throw new Error('Failed to fetch items');
             }
             const data = await res.json();
-            const items = data.items;
-            setItems(items);
+            const popupItems = apiFetchType === 'posts' ? data.posts : data;
+            setItems(popupItems);
         }
         fetchPosts().catch(error => {
             console.error('Error fetching items:', error);
         });
-    }, [itemType]);
+    }, [apiFetchType]);
 
     return (
         <>
@@ -98,7 +100,7 @@ const Popup = ({
                 if (!v) setCurrentIndex(0);
             }}>
                 <DialogContent className="max-h-[90vh] overflow-y-auto flex flex-col items-center">
-                    {items.length > 0 && (
+                    {items?.length > 0 && (
                         <>
                              <DialogTitle className="text-xl font-bold mb-2">旅の概要 ({currentIndex + 1} / {items.length})</DialogTitle>
                              <DialogDescription>左右の矢印で他の旅程に切り替えられます。</DialogDescription>
