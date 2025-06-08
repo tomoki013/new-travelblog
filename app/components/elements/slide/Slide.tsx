@@ -26,19 +26,17 @@ const Slide = ({
     imageType = '',
 }: SlideProps) => {
     const [current, setCurrent] = useState(0);
-    // imageTypeが指定されていればregionsから該当cityの画像配列を、なければhomeImages
     const images = imageType
         ? regions.filter(r => r.city === imageType).flatMap(r => r.images)
         : homeImages;
     const total = images.length;
     const timeoutRef = useRef<NodeJS.Timeout | null>(null);
 
-    // 自動スライド
     useEffect(() => {
         if (timeoutRef.current) clearTimeout(timeoutRef.current);
         timeoutRef.current = setTimeout(() => {
             setCurrent((prev) => (prev + 1) % total);
-        }, 8000); // 4秒ごとに自動切り替え
+        }, 8000); // 8秒ごとに自動切り替え
         return () => {
             if (timeoutRef.current) clearTimeout(timeoutRef.current);
         };
@@ -46,8 +44,44 @@ const Slide = ({
 
     const prevSlide = () => setCurrent((prev) => (prev - 1 + total) % total);
     const nextSlide = () => setCurrent((prev) => (prev + 1) % total);
+
+    const [touchStartX, setTouchStartX] = useState<number | null>(null);
+    const [touchEndX, setTouchEndX] = useState<number | null>(null);
+
+    const minSwipeDistance = 50;
+
+    const handleTouchStart = (e: React.TouchEvent) => {
+        setTouchEndX(null); // 新しいタッチのためにリセット
+        setTouchStartX(e.targetTouches[0].clientX);
+    };
+
+    const handleTouchMove = (e: React.TouchEvent) => {
+        setTouchEndX(e.targetTouches[0].clientX);
+    };
+
+    const handleTouchEnd = () => {
+        if (touchStartX === null || touchEndX === null) return;
+
+        const distance = touchStartX - touchEndX;
+
+        if (distance > minSwipeDistance) {
+            nextSlide();
+        } else if (distance < -minSwipeDistance) {
+            prevSlide();
+        }
+
+        setTouchStartX(null);
+        setTouchEndX(null);
+    };
+
+
     return (
-        <div className="absolute inset-0 overflow-hidden">
+        <div
+            className="absolute inset-0 overflow-hidden"
+            onTouchStart={handleTouchStart}
+            onTouchMove={handleTouchMove}
+            onTouchEnd={handleTouchEnd}
+        >
             {images.map((img, idx) => (
                 <Image
                     key={img}
@@ -68,14 +102,14 @@ const Slide = ({
                     <button
                         onClick={prevSlide}
                         aria-label="前へ"
-                        className="absolute left-4 top-1/2 z-20 -translate-y-1/2 bg-black/40 text-white rounded-full p-3 hover:bg-white/80 hover:text-black shadow-lg transition-colors"
+                        className="hidden md:block absolute left-4 top-1/2 z-20 -translate-y-1/2 bg-black/40 text-white rounded-full p-3 hover:bg-white/80 hover:text-black shadow-lg transition-colors"
                     >
                         <FaChevronLeft size={28} />
                     </button>
                     <button
                         onClick={nextSlide}
                         aria-label="次へ"
-                        className="absolute right-4 top-1/2 z-20 -translate-y-1/2 bg-black/40 text-white rounded-full p-3 hover:bg-white/80 hover:text-black shadow-lg transition-colors"
+                        className="hidden md:block absolute right-4 top-1/2 z-20 -translate-y-1/2 bg-black/40 text-white rounded-full p-3 hover:bg-white/80 hover:text-black shadow-lg transition-colors"
                     >
                         <FaChevronRight size={28} />
                     </button>
