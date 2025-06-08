@@ -1,6 +1,7 @@
 import * as Elements from '@/app/components/elements/index';
 import * as Sections from '@/app/components/sections/index';
 import { Metadata } from 'next';
+import ItineraryListForPopup from './ItineraryListForPopup';
 
 export const metadata: Metadata = {
   	title: '旅程＆費用レポート–日本各地の観光・グルメ・宿泊・交通情報',
@@ -22,9 +23,17 @@ const ItineraryPage = () => {
                 <h1 className="mb-4 text-4xl font-bold">旅程＆費用レポート</h1>
                 <p className="mx-auto max-w-2xl text-muted-foreground">日本各地の観光スポット、グルメ、宿泊施設、交通情報など、旅行計画に役立つ情報をお届けします。</p>
             </div>
-
-            {/* Itinerary Header */}
-            <Elements.Popup apiFetchType='posts' buttonType='section' />
+            
+            {/* 新しいPopupコンポーネントを使用 */}
+            <Elements.Popup
+                buttonType='section'
+                triggerTitle="旅の概要をまとめてチェック"
+                triggerDescription="クリックして全ての旅程と費用の概要をモーダルで確認できます。"
+                dialogTitle="旅の概要"
+                dialogDescription="左右の矢印で他の旅程に切り替えられます。"
+            >
+                <ItineraryListForPopup />
+            </Elements.Popup>
 
             {/* Itinerary */}
             <Sections.Posts

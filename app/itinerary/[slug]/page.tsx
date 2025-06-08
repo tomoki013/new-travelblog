@@ -7,7 +7,9 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import { Metadata } from 'next';
+import ItineraryPopupContent from '@/app/components/elements/popupContent/ItineraryPopupContent'; // インポート
 
+// ... (getPostData, generateMetadata, generateDateRangeは変更なし)
 async function getPostData(slug: string) {
     const post = await getPostBySlug('itinerary', slug);
     if (!post) {
@@ -59,6 +61,7 @@ const generateDateRange = (startDate: string, endDate: string): string[] => {
     return dateRange;
 };
 
+
 const ItineraryPostPage = async (props: { params: Promise<{ slug: string }>}) => {
     const params = await props.params;
     const post = await getPostBySlug('itinerary', params.slug);
@@ -68,22 +71,12 @@ const ItineraryPostPage = async (props: { params: Promise<{ slug: string }>}) =>
         dateRange.some((date) => diaryPost.dates.includes(date))
     );
 
-    const itineraryPosts = getAllPosts('itinerary');
-    let itineraryPost = null;
-    let itineraryClass = "block";
-    if (post.dates && post.dates.length > 0) {
-        itineraryPost = itineraryPosts.find((itPost) => {
-            if (!itPost.dates || itPost.dates.length < 2) return false;
-            const range = generateDateRange(itPost.dates[0], itPost.dates[itPost.dates.length - 1]);
-            return post.dates.some(date => range.includes(date));
-        });
-    }
-    if (!itineraryPost) {
-        itineraryClass = "hidden";
-    }
-
     const author = members.find((member) => member.name === post.author) || { name: "ともきちの旅行日記", role: "", image: "/favicon.ico", description: "" };
     
+    if (!post) {
+        notFound();
+    }
+
     return (
         <div className="container py-12">
             <Elements.ListLink href="/itinerary">
@@ -91,11 +84,19 @@ const ItineraryPostPage = async (props: { params: Promise<{ slug: string }>}) =>
             </Elements.ListLink>
 
             <Sections.HeadsUp dates={post.dates} />
+            
+            {/* フローティングボタンで現在の旅程概要を表示するポップアップ */}
+            <Elements.Popup
+                buttonType='button'
+                triggerTitle="この旅程の概要"
+                triggerDescription='' // ボタンタイプなので不要
+                dialogTitle="旅の概要"
+            >
+                <ItineraryPopupContent post={post} />
+            </Elements.Popup>
 
             <div className="grid gap-10 lg:grid-cols-3">
-                
                 <div className='lg:col-span-2'>
-                    <Elements.Popup apiFetchType='posts' buttonType='button' initialOpen={true} />
                     <Sections.Article
                         post={post}
                         author={author}
@@ -105,10 +106,11 @@ const ItineraryPostPage = async (props: { params: Promise<{ slug: string }>}) =>
                 <div>
                     <div className="sticky top-24 space-y-8">
                         <div className="hidden md:block">
-                            <div className="max-h-64 overflow-y-auto">
+                            <div className="max-h-[60vh] overflow-y-auto">
                                 <Sections.TableOfContents />
                             </div>
                         </div>
+                        {/* 関連日記や人気タグなどのサイドバーは変更なし */}
                         <div className="rounded-lg border bg-card p-6">
                             <h3 className="mb-4 text-lg font-medium">関連する旅行日記</h3>
                             <div className="space-y-4">
@@ -134,32 +136,6 @@ const ItineraryPostPage = async (props: { params: Promise<{ slug: string }>}) =>
                                 ))}
                             </div>
                         </div>
-                        <div className={`rounded-lg border bg-card p-6 ${itineraryClass}`}>
-                            <h3 className='mb-4 text-lg font-medium'>旅程＆費用レポート</h3>
-                            <div className='space-y-4'>
-                                {itineraryPosts.slice(0, 3).map((itineraryPost) => (
-                                    <div key={itineraryPost.slug} className="flex gap-3">
-                                        <div className="relative h-16 w-16 flex-shrink-0 overflow-hidden rounded-md">
-                                            <Image
-                                                src={itineraryPost.image || "/favicon.ico"}
-                                                alt={itineraryPost.title || "favicon"}
-                                                fill
-                                                style={{ objectFit: 'cover' }}
-                                            />
-                                        </div>
-                                        <div>
-                                            <h4 className="text-sm font-medium">
-                                                <Link href={`/itinerary/${itineraryPost.slug}`} className="hover:underline">
-                                                    {itineraryPost.title}
-                                                </Link>
-                                            </h4>
-                                            <p className="text-xs text-muted-foreground">{itineraryPost.dates.join("～")}</p>
-                                        </div>
-                                    </div>
-                                ))}
-                            </div>
-                        </div>
-
                         <div className="rounded-lg border bg-card p-6">
                             <h3 className="mb-4 text-lg font-medium">人気のタグ</h3>
                             <div className="flex flex-wrap gap-2">

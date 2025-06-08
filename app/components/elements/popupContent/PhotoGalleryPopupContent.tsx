@@ -1,13 +1,12 @@
 import { MapPin } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import Image from "next/image";
-import { DialogTitle } from "@radix-ui/react-dialog";
 import { Photo } from "@/types/types";
 
 const PhotoGalleryPopupContent = ({ photo }: { photo: Photo }) => (
     <div>
         <div>
-            <DialogTitle className="text-2xl font-bold">{photo.title}</DialogTitle>
+            <h2 className="text-2xl font-bold">{photo.title}</h2>
             <p className="flex items-center text-sm text-muted-foreground">
                 <MapPin className="mr-1 h-3 w-3" />
                 {photo.location}
