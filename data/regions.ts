@@ -8,6 +8,17 @@ export interface regionProps {
 
 export const regions: regionProps[] = [
     {
+        city: 'サントリーニ島',
+        images: [
+            '/images/Greece/oia-castle-sunset-view.jpg',
+            '/images/Greece/oia-castle-view.jpg',
+            '/images/Greece/fira-shopping-street.jpg',
+        ],
+        country: 'ギリシャ',
+        title: 'サントリーニ-エーゲ海に輝く白と青の絶景',
+        description: 'ともきちの旅行日記「サントリーニ」ページへようこそ。断崖に連なる白壁の家々とブルードームの教会、そして世界一と称されるイアの夕日。ロマンチックな風景と美味しいシーフード、ワインを堪能する、夢のような島の滞在記です。',
+    },
+    {
         city: 'パリ',
         images: [
             '/images/France/eiffel-tower-and-sunset.jpg',
@@ -199,16 +210,5 @@ export const regions: regionProps[] = [
     //     country: 'ギリシャ',
     //     title: 'アテネ – 神話と哲学の故郷、西洋文明の源流を訪ねて',
     //     description: 'ともきちの旅行日記「アテネ」編。青い空に映えるパルテノン神殿、哲学者たちが議論を交わした古代アゴラ。歴史的な遺跡を巡りながら、プラカ地区の散策や美味しいギリシャ料理も満喫。神話の世界が息づく街の魅力をお届けします。',
-    // },
-    // {
-    //     city: 'サントリーニ',
-    //     images: [
-    //         '/images/Greece/santorini-oia.jpg',
-    //         '/images/Greece/blue-domes.jpg',
-    //         '/images/Greece/santorini-sunset.jpg',
-    //     ],
-    //     country: 'ギリシャ',
-    //     title: 'サントリーニ – エーゲ海に輝く白と青の絶景',
-    //     description: 'ともきちの旅行日記「サントリーニ」ページへようこそ。断崖に連なる白壁の家々とブルードームの教会、そして世界一と称されるイアの夕日。ロマンチックな風景と美味しいシーフード、ワインを堪能する、夢のような島の滞在記です。',
     // },
 ]
