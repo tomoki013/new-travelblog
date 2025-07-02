@@ -23,7 +23,7 @@ const ItineraryListCard = ({ post, linkPrefix }: { post: Post; linkPrefix: strin
                 </div>
                 <CardHeader>
                     <div className="flex items-center justify-between gap-2 mb-2">
-                        {post.category.map(cat => <Badge key={cat} variant="outline">{cat}</Badge>)}
+                        <Badge className="mb-3">{Array.isArray(post.category) ? post.category.join(", ") : post.category}</Badge>
                         <span className="flex items-center text-xs text-muted-foreground">
                             <p>
                                 {getDatePrefix(post.type)}

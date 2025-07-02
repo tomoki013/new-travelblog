@@ -8,6 +8,7 @@ import type { Metadata } from "next";
 import * as Elements from '@/app/components/elements/index';
 import * as Sections from '@/app/components/sections/index';
 import { members } from "@/data/member";
+import type { Post } from "@/types/types";
 
 async function getPostData(slug: string) {
     const post = await getPostBySlug('tourism', slug);
@@ -48,20 +49,52 @@ export async function generateMetadata(props: { params: Promise<{ slug: string }
     }
 }
 
+// 関連度を計算する関数を定義
+const getRelevanceScore = (targetPost: Post, currentPost: Post): number => {
+    let score = 0;
+
+    // 1. カテゴリの一致度を評価（重み: 2）
+    const commonCategories = targetPost.category.filter(cat => currentPost.category.includes(cat));
+    score += commonCategories.length * 1;
+
+    // 2. ロケーションの一致度を詳細に評価
+    const currentLocations = currentPost.location.map(l => l.split('-')); // 例: [['スペイン', 'マドリード']]
+    const targetLocations = targetPost.location.map(l => l.split('-')); // 例: [['スペイン', 'トレド']]
+
+    currentLocations.forEach(currentLoc => {
+        const currentCountry = currentLoc[0];
+        const currentCity = currentLoc[1];
+
+        targetLocations.forEach(targetLoc => {
+            const targetCountry = targetLoc[0];
+            const targetCity = targetLoc[1];
+
+            // 国が一致する場合、スコアを加算（重み: 3）
+            if (currentCountry && targetCountry && currentCountry === targetCountry) {
+                score += 3;
+
+                // さらに都市も一致する場合、追加でスコアを加算（重み: 5）
+                if (currentCity && targetCity && currentCity === targetCity) {
+                    score += 5; // 同じ都市の関連性をより高く評価
+                }
+            }
+        });
+    });
+
+    return score;
+};
+
 const TourismPostPage = async (props: { params: Promise<{ slug: string }>}) => {
     const params = await props.params;
     const post = await getPostBySlug('tourism', params.slug)
     const relatedPosts = getAllPosts('tourism')
         .filter((p) => p.slug !== post.slug)
-        .sort((a, b) => {
-            if (a.category === post.category && b.category !== post.category) return -1;
-            if (a.category !== post.category && b.category === post.category) return 1;
-            if (a.location === post.location && b.location !== post.location) return -1;
-            if (a.location !== post.location && b.location === post.location) return 1;
-            return 0;
-        });
+        // 各記事のスコアを計算し、降順でソート
+        .sort((a, b) => getRelevanceScore(b, post) - getRelevanceScore(a, post));
+    console.log('Related Posts:', relatedPosts);
+    console.log('score:', relatedPosts.map(p => getRelevanceScore(p, post)));
 
-        const author = members.find((member) => member.name === post.author) || { name: "ともきちの旅行日記", role: "", image: "/favicon.ico", description: "" };
+    const author = members.find((member) => member.name === post.author) || { name: "ともきちの旅行日記", role: "", image: "/favicon.ico", description: "" };
 
     if (!post) {
         notFound()
