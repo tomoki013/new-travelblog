@@ -11,9 +11,9 @@ import { useEffect, useState } from 'react';
 interface SearchBoxProps {
     initialKeyword?: string;
     initialCategory?: string;
-    onSearch?: (keyword: string, category: string) => void;
+    onSearch: (keyword: string, category: string) => void;
     className?: string;
-    mode: 'url' | 'realtime'; // 追加: 検索挙動の切り替え
+    mode?: 'url' | 'realtime'; // 追加: 検索挙動の切り替え
     categories?: { id: string; name: string }[]; // カテゴリリストを外部からも受け取れるように
 }
 

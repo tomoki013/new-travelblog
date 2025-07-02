@@ -53,7 +53,7 @@ export async function generateMetadata(props: { params: Promise<{ slug: string }
 const getRelevanceScore = (targetPost: Post, currentPost: Post): number => {
     let score = 0;
 
-    // 1. カテゴリの一致度を評価（重み: 2）
+    // 1. カテゴリの一致度を評価（重み: 1）
     const commonCategories = targetPost.category.filter(cat => currentPost.category.includes(cat));
     score += commonCategories.length * 1;
 
