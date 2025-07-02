@@ -91,8 +91,6 @@ const TourismPostPage = async (props: { params: Promise<{ slug: string }>}) => {
         .filter((p) => p.slug !== post.slug)
         // 各記事のスコアを計算し、降順でソート
         .sort((a, b) => getRelevanceScore(b, post) - getRelevanceScore(a, post));
-    console.log('Related Posts:', relatedPosts);
-    console.log('score:', relatedPosts.map(p => getRelevanceScore(p, post)));
 
     const author = members.find((member) => member.name === post.author) || { name: "ともきちの旅行日記", role: "", image: "/favicon.ico", description: "" };
 
