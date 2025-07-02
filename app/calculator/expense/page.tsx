@@ -1,5 +1,5 @@
-import ExpenseCalculatorForm from "./ExpenseCalculatorForm"
-import { Metadata } from 'next'
+import ExpenseCalculatorForm from "./ExpenseCalculatorForm";
+import { Metadata } from 'next';
 
 export const metadata: Metadata = {
     title: '旅費計算ツール',
