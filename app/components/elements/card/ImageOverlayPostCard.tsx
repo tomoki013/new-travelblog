@@ -15,7 +15,7 @@ const ImageOverlayPostCard = ({ post, linkPrefix }: { post: Post; linkPrefix: st
             />
             <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent" />
             <div className="absolute bottom-0 left-0 p-4 text-white">
-                <Badge className="mb-2">{post.category}</Badge>
+                <Badge className="mb-3">{Array.isArray(post.category) ? post.category.join(", ") : post.category}</Badge>
                 <h3 className="text-lg font-bold">{post.title}</h3>
             </div>
         </div>

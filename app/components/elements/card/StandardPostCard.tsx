@@ -20,7 +20,7 @@ const StandardPostCard = ({ post, linkPrefix }: { post: Post; linkPrefix: string
             </div>
             <CardContent className="p-6">
                 <div className="mb-3 flex items-center justify-between">
-                    <Badge variant='outline'>{post.category}</Badge>
+                    <Badge className="mb-3">{Array.isArray(post.category) ? post.category.join(", ") : post.category}</Badge>
                     <span className="flex items-center text-xs text-muted-foreground">
                         <p>
                             {getDatePrefix(post.type)}

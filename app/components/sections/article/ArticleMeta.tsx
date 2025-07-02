@@ -9,7 +9,7 @@ interface ArticleMetaProps {
 const ArticleMeta = ({ post }: ArticleMetaProps) => {
     return (
         <div className="my-6">
-            <Badge className="mb-3">{post.category}</Badge>
+            {post.category.map(cat => <Badge key={cat} variant="outline">{cat}</Badge>)}
             <h1 className="mb-4 text-3xl font-bold sm:text-4xl">{post.title}</h1>
             <div className="flex flex-wrap items-center gap-4 text-sm text-muted-foreground">
                 <div className="flex items-center">

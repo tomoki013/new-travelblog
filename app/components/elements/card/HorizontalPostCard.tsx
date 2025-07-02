@@ -20,7 +20,7 @@ const HorizontalPostCard = ({ post, linkPrefix }: { post: Post; linkPrefix: stri
                 </div>
                 <div className="sm:col-span-2">
                     <div className="mb-2 flex items-center gap-2">
-                        <Badge variant="outline">{post.category}</Badge>
+                        <Badge className="mb-3">{Array.isArray(post.category) ? post.category.join(", ") : post.category}</Badge>
                         <Badge variant="secondary">予算 {post.budget?.toLocaleString()}円</Badge>
                     </div>
                     <h3 className="mb-2 line-clamp-2 text-lg font-bold">{post.title}</h3>
