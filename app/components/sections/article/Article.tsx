@@ -22,6 +22,7 @@ interface ArticleProps {
     nextPost?: { slug: string; title: string } | null;
     navHidden?: string;
     isItinerary?: boolean;
+    allPosts: Post[];
 }
 
 const Article = ({
@@ -30,6 +31,7 @@ const Article = ({
     prevPost = null,
     nextPost = null,
     navHidden,
+    allPosts,
 }: ArticleProps
 ) => {
     return (
@@ -38,7 +40,7 @@ const Article = ({
             <ArticleMeta post={post} />
             <ArticleImage src={post.image} alt={post.title} />
             <ArticleMobileToc navHidden={navHidden} />
-            <ArticleContent content={post.content} />
+            <ArticleContent content={post.content} allPosts={allPosts} currentPostType={post.type} />
             <ArticleTags tags={post.tags} />
             <ArticleNavigation prevPost={prevPost} nextPost={nextPost} type={post.type || 'diary'} />
             <Separator className="my-8" />

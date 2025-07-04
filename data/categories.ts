@@ -20,6 +20,7 @@ export const tourismCategories = [
     {id: 'food', name: 'グルメ'},
     {id: 'accommodation', name: '宿泊施設'},
     {id: 'transportation', name: '交通情報'},
+    {id: 'airportAccess', name: '空港アクセス'},
     {id: 'pilgrimage', name: '聖地巡礼'},
 ];
 
