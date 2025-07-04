@@ -1,5 +1,3 @@
-// app/components/elements/card/EmbeddedPostCard.tsx
-
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import Image from "next/image";
@@ -8,7 +6,6 @@ import { Calendar, MapPin } from "lucide-react";
 import { Post } from "@/types/types";
 
 const EmbeddedPostCard = ({ post }: { post: Post }) => (
-    // 外側のdivを削除し、Linkをルート要素にする
     <Link href={`/${post.type}/${post.slug}`} className="block group my-6 no-underline hover:no-underline">
         <Card className="overflow-hidden transition-all hover:shadow-lg flex flex-col sm:flex-row w-full">
             <div className="relative h-48 sm:h-auto sm:w-48 flex-shrink-0">
