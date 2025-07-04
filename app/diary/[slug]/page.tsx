@@ -1,5 +1,5 @@
 import { Badge } from "@/components/ui/badge";
-import getAllPosts, { getPostBySlug } from "@/lib/markdown";
+import getAllPosts, { getPostBySlug, getAllPostTypes } from "@/lib/markdown";
 import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
@@ -51,6 +51,7 @@ export async function generateMetadata(props: { params: Promise<{ slug: string }
 const DiaryPostPage = async (props: { params: Promise<{ slug: string }>}) => {
     const params = await props.params;
     const post = await getPostBySlug('diary', params.slug);
+    const allPostsForEmbedding = getAllPostTypes(); // これは埋め込みカード用
     const allPosts = getAllPosts('diary');
 
     const author = members.find((member) => member.name === post.author) || { name: "ともきちの旅行日記", role: "", image: "/favicon.ico", description: "" };
@@ -99,6 +100,7 @@ const DiaryPostPage = async (props: { params: Promise<{ slug: string }>}) => {
                         prevPost={prevPost}
                         nextPost={nextPost}
                         navHidden="hidden"
+                        allPosts={allPostsForEmbedding}
                     />
                     <Elements.ItineraryLink />
                     <Sections.SearchHeroSection />

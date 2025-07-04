@@ -50,3 +50,10 @@ export default function getAllPosts(type: PostType): Post[] {
         });
     return posts;
 }
+
+export function getAllPostTypes(): Post[] {
+    const diaryPosts = getAllPosts('diary');
+    const tourismPosts = getAllPosts('tourism');
+    const itineraryPosts = getAllPosts('itinerary');
+    return [...diaryPosts, ...tourismPosts, ...itineraryPosts];
+}

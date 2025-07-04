@@ -28,7 +28,7 @@ const TourismPage = () => {
             {/* Tourism Information */}
             <Sections.Posts
                 apiFetchType="tourism"
-                tabsGridColsClass="sm:grid-cols-2 md:grid-cols-6"
+                tabsGridColsClass="sm:grid-cols-2 md:grid-cols-7"
             />
 
             {/* Travel Tips */}

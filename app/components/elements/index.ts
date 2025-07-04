@@ -10,6 +10,7 @@ import Slide from "./slide/Slide";
 import SearchBox from "./searchBox/SearchBox";
 import ItineraryListCard from "./card/ItineraryListCard";
 import Popup from './popup/Popup';
+import EmbeddedPostCard from "./card/EmbeddedPostCard";
 
 export {
     GitHubIcon,
@@ -24,4 +25,5 @@ export {
     SearchBox,
     ItineraryListCard,
     Popup,
+    EmbeddedPostCard,
 };

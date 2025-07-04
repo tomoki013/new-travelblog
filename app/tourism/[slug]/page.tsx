@@ -1,6 +1,6 @@
 import { Badge } from "@/components/ui/badge";
 // import { Button } from "@/components/ui/button";
-import getAllPosts, { getPostBySlug } from "@/lib/markdown";
+import getAllPosts, { getPostBySlug, getAllPostTypes } from "@/lib/markdown";
 import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
@@ -87,6 +87,7 @@ const getRelevanceScore = (targetPost: Post, currentPost: Post): number => {
 const TourismPostPage = async (props: { params: Promise<{ slug: string }>}) => {
     const params = await props.params;
     const post = await getPostBySlug('tourism', params.slug)
+    const allPostsForEmbedding = getAllPostTypes(); // これは埋め込みカード用
     const relatedPosts = getAllPosts('tourism')
         .filter((p) => p.slug !== post.slug)
         // 各記事のスコアを計算し、降順でソート
@@ -111,6 +112,7 @@ const TourismPostPage = async (props: { params: Promise<{ slug: string }>}) => {
                     <Sections.Article
                         post={post}
                         author={author}
+                        allPosts={allPostsForEmbedding}
                     />
                     <Elements.ItineraryLink />
                     <Sections.SearchHeroSection />
