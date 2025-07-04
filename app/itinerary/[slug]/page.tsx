@@ -1,7 +1,7 @@
 import * as Elements from '@/app/components/elements/index';
 import * as Sections from '@/app/components/sections/index';
 import { Badge } from '@/components/ui/badge';
-import getAllPosts, { getPostBySlug } from '@/lib/markdown';
+import getAllPosts, { getPostBySlug, getAllPostTypes } from '@/lib/markdown';
 import { members } from '@/data/member';
 import Image from 'next/image';
 import Link from 'next/link';
@@ -65,6 +65,7 @@ const generateDateRange = (startDate: string, endDate: string): string[] => {
 const ItineraryPostPage = async (props: { params: Promise<{ slug: string }>}) => {
     const params = await props.params;
     const post = await getPostBySlug('itinerary', params.slug);
+    const allPostsForEmbedding = getAllPostTypes();
 
     const dateRange = generateDateRange(post.dates[0], post.dates[post.dates.length - 1]);
     const diaryPosts = getAllPosts('diary').filter((diaryPost) =>
@@ -100,6 +101,7 @@ const ItineraryPostPage = async (props: { params: Promise<{ slug: string }>}) =>
                     <Sections.Article
                         post={post}
                         author={author}
+                        allPosts={allPostsForEmbedding}
                     />
                     <Sections.SearchHeroSection />
                 </div>
