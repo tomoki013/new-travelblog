@@ -7,7 +7,7 @@ import { Post } from "@/types/types";
 import { getDatePrefix } from "@/lib/dateFormat";
 
 const StandardPostCard = ({ post, linkPrefix }: { post: Post; linkPrefix: string }) => (
-    <Link href={`${linkPrefix}/${post.slug}`} className="block group">
+    <Link href={`/${linkPrefix}/${post.slug}`} className="block group">
         <Card className='overflow-hidden transition-all hover:shadow-lg'>
             <div className="relative h-48 w-full">
                 <Image
