@@ -22,6 +22,8 @@ interface PopupProps {
     children: ReactNode;
     // アイコンの種類
     iconType?: 'file' | 'image';
+    // モーダルの初期開閉状態
+    modalState?: boolean;
 }
 
 const Popup = ({
@@ -31,10 +33,11 @@ const Popup = ({
     dialogTitle,
     dialogDescription,
     children,
-    iconType = 'file'
+    iconType = 'file',
+    modalState  = false,
 }: PopupProps) => {
     // モーダルの開閉状態だけを管理
-    const [open, setOpen] = useState(false);
+    const [open, setOpen] = useState(modalState);
 
     const TriggerIcon = iconType === 'image' ? ImageIcon : FileText;
 

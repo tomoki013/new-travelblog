@@ -90,6 +90,7 @@ const ItineraryPostPage = async (props: { params: Promise<{ slug: string }>}) =>
                 triggerTitle="この旅程の概要"
                 triggerDescription='' // ボタンタイプなので不要
                 dialogTitle="旅の概要"
+                modalState={true}
             >
                 <ItineraryPopupContent post={post} />
             </Elements.Popup>
