@@ -98,6 +98,7 @@ export default function RootLayout({
 						<layouts.Footer />
 					</div>
 					<Sections.ItineraryBanner />
+					<Sections.CookieBanner />
 				</ThemeProvider>
       		</body>
     	</html>
