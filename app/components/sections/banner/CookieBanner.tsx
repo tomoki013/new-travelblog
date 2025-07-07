@@ -9,9 +9,10 @@ const CookieBanner = () => {
     const [isVisible, setIsVisible] = useState(false);
 
     useEffect(() => {
-        // localStorageをチェックして、同意済みでなければバナーを表示
+        // localStorageとsessionStorageをチェックして、同意済みでなければバナーを表示
         const consent = localStorage.getItem('cookie-consent');
-        if (consent !== 'true') {
+        const sessionStorageHidden = sessionStorage.getItem('cookie-banner-hidden');
+        if (consent !== 'true' && sessionStorageHidden !== 'true') {
             setIsVisible(true);
         }
     }, []);
@@ -22,6 +23,12 @@ const CookieBanner = () => {
         setIsVisible(false);
     };
 
+    const handleSettingsClick = () => {
+        // バナーをこのセッションの間だけ非表示にする
+        sessionStorage.setItem('cookie-banner-hidden', 'true');
+        setIsVisible(false);
+    }
+
     if (!isVisible) {
         return null;
     }
@@ -31,7 +38,7 @@ const CookieBanner = () => {
             <div className="container mx-auto flex flex-col sm:flex-row items-center justify-between gap-4 relative max-w-3xl">
                 <button
                     aria-label="バナーを閉じる"
-                    onClick={() => setIsVisible(false)}
+                    onClick={handleSettingsClick}
                     className="sm:static absolute top-2 right-2 sm:top-0 sm:right-0 p-1 rounded hover:bg-muted transition-colors z-10"
                     style={{ lineHeight: 0 }}
                 >
@@ -48,7 +55,7 @@ const CookieBanner = () => {
                     </p>
                 </div>
                 <div className='flex flex-wrap md:flex-nowrap items-center gap-2 w-full sm:w-auto md:flex-shrink-0 mt-2 sm:mt-0'>
-                    <Button asChild variant="outline" size="sm" className="w-full">
+                    <Button asChild variant="outline" size="sm" className="w-full" onClick={handleSettingsClick}>
                         <Link href="/privacy#how-to-disable-cookies">
                             ブラウザの設定
                         </Link>

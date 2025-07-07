@@ -7,7 +7,7 @@ interface ArticleNavigationProps {
 }
 
 const ArticleNavigation = ({ prevPost, nextPost }: ArticleNavigationProps) => (
-    <div className="flex justify-between gap-4">
+    <div className="flex flex-wrap md:flex-nowrap justify-between gap-4">
         {prevPost && (
             <div className="flex items-center gap-4 rounded-lg border bg-card p-2">
                 <ArrowLeft className="h-6 w-6 text-muted-foreground" />
