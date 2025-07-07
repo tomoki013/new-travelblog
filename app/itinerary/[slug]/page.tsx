@@ -3,8 +3,6 @@ import * as Sections from '@/app/components/sections/index';
 import { Badge } from '@/components/ui/badge';
 import getAllPosts, { getPostBySlug, getAllPostTypes } from '@/lib/markdown';
 import { members } from '@/data/member';
-import Image from 'next/image';
-import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import { Metadata } from 'next';
 import ItineraryPopupContent from '@/app/components/elements/popupContent/ItineraryPopupContent'; // インポート
@@ -108,7 +106,7 @@ const ItineraryPostPage = async (props: { params: Promise<{ slug: string }>}) =>
                 <div>
                     <div className="sticky top-24 space-y-8">
                         <div className="hidden md:block">
-                            <div className="max-h-[60vh] overflow-y-auto">
+                            <div className="max-h-64 overflow-y-auto">
                                 <Sections.TableOfContents />
                             </div>
                         </div>
@@ -117,24 +115,7 @@ const ItineraryPostPage = async (props: { params: Promise<{ slug: string }>}) =>
                             <h3 className="mb-4 text-lg font-medium">関連する旅行日記</h3>
                             <div className="space-y-4">
                                 {diaryPosts.slice(0, 3).map((diaryPost) => (
-                                    <div key={diaryPost.slug} className="flex gap-3">
-                                        <div className="relative h-16 w-16 flex-shrink-0 overflow-hidden rounded-md">
-                                            <Image
-                                                src={diaryPost.image}
-                                                alt={diaryPost.title}
-                                                fill
-                                                style={{ objectFit: 'cover' }}
-                                            />
-                                        </div>
-                                        <div>
-                                            <h4 className="text-sm font-medium">
-                                                <Link href={`/diary/${diaryPost.slug}`} className="hover:underline">
-                                                    {diaryPost.title}
-                                                </Link>
-                                            </h4>
-                                            <p className="text-xs text-muted-foreground">{diaryPost.dates.join("～")}</p>
-                                        </div>
-                                    </div>
+                                    <Elements.MinimumPostCard key={diaryPost.slug} post={diaryPost} />
                                 ))}
                             </div>
                         </div>

@@ -11,6 +11,7 @@ import SearchBox from "./searchBox/SearchBox";
 import ItineraryListCard from "./card/ItineraryListCard";
 import Popup from './popup/Popup';
 import EmbeddedPostCard from "./card/EmbeddedPostCard";
+import MinimumPostCard from "./card/MinimumPostCard";
 
 export {
     GitHubIcon,
@@ -26,4 +27,5 @@ export {
     ItineraryListCard,
     Popup,
     EmbeddedPostCard,
+    MinimumPostCard,
 };
