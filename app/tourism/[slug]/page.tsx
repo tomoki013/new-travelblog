@@ -1,8 +1,6 @@
 import { Badge } from "@/components/ui/badge";
 // import { Button } from "@/components/ui/button";
 import getAllPosts, { getPostBySlug, getAllPostTypes } from "@/lib/markdown";
-import Image from "next/image";
-import Link from "next/link";
 import { notFound } from "next/navigation";
 import type { Metadata } from "next";
 import * as Elements from '@/app/components/elements/index';
@@ -128,24 +126,7 @@ const TourismPostPage = async (props: { params: Promise<{ slug: string }>}) => {
                             <h3 className="mb-4 text-lg font-medium">関連する記事</h3>
                             <div className="space-y-4">
                                 {relatedPosts.slice(0, 3).map((relatedPost) => (
-                                    <div key={relatedPost.slug} className="flex gap-3">
-                                        <div className="relative h-16 w-16 flex-shrink-0 overflow-hidden rounded-md">
-                                            <Image
-                                                src={relatedPost.image}
-                                                alt={relatedPost.title}
-                                                fill
-                                                style={{ objectFit: 'cover' }}
-                                            />
-                                        </div>
-                                        <div>
-                                            <h4 className="text-sm font-medium">
-                                                <Link href={`/tourism/${relatedPost.slug}`} className="hover:underline">
-                                                    {relatedPost.title}
-                                                </Link>
-                                            </h4>
-                                            <p className="text-xs text-muted-foreground">{relatedPost.dates.join("～")}</p>
-                                        </div>
-                                    </div>
+                                    <Elements.MinimumPostCard key={relatedPost.slug} post={relatedPost} />
                                 ))}
                             </div>
                         </div>

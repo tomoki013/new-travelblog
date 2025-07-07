@@ -1,7 +1,5 @@
 import { Badge } from "@/components/ui/badge";
 import getAllPosts, { getPostBySlug, getAllPostTypes } from "@/lib/markdown";
-import Image from "next/image";
-import Link from "next/link";
 import { notFound } from "next/navigation";
 import * as Elements from '@/app/components/elements/index';
 import * as Sections from '@/app/components/sections/index';
@@ -111,24 +109,7 @@ const DiaryPostPage = async (props: { params: Promise<{ slug: string }>}) => {
                             <h3 className="mb-4 text-lg font-medium">最新の記事</h3>
                             <div className="space-y-4">
                                 {getAllPosts('diary').slice(0, 3).map((relatedPost) => (
-                                    <div key={relatedPost.slug} className="flex gap-3">
-                                        <div className="relative h-16 w-16 flex-shrink-0 overflow-hidden rounded-md">
-                                            <Image
-                                                src={relatedPost.image}
-                                                alt={relatedPost.title}
-                                                fill
-                                                style={{ objectFit: 'cover' }}
-                                            />
-                                        </div>
-                                        <div>
-                                            <h4 className="text-sm font-medium">
-                                                <Link href={`/diary/${relatedPost.slug}`} className="hover:underline">
-                                                    {relatedPost.title}
-                                                </Link>
-                                            </h4>
-                                            <p className="text-xs text-muted-foreground">{relatedPost.dates.join("～")}</p>
-                                        </div>
-                                    </div>
+                                    <Elements.MinimumPostCard key={relatedPost.slug} post={relatedPost} />
                                 ))}
                             </div>
                         </div>
@@ -138,24 +119,13 @@ const DiaryPostPage = async (props: { params: Promise<{ slug: string }>}) => {
                         )}>
                             <h3 className="mb-4 text-lg font-medium">旅程＆費用レポート</h3>
                             <div className="space-y-4">
-                                <div className="flex gap-3">
-                                    <div className="relative h-16 w-16 flex-shrink-0 overflow-hidden rounded-md">
-                                        <Image
-                                            src={itineraryPost?.image || "/favicon.ico"}
-                                            alt={itineraryPost?.title || "favicon"}
-                                            fill
-                                            style={{ objectFit: 'cover' }}
-                                        />
-                                    </div>
-                                    <div>
-                                        <h4 className="text-sm font-medium">
-                                            <Link href={`/itinerary/${itineraryPost?.slug}`} className="hover:underline">
-                                                {itineraryPost?.title}
-                                            </Link>
-                                        </h4>
-                                        <p className="text-xs text-muted-foreground">{itineraryPost?.dates.join("～")}</p>
-                                    </div>
-                                </div>
+                                {itineraryPost ? (
+                                    <Elements.MinimumPostCard post={itineraryPost} />
+                                ) : (
+                                    <p className="text-sm text-muted-foreground">
+                                        この旅行に関連する旅程や費用レポートはありません。
+                                    </p>
+                                )}
                             </div>
                         </div>
 

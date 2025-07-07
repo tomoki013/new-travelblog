@@ -1,25 +1,28 @@
-import Link from "next/link";
+import * as Elements from "@/app/components/elements/index";
 import { ArrowLeft, ArrowRight } from "lucide-react";
 
 interface ArticleNavigationProps {
-    prevPost?: { slug: string; title: string } | null;
-    nextPost?: { slug: string; title: string } | null;
-    type?: string;
+    prevPost?: { slug: string; title: string; dates: string[]; image: string; type: "diary" | "tourism" | "itinerary" } | null;
+    nextPost?: { slug: string; title: string; dates: string[]; image: string; type: "diary" | "tourism" | "itinerary" } | null;
 }
 
-const ArticleNavigation = ({ prevPost, nextPost, type = "diary" }: ArticleNavigationProps) => (
-    <div className="flex justify-between">
+const ArticleNavigation = ({ prevPost, nextPost }: ArticleNavigationProps) => (
+    <div className="flex justify-between gap-4">
         {prevPost && (
-            <Link href={`/${type}/${prevPost.slug}`} className="flex items-center text-sm font-medium hover:underline">
-                <ArrowLeft className="ml-1 h-4 w-4" />
-                {prevPost.title}
-            </Link>
+            <div className="flex items-center gap-4 rounded-lg border bg-card p-2">
+                <ArrowLeft className="h-6 w-6 text-muted-foreground" />
+                <Elements.MinimumPostCard
+                    post={prevPost}
+                />
+            </div>
         )}
         {nextPost && (
-            <Link href={`/${type}/${nextPost.slug}`} className="flex items-center text-sm font-medium hover:underline">
-                {nextPost.title}
-                <ArrowRight className="ml-1 h-4 w-4" />
-            </Link>
+            <div className="flex items-center gap-4 rounded-lg border bg-card p-2">
+                <Elements.MinimumPostCard
+                    post={nextPost}
+                />
+                <ArrowRight className="h-6 w-6 text-muted-foreground" />
+            </div>
         )}
     </div>
 );

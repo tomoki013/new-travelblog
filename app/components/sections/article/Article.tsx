@@ -18,8 +18,8 @@ interface Author {
 interface ArticleProps {
     post: Post;
     author: Author;
-    prevPost?: { slug: string; title: string } | null;
-    nextPost?: { slug: string; title: string } | null;
+    prevPost?: { slug: string; title: string; dates: string[]; image: string; type: "diary" | "tourism" | "itinerary" } | null;
+    nextPost?: { slug: string; title: string; dates: string[]; image: string; type: "diary" | "tourism" | "itinerary" } | null;
     navHidden?: string;
     isItinerary?: boolean;
     allPosts: Post[];
@@ -36,13 +36,13 @@ const Article = ({
 ) => {
     return (
         <article>
-            <ArticleNavigation prevPost={prevPost} nextPost={nextPost} type={post.type || 'diary'} />
+            <ArticleNavigation prevPost={prevPost} nextPost={nextPost} />
             <ArticleMeta post={post} />
             <ArticleImage src={post.image} alt={post.title} />
             <ArticleMobileToc navHidden={navHidden} />
             <ArticleContent content={post.content} allPosts={allPosts} currentPostType={post.type} />
             <ArticleTags tags={post.tags} />
-            <ArticleNavigation prevPost={prevPost} nextPost={nextPost} type={post.type || 'diary'} />
+            <ArticleNavigation prevPost={prevPost} nextPost={nextPost} />
             <Separator className="my-8" />
             <ArticleAuthor author={author} />
         </article>
