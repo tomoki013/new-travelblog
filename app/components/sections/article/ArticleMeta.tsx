@@ -23,10 +23,12 @@ const ArticleMeta = ({ post }: ArticleMetaProps) => {
                     <Calendar className="mr-1 h-4 w-4" />
                     {post.dates.join("～")}
                 </div>
-                <div className="flex items-center">
-                    <MapPin className="mr-1 h-4 w-4" />
-                    {post.location}
-                </div>
+                {post.location && (
+                    <div className="flex items-center">
+                        <MapPin className="mr-1 h-4 w-4" />
+                        {post.location}
+                    </div>
+                )}
             </div>
         </div>
     )
