@@ -4,6 +4,7 @@ import getAllPosts from "@/lib/markdown";
 import type { Metadata } from "next";
 import * as Elements from '@/app/components/elements/index';
 import * as Sections from '@/app/components/sections/index';
+import * as Servers from '@/app/components/server/index';
 import type { Post } from "@/types/types";
 import { getPostData } from "@/lib/getPostData";
 
@@ -90,7 +91,7 @@ const TourismPostPage = async (props: { params: Promise<{ slug: string }>}) => {
 
             <div className="grid gap-10 lg:grid-cols-3">
                 <div className="lg:col-span-2">
-                    <Sections.Article
+                    <Servers.Article
                         post={post}
                     />
                     <Elements.ItineraryLink />
