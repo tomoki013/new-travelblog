@@ -1,5 +1,6 @@
 import * as Elements from '@/app/components/elements/index';
 import * as Sections from '@/app/components/sections/index';
+import * as Servers from '@/app/components/server/index';
 import { Badge } from '@/components/ui/badge';
 import { Metadata } from 'next';
 import ItineraryPopupContent from '@/app/components/elements/popupContent/ItineraryPopupContent';
@@ -79,7 +80,7 @@ const ItineraryPostPage = async (props: { params: Promise<{ slug: string }>}) =>
 
             <div className="grid gap-10 lg:grid-cols-3">
                 <div className='lg:col-span-2'>
-                    <Sections.Article
+                    <Servers.Article
                         post={post}
                     />
                     <Sections.SearchHeroSection />
