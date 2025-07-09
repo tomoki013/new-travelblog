@@ -2,11 +2,7 @@ import { Badge } from "@/components/ui/badge";
 import { Calendar, MapPin } from "lucide-react";
 import { Post } from "@/types/types";
 
-interface ArticleMetaProps {
-    post: Post;
-}
-
-const ArticleMeta = ({ post }: ArticleMetaProps) => {
+const ArticleMeta = ({ post }: { post: Post }) => {
     return (
         <div className="my-6">
             {post.category.map(cat => <Badge key={cat} variant="outline">{cat}</Badge>)}

@@ -3,7 +3,7 @@ import path from 'path';
 import matter from 'gray-matter';
 import { Post } from '../types/types';
 
-type PostType = 'diary' | 'tourism' | 'itinerary'
+export type PostType = 'diary' | 'tourism' | 'itinerary'
 
 const postsDirectory = path.join(process.cwd(), 'posts');
 

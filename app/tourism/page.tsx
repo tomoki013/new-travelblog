@@ -32,7 +32,7 @@ const TourismPage = () => {
             />
 
             {/* Travel Tips */}
-            <section className="mt-16 rounded-xl bg-muted p-8">
+            {/* <section className="mt-16 rounded-xl bg-muted p-8">
                 <h2 className="mb-6 text-2xl font-bold">旅行のヒント</h2>
                 <div className="grid gap-6 md:grid-cols-3">
                     <div className="rounded-lg bg-background p-6 shadow-sm">
@@ -48,7 +48,7 @@ const TourismPage = () => {
                         <p className="text-sm text-muted-foreground">日本旅行の予算は、宿泊施設や食事のグレードによって大きく変わります。一般的に、1日当たり10,000円~30,000円程度を見込んでおくといいでしょう。</p>
                     </div>
                 </div>
-            </section>
+            </section> */}
         </div>
     );
 }

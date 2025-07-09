@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import * as Sections from '@/app/components/sections/index';
+import * as Clients from '@/app/components/client/index';
 import { Metadata } from 'next';
 
 export const metadata: Metadata = {
@@ -36,7 +36,7 @@ const RoulettePage = () => {
             </div>
 
             {/* ルーレット */}
-            <Sections.Roulette />
+            <Clients.Roulette />
         </div>
     );
 }

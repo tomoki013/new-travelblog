@@ -1,6 +1,5 @@
 import FeaturedRegions from "./regions/FeaturedRegions";
 import Posts from "./posts/Posts";
-import Roulette from "./roulette/Roulette";
 import Article from "./article/Article";
 import TableOfContents from "./article/TableOfContents";
 import HeroSection from "./heroSections/HeroSection";
@@ -19,7 +18,6 @@ import CookieBanner from "./banner/CookieBanner";
 export {
     FeaturedRegions,
     Posts,
-    Roulette,
     Article,
     TableOfContents,
     HeroSection,
