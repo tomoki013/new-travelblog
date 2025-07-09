@@ -1,26 +1,16 @@
 import { Badge } from "@/components/ui/badge";
 // import { Button } from "@/components/ui/button";
-import getAllPosts, { getPostBySlug, getAllPostTypes } from "@/lib/markdown";
-import { notFound } from "next/navigation";
+import getAllPosts from "@/lib/markdown";
 import type { Metadata } from "next";
 import * as Elements from '@/app/components/elements/index';
 import * as Sections from '@/app/components/sections/index';
-import { members } from "@/data/member";
 import type { Post } from "@/types/types";
-
-async function getPostData(slug: string) {
-    const post = await getPostBySlug('tourism', slug);
-    if (!post) {
-        notFound();
-    }
-    return post;
-}
+import { getPostData } from "@/lib/getPostData";
 
 // 動的にメタデータを生成
 export async function generateMetadata(props: { params: Promise<{ slug: string }>}): Promise<Metadata> {
     const params = await props.params;
-    const slug = params.slug;
-    const post = await getPostData(slug);
+    const post = await getPostData('tourism', params.slug);
 
     return {
         title: post.title,
@@ -84,18 +74,11 @@ const getRelevanceScore = (targetPost: Post, currentPost: Post): number => {
 
 const TourismPostPage = async (props: { params: Promise<{ slug: string }>}) => {
     const params = await props.params;
-    const post = await getPostBySlug('tourism', params.slug)
-    const allPostsForEmbedding = getAllPostTypes(); // これは埋め込みカード用
+    const post = await getPostData('tourism', params.slug);
     const relatedPosts = getAllPosts('tourism')
         .filter((p) => p.slug !== post.slug)
         // 各記事のスコアを計算し、降順でソート
         .sort((a, b) => getRelevanceScore(b, post) - getRelevanceScore(a, post));
-
-    const author = members.find((member) => member.name === post.author) || { name: "ともきちの旅行日記", role: "", image: "/favicon.ico", description: "" };
-
-    if (!post) {
-        notFound()
-    }
 
     return (
         <div className="container py-12">
@@ -109,8 +92,6 @@ const TourismPostPage = async (props: { params: Promise<{ slug: string }>}) => {
                 <div className="lg:col-span-2">
                     <Sections.Article
                         post={post}
-                        author={author}
-                        allPosts={allPostsForEmbedding}
                     />
                     <Elements.ItineraryLink />
                     <Sections.SearchHeroSection />

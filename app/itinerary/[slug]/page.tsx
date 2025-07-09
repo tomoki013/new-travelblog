@@ -1,26 +1,15 @@
 import * as Elements from '@/app/components/elements/index';
 import * as Sections from '@/app/components/sections/index';
 import { Badge } from '@/components/ui/badge';
-import getAllPosts, { getPostBySlug, getAllPostTypes } from '@/lib/markdown';
-import { members } from '@/data/member';
-import { notFound } from 'next/navigation';
 import { Metadata } from 'next';
-import ItineraryPopupContent from '@/app/components/elements/popupContent/ItineraryPopupContent'; // インポート
-
-// ... (getPostData, generateMetadata, generateDateRangeは変更なし)
-async function getPostData(slug: string) {
-    const post = await getPostBySlug('itinerary', slug);
-    if (!post) {
-        notFound();
-    }
-    return post;
-}
+import ItineraryPopupContent from '@/app/components/elements/popupContent/ItineraryPopupContent';
+import { getPostData } from '@/lib/getPostData';
+import getAllPosts from '@/lib/markdown';
 
 // 動的にメタデータを生成
 export async function generateMetadata(props: { params: Promise<{ slug: string }>}): Promise<Metadata> {
     const params = await props.params;
-    const slug = params.slug;
-    const post = await getPostData(slug);
+    const post = await getPostData('itinerary', params.slug);
 
     return {
         title: post.title,
@@ -62,19 +51,12 @@ const generateDateRange = (startDate: string, endDate: string): string[] => {
 
 const ItineraryPostPage = async (props: { params: Promise<{ slug: string }>}) => {
     const params = await props.params;
-    const post = await getPostBySlug('itinerary', params.slug);
-    const allPostsForEmbedding = getAllPostTypes();
+    const post = await getPostData('itinerary', params.slug);
 
     const dateRange = generateDateRange(post.dates[0], post.dates[post.dates.length - 1]);
     const diaryPosts = getAllPosts('diary').filter((diaryPost) =>
         dateRange.some((date) => diaryPost.dates.includes(date))
     );
-
-    const author = members.find((member) => member.name === post.author) || { name: "ともきちの旅行日記", role: "", image: "/favicon.ico", description: "" };
-    
-    if (!post) {
-        notFound();
-    }
 
     return (
         <div className="container py-12">
@@ -99,8 +81,6 @@ const ItineraryPostPage = async (props: { params: Promise<{ slug: string }>}) =>
                 <div className='lg:col-span-2'>
                     <Sections.Article
                         post={post}
-                        author={author}
-                        allPosts={allPostsForEmbedding}
                     />
                     <Sections.SearchHeroSection />
                 </div>

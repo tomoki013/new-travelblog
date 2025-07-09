@@ -1,11 +1,7 @@
 import * as Sections from "@/app/components/sections/index";
 
-interface ArticleMobileTocProps {
-    navHidden?: string;
-}
-
-const ArticleMobileToc = ({ navHidden }: ArticleMobileTocProps) => (
-    <div className={`md:hidden mb-4 ${navHidden || ''}`}>
+const ArticleMobileToc = () => (
+    <div className='md:hidden mb-4'>
         <div className="max-h-64 overflow-y-auto">
             <Sections.TableOfContents />
         </div>

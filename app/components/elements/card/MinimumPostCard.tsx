@@ -9,30 +9,30 @@ interface MinimumPostCardProps {
 
 const MinimumPostCard = ({ post }: MinimumPostCardProps) => {
     return (
-        <div className="flex gap-3">
-            <div className="relative h-16 w-16 flex-shrink-0 overflow-hidden rounded-md">
-                <Image
-                    src={post.image}
-                    alt={post.title}
-                    fill
-                    style={{ objectFit: 'cover' }}
-                />
-            </div>
-            <div>
-                <h4 className="text-sm font-medium">
-                    <Link href={`/${post.type}/${post.slug}`} className="hover:underline">
+        <Link href={`/${post.type}/${post.slug}`}>
+            <div className="flex gap-3">
+                <div className="relative h-16 w-16 flex-shrink-0 overflow-hidden rounded-md">
+                    <Image
+                        src={post.image}
+                        alt={post.title}
+                        fill
+                        style={{ objectFit: 'cover' }}
+                    />
+                </div>
+                <div>
+                    <h4 className="text-sm font-medium">
                         {post.title}
-                    </Link>
-                </h4>
-                <span className="flex items-center gap-1 text-muted-foreground text-sm">
-                    <p>
-                        {getDatePrefix(post.type)}
-                    </p>
-                    <Calendar className="h-4 w-4" />
-                    {post.dates.join("～")}
-                </span>
+                    </h4>
+                    <span className="flex items-center gap-1 text-muted-foreground text-sm">
+                        <p>
+                            {getDatePrefix(post.type)}
+                        </p>
+                        <Calendar className="h-4 w-4" />
+                        {post.dates.join("～")}
+                    </span>
+                </div>
             </div>
-        </div>
+        </Link>
     )
 }
 

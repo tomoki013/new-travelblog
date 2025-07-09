@@ -1,18 +1,8 @@
 import Image from "next/image";
 import Link from "next/link";
+import { Author } from "@/types/types";
 
-interface Author {
-    name: string;
-    role: string;
-    description: string;
-    image: string;
-}
-
-interface ArticleAuthorProps {
-    author: Author;
-}
-
-const ArticleAuthor = ({ author }: ArticleAuthorProps) => (
+const ArticleAuthor = ({ author }: { author: Author }) => (
     <div className="flex items-center justify-between">
         {author.name !== 'ともきちの旅行日記' ? (
             <Link href={`/personal/${encodeURIComponent(author.name)}`} className="flex items-center border p-2 rounded-lg bg-card">

@@ -1,25 +1,15 @@
 import { Badge } from "@/components/ui/badge";
-import getAllPosts, { getPostBySlug, getAllPostTypes } from "@/lib/markdown";
-import { notFound } from "next/navigation";
+import getAllPosts from "@/lib/markdown";
 import * as Elements from '@/app/components/elements/index';
 import * as Sections from '@/app/components/sections/index';
-import { members } from "@/data/member";
 import type { Metadata } from "next";
 import { cn } from "@/lib/utils";
-
-async function getPostData(slug: string) {
-    const post = await getPostBySlug('diary', slug);
-    if (!post) {
-        notFound();
-    }
-    return post;
-}
+import { getPostData } from "@/lib/getPostData";
 
 // 動的にメタデータを生成
 export async function generateMetadata(props: { params: Promise<{ slug: string }>}): Promise<Metadata> {
     const params = await props.params;
-    const slug = params.slug;
-    const post = await getPostData(slug);
+    const post = await getPostData('diary', params.slug);
 
     return {
         title: post.title,
@@ -48,19 +38,7 @@ export async function generateMetadata(props: { params: Promise<{ slug: string }
 
 const DiaryPostPage = async (props: { params: Promise<{ slug: string }>}) => {
     const params = await props.params;
-    const post = await getPostBySlug('diary', params.slug);
-    const allPostsForEmbedding = getAllPostTypes(); // これは埋め込みカード用
-    const allPosts = getAllPosts('diary');
-
-    const author = members.find((member) => member.name === post.author) || { name: "ともきちの旅行日記", role: "", image: "/favicon.ico", description: "" };
-
-    if (!post) {
-        notFound();
-    }
-
-    const currentIndex = allPosts.findIndex((p) => p.slug === params.slug);
-    const prevPost = allPosts[currentIndex - 1] || null;
-    const nextPost = allPosts[currentIndex + 1] || null;
+    const post = await getPostData('diary', params.slug);
 
     // 日付範囲を生成する関数
     function generateDateRange(start: string, end: string): string[] {
@@ -94,11 +72,6 @@ const DiaryPostPage = async (props: { params: Promise<{ slug: string }>}) => {
                 <div className="lg:col-span-2">
                     <Sections.Article
                         post={post}
-                        author={author}
-                        prevPost={prevPost}
-                        nextPost={nextPost}
-                        navHidden="hidden"
-                        allPosts={allPostsForEmbedding}
                     />
                     <Elements.ItineraryLink />
                     <Sections.SearchHeroSection />

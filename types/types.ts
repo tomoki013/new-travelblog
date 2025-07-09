@@ -24,3 +24,9 @@ export interface Photo {
     likes: number;
 }
 
+export interface Author {
+    name: string;
+    role: string;
+    description: string;
+    image: string;
+}
