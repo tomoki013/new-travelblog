@@ -1,6 +1,7 @@
 import * as Elements from '@/app/components/elements/index';
 import * as Sections from '@/app/components/sections/index';
 import { regions } from '@/data/regions';
+import getAllPosts from '@/lib/markdown';
 import { Metadata } from 'next';
 
 export async function generateMetadata(props: { params: Promise<{ city: string }>}): Promise<Metadata> {
@@ -44,6 +45,8 @@ const RegionPage = async (props: { params: Promise<{ city: string }>}) => {
     const decodedCity = decodeURIComponent(params.city);
     const region = regions.find(region => region.city.toLowerCase() === decodedCity.toLowerCase());
 
+    const posts = getAllPosts('tourism');
+
     if (!region) {
         return <div className="flex items-center justify-center h-screen">
             <h1 className="text-4xl font-bold">地域が見つかりません</h1>
@@ -67,7 +70,8 @@ const RegionPage = async (props: { params: Promise<{ city: string }>}) => {
             <div className='container py-12'>
                 {/* Tourism Information */}
                 <Sections.Posts
-                    apiFetchType='tourism'
+                    initialPosts={posts}
+                    postFilterType='tourism'
                     specificFilterType='region'
                     specificFilterValue={decodedCity}
                     tabsGridColsClass='sm:grid-cols-2 md:grid-cols-6'

@@ -2,12 +2,20 @@
 
 import { useSearchParams } from 'next/navigation';
 import * as Sections from '@/app/components/sections/index';
+import { Post } from '@/types/types';
+
+interface SearchPageContentProps {
+    allPosts: Post[];
+}
 
 const getCategoryDisplayName = (categoryValue: string) => {
-    return categoryValue === 'all' ? 'すべてのカテゴリー' : categoryValue === 'diary' ? '旅行日記' : categoryValue === 'tourism' ? '観光情報' : categoryValue === 'itinerary' ? '旅程＆費用レポート' : 'その他';
+    return categoryValue === 'all' ? 'すべてのカテゴリー' : 
+           categoryValue === 'diary' ? '旅行日記' : 
+           categoryValue === 'tourism' ? '観光情報' : 
+           categoryValue === 'itinerary' ? '旅程＆費用レポート' : 'その他';
 };
 
-const SearchPageContent = () => {
+const SearchPageContent = ({ allPosts }: SearchPageContentProps) => {
     const searchParams = useSearchParams();
     const keyword = searchParams.get('keyword') || undefined;
     const category = searchParams.get('category') || undefined;
@@ -24,9 +32,12 @@ const SearchPageContent = () => {
                     </p>
                 )}
             </div>
+            
             <Sections.SearchHeroSection />
+            
             <Sections.Posts
-                apiFetchType="all"
+                initialPosts={allPosts}
+                postFilterType="all"
                 syncWithUrl={true}
                 showSearchInput={false}
                 showCategoryTabs={false}
