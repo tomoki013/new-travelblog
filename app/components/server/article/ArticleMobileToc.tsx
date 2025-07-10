@@ -1,9 +1,9 @@
-import * as Sections from "@/app/components/sections/index";
+import * as Server from "@/app/components/server/index";
 
 const ArticleMobileToc = () => (
     <div className='md:hidden mb-4'>
         <div className="max-h-64 overflow-y-auto">
-            <Sections.TableOfContents />
+            <Server.TableOfContents />
         </div>
     </div>
 );
