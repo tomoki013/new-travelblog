@@ -1,26 +1,10 @@
-"use client";
-
 import { ArrowRight } from "lucide-react";
 import Link from "next/link";
 import * as Elements from "@/app/components/elements/index";
-import { useEffect, useState } from "react";
-import { Post } from "@/types/types"; // Post型をインポート
+import getAllPosts from "@/lib/markdown";
 
 const TourismInformationHeroSection = () => {
-    const [tourismPosts, setTourismPosts] = useState<Post[]>([]);
-    const [isLoading, setIsLoading] = useState<boolean>(true); // ローディング状態を管理
-
-    useEffect(() => {
-            const fetchPosts = async () => {
-                setIsLoading(true); // ローディング開始
-                const tourismResponse = await fetch('/api/posts?type=tourism');
-                const tourismData = await tourismResponse.json();
-                setTourismPosts(tourismData.posts);
-                setIsLoading(false); // ローディング終了
-            };
-    
-            fetchPosts();
-        }, []);
+    const tourismPosts = getAllPosts('tourism');
 
     return (
         <div className="container relative z-10">
@@ -34,20 +18,16 @@ const TourismInformationHeroSection = () => {
                     <ArrowRight className="ml-1 h-4 w-4" />
                 </Link>
             </div>
-            {isLoading ? ( // ローディング中はスピナーを表示
-                <Elements.LoadingAnimation />
-            ) : (
-                <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
-                    {tourismPosts.slice(0, 8).map((info) => (
-                        <Elements.PostCard
-                            key={info.slug}
-                            post={info}
-                            linkPrefix="tourism"
-                            postCardType={2}
-                        />
-                    ))}
-                </div>
-            )}
+            <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+                {tourismPosts.slice(0, 8).map((info) => (
+                    <Elements.PostCard
+                        key={info.slug}
+                        post={info}
+                        linkPrefix="tourism"
+                        postCardType={2}
+                    />
+                ))}
+            </div>
         </div>
     )
 }

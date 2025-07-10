@@ -1,4 +1,3 @@
-// lib/hooks/usePostFilters.ts
 import { useState, useEffect, useMemo, useCallback } from 'react';
 import { Post } from '@/types/types';
 import { useRouter, usePathname, useSearchParams } from 'next/navigation';
@@ -9,8 +8,12 @@ import {
     itineraryCategories,
 } from '@/data/categories';
 
+interface scoredPosts extends Post {
+    score?: number; // スコアを追加
+}
+
 interface UsePostFiltersParams {
-    basePosts: Post[];
+    basePosts: scoredPosts[];
     initialKeyword?: string;
     initialCategory?: string;
     initialBudget?: string;
@@ -18,66 +21,155 @@ interface UsePostFiltersParams {
     pageTypeForTabs?: 'all' | 'diary' | 'tourism' | 'itinerary';
 }
 
-// スコア計算ロジックをフックの外、またはフックの最上部に定義
-const calculatePostScore = (post: Post, searchKeywordsArray: string[]): number => {
-    // キーワードが指定されていない場合は、全ての記事にデフォルトスコア1を付与 (または0にして後続処理で扱う)
-    if (searchKeywordsArray.length === 0) return 1;
+// 検索キーワードの正規化
+const normalizeSearchKeyword = (keyword: string): string[] => {
+    return keyword
+        .toLowerCase()
+        .replace(/[、，]/g, ' ') // 日本語の句読点をスペースに変換
+        .split(/\s+/)
+        .filter(Boolean);
+};
+
+// 検索対象テキストの正規化
+const normalizeText = (text: string): string => {
+    return text
+        .toLowerCase()
+        .replace(/[　\s]/g, ' ') // 全角スペースを半角スペースに変換
+        .trim();
+};
+
+// 部分一致検索の実装
+const isPartialMatch = (searchText: string, targetText: string): boolean => {
+    const normalizedSearch = normalizeText(searchText);
+    const normalizedTarget = normalizeText(targetText);
+    return normalizedTarget.includes(normalizedSearch);
+};
+
+// 配列内の任意の要素との部分一致検索
+const isArrayMatch = (searchKeywords: string[], targetArray: string[]): boolean => {
+    return searchKeywords.some(keyword => 
+        targetArray.some(item => isPartialMatch(keyword, item))
+    );
+};
+
+// 全てのキーワードが配列内のいずれかの要素にマッチするかチェック
+const isAllKeywordsMatch = (searchKeywords: string[], targetArray: string[]): boolean => {
+    return searchKeywords.every(keyword => 
+        targetArray.some(item => isPartialMatch(keyword, item))
+    );
+};
+
+// スコア計算ロジック
+const calculatePostScore = (post: Post, searchKeywords: string[]): number => {
+    if (searchKeywords.length === 0) return 1;
 
     let score = 0;
-    const lowerKeywords = searchKeywordsArray.map(k => k.toLowerCase());
-
-    // 複数のキーワード全てにヒットするかどうかをチェックするヘルパー関数
-    // textInputが文字列配列の場合(tags, category)、いずれかの要素にキーワードが含まれればOK (OR検索的に)
-    // AND検索にしたい場合は、全キーワードが同一要素内にあるか、または全キーワードが配列内のいずれかの要素にヒットするかを調整する必要がある。
-    // ここでは、各キーワードがtextInput内のいずれかの要素に含まれていれば良い、というAND検索に近い形で実装。
-    const checkMatch = (textInput: string | string[] | undefined): boolean => {
-        if (!textInput) return false;
-        const textsToSearch = Array.isArray(textInput)
-            ? textInput.map(t => t.toLowerCase())
-            : [textInput.toLowerCase()];
-
-        // 全てのキーワードが、与えられたテキスト（群）のいずれかに部分一致するか
-        return lowerKeywords.every(keyword =>
-            textsToSearch.some(text => text.includes(keyword))
-        );
-    };
-
-    // 各フィールドの重み付け (この値は調整可能です)
     const weights = {
         title: 10,
-        location: 7,
-        tags: 5,
-        category: 5, // フロントマターのcategoryフィールド
+        location: 8,
+        tags: 6,
+        category: 5,
         excerpt: 3,
         content: 1,
-        author: 1,
+        author: 2,
     };
 
-    if (checkMatch(post.title)) {
+    // タイトルでの検索
+    if (post.title && searchKeywords.some(keyword => isPartialMatch(keyword, post.title))) {
         score += weights.title;
+        // 完全一致の場合はボーナス
+        if (searchKeywords.some(keyword => normalizeText(post.title).includes(normalizeText(keyword)))) {
+            score += 5;
+        }
     }
-    if (post.location && checkMatch(post.location)) { // post.location は string[] を想定
-        score += weights.location;
+
+    // ロケーションでの検索
+    if (post.location && post.location.length > 0) {
+        if (isArrayMatch(searchKeywords, post.location)) {
+            score += weights.location;
+        }
+        // 全てのキーワードがロケーションにマッチする場合はボーナス
+        if (isAllKeywordsMatch(searchKeywords, post.location)) {
+            score += 3;
+        }
     }
-    if (post.tags && checkMatch(post.tags)) { // post.tags は string[]
-        score += weights.tags;
+
+    // タグでの検索
+    if (post.tags && post.tags.length > 0) {
+        if (isArrayMatch(searchKeywords, post.tags)) {
+            score += weights.tags;
+        }
     }
-    if (post.category && checkMatch(post.category)) { // post.category は string[] を想定
-        score += weights.category;
+
+    // カテゴリでの検索
+    if (post.category && post.category.length > 0) {
+        if (isArrayMatch(searchKeywords, post.category)) {
+            score += weights.category;
+        }
     }
-    if (checkMatch(post.excerpt)) {
+
+    // 抜粋での検索
+    if (post.excerpt && searchKeywords.some(keyword => isPartialMatch(keyword, post.excerpt))) {
         score += weights.excerpt;
     }
-    if (checkMatch(post.content)) {
+
+    // コンテンツでの検索
+    if (post.content && searchKeywords.some(keyword => isPartialMatch(keyword, post.content))) {
         score += weights.content;
     }
-    if (checkMatch(post.author)) {
+
+    // 著者での検索
+    if (post.author && searchKeywords.some(keyword => isPartialMatch(keyword, post.author))) {
         score += weights.author;
     }
 
     return score;
 };
 
+// 予算フィルタリング
+const filterByBudget = (posts: Post[], budgetFilter: string): Post[] => {
+    if (budgetFilter === 'all') return posts;
+
+    return posts.filter(post => {
+        if (!post.budget) return false;
+        
+        switch (budgetFilter) {
+            case '10万円以下':
+                return post.budget <= 100000;
+            case '15万円以下':
+                return post.budget <= 150000;
+            case '20万円以下':
+                return post.budget <= 200000;
+            case '30万円以上':
+                return post.budget >= 300000;
+            default:
+                return true;
+        }
+    });
+};
+
+// カテゴリフィルタリング
+const filterByCategory = (
+    posts: Post[], 
+    categoryFilter: string, 
+    pageType: string,
+    categories: { id: string; name: string }[]
+): Post[] => {
+    if (categoryFilter === 'all') return posts;
+
+    const categoryName = categories.find(cat => cat.id === categoryFilter)?.name || '';
+
+    return posts.filter(post => {
+        if (pageType === 'all') {
+            // 全体検索の場合、記事のタイプまたはカテゴリでフィルタリング
+            return post.type === categoryFilter || 
+                   (post.category && post.category.includes(categoryName));
+        } else {
+            // 特定のページタイプの場合、カテゴリでフィルタリング
+            return post.category && post.category.includes(categoryName);
+        }
+    });
+};
 
 export const usePostFilters = ({
     basePosts,
@@ -102,6 +194,7 @@ export const usePostFilters = ({
     const [activeTab, setActiveTab] = useState(() => getInitialState('category', initialCategory));
     const [budget, setBudget] = useState(() => getInitialState('budget', initialBudget));
 
+    // URL同期の処理
     useEffect(() => {
         if (syncWithUrl) {
             setKeyword(searchParams.get('keyword') || initialKeyword);
@@ -112,6 +205,7 @@ export const usePostFilters = ({
 
     const updateUrl = useCallback((newParams: Record<string, string | undefined>) => {
         if (!syncWithUrl) return;
+        
         const current = new URLSearchParams(Array.from(searchParams.entries()));
         Object.entries(newParams).forEach(([key, value]) => {
             if (value && value !== 'all') {
@@ -120,27 +214,34 @@ export const usePostFilters = ({
                 current.delete(key);
             }
         });
+        
         const search = current.toString();
         const query = search ? `?${search}` : '';
         router.replace(`${pathname}${query}`, { scroll: false });
     }, [syncWithUrl, router, pathname, searchParams]);
 
-    const handleKeywordChange = (newKeyword: string) => {
+    const handleKeywordChange = useCallback((newKeyword: string) => {
         setKeyword(newKeyword);
-        if (syncWithUrl) updateUrl({ keyword: newKeyword || undefined });
-    };
+        if (syncWithUrl) {
+            updateUrl({ keyword: newKeyword || undefined });
+        }
+    }, [syncWithUrl, updateUrl]);
 
-    const handleTabChange = (newTab: string) => {
+    const handleTabChange = useCallback((newTab: string) => {
         setActiveTab(newTab);
-        if (syncWithUrl) updateUrl({ category: newTab === 'all' ? undefined : newTab });
-    };
+        if (syncWithUrl) {
+            updateUrl({ category: newTab === 'all' ? undefined : newTab });
+        }
+    }, [syncWithUrl, updateUrl]);
 
-    const handleBudgetChange = (newBudget: string) => {
+    const handleBudgetChange = useCallback((newBudget: string) => {
         setBudget(newBudget);
-        if (syncWithUrl) updateUrl({ budget: newBudget === 'all' ? undefined : newBudget });
-    };
+        if (syncWithUrl) {
+            updateUrl({ budget: newBudget === 'all' ? undefined : newBudget });
+        }
+    }, [syncWithUrl, updateUrl]);
 
-    const categoriesToDisplayForTabs = useMemo(() => {
+    const categoriesForTabs = useMemo(() => {
         switch (pageTypeForTabs) {
             case 'diary': return diaryCategories;
             case 'tourism': return tourismCategories;
@@ -151,64 +252,53 @@ export const usePostFilters = ({
         }
     }, [pageTypeForTabs]);
 
-    const getCategoryNameById = useCallback((id: string, categories: { id: string; name: string }[]) => {
-        const category = categories.find(cat => cat.id === id);
-        return category ? category.name : '';
-    }, []);
-
+    // メインのフィルタリング処理
     const filteredPosts = useMemo(() => {
-        const searchKeywordsArray = keyword.toLowerCase().split(/\s+/).filter(Boolean);
+        const searchKeywords = normalizeSearchKeyword(keyword);
 
-        // 1. スコアリング
+        // 1. キーワード検索とスコアリング
         const scoredPosts = basePosts.map(post => ({
             ...post,
-            score: calculatePostScore(post, searchKeywordsArray),
+            score: calculatePostScore(post, searchKeywords),
         }));
 
-        // 2. キーワードによるフィルタリング（スコアが0より大きいもの）
-        //    およびスコアによるソート
-        const keywordFilteredAndSortedPosts = scoredPosts
-            .filter(post => {
-                // キーワードが入力されている場合、スコアが0の記事は除外
-                if (searchKeywordsArray.length > 0 && post.score === 0) {
-                    return false;
-                }
-                return true;
-            })
-            .sort((a, b) => b.score - a.score); // スコアの高い順にソート
-
-        // 3. 予算とカテゴリタブでさらにフィルタリング
-        return keywordFilteredAndSortedPosts.filter(post => {
-            // Budget filter
-            if (budget && budget !== 'all') {
-                if (!post.budget) return false;
-                if (budget === '10万円以下' && post.budget > 100000) return false;
-                if (budget === '15万円以下' && post.budget > 150000) return false;
-                if (budget === '20万円以下' && post.budget > 200000) return false;
-                if (budget === '30万円以上' && post.budget <= 300000) return false;
+        // 2. スコアによるフィルタリング（キーワードが指定されている場合）
+        const keywordFilteredPosts = scoredPosts.filter(post => {
+            if (searchKeywords.length > 0 && post.score === 0) {
+                return false;
             }
-
-            // Category tab filter
-            if (activeTab === 'all') return true;
-
-            const tabCategoryName = getCategoryNameById(activeTab, categoriesToDisplayForTabs);
-
-            if (pageTypeForTabs === 'all') {
-                // 記事のタイプ自体がタブIDと一致するか、または記事のカテゴリにタブ名が含まれるか
-                return post.type === activeTab || (post.category && post.category.includes(tabCategoryName));
-            }
-            // 特定のリストページ (例: pageTypeForTabs === 'tourism')
-            // 記事のカテゴリにタブ名が含まれるか
-            return post.category && post.category.includes(tabCategoryName);
+            return true;
         });
-    }, [keyword, activeTab, budget, basePosts, pageTypeForTabs, categoriesToDisplayForTabs, getCategoryNameById]);
+
+        // 3. 予算フィルタリング
+        const budgetFilteredPosts = filterByBudget(keywordFilteredPosts, budget);
+
+        // 4. カテゴリフィルタリング
+        const categoryFilteredPosts = filterByCategory(
+            budgetFilteredPosts, 
+            activeTab, 
+            pageTypeForTabs,
+            categoriesForTabs
+        );
+
+        // 5. スコアによるソート
+        return categoryFilteredPosts.sort((a, b) => {
+            if (searchKeywords.length > 0) {
+                return b.score - a.score;
+            }
+            // キーワードが指定されていない場合は日付順
+            const dateA = new Date(a.dates[0]).getTime();
+            const dateB = new Date(b.dates[0]).getTime();
+            return dateB - dateA;
+        });
+    }, [keyword, activeTab, budget, basePosts, pageTypeForTabs, categoriesForTabs]);
 
     return {
         keyword,
         activeTab,
         budget,
         filteredPosts,
-        categoriesForTabs: categoriesToDisplayForTabs,
+        categoriesForTabs,
         handleKeywordChange,
         handleTabChange,
         handleBudgetChange,

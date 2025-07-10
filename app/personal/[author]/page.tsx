@@ -4,6 +4,7 @@ import { members } from "@/data/member";
 import Image from "next/image";
 import { Metadata } from "next";
 import { notFound } from "next/navigation";
+import { getAllPostTypes } from "@/lib/markdown";
 
 // 動的にメタデータを生成
 export async function generateMetadata(props: { params: Promise<{ author: string }>}): Promise<Metadata> {
@@ -42,6 +43,8 @@ const AuthorPage = async (props: { params: Promise<{ author: string }>}) => {
     const decodedAuthor = decodeURIComponent(params.author).replace(/\}$/g, ''); // 余分な`}`を削除
     const authorMember = members.find((member) => member.name === decodedAuthor);
 
+    const allPosts = getAllPostTypes();
+
     return (
         <div className="container py-12">
             <div className="mb-12 flex flex-col md:flex-row justify-center items-center gap-8">
@@ -68,7 +71,8 @@ const AuthorPage = async (props: { params: Promise<{ author: string }>}) => {
                 </Elements.ListLink>
             </div>
             <Sections.Posts
-                apiFetchType="all"
+                initialPosts={allPosts}
+                postFilterType="all"
                 specificFilterType="author"
                 specificFilterValue={decodedAuthor}
                 tabsGridColsClass="sm:grid-cols-2 md:grid-cols-4"

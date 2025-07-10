@@ -4,6 +4,7 @@ import { Suspense } from 'react';
 import { Metadata } from 'next';
 import * as Elements from '@/app/components/elements/index';
 import SearchPageContent from './SearchPageContent';
+import { getAllPostTypes } from '@/lib/markdown';
 
 export const metadata: Metadata = {
     title: '検索結果一覧',
@@ -18,9 +19,14 @@ export const metadata: Metadata = {
     },
 };
 
-const SearchPage = () => (
-    <Suspense fallback={<Elements.LoadingAnimation />}>
-        <SearchPageContent />
-    </Suspense>
-);
+const SearchPage = () => {
+    const allPosts = getAllPostTypes();
+
+    return (
+        <Suspense fallback={<Elements.LoadingAnimation />}>
+            <SearchPageContent allPosts={allPosts} />
+        </Suspense>
+    )
+}
+
 export default SearchPage;

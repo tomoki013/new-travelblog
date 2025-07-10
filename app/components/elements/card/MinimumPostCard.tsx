@@ -20,7 +20,7 @@ const MinimumPostCard = ({ post }: MinimumPostCardProps) => {
                     />
                 </div>
                 <div>
-                    <h4 className="text-sm font-medium">
+                    <h4 className="text-sm font-medium hover:underline">
                         {post.title}
                     </h4>
                     <span className="flex items-center gap-1 text-muted-foreground text-sm">
