@@ -257,13 +257,13 @@ export const usePostFilters = ({
         const searchKeywords = normalizeSearchKeyword(keyword);
 
         // 1. キーワード検索とスコアリング
-        const scoredPosts = basePosts.map(post => ({
+        const scoredPostsArray: scoredPosts[] = basePosts.map(post => ({
             ...post,
             score: calculatePostScore(post, searchKeywords),
         }));
 
         // 2. スコアによるフィルタリング（キーワードが指定されている場合）
-        const keywordFilteredPosts = scoredPosts.filter(post => {
+        const keywordFilteredPosts = scoredPostsArray.filter(post => {
             if (searchKeywords.length > 0 && post.score === 0) {
                 return false;
             }
@@ -279,12 +279,12 @@ export const usePostFilters = ({
             activeTab, 
             pageTypeForTabs,
             categoriesForTabs
-        );
+        ) as scoredPosts[];
 
         // 5. スコアによるソート
         return categoryFilteredPosts.sort((a, b) => {
             if (searchKeywords.length > 0) {
-                return b.score - a.score;
+                return (b.score ?? 0) - (a.score ?? 0);
             }
             // キーワードが指定されていない場合は日付順
             const dateA = new Date(a.dates[0]).getTime();
