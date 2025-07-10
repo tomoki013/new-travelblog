@@ -10,6 +10,7 @@ import ItineraryHeroSection from "./heroSections/ItineraryHeroSection";
 import HeadsUp from "./headsUp/HeadsUp";
 import ItineraryBanner from "./banner/ItineraryBanner";
 import CookieBanner from "./banner/CookieBanner";
+import Posts from './posts/Posts';
 
 export {
     FeaturedRegions,
@@ -24,4 +25,5 @@ export {
     HeadsUp,
     ItineraryBanner,
     CookieBanner,
+    Posts,
 }

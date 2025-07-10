@@ -1,4 +1,4 @@
-import * as Server from '@/app/components/server/index';
+import * as Sections from '@/app/components/sections/index';
 import { Metadata } from 'next';
 import getAllPosts from '@/lib/markdown';
 
@@ -27,7 +27,7 @@ const DiaryPage = () => {
                 </p>
             </div>
 
-            <Server.Posts
+            <Sections.Posts
                 initialPosts={diaryPosts}
                 postFilterType="diary"
                 tabsGridColsClass="sm:grid-cols-2 md:grid-cols-6"

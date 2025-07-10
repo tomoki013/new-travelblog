@@ -3,10 +3,17 @@ import * as Elements from "@/app/components/elements/index";
 import Link from "next/link";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import getAllPosts from "@/lib/markdown";
+import { Post } from "@/types/types";
 
-const ItineraryHeroSection = () => {
-    const itineraryPosts = getAllPosts('itinerary');
+interface ItineraryHeroSectionProps {
+    posts: Post[];
+}
+
+const ItineraryHeroSection = ({
+    posts
+}: ItineraryHeroSectionProps
+) => {
+    const itineraryPosts = posts;
 
     return (
         <div className="container relative z-10">

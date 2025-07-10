@@ -1,11 +1,18 @@
 import { ArrowRight } from "lucide-react";
 import Link from "next/link";
 import * as Elements from "@/app/components/elements/index";
-import getAllPosts from "@/lib/markdown";
+import { Post } from "@/types/types";
 
-const TourismInformationHeroSection = () => {
-    const tourismPosts = getAllPosts('tourism');
+interface TourismInformationHeroSectionProps {
+    posts: Post[];
+}
 
+const TourismInformationHeroSection = ({
+    posts
+}: TourismInformationHeroSectionProps
+) => {
+    const tourismPosts = posts;
+    
     return (
         <div className="container relative z-10">
             <div className="mb-10 flex items-center justify-between">

@@ -1,11 +1,17 @@
+import * as Elements from "@/app/components/elements/index";
 import * as Sections from "@/app/components/sections/index";
+import getAllPosts from "@/lib/markdown";
 
 const Home = () => {
+    const diaryPosts = getAllPosts('diary');
+    const tourismPosts = getAllPosts('tourism');
+    const itineraryPosts = getAllPosts('itinerary');
+
     const sections = [
-        // { Component: Sections.SearchHeroSection },
-        { Component: Sections.DiaryPostsHeroSection },
-        { Component: Sections.TourismInformationHeroSection },
-        { Component: Sections.ItineraryHeroSection },
+        { Component: Elements.SearchHeroSection },
+        { Component: Sections.DiaryPostsHeroSection, props: { posts: diaryPosts } },
+        { Component: Sections.TourismInformationHeroSection, props: { posts: tourismPosts } },
+        { Component: Sections.ItineraryHeroSection, props: { posts: itineraryPosts } },
         { Component: Sections.PhotoGalleryHeroSection },
         { Component: Sections.RouletteHeroSection },
         { Component: Sections.WorldClockHeroSection },
@@ -24,7 +30,11 @@ const Home = () => {
                         index % 2 === 0 ? "bg-muted" : ""
                     }`}
                 >
-                    <section.Component />
+                    {section.props ? (
+                        <section.Component {...section.props} />
+                    ) : (
+                        <section.Component />
+                    )}
                 </section>
             ))}
 
