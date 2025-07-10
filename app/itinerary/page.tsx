@@ -1,5 +1,5 @@
 import * as Elements from '@/app/components/elements/index';
-import * as Server from '@/app/components/server/index';
+import * as Sections from '@/app/components/sections/index';
 import { Metadata } from 'next';
 import getAllPosts from '@/lib/markdown';
 import ItineraryListForPopup from './ItineraryListForPopup';
@@ -39,7 +39,7 @@ const ItineraryPage = () => {
                 <ItineraryListForPopup />
             </Elements.Popup>
 
-            <Server.Posts
+            <Sections.Posts
                 initialPosts={itineraryPosts}
                 postFilterType="itinerary"
                 showBudgetFilter={true}

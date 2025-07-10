@@ -7,10 +7,17 @@ import { Compass } from "lucide-react"
 import Image from "next/image"
 import { useRef, useState } from "react"
 import { regions, regionProps } from "@/data/regions";
-// import { Post } from "@/types/types";
-// import * as Server from "@/app/components/server/index";
+import { Post } from "@/types/types";
+import * as Sections from "@/app/components/sections/index";
 
-const Roulette = () => {
+interface RouletteProps {
+    posts: Post[];
+}
+
+const Roulette = ({
+    posts
+}: RouletteProps
+) => {
     const [spinning, setSpinning] = useState(false)
     const [selectedDestination, setSelectedDestination] = useState<regionProps | null>(null)
     const [selectedOptions, setSelectedOptions] = useState<string[]>(regions.map(d => d.city))
@@ -136,16 +143,18 @@ const Roulette = () => {
                 </div>
             </div>
 
-            {/* {selectedDestination && (
+            {selectedDestination && (
                 <div ref={postsRef}>
-                    <Server.Posts
+                    <Sections.Posts
                         initialPosts={posts}
                         postFilterType="tourism"
                         specificFilterType="region"
                         specificFilterValue={selectedDestination.city}
+                        showSearchInput={false}
+                        showCategoryTabs={false}
                     />
                 </div>
-            )} */}
+            )}
         </>
     );
 }

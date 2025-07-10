@@ -1,7 +1,7 @@
 import Link from 'next/link';
 import * as Clients from '@/app/components/client/index';
 import { Metadata } from 'next';
-// import getAllPosts from '@/lib/markdown';
+import getAllPosts from '@/lib/markdown';
 
 export const metadata: Metadata = {
     title: "旅行先ルーレット–迷ったら運命の旅先を！",
@@ -17,7 +17,7 @@ export const metadata: Metadata = {
 };
 
 const RoulettePage = () => {
-    // const posts = getAllPosts('tourism');
+    const posts = getAllPosts('tourism');
 
     return (
         <div className="container py-12">
@@ -39,7 +39,7 @@ const RoulettePage = () => {
             </div>
 
             {/* ルーレット */}
-            <Clients.Roulette />
+            <Clients.Roulette posts={posts} />
         </div>
     );
 }

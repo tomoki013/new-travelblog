@@ -1,5 +1,4 @@
 import * as Sections from '@/app/components/sections/index';
-import * as Server from '@/app/components/server/index';
 import type { Metadata } from "next";
 import getAllPosts from '@/lib/markdown';
 
@@ -30,7 +29,7 @@ const TourismPage = () => {
 
             <Sections.FeaturedRegions />
 
-            <Server.Posts
+            <Sections.Posts
                 initialPosts={tourismPosts}
                 postFilterType="tourism"
                 tabsGridColsClass="sm:grid-cols-2 md:grid-cols-7"

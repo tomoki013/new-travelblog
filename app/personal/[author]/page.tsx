@@ -1,5 +1,5 @@
 import * as Elements from "@/app/components/elements/index";
-import * as Server from '@/app/components/server/index';
+import * as Sections from '@/app/components/sections/index';
 import { members } from "@/data/member";
 import Image from "next/image";
 import { Metadata } from "next";
@@ -70,7 +70,7 @@ const AuthorPage = async (props: { params: Promise<{ author: string }>}) => {
                     著者一覧へ
                 </Elements.ListLink>
             </div>
-            <Server.Posts
+            <Sections.Posts
                 initialPosts={allPosts}
                 postFilterType="all"
                 specificFilterType="author"

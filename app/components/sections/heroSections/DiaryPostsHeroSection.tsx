@@ -1,10 +1,17 @@
 import { ArrowRight } from "lucide-react";
 import Link from "next/link";
 import * as Elements from "@/app/components/elements/index";
-import getAllPosts from "@/lib/markdown";
+import { Post } from "@/types/types";
 
-const DiaryPostsHeroSection = () => {
-    const diaryPosts = getAllPosts('diary');
+interface DiaryPostsHeroSectionProps {
+    posts: Post[];
+}
+
+const DiaryPostsHeroSection = ({
+    posts
+}: DiaryPostsHeroSectionProps
+) => {
+    const diaryPosts = posts;
 
     return (
         <div className="container relative z-10">
