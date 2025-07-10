@@ -1,12 +1,14 @@
 "use client";
 
 import { useSearchParams } from 'next/navigation';
-import * as Sections from '@/app/components/sections/index';
-import { Post } from '@/types/types';
+import * as Elements from '@/app/components/elements/index';
+// import * as Sections from '@/app/components/sections/index';
+// import * as Server from '@/app/components/server/index';
+// import { Post } from '@/types/types';
 
-interface SearchPageContentProps {
-    allPosts: Post[];
-}
+// interface SearchPageContentProps {
+//     allPosts: Post[];
+// }
 
 const getCategoryDisplayName = (categoryValue: string) => {
     return categoryValue === 'all' ? 'すべてのカテゴリー' : 
@@ -15,7 +17,7 @@ const getCategoryDisplayName = (categoryValue: string) => {
            categoryValue === 'itinerary' ? '旅程＆費用レポート' : 'その他';
 };
 
-const SearchPageContent = ({ allPosts }: SearchPageContentProps) => {
+const SearchPageContent = () => {
     const searchParams = useSearchParams();
     const keyword = searchParams.get('keyword') || undefined;
     const category = searchParams.get('category') || undefined;
@@ -33,15 +35,15 @@ const SearchPageContent = ({ allPosts }: SearchPageContentProps) => {
                 )}
             </div>
             
-            <Sections.SearchHeroSection />
+            <Elements.SearchHeroSection />
             
-            <Sections.Posts
+            {/* <Server.Posts
                 initialPosts={allPosts}
                 postFilterType="all"
                 syncWithUrl={true}
                 showSearchInput={false}
                 showCategoryTabs={false}
-            />
+            /> */}
         </div>
     );
 };

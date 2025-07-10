@@ -1,8 +1,7 @@
 import { Badge } from "@/components/ui/badge";
 import getAllPosts from "@/lib/markdown";
 import * as Elements from '@/app/components/elements/index';
-import * as Sections from '@/app/components/sections/index';
-import * as Servers from '@/app/components/server/index';
+import * as Server from '@/app/components/server/index';
 import type { Metadata } from "next";
 import { cn } from "@/lib/utils";
 import { getPostData } from "@/lib/getPostData";
@@ -71,11 +70,11 @@ const DiaryPostPage = async (props: { params: Promise<{ slug: string }>}) => {
 
             <div className="grid gap-10 lg:grid-cols-3">
                 <div className="lg:col-span-2">
-                    <Servers.Article
+                    <Server.Article
                         post={post}
                     />
                     <Elements.ItineraryLink />
-                    <Sections.SearchHeroSection />
+                    <Elements.SearchHeroSection />
                 </div>
                 <div>
                     <div className="sticky top-24 space-y-8">
