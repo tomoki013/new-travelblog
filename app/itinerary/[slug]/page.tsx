@@ -1,6 +1,6 @@
 import * as Elements from '@/app/components/elements/index';
 import * as Sections from '@/app/components/sections/index';
-import * as Servers from '@/app/components/server/index';
+import * as Server from '@/app/components/server/index';
 import { Badge } from '@/components/ui/badge';
 import { Metadata } from 'next';
 import ItineraryPopupContent from '@/app/components/elements/popupContent/ItineraryPopupContent';
@@ -80,16 +80,16 @@ const ItineraryPostPage = async (props: { params: Promise<{ slug: string }>}) =>
 
             <div className="grid gap-10 lg:grid-cols-3">
                 <div className='lg:col-span-2'>
-                    <Servers.Article
+                    <Server.Article
                         post={post}
                     />
-                    <Sections.SearchHeroSection />
+                    <Elements.SearchHeroSection />
                 </div>
                 <div>
                     <div className="sticky top-24 space-y-8">
                         <div className="hidden md:block">
                             <div className="max-h-64 overflow-y-auto">
-                                <Sections.TableOfContents />
+                                <Server.TableOfContents />
                             </div>
                         </div>
                         {/* 関連日記や人気タグなどのサイドバーは変更なし */}

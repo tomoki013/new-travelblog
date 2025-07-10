@@ -12,6 +12,7 @@ import MinimumPostCard from "./card/MinimumPostCard";
 import Popup from './popup/Popup';
 import SearchBox from './searchBox/SearchBox';
 import Slide from './slide/Slide';
+import SearchHeroSection from "./searchBox/SearchHeroSection";
 
 export {
     GitHubIcon,
@@ -28,4 +29,5 @@ export {
     Popup,
     SearchBox,
     Slide,
+    SearchHeroSection,
 };

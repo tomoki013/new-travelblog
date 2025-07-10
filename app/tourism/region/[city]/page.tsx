@@ -1,5 +1,6 @@
 import * as Elements from '@/app/components/elements/index';
 import * as Sections from '@/app/components/sections/index';
+import * as Server from '@/app/components/server/index';
 import { regions } from '@/data/regions';
 import getAllPosts from '@/lib/markdown';
 import { Metadata } from 'next';
@@ -69,7 +70,7 @@ const RegionPage = async (props: { params: Promise<{ city: string }>}) => {
             </div>
             <div className='container py-12'>
                 {/* Tourism Information */}
-                <Sections.Posts
+                <Server.Posts
                     initialPosts={posts}
                     postFilterType='tourism'
                     specificFilterType='region'

@@ -1,6 +1,7 @@
 import Link from 'next/link';
 import * as Clients from '@/app/components/client/index';
 import { Metadata } from 'next';
+// import getAllPosts from '@/lib/markdown';
 
 export const metadata: Metadata = {
     title: "旅行先ルーレット–迷ったら運命の旅先を！",
@@ -16,6 +17,8 @@ export const metadata: Metadata = {
 };
 
 const RoulettePage = () => {
+    // const posts = getAllPosts('tourism');
+
     return (
         <div className="container py-12">
             <div className='m-8 rounded-md bg-yellow-200 flex justify-center items-center border border-muted-foreground p-2 text-black'>
