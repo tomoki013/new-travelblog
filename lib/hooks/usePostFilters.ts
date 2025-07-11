@@ -25,7 +25,7 @@ interface UsePostFiltersParams {
 const normalizeSearchKeyword = (keyword: string): string[] => {
     return keyword
         .toLowerCase()
-        .replace(/[、，]/g, ' ') // 日本語の句読点をスペースに変換
+        .replace(/[、，&]/g, ' ') // 日本語の句読点や&をスペースに変換
         .split(/\s+/)
         .filter(Boolean);
 };

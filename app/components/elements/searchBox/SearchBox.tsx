@@ -7,6 +7,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Search } from "lucide-react";
 import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
+import { usePostFilters } from '@/lib/hooks/usePostFilters';
 
 interface SearchBoxProps {
     initialKeyword?: string;
@@ -29,17 +30,34 @@ const SearchBox = ({
     initialCategory = 'all',
     onSearch,
     className = '',
-    mode = 'url', // デフォルトはURLパラメータ
+    mode = 'url',
     categories = DEFAULT_CATEGORIES,
 }: SearchBoxProps) => {
-    const [searchKeyword, setSearchKeyword] = useState(initialKeyword);
-    const [selectedCategory, setSelectedCategory] = useState(initialCategory);
+    // usePostFiltersを利用
+    const {
+        keyword: filterKeyword,
+        activeTab: filterCategory,
+        handleKeywordChange: handleFilterKeywordChange,
+        handleTabChange: handleFilterCategoryChange,
+    } = usePostFilters({
+        basePosts: [], // 検索対象のpostsが必要な場合はpropsで受け取る設計に拡張可
+        initialKeyword,
+        initialCategory,
+        syncWithUrl: mode === 'url',
+        pageTypeForTabs: 'all',
+    });
+
+    const [searchKeyword, setSearchKeyword] = useState(filterKeyword);
+    const [selectedCategory, setSelectedCategory] = useState(filterCategory);
     const router = useRouter();
 
-    // initialKeywordが変化したらInputにも反映
+    // usePostFiltersの値が変わったらローカルstateも同期
     useEffect(() => {
-        setSearchKeyword(initialKeyword);
-    }, [initialKeyword]);
+        setSearchKeyword(filterKeyword);
+    }, [filterKeyword]);
+    useEffect(() => {
+        setSelectedCategory(filterCategory);
+    }, [filterCategory]);
 
     // URLパラメータで検索
     const handleSearch = () => {
@@ -55,26 +73,22 @@ const SearchBox = ({
         }
     };
 
-    // リアルタイムモードなら入力ごとにonSearchを呼ぶ
+    // キーワード変更
     const handleKeywordChange = (value: string) => {
         setSearchKeyword(value);
+        handleFilterKeywordChange(value);
         if (mode === 'realtime' && onSearch) {
             onSearch(value, selectedCategory);
         }
     };
+    // カテゴリ変更
     const handleCategoryChange = (value: string) => {
         setSelectedCategory(value);
+        handleFilterCategoryChange(value);
         if (mode === 'realtime' && onSearch) {
             onSearch(searchKeyword, value);
-        } else if (mode === 'url') {
-            // カテゴリ変更時にもURLを即時反映
-            const url = `/search?keyword=${encodeURIComponent(searchKeyword)}&category=${value}`;
-            if (typeof window !== 'undefined' && window.location.pathname === '/search') {
-                router.replace(url);
-            } else {
-                router.push(url);
-            }
         }
+        // mode==='url'では即検索しない
     };
 
     return (
