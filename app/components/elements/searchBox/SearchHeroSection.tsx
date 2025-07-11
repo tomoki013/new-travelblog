@@ -4,14 +4,28 @@ import { Button } from "@/components/ui/button";
 import { useRouter } from 'next/navigation'; // Import useRouter
 import * as Elements from '@/app/components/elements/index';
 import { popularKeywords } from "@/data/popularKeywords";
-import { useState } from "react"; // Import useState
+import { useState, useEffect } from "react"; // Import useState, useEffect
 
 const SearchHeroSection = () => {
     const router = useRouter();
+
     // 検索キーワード状態とカテゴリー状態をここで管理
     const [keyword, setKeyword] = useState('');
     const [selectedCategory, setSelectedCategory] = useState('all');
 
+    // クエリパラメータの初期値を一度だけ反映
+    useEffect(() => {
+        if (typeof window !== 'undefined') {
+            const params = new URLSearchParams(window.location.search);
+            const keywordParam = params.get('keyword') || '';
+            const categoryParam = params.get('category') || 'all';
+            setKeyword(keywordParam);
+            setSelectedCategory(categoryParam);
+        }
+    }, []);
+
+    // SearchBoxの初期値をpropsで渡し、状態管理はSearchBox内で行う
+    // onSearchで親の状態も更新
     return (
         <div className="container relative z-10 my-2">
             <div className="mb-10">
@@ -23,6 +37,7 @@ const SearchHeroSection = () => {
                         </p>
                     </div>
                     <Elements.SearchBox
+                        key={keyword + ':' + selectedCategory}
                         className="mb-2"
                         mode="url"
                         initialKeyword={keyword}
@@ -41,6 +56,8 @@ const SearchHeroSection = () => {
                                 size="sm"
                                 onClick={() => {
                                     setKeyword(tag);
+                                    // カテゴリは現在のselectedCategoryを維持
+                                    // URL遷移も行う
                                     router.push(`/search?keyword=${encodeURIComponent(tag)}&category=${selectedCategory}`);
                                 }}
                             >
