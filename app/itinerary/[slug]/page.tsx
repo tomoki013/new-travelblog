@@ -1,7 +1,6 @@
 import * as Elements from '@/app/components/elements/index';
 import * as Sections from '@/app/components/sections/index';
 import * as Server from '@/app/components/server/index';
-import { Badge } from '@/components/ui/badge';
 import { Metadata } from 'next';
 import { getPostData } from '@/lib/getPostData';
 import getAllPosts from '@/lib/markdown';
@@ -95,22 +94,15 @@ const ItineraryPostPage = async (props: { params: Promise<{ slug: string }>}) =>
                         {/* 関連日記や人気タグなどのサイドバーは変更なし */}
                         <div className="rounded-lg border bg-card p-6">
                             <h3 className="mb-4 text-lg font-medium">関連する旅行日記</h3>
-                            <div className="space-y-4">
+                            <div className="flex flex-wrap gap-2">
                                 {diaryPosts.slice(0, 3).map((diaryPost) => (
                                     <Elements.MinimumPostCard key={diaryPost.slug} post={diaryPost} />
                                 ))}
                             </div>
                         </div>
-                        <div className="rounded-lg border bg-card p-6">
-                            <h3 className="mb-4 text-lg font-medium">人気のタグ</h3>
-                            <div className="flex flex-wrap gap-2">
-                                {['京都', '東京', '沖縄', 'ビーチ', '温泉', 'グルメ', '自然', '寺院', '海外', 'リゾート'].map((tag) => (
-                                    <Badge key={tag} variant='secondary'>
-                                        #{tag}
-                                    </Badge>
-                                ))}
-                            </div>
-                        </div>
+                        
+                        <Sections.TagList post={post} />
+                        
                     </div>
                 </div>
             </div>

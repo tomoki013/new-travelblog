@@ -1,11 +1,11 @@
-import { Badge } from "@/components/ui/badge";
 import { Calendar, MapPin } from "lucide-react";
 import { Post } from "@/types/types";
+import ArticleTags from "./ArticleTags";
 
 const ArticleMeta = ({ post }: { post: Post }) => {
     return (
         <div className="my-6">
-            {post.category.map(cat => <Badge key={cat} variant="outline">{cat}</Badge>)}
+            <ArticleTags tags={post.tags} />
             <h1 className="mb-4 text-3xl font-bold sm:text-4xl">{post.title}</h1>
             <div className="flex flex-wrap items-center gap-4 text-sm text-muted-foreground">
                 <div className="flex items-center">
