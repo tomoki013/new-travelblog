@@ -1,5 +1,5 @@
-import { getAllPostTypes } from '@/lib/markdown'; // lib/markdown.tsから関数をインポート
-import { regions } from '@/data/regions'; // data/regions.tsからデータをインポート
+import { getAllPostTypes } from './lib/markdown'; // lib/markdown.tsから関数をインポート
+import { regions } from './data/regions'; // data/regions.tsからデータをインポート
 
 /** @type {import('next-sitemap').IConfig} */
 module.exports = {
