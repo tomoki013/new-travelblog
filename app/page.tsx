@@ -1,6 +1,7 @@
 import * as Elements from "@/app/components/elements/index";
 import * as Sections from "@/app/components/sections/index";
 import getAllPosts from "@/lib/markdown";
+import { Suspense } from "react";
 
 const Home = () => {
     const diaryPosts = getAllPosts('diary');
@@ -30,8 +31,13 @@ const Home = () => {
                         index % 2 === 0 ? "bg-muted" : ""
                     }`}
                 >
+                    {/* SearchHeroSectionをSuspenseでラップする */}
                     {section.props ? (
                         <section.Component {...section.props} />
+                    ) : section.Component === Elements.SearchHeroSection ? (
+                        <Suspense fallback={<div>Loading...</div>}>
+                            <section.Component />
+                        </Suspense>
                     ) : (
                         <section.Component />
                     )}
