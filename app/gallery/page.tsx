@@ -1,3 +1,4 @@
+import getAllPosts from "@/lib/markdown";
 import GalleryClient from "./GalleryClient"
 import { Metadata } from "next"
 
@@ -24,7 +25,8 @@ export const metadata: Metadata = {
 };
 
 const GalleryPage = () => {
-    return <GalleryClient />;
+    const posts = getAllPosts('tourism');
+    return <GalleryClient posts={posts} />;
 };
 
 export default GalleryPage;

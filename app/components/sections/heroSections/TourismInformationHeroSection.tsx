@@ -1,6 +1,6 @@
 import { ArrowRight } from "lucide-react";
 import Link from "next/link";
-import * as Elements from "@/app/components/elements/index";
+import * as Sections from "@/app/components/sections/index";
 import { Post } from "@/types/types";
 
 interface TourismInformationHeroSectionProps {
@@ -25,16 +25,15 @@ const TourismInformationHeroSection = ({
                     <ArrowRight className="ml-1 h-4 w-4" />
                 </Link>
             </div>
-            <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
-                {tourismPosts.slice(0, 8).map((info) => (
-                    <Elements.PostCard
-                        key={info.slug}
-                        post={info}
-                        linkPrefix="tourism"
-                        postCardType={2}
-                    />
-                ))}
-            </div>
+            <Sections.Posts
+                initialPosts={tourismPosts}
+                postFilterType="tourism"
+                showSearchInput={false}
+                showCategoryTabs={false}
+                postCardType={2}
+                displayCount={8}
+                postsGridColsClass="sm:grid-cols-2 lg:grid-cols-4"
+            />
         </div>
     )
 }
