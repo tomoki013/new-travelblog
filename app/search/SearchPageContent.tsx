@@ -1,5 +1,6 @@
 "use client";
 
+import { Suspense } from 'react';
 import { useSearchParams } from 'next/navigation';
 import * as Elements from '@/app/components/elements/index';
 import * as Sections from '@/app/components/sections/index';
@@ -20,6 +21,14 @@ const SearchPageContent = ({
     allPosts,
 }: SearchPageContentProps
 ) => {
+    return (
+        <Suspense>
+            <SearchPageContentInner allPosts={allPosts} />
+        </Suspense>
+    );
+};
+
+const SearchPageContentInner = ({ allPosts }: SearchPageContentProps) => {
     const searchParams = useSearchParams();
     const keyword = searchParams.get('keyword') || undefined;
     const category = searchParams.get('category') || undefined;
