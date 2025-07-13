@@ -3,10 +3,7 @@
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useEffect, useState, useMemo } from "react";
 import * as Elements from "@/app/components/elements/index";
-import { PhotoCard } from "./PhotoCard";
 import { Photo, Post } from "@/types/types";
-import { Dialog, DialogContent } from "@/components/ui/dialog";
-import PhotoGalleryPopupContent from "@/app/components/elements/popupContent/PhotoGalleryPopupContent";
 
 const GalleryClient = ({ posts }: { posts: Post[] }) => {
     const [selectedImage, setSelectedImage] = useState<Photo | null>(null);
@@ -96,7 +93,7 @@ const GalleryClient = ({ posts }: { posts: Post[] }) => {
                             {photoList.length > 0 ? (
                                 <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
                                     {photoList.map((photo) => (
-                                        <PhotoCard
+                                        <Elements.PhotoCard
                                             key={photo.title}
                                             photo={photo}
                                             onClick={() => setSelectedImage(photo)}
@@ -111,17 +108,22 @@ const GalleryClient = ({ posts }: { posts: Post[] }) => {
                 </Tabs>
                 </>
             )}
-            {/* ギャラリー内の画像クリックで拡大表示するためのDialog */}
-            <Dialog open={!!selectedImage} onOpenChange={() => setSelectedImage(null)}>
-                {selectedImage && (
-                    <DialogContent className="max-w-4xl max-h-[90vh] overflow-y-auto mx-2">
-                        <PhotoGalleryPopupContent
-                            photo={selectedImage}
-                            posts={posts}
-                        />
-                    </DialogContent>
-                )}
-            </Dialog>
+            {/* ギャラリー内の画像クリックで拡大表示するためのPopup */}
+            {selectedImage && (
+                 <Elements.Popup
+                    buttonType="none"
+                    dialogTitle="写真ギャラリー"
+                    dialogDescription="左右の矢印で他の写真に切り替えられます。"
+                    modalState={!!selectedImage}
+                    onClose={() => setSelectedImage(null)}
+                 >
+                    <Elements.ListForPopup
+                        items={photos}
+                        initialCurrentIndex={photos.findIndex(p => p.title === selectedImage?.title)}
+                        allPosts={posts}
+                    />
+                </Elements.Popup>
+            )}
         </div>
     );
 };

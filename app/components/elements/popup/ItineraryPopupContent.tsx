@@ -8,7 +8,7 @@ type CostBreakdownType = { [key: string]: number };
 type SummaryType = string | undefined;
 
 type SidebarProps = {
-  post: Post & { costs?: CostBreakdownType; summary?: SummaryType };
+    post: Post & { costs?: CostBreakdownType; summary?: SummaryType };
 };
 
 const ItineraryPopupContent = ({ post }: SidebarProps) => (

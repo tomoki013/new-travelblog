@@ -3,7 +3,6 @@ import * as Sections from '@/app/components/sections/index';
 import * as Server from '@/app/components/server/index';
 import { Badge } from '@/components/ui/badge';
 import { Metadata } from 'next';
-import ItineraryPopupContent from '@/app/components/elements/popupContent/ItineraryPopupContent';
 import { getPostData } from '@/lib/getPostData';
 import getAllPosts from '@/lib/markdown';
 
@@ -53,6 +52,8 @@ const generateDateRange = (startDate: string, endDate: string): string[] => {
 const ItineraryPostPage = async (props: { params: Promise<{ slug: string }>}) => {
     const params = await props.params;
     const post = await getPostData('itinerary', params.slug);
+    const allItineraryPosts = getAllPosts('itinerary');
+    const currentIndex = allItineraryPosts.findIndex(p => p.slug === post.slug);
 
     const dateRange = generateDateRange(post.dates[0], post.dates[post.dates.length - 1]);
     const diaryPosts = getAllPosts('diary').filter((diaryPost) =>
@@ -71,11 +72,10 @@ const ItineraryPostPage = async (props: { params: Promise<{ slug: string }>}) =>
             <Elements.Popup
                 buttonType='button'
                 triggerTitle="この旅程の概要"
-                triggerDescription='' // ボタンタイプなので不要
                 dialogTitle="旅の概要"
                 modalState={true}
             >
-                <ItineraryPopupContent post={post} />
+                <Elements.ListForPopup items={allItineraryPosts} initialCurrentIndex={currentIndex} />
             </Elements.Popup>
 
             <div className="grid gap-10 lg:grid-cols-3">

@@ -11,9 +11,9 @@ interface PopupProps {
     // モーダルを開くためのトリガーボタンの種類
     buttonType: 'section' | 'button' | 'none';
     // トリガーに表示するタイトル
-    triggerTitle: string;
+    triggerTitle?: string;
     // トリガーに表示する説明文
-    triggerDescription: string;
+    triggerDescription?: string;
     // モーダル自体のタイトル (オプション)
     dialogTitle?: string;
     // モーダル自体の説明文 (オプション)
@@ -24,20 +24,31 @@ interface PopupProps {
     iconType?: 'file' | 'image';
     // モーダルの初期開閉状態
     modalState?: boolean;
+    // モーダルを閉じるためのコールバック
+    onClose?: () => void;
 }
 
 const Popup = ({
     buttonType,
-    triggerTitle,
-    triggerDescription,
-    dialogTitle,
-    dialogDescription,
+    triggerTitle = '',
+    triggerDescription =  '',
+    dialogTitle = '',
+    dialogDescription = '',
     children,
     iconType = 'file',
     modalState  = false,
+    onClose,
 }: PopupProps) => {
     // モーダルの開閉状態だけを管理
     const [open, setOpen] = useState(modalState);
+
+    const handleOpenChange = (isOpen: boolean) => {
+        setOpen(isOpen);
+        if (!isOpen && onClose) {
+            onClose();
+        }
+    };
+
 
     const TriggerIcon = iconType === 'image' ? ImageIcon : FileText;
 
@@ -89,7 +100,7 @@ const Popup = ({
             {/* ボタン無し（直接開閉を制御する場合）*/}
             {buttonType === 'none' && null}
 
-            <Dialog open={open} onOpenChange={setOpen}>
+            <Dialog open={open} onOpenChange={handleOpenChange}>
                 <DialogContent className="max-w-7xl w-[95%] max-h-[90vh] overflow-y-auto flex flex-col items-center">
                     {/* ダイアログのタイトルと説明 */}
                     {dialogTitle && <DialogTitle className="text-2xl font-bold mb-2">{dialogTitle}</DialogTitle>}

@@ -1,3 +1,4 @@
+import PhotoGalleryPopupContent from './popup/PhotoGalleryPopupContent';
 import GitHubIcon from "./icons/GithubIcon";
 import InstagramIcon from "./icons/InstagramIcon";
 import TikTokIcon from "./icons/TikTokIcon";
@@ -13,6 +14,9 @@ import Popup from './popup/Popup';
 import SearchBox from './searchBox/SearchBox';
 import Slide from './slide/Slide';
 import SearchHeroSection from "./searchBox/SearchHeroSection";
+import PhotoCard from './card/PhotoCard';
+import ListForPopup from "./popup/ListForPopup";
+import ItineraryPopupContent from './popup/ItineraryPopupContent';
 
 export {
     GitHubIcon,
@@ -30,4 +34,8 @@ export {
     SearchBox,
     Slide,
     SearchHeroSection,
+    PhotoCard,
+    ListForPopup,
+    ItineraryPopupContent,
+    PhotoGalleryPopupContent,
 };
