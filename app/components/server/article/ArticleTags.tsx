@@ -1,4 +1,5 @@
 import { Badge } from "@/components/ui/badge";
+import Link from "next/link";
 
 interface ArticleTagsProps {
     tags: string[];
@@ -7,9 +8,14 @@ interface ArticleTagsProps {
 const ArticleTags = ({ tags }: ArticleTagsProps) => (
     <div className="mt-8 flex flex-wrap gap-2">
         {tags.map((tag) => (
-            <Badge key={tag} variant="outline">
-                #{tag}
-            </Badge>
+            <Link
+                key={tag}
+                href={`/search?keyword=${encodeURIComponent(tag)}`}
+            >
+                <Badge variant="outline">
+                    #{tag}
+                </Badge>
+            </Link>
         ))}
     </div>
 );

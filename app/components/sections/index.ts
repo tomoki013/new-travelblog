@@ -11,6 +11,7 @@ import HeadsUp from "./headsUp/HeadsUp";
 import ItineraryBanner from "./banner/ItineraryBanner";
 import CookieBanner from "./banner/CookieBanner";
 import Posts from './posts/Posts';
+import TagList from "./tagList/TagList";
 
 export {
     FeaturedRegions,
@@ -26,4 +27,5 @@ export {
     ItineraryBanner,
     CookieBanner,
     Posts,
+    TagList,
 }

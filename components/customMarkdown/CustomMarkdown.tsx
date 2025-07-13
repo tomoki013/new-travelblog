@@ -44,9 +44,7 @@ export const CustomImg = ({
 }: CustomImgProps
 ) => {
     return (
-        <div className="image-container">
-            <Image src={src} alt={alt} layout="responsive" width={700} height={400} />
-        </div>
+        <Image src={src} alt={alt} layout="responsive" width={700} height={400} />
     );
 };
 

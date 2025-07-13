@@ -18,9 +18,9 @@ const EmbeddedPostCard = ({ post }: { post: Post }) => (
             </div>
             {/* Right: Text Content */}
             <div className="flex flex-col justify-center p-4">
-                <h4 className="mb-2 font-bold leading-tight text-card-foreground group-hover:underline">
+                <span className="mb-2 font-bold leading-tight text-card-foreground group-hover:underline">
                     {post.title}
-                </h4>
+                </span>
                 <div className="flex flex-wrap items-center gap-x-4 gap-y-1 text-xs text-muted-foreground">
                     <span className="flex items-center gap-1.5">
                         <Calendar className="h-3 w-3" />

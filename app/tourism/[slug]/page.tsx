@@ -1,5 +1,3 @@
-import { Badge } from "@/components/ui/badge";
-// import { Button } from "@/components/ui/button";
 import getAllPosts from "@/lib/markdown";
 import type { Metadata } from "next";
 import * as Elements from '@/app/components/elements/index';
@@ -106,23 +104,15 @@ const TourismPostPage = async (props: { params: Promise<{ slug: string }>}) => {
                         </div>
                         <div className="rounded-lg border bg-card p-6">
                             <h3 className="mb-4 text-lg font-medium">関連する記事</h3>
-                            <div className="space-y-4">
+                            <div className="flex flex-wrap gap-2">
                                 {relatedPosts.slice(0, 3).map((relatedPost) => (
                                     <Elements.MinimumPostCard key={relatedPost.slug} post={relatedPost} />
                                 ))}
                             </div>
                         </div>
 
-                        <div className="rounded-lg border bg-card p-6">
-                            <h3 className="mb-4 text-lg font-medium">人気のタグ</h3>
-                            <div className="flex flex-wrap gap-2">
-                                {['京都', '東京', '沖縄', 'ビーチ', '温泉', 'グルメ', '自然', '寺院', '海外', 'リゾート'].map((tag) => (
-                                    <Badge key={tag} variant='secondary'>
-                                        #{tag}
-                                    </Badge>
-                                ))}
-                            </div>
-                        </div>
+                        <Sections.TagList post={post} />
+
                     </div>
                 </div>
             </div>
