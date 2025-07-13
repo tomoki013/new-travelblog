@@ -1,5 +1,5 @@
 import { FileText } from "lucide-react";
-import * as Elements from "@/app/components/elements/index";
+import * as Sections from "@/app/components/sections/index";
 import Link from "next/link";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -38,14 +38,15 @@ const ItineraryHeroSection = ({
                         </Button>
                     </div>
                     <div className="space-y-4">
-                        {itineraryPosts.slice(0, 2).map((post) => (
-                            <Elements.PostCard
-                                key={post.slug}
-                                post={post}
-                                linkPrefix="itinerary"
-                                postCardType={3}
-                            />
-                        ))}
+                        <Sections.Posts
+                            initialPosts={itineraryPosts}
+                            postFilterType="itinerary"
+                            showSearchInput={false}
+                            showCategoryTabs={false}
+                            postCardType={3}
+                            displayCount={2}
+                            postsGridColsClass="sm:grid-cols-1 lg:grid-cols-1"
+                        />
                     </div>
                 </div>
             </div>

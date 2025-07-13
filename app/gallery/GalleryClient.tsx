@@ -4,11 +4,11 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useEffect, useState, useMemo } from "react";
 import * as Elements from "@/app/components/elements/index";
 import { PhotoCard } from "./PhotoCard";
-import { Photo } from "@/types/types";
+import { Photo, Post } from "@/types/types";
 import { Dialog, DialogContent } from "@/components/ui/dialog";
 import PhotoGalleryPopupContent from "@/app/components/elements/popupContent/PhotoGalleryPopupContent";
 
-const GalleryClient = () => {
+const GalleryClient = ({ posts }: { posts: Post[] }) => {
     const [selectedImage, setSelectedImage] = useState<Photo | null>(null);
     const [photos, setPhotos] = useState<Photo[]>([]);
     const [isLoading, setIsLoading] = useState(true);
@@ -115,7 +115,10 @@ const GalleryClient = () => {
             <Dialog open={!!selectedImage} onOpenChange={() => setSelectedImage(null)}>
                 {selectedImage && (
                     <DialogContent className="max-w-4xl max-h-[90vh] overflow-y-auto mx-2">
-                        <PhotoGalleryPopupContent photo={selectedImage} />
+                        <PhotoGalleryPopupContent
+                            photo={selectedImage}
+                            posts={posts}
+                        />
                     </DialogContent>
                 )}
             </Dialog>

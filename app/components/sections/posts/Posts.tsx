@@ -26,6 +26,7 @@ interface PostsProps {
 
     // UI要素のクラス名カスタマイズ用
     tabsGridColsClass?: string;
+    postsGridColsClass?: string;
 
     // ページ固有の事前フィルタリング用 (例: /tourism/region/[city] の場合)
     specificFilterType?: 'region' | 'author';
@@ -33,6 +34,12 @@ interface PostsProps {
 
     // ポストカードのタイプを指定
     postCardType?: number;
+
+    // 表示する投稿の最大数を指定
+    displayCount?: number;
+
+    // 該当の記事がない場合のメッセージ
+    textForIsPosts?: string;
 }
 
 const PostsContent = ({
@@ -47,6 +54,9 @@ const PostsContent = ({
     specificFilterType,
     specificFilterValue,
     postCardType = 1,
+    displayCount,
+    postsGridColsClass = 'sm:grid-cols-2 lg:grid-cols-3',
+    textForIsPosts = '該当の記事がありません。',
 }: PostsProps) => {
     const [basePosts, setBasePosts] = useState<Post[]>([]);
     const [isLoading, setIsLoading] = useState(true);
@@ -107,6 +117,9 @@ const PostsContent = ({
         pageTypeForTabs,
     });
 
+    // displayCountに基づいて表示する投稿を制限する
+    const postsToDisplay = displayCount ? filteredPosts.slice(0, displayCount) : filteredPosts;
+
     if (isLoading && basePosts.length === 0) {
         return <Elements.LoadingAnimation />;
     }
@@ -139,7 +152,7 @@ const PostsContent = ({
                         {isLoading && basePosts.length > 0 ? (
                             <Elements.LoadingAnimation />
                         ) : (
-                            <PostList posts={filteredPosts} postCardType={postCardType} />
+                            <PostList posts={postsToDisplay} postCardType={postCardType} postsGridColsClass={postsGridColsClass} textForIsPosts={textForIsPosts} />
                         )}
                     </TabsContent>
                 </Tabs>
@@ -147,7 +160,7 @@ const PostsContent = ({
                 isLoading && basePosts.length > 0 ? (
                     <Elements.LoadingAnimation />
                 ) : (
-                    <PostList posts={filteredPosts} postCardType={postCardType} />
+                    <PostList posts={postsToDisplay} postCardType={postCardType} postsGridColsClass={postsGridColsClass} textForIsPosts={textForIsPosts} />
                 )
             )}
         </div>

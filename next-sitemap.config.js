@@ -48,7 +48,7 @@ function getAllPostTypes() {
 // data/regions.ts のデータを直接読み込み
 let regions = [];
 try {
-    const regionsDataPath = path.join(process.cwd(), 'data/regions.ts');
+    const regionsDataPath = path.join(process.cwd(), './data/regions.ts');
     const regionsFileContent = fs.readFileSync(regionsDataPath, 'utf-8');
     // ファイルから配列部分を文字列として抽出し、JSONとしてパース可能な形式に変換
     const arrayString = regionsFileContent.substring(
@@ -80,7 +80,7 @@ const config = {
                 results.push({
                     loc: `/${post.type}/${post.slug}`,
                     changefreq: 'weekly',
-                    priority: 0.7,
+                    priority: 0.8,
                     lastmod: new Date(post.dates[0]).toISOString(),
                 });
             }
