@@ -70,9 +70,9 @@ export const regions: regionProps[] = [
     {
         city: 'バンコク',
         images: [
-            '/images/Thai/wat-arun-3.jpg',
-            '/images/Thai/wat-arun-4.jpg',
-            '/images/Thai/wat-pho-1.jpg',
+            '/images/Thai/wat-arun-right-up.jpg',
+            '/images/Thai/emotional-wat-arun.jpg',
+            '/images/Thai/wat-pho-nirvana-buddha.jpg',
             '/images/Thai/thai-streetscape.jpg',
         ],
         country: 'タイ',

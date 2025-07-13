@@ -25,7 +25,7 @@ const ItineraryBanner = () => {
                 <div
                     className="bg-gray-900 text-white py-4 fixed bottom-0 left-0 right-0 x-10 z-10"
                     style ={{
-                        backgroundImage: "url('/images/Thai/wat-arun-4.jpg')",
+                        backgroundImage: "url('/images/Thai/emotional-wat-arun.jpg')",
                         backgroundSize: "cover",
                         backgroundPosition: "center",
                         backgroundRepeat: "no-repeat",
@@ -59,7 +59,7 @@ const ItineraryBanner = () => {
                 <div
                     className="fixed bottom-4 right-4 bg-gray-900/80 text-white p-3 rounded-lg shadow-lg hover:bg-gray-800/90 transition-all flex items-center space-x-2 cursor-pointer z-10"
                     style={{
-                        backgroundImage: "url('/images/Thai/wat-arun-4.jpg')",
+                        backgroundImage: "url('/images/Thai/emotional-wat-arun.jpg')",
                         backgroundSize: "cover",
                         backgroundPosition: "center",
                         backgroundRepeat: "no-repeat",

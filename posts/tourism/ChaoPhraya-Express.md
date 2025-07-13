@@ -2,7 +2,7 @@
 title: "バンコク観光の最強コスパ！チャオプラヤエクスプレス徹底活用ガイド【2025年最新版】"
 dates: ["2025-06-12"]
 excerpt: "バンコク観光の移動はチャオプラヤエクスプレスが最強！渋滞知らずでワットアルンや王宮へ。2025年最新の料金、簡単な乗り方、路線図、主要観光地へのアクセスを徹底解説。オレンジ旗の格安ボートから快適なツーリストボートまで、この完全ガイドで乗りこなし術をマスター。"
-image: "/images/Thai/chao-phraya-express-1.jpg"
+image: "/images/Thai/interior-of-chao-phraya-express.jpg"
 location: "タイ-バンコク"
 category: '海外旅行, 交通情報'
 author: 'ともきち'

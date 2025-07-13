@@ -9,7 +9,7 @@ const homeImages = [
     "/images/India/tajmahal.jpg",
     "/images/France/eiffel-tower-and-sunset.jpg",
     "/images/Spain/toledo-view.jpg",
-    "/images/Thai/wat-arun-4.jpg",
+    "/images/Thai/emotional-wat-arun.jpg",
     "/images/France/louvre-museum1.jpg",
     "/images/Spain/sagrada-familia.jpg",
 ];
