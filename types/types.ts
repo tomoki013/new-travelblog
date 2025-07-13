@@ -30,3 +30,31 @@ export interface Author {
     description: string;
     image: string;
 }
+
+// 旅費精算プロジェクト用の型定義
+export interface Member {
+    id: string;
+    name: string;
+}
+
+export interface Payment {
+    id: string;
+    amount: number;
+    description: string;
+    paidBy: string; // member.id
+    paidFor: string[]; // member.id[]
+}
+
+export interface ExpenseProject {
+    id: string;
+    name: string;
+    createdAt: string;
+    members: Member[];
+    payments: Payment[];
+}
+
+export interface CalculationResult {
+    from: string;
+    to: string;
+    amount: number;
+}
