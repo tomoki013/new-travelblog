@@ -1,6 +1,5 @@
 "use client";
 
-import { Suspense } from 'react';
 import { useSearchParams } from 'next/navigation';
 import * as Elements from '@/app/components/elements/index';
 import * as Sections from '@/app/components/sections/index';
@@ -17,18 +16,7 @@ const getCategoryDisplayName = (categoryValue: string) => {
            categoryValue === 'itinerary' ? '旅程＆費用レポート' : 'その他';
 };
 
-const SearchPageContent = ({
-    allPosts,
-}: SearchPageContentProps
-) => {
-    return (
-        <Suspense>
-            <SearchPageContentInner allPosts={allPosts} />
-        </Suspense>
-    );
-};
-
-const SearchPageContentInner = ({ allPosts }: SearchPageContentProps) => {
+const SearchPageContent = ({ allPosts }: SearchPageContentProps) => {
     const searchParams = useSearchParams();
     const keyword = searchParams.get('keyword') || undefined;
     const category = searchParams.get('category') || undefined;
