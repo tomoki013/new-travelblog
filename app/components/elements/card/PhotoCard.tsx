@@ -16,7 +16,7 @@ interface PhotoCardProps {
     onClick: () => void;
 }
 
-export const PhotoCard = ({ photo, onClick }: PhotoCardProps) => {
+const PhotoCard = ({ photo, onClick }: PhotoCardProps) => {
     return (
         <div
             className="group relative cursor-pointer overflow-hidden rounded-lg"
@@ -44,3 +44,5 @@ export const PhotoCard = ({ photo, onClick }: PhotoCardProps) => {
         </div>
     );
 };
+
+export default PhotoCard;

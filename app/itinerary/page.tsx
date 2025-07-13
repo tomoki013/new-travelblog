@@ -2,7 +2,6 @@ import * as Elements from '@/app/components/elements/index';
 import * as Sections from '@/app/components/sections/index';
 import { Metadata } from 'next';
 import getAllPosts from '@/lib/markdown';
-import ItineraryListForPopup from './ItineraryListForPopup';
 
 export const metadata: Metadata = {
     title: '旅程＆費用レポート–日本各地の観光・グルメ・宿泊・交通情報',
@@ -36,7 +35,7 @@ const ItineraryPage = () => {
                 dialogTitle="旅の概要"
                 dialogDescription="左右の矢印で他の旅程に切り替えられます。"
             >
-                <ItineraryListForPopup />
+                <Elements.ListForPopup items={itineraryPosts} />
             </Elements.Popup>
 
             <Sections.Posts
