@@ -9,7 +9,7 @@ const ItineraryLink = () => {
             {/* 背景画像 */}
             <div
                 className="absolute inset-0 bg-cover bg-center transition-transform duration-300 group-hover:scale-101 z-10"
-                style={{ backgroundImage: "url('/images/Thai/wat-arun-4.jpg')" }}
+                style={{ backgroundImage: "url('/images/Thai/emotional-wat-arun.jpg')" }}
             ></div>
 
             {/* テキスト */}
