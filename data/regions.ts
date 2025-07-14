@@ -82,9 +82,9 @@ export const regions: regionProps[] = [
     {
         city: 'デリー',
         images: [
-            '/images/India/indian-gate-1.jpg',
+            '/images/India/indian-gate-at-noon.jpg',
             '/images/India/lotus-temple.jpg',
-            '/images/India/indian-gate-2.jpg',
+            '/images/India/indian-gate-at-night.jpg',
         ],
         country: 'インド',
         title: 'デリー–インドの歴史と文化が息づく首都',
@@ -103,9 +103,9 @@ export const regions: regionProps[] = [
     {
         city: 'ジャイプル',
         images: [
-            '/images/India/pink-city-1.jpg',
-            '/images/India/amber-palace-1.jpg',
-            '/images/India/train-view-1.jpg',
+            '/images/India/hawa-mahal.jpg',
+            '/images/India/amber-palace1.jpg',
+            '/images/India/train-view1.jpg',
         ],
         country: 'インド',
         title: 'ジャイプール–ピンクシティの魅力と観光情報',
@@ -114,10 +114,10 @@ export const regions: regionProps[] = [
     {
         city: 'バラナシ',
         images: [
-            '/images/India/festival-2.jpg',
-            '/images/India/ganga-2.jpg',
-            '/images/India/varanasi-alley-1.jpg',
-            '/images/India/lassi-1.jpg',
+            '/images/India/festival-of-ganga2.jpg',
+            '/images/India/ganga.jpg',
+            '/images/India/varanasi-alley1.jpg',
+            '/images/India/lassi.jpg',
         ],
         country: 'インド',
         title: 'バラナシ–ガンジス川とヒンドゥー教の聖地を巡る旅',
