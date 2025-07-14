@@ -3,34 +3,44 @@
 import { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { regions } from "../../../../data/regions";
+import { regions } from "@/data/regions";
 
-const FeaturedRegions = () => {
+interface FeaturedRegionsProps {
+    city?: string;
+}
+
+const FeaturedRegions = ({ city }: FeaturedRegionsProps) => {
     const [currentIndex, setCurrentIndex] = useState(0);
     const itemsPerPage = 6;
 
+    const filteredRegions = city ? regions.filter(region => region.city.includes(city)) : regions;
+
     const handlePrev = () => {
-        setCurrentIndex((prevIndex) => 
-            prevIndex === 0 ? Math.ceil(regions.length / itemsPerPage) - 1 : prevIndex - 1
+        setCurrentIndex((prevIndex) =>
+            prevIndex === 0 ? Math.ceil(filteredRegions.length / itemsPerPage) - 1 : prevIndex - 1
         );
     };
 
     const handleNext = () => {
-        setCurrentIndex((prevIndex) => 
-            prevIndex === Math.ceil(regions.length / itemsPerPage) - 1 ? 0 : prevIndex + 1
+        setCurrentIndex((prevIndex) =>
+            prevIndex === Math.ceil(filteredRegions.length / itemsPerPage) - 1 ? 0 : prevIndex + 1
         );
     };
 
-    const visibleRegions = regions.slice(
+    const visibleRegions = filteredRegions.slice(
         currentIndex * itemsPerPage,
         currentIndex * itemsPerPage + itemsPerPage
     );
 
+    if (filteredRegions.length === 0) {
+        return null;
+    }
+
     return (
         <section className="my-16">
-            <h2 className="mb-6 text-2xl font-bold">人気の観光地</h2>
+            <h2 className="mb-6 text-2xl font-bold">{city ? `「${city}」の観光情報をもっと見る` : "人気の観光地"}</h2>
             <div className="relative mx-11">
-                {currentIndex > 0 && (
+                {currentIndex > 0 && filteredRegions.length > itemsPerPage && (
                     <button
                         onClick={handlePrev}
                         className="absolute -left-11 top-1/2 -translate-y-1/2 bg-black/50 text-white p-2 rounded-full z-10 h-10 w-10 hover:bg-black/70 transition-colors dark:bg-white/50 dark:text-bg-black dark:hover:bg-white/70 duration-300"
@@ -57,7 +67,7 @@ const FeaturedRegions = () => {
                         </Link>
                     ))}
                 </div>
-                {currentIndex < Math.ceil(regions.length / itemsPerPage) - 1 && (
+                {currentIndex < Math.ceil(filteredRegions.length / itemsPerPage) - 1 && (
                     <button
                         onClick={handleNext}
                         className="absolute -right-11 top-1/2 -translate-y-1/2 bg-black/50 text-white p-2 rounded-full z-10 h-10 w-10 hover:bg-black/70 transition-colors dark:bg-white/50 dark:text-bg-black dark:hover:bg-white/70 duration-300"

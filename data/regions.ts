@@ -1,10 +1,4 @@
-export interface regionProps {
-    city: string;
-    images: string[];
-    country: string;
-    title: string;
-    description: string;
-}
+import { regionProps } from '@/types/types';
 
 export const regions: regionProps[] = [
     {
