@@ -58,3 +58,12 @@ export interface CalculationResult {
     to: string;
     amount: number;
 }
+
+// 地域別ページ用の地域の型
+export interface regionProps {
+    city: string;
+    images: string[];
+    country: string;
+    title: string;
+    description: string;
+}

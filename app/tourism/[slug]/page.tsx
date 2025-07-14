@@ -79,6 +79,15 @@ const TourismPostPage = async (props: { params: Promise<{ slug: string }>}) => {
         // 各記事のスコアを計算し、降順でソート
         .sort((a, b) => getRelevanceScore(b, post) - getRelevanceScore(a, post));
 
+    // post.locationから都市名の配列を生成
+    const cities = post.location
+        .flatMap(locationString => locationString.split(','))
+        .map(part => {
+            const trimmedPart = part.trim();
+            return trimmedPart.includes('-') ? trimmedPart.split('-')[1] : trimmedPart;
+        })
+        .filter((value, index, self) => self.indexOf(value) === index); // 重複を削除
+
     return (
         <div className="container py-12">
             <Elements.ListLink href="/tourism">
@@ -92,8 +101,19 @@ const TourismPostPage = async (props: { params: Promise<{ slug: string }>}) => {
                     <Server.Article
                         post={post}
                     />
+
                     <Elements.ItineraryLink />
                     <Elements.SearchHeroSection />
+
+                    {/* 関連する各地域の情報へのリンク */}
+                    {cities.length > 0 && (
+                        <div className="mt-12 space-y-8">
+                            {cities.map(city => (
+                                <Sections.FeaturedRegions key={city} city={city} />
+                            ))}
+                        </div>
+                    )}
+                    
                 </div>
                 <div>
                     <div className="sticky top-24 space-y-8">
