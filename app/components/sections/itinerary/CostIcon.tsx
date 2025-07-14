@@ -1,9 +1,10 @@
-import { Plane, Hotel, Utensils, Landmark, ShoppingCart, CircleDollarSign } from "lucide-react";
+import { Plane, Hotel, Utensils, Landmark, ShoppingCart, CircleDollarSign, Train } from "lucide-react";
 
 // 費用カテゴリに対応するアイコン
 const CostIcon = ({ category }: { category: string }) => {
     switch (category.toLowerCase()) {
         case 'flight': return <Plane className="h-5 w-5 mr-2 text-primary" />;
+        case 'train': return <Train className="h-5 w-5 mr-2 text-primary" />;
         case 'hotel': return <Hotel className="h-5 w-5 mr-2 text-primary" />;
         case 'transport': return <Plane className="h-5 w-5 mr-2 text-primary" />;
         case 'food': return <Utensils className="h-5 w-5 mr-2 text-primary" />;

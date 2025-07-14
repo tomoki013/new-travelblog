@@ -10,6 +10,7 @@ tags: ["海外"]
 budget: 110613
 costs:
     flight: 85140
+    train: 0
     hotel: 10324
     transport: 2087
     sightseeing: 5075

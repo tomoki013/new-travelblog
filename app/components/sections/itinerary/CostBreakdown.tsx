@@ -6,6 +6,7 @@ const CostBreakdown = ({ costs }: { costs: { [key: string]: number } }) => {
     const totalCost = Object.values(costs).reduce((acc, val) => acc + val, 0);
     const costLabels: { [key: string]: string } = {
         flight: "飛行機代",
+        train: "高速列車代",
         hotel: "ホテル代",
         transport: "現地交通費",
         sightseeing: "観光費",
