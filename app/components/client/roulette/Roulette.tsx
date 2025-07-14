@@ -6,8 +6,8 @@ import { motion, AnimatePresence } from "framer-motion"
 import { Compass } from "lucide-react"
 import Image from "next/image"
 import { useRef, useState } from "react"
-import { regions, regionProps } from "@/data/regions";
-import { Post } from "@/types/types";
+import { regions } from "@/data/regions";
+import { Post, regionProps } from "@/types/types";
 import * as Sections from "@/app/components/sections/index";
 
 interface RouletteProps {
