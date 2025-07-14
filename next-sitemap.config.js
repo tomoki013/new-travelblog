@@ -1,6 +1,7 @@
 import fs from 'fs';
 import path from 'path';
 import matter from 'gray-matter';
+import vm from 'vm';
 
 // lib/markdown.ts のロジックをこのファイル内に再現
 const postsDirectory = path.join(process.cwd(), 'posts');
