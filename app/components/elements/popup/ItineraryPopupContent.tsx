@@ -3,6 +3,8 @@ import { Badge } from "@/components/ui/badge";
 import { CalendarDays, MapPin, CircleDollarSign } from "lucide-react";
 import CostBreakdown from "../../sections/itinerary/CostBreakdown";
 import { Post } from "@/types/types";
+import { Button } from "@/components/ui/button";
+import Link from "next/link";
 
 type CostBreakdownType = { [key: string]: number };
 type SummaryType = string | undefined;
@@ -43,6 +45,9 @@ const ItineraryPopupContent = ({ post }: SidebarProps) => (
             </CardContent>
         </Card>
         {post.costs && <CostBreakdown costs={post.costs} />}
+        <Button asChild className="w-full">
+            <Link href={`/${post.type}/${post.slug}`}>この記事を見る</Link>
+        </Button>
     </div>
 );
 

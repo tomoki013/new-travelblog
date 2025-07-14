@@ -45,53 +45,51 @@ function getAllPostTypes() {
     return allPosts;
 }
 
-// data/regions.ts のデータを直接読み込み
 let regions = [];
+
 try {
     // --- 1. ファイルの読み込み ---
     // 処理の対象となるファイルのパスを解決します。
     const regionsDataPath = path.join(process.cwd(), './data/regions.ts');
     const regionsFileContent = fs.readFileSync(regionsDataPath, 'utf-8');
 
-    // --- 2. 配列リテラルの部分を文字列として抽出 ---
-    // ファイル内容から配列の開始 `[` と終了 `]` を探し、その間の文字列を抽出します。
-    // この方法は、ファイル内に配列が1つだけ定義されていることを前提としています。
-    const arrayStartIndex = regionsFileContent.indexOf('[');
-    const arrayEndIndex = regionsFileContent.lastIndexOf(']') + 1;
+    // --- 2. TypeScriptコードの前処理 ---
+    // vmで実行するために、TypeScript特有の構文（import/export/型定義）を削除します。
+    // これにより、プレーンなJavaScriptとして解釈できるようになります。
 
-    // 配列が見つからない場合はエラーをスローします。
-    if (arrayStartIndex === -1 || arrayEndIndex === 0) {
-        throw new Error("ファイル内に配列 '[]' が見つかりませんでした。");
-    }
+    // import文を削除 (例: import ... from '...')
+    // `m`フラグは複数行モードを有効にし、`^`が各行の先頭にマッチするようにします。
+    let scriptContent = regionsFileContent.replace(/^import .*$/gm, '');
+    
+    // exportキーワードを削除
+    scriptContent = scriptContent.replace(/export /g, '');
+    
+    // 型定義を削除 (例: `: regionProps[]`)
+    // 変数名と'='の間にある': 型'の部分を正規表現で削除します。
+    // `.*?`は非貪欲マッチ、`(?=\s*=)`は肯定的先読みで、`=`の直前までをマッチ対象とします。
+    scriptContent = scriptContent.replace(/:.*?(?=\s*=)/g, '');
 
-    const arrayLiteralString = regionsFileContent.substring(arrayStartIndex, arrayEndIndex);
 
     // --- 3. vmモジュールを使用して安全にJavaScriptとして評価 ---
-    // vmモジュールは、現在のスコープから隔離された安全なサンドボックス環境を提供します。
-    // これにより、eval()のようなセキュリティリスクを避けつつ、動的にコードを実行できます。
-
-    // 実行するスクリプトを作成します。
-    // サンドボックス内の `data` という変数に、抽出した配列リテラルを代入します。
-    const script = new vm.Script(`data = ${arrayLiteralString}`);
-
-    // スクリプトを実行するためのコンテキスト（サンドボックス環境）を作成します。
-    const context = { data: null };
-    vm.createContext(context);
-
-    // 作成したコンテキスト内でスクリプトを実行します。
-    script.runInContext(context);
+    // vm.runInContextは、提供されたコンテキスト（サンドボックス）内でJavaScriptコードを実行します。
+    // これにより、ファイル内で定義された変数がコンテキストオブジェクトのプロパティになります。
+    const context = {};
+    vm.createContext(context); // 空のサンドボックスコンテキストを作成
+    vm.runInContext(scriptContent, context);
 
     // --- 4. 結果の取得 ---
-    // スクリプトの実行後、コンテキスト内の `data` 変数に格納された配列を取得します。
-    // これで、文字列操作ではなく、JavaScriptエンジンによって正しく解釈されたオブジェクトが得られます。
-    regions = context.data;
-
-    console.log("正常にregions.tsをパースしました:", regions);
-    // 例: regions[0].name のようにプロパティにアクセスできます。
+    // スクリプトの実行後、コンテキスト内にはファイルで定義された`regions`変数が格納されています。
+    // これを直接取得します。
+    if (context.regions) {
+        regions = context.regions;
+        console.log("正常にregions.tsをパースしました:", regions);
+    } else {
+        throw new Error("ファイル内に 'regions' という名前の配列が見つかりませんでした。");
+    }
 
 } catch (e) {
     // エラーハンドリング
-    console.error("regions.tsのパースに失敗しました。ファイルが有効な配列を含んでいるか確認してください。", e);
+    console.error("regions.tsのパースに失敗しました。", e);
 }
 
 
