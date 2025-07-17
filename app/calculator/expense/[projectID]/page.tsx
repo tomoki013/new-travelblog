@@ -10,7 +10,8 @@ export const metadata: Metadata = {
     }
 }
 
-const ExpensePage = async ({ params }: { params: { projectID: string } }) => {
+const ExpensePage = async (props: { params: Promise<{ projectID: string }>}) => {
+    const params = await props.params;
     // URLデコードを行う
     const decodedProjectID = await decodeURIComponent(params.projectID);
 
