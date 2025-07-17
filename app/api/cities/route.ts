@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server';
-import citiesData from '../../../public/data/cities/cities.json';
+import citiesData from '@/public/data/cities/cities.json';
 import fs from 'fs';
 import path from 'path';
 
