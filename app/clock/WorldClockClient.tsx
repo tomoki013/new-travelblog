@@ -8,13 +8,7 @@ import * as Elements from '@/app/components/elements/index';
 import { Input } from "@/components/ui/input";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-
-interface City {
-    name: string;
-    country: string;
-    timeZone: string;
-    region: string;
-}
+import { City } from '@/types/types';
 
 const getTimeZoneOffset = (timeZone: string): number => {
     try {

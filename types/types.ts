@@ -67,3 +67,11 @@ export interface regionProps {
     title: string;
     description: string;
 }
+
+// 世界の都市の型
+export interface City {
+    name: string;
+    country: string;
+    timeZone: string;
+    region: string;
+}

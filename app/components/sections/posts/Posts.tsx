@@ -28,7 +28,7 @@ interface PostsProps {
     tabsGridColsClass?: string;
     postsGridColsClass?: string;
 
-    // ページ固有の事前フィルタリング用 (例: /tourism/region/[city] の場合)
+    // ページ固有の事前フィルタリング用
     specificFilterType?: 'region' | 'author';
     specificFilterValue?: string;
 

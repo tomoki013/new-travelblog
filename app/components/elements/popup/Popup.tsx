@@ -1,8 +1,8 @@
 'use client';
 
 import { Dialog, DialogContent, DialogTitle, DialogDescription } from "@/components/ui/dialog";
-import { useState, ReactNode }
-from "react";
+// useEffectをインポート
+import { useState, ReactNode, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardHeader } from "@/components/ui/card";
 import { ChevronRight, FileText, Image as ImageIcon } from "lucide-react";
@@ -38,12 +38,20 @@ const Popup = ({
     iconType = 'file',
     modalState  = false,
     onClose,
-}: PopupProps) => {
-    // モーダルの開閉状態だけを管理
+}: PopupProps
+) => {
+    // モーダルの開閉状態を管理
     const [open, setOpen] = useState(modalState);
+
+    // `modalState` propの変更を監視し、内部の`open` stateに同期させる
+    // これにより、親コンポーネントからモーダルの開閉を制御できる
+    useEffect(() => {
+        setOpen(modalState);
+    }, [modalState]);
 
     const handleOpenChange = (isOpen: boolean) => {
         setOpen(isOpen);
+        // モーダルが閉じられたとき、かつonCloseがpropとして渡されている場合に実行
         if (!isOpen && onClose) {
             onClose();
         }
@@ -58,7 +66,7 @@ const Popup = ({
             {buttonType === 'section' && (
                 <Card
                     className="mb-8 w-full cursor-pointer hover:shadow-lg transition-shadow bg-secondary/50"
-                    onClick={() => setOpen(true)}
+                    onClick={() => handleOpenChange(true)} // handleOpenChangeを呼ぶように変更
                 >
                     <CardHeader>
                         <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
@@ -87,7 +95,7 @@ const Popup = ({
                         <p>概要はここをクリック！</p>
                     </div>
                     <Button
-                        onClick={() => setOpen(true)}
+                        onClick={() => handleOpenChange(true)} // handleOpenChangeを呼ぶように変更
                         className="rounded-full shadow-lg h-16 w-auto px-6 flex items-center justify-center gap-2 text-base cursor-pointer"
                         aria-label={triggerTitle}
                     >
