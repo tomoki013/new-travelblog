@@ -35,7 +35,7 @@ const Home = () => {
                     {section.props ? (
                         <section.Component {...section.props} />
                     ) : section.Component === Elements.SearchHeroSection ? (
-                        <Suspense fallback={<div>Loading...</div>}>
+                        <Suspense fallback={<Elements.LoadingAnimation />}>
                             <section.Component />
                         </Suspense>
                     ) : (
