@@ -4,7 +4,6 @@ import { useState, useMemo } from "react";
 import Image from "next/image";
 import { Post } from "@/types/types";
 import PostCard from "@/components/elements/PostCard";
-import Link from "next/link";
 import { CustomSelect } from "@/components/elements/CustomSelect";
 import { featuredSeries } from "@/data/series";
 import { POSTS_PER_PAGE } from "@/constants/constants";
@@ -154,7 +153,7 @@ const BlogClient = ({ allPosts }: BlogClientProps) => {
         </section>
 
         {/* ==================== Article List ==================== */}
-        <section className="space-y-16">
+        <section className="flex flex-col gap-16 md:gap-20 mb-12">
           {paginatedPosts.map((post, index) => (
             <PostCard
               key={post.slug}

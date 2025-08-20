@@ -1,5 +1,5 @@
 import { getAllPostTypes } from "@/lib/markdown";
-import PostItem from "@/components/elements/PostItem";
+import PostCard from "@/components/elements/PostCard";
 
 const PopularPosts = () => {
   const posts = getAllPostTypes();
@@ -17,10 +17,11 @@ const PopularPosts = () => {
       {/* 記事一覧 */}
       <div className="flex flex-col gap-16 md:gap-20">
         {posts.slice(0, 2).map((post, index) => (
-          <PostItem
+          <PostCard
             key={post.slug}
             post={post}
             isReversed={index % 2 !== 0} // 偶数番目と奇数番目でレイアウトを反転
+            showMetadata={false} // メタデータを表示
           />
         ))}
       </div>
