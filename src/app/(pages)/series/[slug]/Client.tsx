@@ -1,12 +1,11 @@
 "use client";
 
-import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { Post, Series } from "@/types/types";
-import { Badge } from "@/components/ui/badge";
 import PostCard from "@/components/elements/PostCard";
+import HeroSection from "@/components/sections/HeroSection";
 
 interface SeriesPageProps {
   allPosts: Post[];
@@ -76,26 +75,14 @@ const Client = ({ allPosts, series }: SeriesPageProps) => {
   };
 
   return (
-    <main>
+    <div>
       {/* ==================== Hero Section ==================== */}
-      <section className="relative h-72 md:h-96 flex items-center justify-center text-white text-center">
-        <Image
-          src={series.imageUrl}
-          alt={series.title}
-          layout="fill"
-          objectFit="cover"
-          className="brightness-50"
-          priority
-        />
-        <div className="relative z-10 p-4">
-          <h1 className="text-3xl md:text-5xl font-bold tracking-tight">
-            SERIES: {series.title}
-          </h1>
-          <p className="text-md md:text-lg mt-4 max-w-2xl">
-            {series.description}
-          </p>
-        </div>
-      </section>
+      <HeroSection
+        src={series.imageUrl}
+        alt={series.title}
+        pageTitle={`SERIES: ${series.title}`}
+        pageMessage={series.description}
+      />
 
       <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
         {/* ==================== Article List ==================== */}
@@ -162,7 +149,7 @@ const Client = ({ allPosts, series }: SeriesPageProps) => {
           </Link>
         </section>
       </div>
-    </main>
+    </div>
   );
 };
 

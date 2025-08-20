@@ -12,8 +12,9 @@ const eachSeries = async (props: {
   if (!series) return <div>シリーズが見つかりませんでした。</div>;
 
   const allSeriesPosts = await getAllPosts("series");
+  const allPosts = allSeriesPosts.filter((post) => post.series === slug);
 
-  return <Client allPosts={allSeriesPosts} series={series} />;
+  return <Client allPosts={allPosts} series={series} />;
 };
 
 export default eachSeries;

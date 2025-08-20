@@ -1,6 +1,6 @@
 import Image from "next/image";
 
-const HeroSection = () => {
+const Hero = () => {
   return (
     <section className="relative h-[85vh] flex items-center justify-center text-center text-white">
       <Image
@@ -24,4 +24,4 @@ const HeroSection = () => {
   );
 };
 
-export default HeroSection;
+export default Hero;

@@ -1,8 +1,8 @@
 import Link from "next/link";
-import Image from "next/image";
 import { Metadata } from "next";
 import { Post } from "@/types/types";
 import { getAllPostTypes } from "@/lib/markdown";
+import HeroSection from "@/components/sections/HeroSection";
 
 export const metadata: Metadata = {
   title: "サイトマップ",
@@ -50,21 +50,13 @@ export default async function SitemapPage() {
   return (
     <div>
       {/* ==================== Hero Section ==================== */}
-      <section className="relative h-64 md:h-80 flex items-center justify-center text-white/90">
-        <Image
-          src="/images/Egypt/the-three-great-pyramids-of-giza-with-sunset.jpg"
-          alt="Sitemap Hero Image"
-          layout="fill"
-          objectFit="cover"
-          className="brightness-50"
-        />
-        <div className="relative z-10 text-center">
-          <h1 className="text-4xl md:text-6xl font-bold tracking-tight">
-            SITEMAP
-          </h1>
-          <p className="text-lg md:text-xl mt-2">サイトの全コンテンツ一覧</p>
-        </div>
-      </section>
+      <HeroSection
+        src="/images/Egypt/the-three-great-pyramids-of-giza-with-sunset.jpg"
+        alt="Sitemap Hero Image"
+        pageTitle="SITEMAP"
+        pageMessage="サイトの全コンテンツ一覧"
+        textColor="text-foreground"
+      />
 
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-8 gap-y-12">
