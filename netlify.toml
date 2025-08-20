@@ -1,3 +1,69 @@
 [build]
   command = "npm run build"
   publish = ".next"
+
+[[redirects]]
+  from = "/diary/*"
+  to = "/posts/:splat"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/tourism/*"
+  to = "/posts/:splat"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/itinerary/*"
+  to = "/posts/:splat"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/calculator/*"
+  to = "/"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/clock"
+  to = "/"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/personal"
+  to = "/"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/roulette"
+  to = "/"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/search"
+  to = "/"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/diary"
+  to = "/posts"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/tourism"
+  to = "/posts"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/itinerary"
+  to = "/posts"
+  status = 301
+  force = true
