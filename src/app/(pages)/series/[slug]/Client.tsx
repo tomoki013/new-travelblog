@@ -2,12 +2,11 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { motion } from "framer-motion";
-import { Calendar, MapPin } from "lucide-react";
 import { useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { Post, Series } from "@/types/types";
 import { Badge } from "@/components/ui/badge";
+import PostCard from "@/components/elements/PostCard";
 
 interface SeriesPageProps {
   allPosts: Post[];
@@ -101,82 +100,14 @@ const Client = ({ allPosts, series }: SeriesPageProps) => {
       <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
         {/* ==================== Article List ==================== */}
         <section className="space-y-16">
-          {paginatedPosts.map((post, index) => {
-            const motionProps =
-              index === 0
-                ? {
-                    initial: { opacity: 0, y: 50 },
-                    animate: { opacity: 1, y: 0 },
-                    transition: { duration: 0.8 },
-                  }
-                : {
-                    initial: { opacity: 0, y: 50 },
-                    whileInView: { opacity: 1, y: 0 },
-                    viewport: { once: true, amount: 0.3 },
-                    transition: { duration: 0.8 },
-                  };
-            return (
-              <motion.article
-                key={post.id}
-                {...motionProps}
-                className={`flex flex-col md:flex-row items-center gap-8 ${
-                  index % 2 !== 0 ? "md:flex-row-reverse" : ""
-                }`}
-              >
-                {/* 画像エリア: position-relative を追加 */}
-                <div className="w-full md:w-1/2 relative">
-                  <Image
-                    src={post.image}
-                    alt={post.title}
-                    width={800}
-                    height={600}
-                    className="rounded-lg shadow-lg object-cover w-full aspect-[4/3]"
-                  />
-                  {/* 画像の上に表示する情報 */}
-                  <div className="absolute bottom-0 left-0 p-4 w-full bg-gradient-to-t from-black/60 to-transparent rounded-b-lg">
-                    {post.series && (
-                      <Badge variant="secondary">{series.title}</Badge>
-                    )}
-                    <div className="my-1">
-                      <Badge variant="secondary">
-                        {post.category.map((c) => (
-                          <span key={c} className="mr-1">
-                            {c}
-                          </span>
-                        ))}
-                      </Badge>
-                    </div>
-                    <div className="text-white text-sm mt-1 flex items-center">
-                      <Calendar className="inline mr-1.5" size={16} />
-                      {post.dates.join("～")}
-                    </div>
-                  </div>
-                </div>
-
-                {/* テキストエリア: メタ情報がなくなりスッキリ */}
-                <div className="w-full md:w-1/2">
-                  {/* 場所などの補足情報はタイトル下にあっても良い */}
-                  <div className="text-sm text-muted-foreground mb-2 flex items-center">
-                    <MapPin className="inline mr-1.5" size={16} />
-                    {post.location.join(", ")}
-                  </div>
-
-                  <h2 className="text-2xl font-bold mb-3 text-foreground">
-                    {post.title}
-                  </h2>
-                  <p className="text-foreground leading-relaxed mb-4">
-                    {post.excerpt}
-                  </p>
-                  <Link
-                    href={`/posts/${post.slug}`}
-                    className="font-semibold text-teal-600 hover:text-teal-700"
-                  >
-                    続きを読む →
-                  </Link>
-                </div>
-              </motion.article>
-            );
-          })}
+          {paginatedPosts.map((post, index) => (
+            <PostCard
+              key={post.slug}
+              post={post}
+              isReversed={index % 2 !== 0}
+              showMetadata={true}
+            />
+          ))}
         </section>
 
         {/* ==================== Pagination ==================== */}
