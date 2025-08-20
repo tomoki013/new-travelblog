@@ -1,5 +1,6 @@
 import { getAllPostTypes } from "@/lib/markdown";
 import BlogClient from "./Client";
+import { Suspense } from "react";
 // getAllPostTypes()が返す記事の型を定義しておくと便利です
 import { Post } from "@/types/types"; // 仮の型定義パス
 import { Metadata } from "next";
@@ -15,7 +16,11 @@ const PostsPage = () => {
   const allPosts: Post[] = getAllPostTypes();
 
   // 2. クライアントコンポーネントにプロップとして渡す
-  return <BlogClient allPosts={allPosts} />;
+  return (
+    <Suspense fallback={<div>Loading...</div>}>
+      <BlogClient allPosts={allPosts} />
+    </Suspense>
+  );
 };
 
 export default PostsPage;
