@@ -4,7 +4,7 @@ const HeroSection = () => {
   return (
     <section className="relative h-[85vh] flex items-center justify-center text-center text-white">
       <Image
-        src={`https://images.unsplash.com/photo-1500835556837-99ac94a94552?auto=format&fit=crop&w=1920&q=80`}
+        src={`/images/Turkey/balloons-in-cappadocia.jpg`}
         alt="Man looking at a globe"
         fill
         className="object-cover -z-10"
