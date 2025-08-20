@@ -13,6 +13,7 @@ import {
   type LucideProps, // 型としてインポート
 } from "lucide-react";
 import { featuredSeries } from "@/data/series";
+import HeroSection from "@/components/sections/HeroSection";
 
 // 1. アイコン名とコンポーネントを紐付けるマップを作成
 const iconMap: { [key: string]: React.FC<LucideProps> } = {
@@ -27,21 +28,12 @@ const Client = () => {
   return (
     <div>
       {/* ==================== Hero Section ==================== */}
-      <section className="relative h-64 md:h-80 flex items-center justify-center text-foreground">
-        <Image
-          src="/images/Greece/oia-castle-sunset-view.jpg"
-          alt="Series Hero Image"
-          layout="fill"
-          objectFit="cover"
-          className="brightness-50"
-        />
-        <div className="relative z-10 text-center text-white/80">
-          <h1 className="text-4xl md:text-6xl font-bold tracking-tight">
-            SERIES
-          </h1>
-          <p className="text-lg md:text-xl mt-2">テーマで旅を深掘りする</p>
-        </div>
-      </section>
+      <HeroSection
+        src="/images/Greece/oia-castle-sunset-view.jpg"
+        alt="Series Hero Image"
+        pageTitle="SERIES"
+        pageMessage="テーマで旅を深掘りする"
+      />
 
       {/* ==================== Series List ==================== */}
       <section className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-16">

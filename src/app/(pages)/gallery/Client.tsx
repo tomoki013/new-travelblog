@@ -8,6 +8,7 @@ import { Photo, Post } from "@/types/types";
 import { gallery } from "@/data/gallery";
 import { v4 as uuidv4 } from "uuid";
 import Link from "next/link";
+import HeroSection from "@/components/sections/HeroSection";
 
 // 7分類フィルター
 const filterList = [
@@ -118,21 +119,13 @@ const Client = ({ posts }: ClientProps) => {
   return (
     <div className="min-h-screen">
       {/* ==================== Hero Section ==================== */}
-      <div className="relative h-64 md:h-80 flex items-center justify-center text-foreground">
-        <Image
-          src="/images/Turkey/balloons-in-cappadocia.jpg"
-          alt="Gallery Hero Image"
-          layout="fill"
-          objectFit="cover"
-          className="brightness-50"
-        />
-        <div className="relative z-10 text-center">
-          <h1 className="text-4xl md:text-6xl font-bold tracking-tight">
-            GALLERY
-          </h1>
-          <p className="text-lg md:text-xl mt-2">A Glimpse of My Journey</p>
-        </div>
-      </div>
+      <HeroSection
+        src="/images/Turkey/balloons-in-cappadocia.jpg"
+        alt="Gallery Hero Image"
+        pageTitle="Gallery"
+        pageMessage="A Glimpse of My Journey"
+        textColor="text-foreground"
+      />
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         {/* ==================== Filters ==================== */}

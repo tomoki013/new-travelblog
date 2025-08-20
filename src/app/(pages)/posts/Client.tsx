@@ -1,13 +1,13 @@
 "use client";
 
 import { useState, useMemo } from "react";
-import Image from "next/image";
 import { Post } from "@/types/types";
 import PostCard from "@/components/elements/PostCard";
 import { CustomSelect } from "@/components/elements/CustomSelect";
 import { featuredSeries } from "@/data/series";
 import { POSTS_PER_PAGE } from "@/constants/constants";
 import { useSearchParams, useRouter } from "next/navigation";
+import HeroSection from "@/components/sections/HeroSection";
 
 // Propsの型を定義
 interface BlogClientProps {
@@ -118,22 +118,12 @@ const BlogClient = ({ allPosts }: BlogClientProps) => {
   return (
     <div>
       {/* ==================== Hero Section ==================== */}
-      <section className="relative h-64 md:h-80 flex items-center justify-center text-foreground">
-        <Image
-          src="/images/Spain/toledo-view.jpg"
-          alt="Blog Hero Image"
-          fill // layout="fill" は非推奨なので fill に変更
-          objectFit="cover"
-          className="brightness-50"
-          priority // LCPになる可能性が高い画像にはpriorityを追加
-        />
-        <div className="relative z-10 text-center text-white/80">
-          <h1 className="text-4xl md:text-6xl font-bold tracking-tight">
-            BLOG
-          </h1>
-          <p className="text-lg md:text-xl mt-2">旅の記録を、時系列で</p>
-        </div>
-      </section>
+      <HeroSection
+        src="/images/Spain/toledo-view.jpg"
+        alt="Blog Hero Image"
+        pageTitle="BLOG"
+        pageMessage="旅の記録を、時系列で"
+      />
 
       <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
         {/* ==================== Filters ==================== */}
