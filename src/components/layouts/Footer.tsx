@@ -1,6 +1,6 @@
 import { Mail } from "lucide-react";
 import Link from "next/link";
-import { FaGithub, FaTiktok, FaYoutube } from "react-icons/fa";
+import { FaBlog, FaGithub, FaTiktok, FaYoutube } from "react-icons/fa";
 
 export const contentsList = [
   { name: "シリーズ一覧", pass: "/series" },
@@ -42,7 +42,7 @@ const Footer = () => {
   return (
     <footer className="bg-background text-foreground py-16 px-8">
       <div className="container py-10">
-        <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 md:grid-cols-4">
+        <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 md:grid-cols-5">
           <div className="space-y-3">
             <Link href="/" className="text-lg font-medium">
               ともきちの旅行日記
@@ -64,6 +64,12 @@ const Footer = () => {
                 </Link>
               ))}
             </div>
+            <Link
+              href={`/social`}
+              className="text-sm text-muted-foreground hover:text-secondary"
+            >
+              Follow Me
+            </Link>
           </div>
           <div className="space-y-3">
             <h3 className="text-lg font-medium">コンテンツ</h3>
@@ -106,6 +112,19 @@ const Footer = () => {
             >
               <Mail className="mr-2 h-4 w-4" />
               お問い合わせフォーム
+            </Link>
+          </div>
+          <div className="space-y-3">
+            <h3 className="text-lg font-medium">記事テーマをリクエスト</h3>
+            <p className="text-sm text-muted-foreground">
+              記事テーマを募集しています。興味のあるテーマがあれば、ぜひリクエストしてください。
+            </p>
+            <Link
+              href="/request"
+              className="inline-flex items-center text-sm text-muted-foreground hover:text-secondary"
+            >
+              <FaBlog className="mr-2 h-4 w-4" />
+              記事テーマ募集フォーム
             </Link>
           </div>
         </div>

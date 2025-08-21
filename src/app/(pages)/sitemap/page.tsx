@@ -93,8 +93,28 @@ export default async function SitemapPage() {
                   </Link>
                 </li>
                 <li>
+                  <Link href="/social" className="hover:text-secondary">
+                    SNSページ
+                  </Link>
+                </li>
+                <li>
+                  <Link href="/request" className="hover:text-secondary">
+                    記事テーマ募集ページ
+                  </Link>
+                </li>
+                <li>
+                  <Link href="/contact" className="hover:text-secondary">
+                    お問い合わせページ
+                  </Link>
+                </li>
+                <li>
                   <Link href="/privacy" className="hover:text-secondary">
                     プライバシーポリシー/免責事項
+                  </Link>
+                </li>
+                <li>
+                  <Link href="/terms" className="hover:text-secondary">
+                    利用規約
                   </Link>
                 </li>
               </ul>
