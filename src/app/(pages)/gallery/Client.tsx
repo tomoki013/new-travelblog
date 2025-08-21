@@ -184,7 +184,7 @@ const Client = ({ posts }: ClientProps) => {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             onClick={() => setSelectedPhoto(null)}
-            className="fixed inset-0 bg-black/80 z-50 flex items-center justify-center p-4"
+            className="fixed inset-0 bg-black/80 z-50 flex items-center justify-center p-4 overflow-y-hidden"
           >
             {/* Photo Counter */}
             <div className="absolute top-4 left-4 z-10">
@@ -199,7 +199,7 @@ const Client = ({ posts }: ClientProps) => {
               animate={{ scale: 1, opacity: 1 }}
               exit={{ scale: 0.9, opacity: 0 }}
               onClick={(e) => e.stopPropagation()}
-              className="relative bg-white text-black rounded-lg w-full max-w-4xl max-h-[80vh] flex flex-col md:flex-row overflow-hidden"
+              className="relative bg-white text-black rounded-lg w-full max-w-4xl max-h-[80vh] flex flex-col md:flex-row overflow-y-auto md:overflow-y-hidden"
             >
               {/* Image Display */}
               <div className="w-full md:w-2/3 h-64 md:h-auto flex items-center justify-center bg-black">

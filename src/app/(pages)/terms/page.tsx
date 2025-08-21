@@ -24,8 +24,8 @@ export const metadata: Metadata = {
 
 const TermsPage = () => {
   return (
-    <div className="container py-12">
-      <div className="mx-auto max-w-3xl">
+    <div className="container py-16">
+      <div className="mx-auto max-w-3xl px-4 sm:px-6 lg:mx-8">
         <h1 className="mb-8 text-4xl font-bold">利用規約</h1>
 
         <div className="prose prose-lg max-w-none dark:prose-invert">
