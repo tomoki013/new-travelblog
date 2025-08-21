@@ -1,4 +1,4 @@
-import { Separator } from "@radix-ui/react-select";
+import { Separator } from "@/components/ui/separator";
 import { Metadata } from "next";
 import Link from "next/link";
 
@@ -84,9 +84,14 @@ const TermsPage = () => {
 
           <Separator className="my-8" />
 
-          <h2 className="text-2xl font-bold">第4条（著作権）</h2>
+          <h2 className="text-2xl font-bold">
+            第4条（著作権およびコンテンツの利用）
+          </h2>
           <p>
-            当サイトに掲載されているコンテンツの著作権は、当サイトまたは正当な権利者に帰属します。ユーザーは、著作権法で認められる私的利用の範囲を超えて、無断で複製、転用、販売などの二次利用を行うことはできません。
+            当サイトに掲載されているコンテンツ（文章、画像、動画等）の著作権は、当サイトまたは正当な権利者に帰属します。ユーザーは、著作権法で認められる私的利用の範囲を超えて、無断で複製、転用、販売などの二次利用を行うことはできません。
+          </p>
+          <p>
+            ただし、当サイトへのリンクは原則として自由です。リンクを行う場合の許可や連絡は不要です。記事の引用は、引用元を明記し、著作権法上の引用の要件を満たす形であれば問題ありません。
           </p>
 
           <Separator className="my-8" />
@@ -104,7 +109,10 @@ const TermsPage = () => {
           <p>
             当サイトは、サービスの品質向上とユーザー体験の改善を目的として、Cookie（クッキー）およびGoogle
             Analyticsなどのアクセス解析ツールを利用しています。これにより、ユーザーのサイト利用状況に関する情報を匿名で収集しますが、個人を特定するものではありません。詳細については、別途定める
-            <Link href="/privacy" className="text-primary underline">
+            <Link
+              href="/privacy"
+              className="text-primary underline hover:text-secondary"
+            >
               プライバシーポリシー
             </Link>
             をご確認ください。
@@ -134,7 +142,7 @@ const TermsPage = () => {
           <Separator className="my-8" />
 
           <p className="text-sm text-muted-foreground">
-            最終更新日：2025年7月8日
+            最終更新日：2025年8月21日
           </p>
         </div>
       </div>

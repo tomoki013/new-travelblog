@@ -10,6 +10,7 @@ import { ThemeProvider } from "@/components/theme-provider";
 import Header from "@/components/layouts/Header";
 import Footer from "@/components/layouts/Footer";
 import Script from "next/script";
+import CookieBanner from "@/components/elements/CookieBanner";
 
 const montserrat = Montserrat({
   subsets: ["latin"],
@@ -129,6 +130,7 @@ export default function RootLayout({
             <main className="flex-1">{children}</main>
             <Footer />
           </div>
+          <CookieBanner />
         </ThemeProvider>
       </body>
     </html>
