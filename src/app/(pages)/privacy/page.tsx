@@ -1,4 +1,4 @@
-import { Separator } from "@radix-ui/react-select";
+import { Separator } from "@/components/ui/separator"; // 推奨されるインポートパス
 import { Metadata } from "next";
 import Link from "next/link";
 
@@ -34,7 +34,7 @@ const PrivacyPage = () => {
 
           <Separator className="my-8" />
 
-          <h2 className="text-2xl font-bold">1.収集する情報</h2>
+          <h2 className="text-2xl font-bold">1. 収集する情報</h2>
           <p>当サイトでは、以下の情報を収集する場合があります：</p>
           <ul className="list-disc pl-6">
             <li>
@@ -50,7 +50,7 @@ const PrivacyPage = () => {
 
           <Separator className="my-8" />
 
-          <h2 className="text-2xl font-bold">2.情報の使用目的</h2>
+          <h2 className="text-2xl font-bold">2. 情報の使用目的</h2>
           <p>収集した情報は、以下の目的で使用されます：</p>
           <ul className="list-disc pl-6">
             <li>お問い合わせ内容への回答および連絡</li>
@@ -61,14 +61,14 @@ const PrivacyPage = () => {
 
           <Separator className="my-8" />
 
-          <h2 className="text-2xl font-bold">3.個人情報の保護</h2>
+          <h2 className="text-2xl font-bold">3. 個人情報の保護</h2>
           <p>
             当サイトは、収集した個人情報の漏洩、紛失、改ざんなどを防ぐため、適切なセキュリティ対策を実施し、厳重に管理いたします。
           </p>
 
           <Separator className="my-8" />
 
-          <h2 className="text-2xl font-bold">4.第三者への提供</h2>
+          <h2 className="text-2xl font-bold">4. 第三者への提供</h2>
           <p>
             当サイトは、以下の場合を除き、収集した個人情報を第三者に提供することはありません：
           </p>
@@ -82,15 +82,16 @@ const PrivacyPage = () => {
 
           <Separator className="my-8" />
 
-          <h2 className="text-2xl font-bold">5.Cookieの使用について</h2>
+          <h2 className="text-2xl font-bold" id="cookie">
+            5. Cookieの使用について
+          </h2>
           <p>
             当サイトでは、ユーザーの利便性向上、およびサイトの利用状況の分析のためにCookie（クッキー）を使用しています。Cookieとは、ユーザーがサイトを訪れた際に、そのユーザーのコンピュータ内に記録される小さなテキストファイルのことです。これにより、次回以降のアクセス時に、より快適にサービスをご利用いただくことが可能になります。
           </p>
           <p>
             ユーザーはご自身のブラウザ設定を変更することにより、Cookieの使用を無効にすることができます。具体的な設定方法については、下記の「Cookieを無効化する方法」の項目をご参照ください。
           </p>
-
-          <h3 id="how-to-disable-cookies">Cookieを無効化する方法</h3>
+          <h3>Cookieを無効化する方法</h3>
           <p>
             主要なブラウザのCookie設定の変更方法については、以下の各社公式サポートページをご確認ください。設定を変更することにより、当サイトおよび他のウェブサイトからのCookieを無効にできますが、一部のウェブサイトが正常に機能しなくなる可能性があります。
           </p>
@@ -139,7 +140,7 @@ const PrivacyPage = () => {
 
           <Separator className="my-8" />
 
-          <h2 className="text-2xl font-bold">6.アクセス解析ツールについて</h2>
+          <h2 className="text-2xl font-bold">6. アクセス解析ツールについて</h2>
           <p>
             当サイトでは、サービスの向上を目的として、Google社の提供するアクセス解析ツール「Google
             Analytics」を利用しています。Google
@@ -191,7 +192,51 @@ const PrivacyPage = () => {
 
           <Separator className="my-8" />
 
-          <h2 className="text-2xl font-bold">7.お問い合わせ</h2>
+          <h2 className="text-2xl font-bold">7. 広告配信サービスについて</h2>
+          <p>
+            当サイトでは、第三者配信の広告サービス「Google
+            AdSense」を利用する可能性があります。このような広告配信事業者は、ユーザーの興味に応じた商品やサービスの広告を表示するため、当サイトや他サイトへのアクセスに関する情報「Cookie」(氏名、住所、メールアドレス、電話番号は含まれません)
+            を使用することがあります。
+          </p>
+          <p>
+            Google
+            AdSenseに関して、このプロセスの詳細やこのような情報が広告配信事業者に使用されないようにする方法については、
+            <Link
+              href="https://policies.google.com/technologies/ads"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-primary underline hover:text-secondary"
+            >
+              Googleの広告とプライバシーに関するポリシー
+            </Link>
+            をご確認ください。
+          </p>
+
+          {/* <Separator className="my-8" /> */}
+
+          {/* <h2 className="text-2xl font-bold">
+            8. アフィリエイトプログラムについて
+          </h2>
+          <p>
+            当サイトは、「Amazon.co.jp」を宣伝しリンクすることによってサイトが紹介料を獲得できる手段を提供することを目的に設定されたアフィリエイトプログラムである、Amazonアソシエイト・プログラムの参加者です。
+          </p>
+          <p>
+            第三者がコンテンツおよび宣伝を提供し、訪問者から直接情報を収集し、訪問者のブラウザにCookieを設定したりこれを認識したりする場合があります。
+          </p> */}
+
+          <Separator className="my-8" />
+
+          <h2 className="text-2xl font-bold">8. 免責事項</h2>
+          <p>
+            当サイトに掲載された内容によって生じた損害等の一切の責任を負いかねますのでご了承ください。当サイトからリンクやバナーなどによって他のサイトに移動した場合、移動先サイトで提供される情報、サービス等についても一切の責任を負いません。
+          </p>
+          <p>
+            当サイトで掲載しているコンテンツ・情報は、可能な限り正確な情報を掲載するよう努めておりますが、誤情報が入り込んだり、情報が古くなっていることもございます。必ずしも正確性を保証するものではありません。また、合法性や安全性なども保証致しません。
+          </p>
+
+          <Separator className="my-8" />
+
+          <h2 className="text-2xl font-bold">9. お問い合わせ</h2>
           <p>
             本プライバシーポリシーに関するお問い合わせは、
             <Link
@@ -205,7 +250,7 @@ const PrivacyPage = () => {
 
           <Separator className="my-8" />
 
-          <h2 className="text-2xl font-bold">8.プライバシーポリシーの変更</h2>
+          <h2 className="text-2xl font-bold">10. プライバシーポリシーの変更</h2>
           <p>
             当サイトは、法令の変更やサービスの改善に伴い、本プライバシーポリシーを事前の予告なく変更することがあります。変更後のプライバシーポリシーは、当サイトに掲載したときから効力を生じるものとします。
           </p>
@@ -213,7 +258,7 @@ const PrivacyPage = () => {
           <Separator className="my-8" />
 
           <p className="text-sm text-muted-foreground">
-            最終更新日：2025年7月7日
+            最終更新日：2025年8月21日
           </p>
         </div>
       </div>
