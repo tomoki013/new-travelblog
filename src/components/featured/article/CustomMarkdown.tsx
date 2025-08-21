@@ -3,6 +3,7 @@ import Link from "next/link";
 import React from "react";
 import { toString } from "mdast-util-to-string";
 import { Post } from "@/types/types";
+import { LinkCard } from "@/components/elements/LinkCard";
 
 export interface createCustomHeadingProps {
   level: number; // 見出しのレベル (2ならh2, 3ならh3)
@@ -87,7 +88,15 @@ export const CustomLink = ({
   // 内部リンクで記事が見つかった場合
   if (linkedPost) {
     // 埋め込みカードとして表示
-    return <Link href={`/posts/${linkedPost.slug}`}>{children}</Link>;
+    return (
+      <LinkCard
+        href={`/posts/${linkedPost.slug}`}
+        title={linkedPost.title}
+        excerpt={linkedPost.excerpt}
+        imageUrl={linkedPost.image}
+        variant="standard"
+      />
+    );
   }
 
   // 外部リンクやその他のリンクの場合

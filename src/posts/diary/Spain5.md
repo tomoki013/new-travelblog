@@ -3,9 +3,9 @@ title: "ヨーロッパ旅行記 第8回：マドリード市民と同化して�
 dates: ["2025-02-22", "2025-02-23"]
 excerpt: "【ヨーロッパ旅行記 第8回】マドリード市民生活体験記。ラスベンタス闘牛場とセバダ市場巡り、サンミゲル市場で本場生ハム堪能。VIANDASの生ハムサンドやGoconutのチュロス、Puerto Ricoでタコグリルを満喫。観光を忘れて地元の雰囲気に溶け込んだ2日間のスペイン一人旅記録。"
 image: "/images/Spain/royal-palace-in-the-daytime.jpg"
-location: "スペイン-マドリード"
-category: '海外旅行, 一人旅'
-author: 'ともきち'
+location: "madrid"
+category: "海外旅行, 一人旅"
+author: "ともきち"
 tags: ["海外", "スペイン", "マドリード"]
 ---
 

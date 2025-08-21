@@ -14,7 +14,23 @@ export function getPostSlugs(type: PostType): string[] {
     .map((file) => file.replace(/\.md$/, ""));
 }
 
+// --- 汎用ヘルパー関数 ---
+// 様々な形式のデータを、必ず文字列の配列 `string[]` に変換します。
+const normalizeToArray = (data: unknown): string[] => {
+  if (!data) {
+    return []; // null, undefined, "" の場合は空配列
+  }
+  if (Array.isArray(data)) {
+    return data; // すでに配列の場合はそのまま返す
+  }
+  // 文字列の場合はカンマで分割し、各要素の空白を削除
+  return String(data)
+    .split(",")
+    .map((item) => item.trim());
+};
+
 export function getPostBySlug(postType: PostType, postSlug: string): Post {
+  const postsDirectory = path.join(process.cwd(), "src/posts");
   const fullPath = path.join(postsDirectory, postType, `${postSlug}.md`);
   const fileContents = fs.readFileSync(fullPath, "utf8");
   const { data, content } = matter(fileContents);
@@ -26,17 +42,18 @@ export function getPostBySlug(postType: PostType, postSlug: string): Post {
     id,
     slug: postSlug,
     title: data.title,
-    dates: Array.isArray(data.dates) ? data.dates : [data.dates], // 配列に変換
+    // 汎用ヘルパー関数を使って安全に配列へ変換
+    dates: normalizeToArray(data.dates),
     content,
     excerpt: data.excerpt,
     image: data.image,
-    category:
-      typeof data.category === "string"
-        ? data.category.split(",").map((c) => c.trim())
-        : [], // 文字列なら配列に変換
-    location: Array.isArray(data.location) ? data.location : [data.location], // 配列に変換
+    // 汎用ヘルパー関数を使って安全に配列へ変換
+    category: normalizeToArray(data.category),
+    // ★ご指摘の箇所を汎用ヘルパー関数を使って修正
+    location: normalizeToArray(data.location),
     author: data.author,
-    tags: data.tags || [],
+    // tagsも同様に処理するのが安全
+    tags: normalizeToArray(data.tags),
     budget: data.budget,
     costs: data.costs || {},
     type: postType, // フォルダに基づいてtypeを設定

@@ -4,20 +4,22 @@ import { useState, useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { motion } from "framer-motion";
-import { Copy } from "lucide-react";
+import { ChevronRight, Copy, MapPin } from "lucide-react";
 import { getDatePrefix } from "@/lib/dateFormat";
 import { members } from "@/data/member";
 import { Post } from "@/types/types";
 import { featuredSeries } from "@/data/series";
 import { FaFacebook, FaTwitter } from "react-icons/fa";
-// import { ChevronRight } from "lucide-react";
+import { getRegionPath, getRegionsBySlugs } from "@/lib/regionUtil";
 
 interface ClientProps {
   children: React.ReactNode;
   post: Post;
+  previousPost?: { href: string; title: string }; // 前の記事へのリンク
+  nextPost?: { href: string; title: string }; // 次の記事へのリンク
 }
 
-const Client = ({ children, post }: ClientProps) => {
+const Client = ({ children, post, previousPost, nextPost }: ClientProps) => {
   const [currentUrl, setCurrentUrl] = useState("");
   const [isCopied, setIsCopied] = useState(false);
 
@@ -59,6 +61,11 @@ const Client = ({ children, post }: ClientProps) => {
       });
   };
 
+  const regionTags = getRegionsBySlugs(post.location);
+  const primarySlug = post.location.length > 0 ? post.location[0] : undefined;
+  const regionPath = primarySlug ? getRegionPath(primarySlug) : [];
+  const country = regionPath.length > 0 ? regionPath[0] : null;
+
   return (
     <div>
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
@@ -69,7 +76,7 @@ const Client = ({ children, post }: ClientProps) => {
           transition={{ duration: 0.8 }}
         >
           {/* パンくずリスト */}
-          {/* <nav
+          <nav
             className="flex items-center text-sm text-gray-500 mb-4"
             aria-label="Breadcrumb"
           >
@@ -77,15 +84,17 @@ const Client = ({ children, post }: ClientProps) => {
               ホーム
             </Link>
             <ChevronRight size={16} className="mx-1" />
-            <Link
-              href={`/destinations/${post.region.slug}`}
-              className="hover:text-teal-600"
-            >
-              Destinations
-            </Link>
+            {country && (
+              <Link
+                href={`/destination/${country.slug}`}
+                className="hover:text-teal-600"
+              >
+                {country.name}
+              </Link>
+            )}
             <ChevronRight size={16} className="mx-1" />
             <span className="truncate">{post.title}</span>
-          </nav> */}
+          </nav>
 
           {/* メタ情報 */}
           <div className="flex flex-wrap gap-2 mb-4">
@@ -98,12 +107,6 @@ const Client = ({ children, post }: ClientProps) => {
                 {cat}
               </Link>
             ))}
-            {/* <Link
-              href={`/destinations/${post.region.slug}`}
-              className="bg-blue-100 text-blue-700 px-3 py-1 text-xs font-semibold rounded-full hover:bg-blue-200"
-            >
-              {post.region.name}
-            </Link> */}
             {series && (
               <Link
                 href={`/series/${series.slug}`}
@@ -117,9 +120,23 @@ const Client = ({ children, post }: ClientProps) => {
           <h1 className="text-3xl md:text-5xl font-bold text-gray-900 mb-4">
             {post.title}
           </h1>
-          <p className="text-gray-500 mb-6">
-            {getDatePrefix(post.type)}: {post.dates.join("～")}
-          </p>
+          <div className="text-muted-foreground mb-6 flex justify-between items-center">
+            <p>
+              {getDatePrefix(post.type)}: {post.dates.join("～")}
+            </p>
+            <section className="flex items-center gap-2">
+              {regionTags.map((r) => (
+                <Link
+                  key={r.slug}
+                  href={`/destinations/${r.slug}`}
+                  className="hover:text-foreground"
+                >
+                  <MapPin className="inline mr-0.5" size={16} />
+                  {r.name}
+                </Link>
+              ))}
+            </section>
+          </div>
 
           {/* アイキャッチ画像 */}
           <Image
@@ -182,22 +199,30 @@ const Client = ({ children, post }: ClientProps) => {
           </div>
 
           {/* シリーズナビゲーション */}
-          {/* <div className="flex justify-between border-y border-gray-200 py-6 mb-10">
-            <Link
-              href="#"
-              className="text-gray-600 hover:text-teal-600 max-w-[45%]"
-            >
-              <span className="text-sm">« 前の記事へ</span>
-              <p className="font-semibold truncate">前の記事タイトル</p>
-            </Link>
-            <Link
-              href="#"
-              className="text-gray-600 hover:text-teal-600 max-w-[45%] text-right"
-            >
-              <span className="text-sm">次の記事へ »</span>
-              <p className="font-semibold truncate">次の記事タイトル</p>
-            </Link>
-          </div> */}
+          <div className="flex justify-between border-y border-gray-200 py-6 mb-10">
+            {previousPost ? (
+              <Link
+                href={previousPost.href}
+                className="text-gray-600 hover:text-teal-600 max-w-[45%]"
+              >
+                <span className="text-sm">« 前の記事へ</span>
+                <p className="font-semibold truncate">{previousPost.title}</p>
+              </Link>
+            ) : (
+              <div />
+            )}
+            {nextPost ? (
+              <Link
+                href={nextPost.href}
+                className="text-gray-600 hover:text-teal-600 max-w-[45%] text-right"
+              >
+                <span className="text-sm">次の記事へ »</span>
+                <p className="font-semibold truncate">{nextPost.title}</p>
+              </Link>
+            ) : (
+              <div />
+            )}
+          </div>
 
           {/* 著者プロフィール */}
           <div className="bg-gray-50 p-6 rounded-lg flex items-center gap-6">

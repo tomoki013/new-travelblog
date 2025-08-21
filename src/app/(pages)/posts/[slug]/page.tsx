@@ -1,4 +1,4 @@
-import { getPostBySlug } from "@/lib/markdown";
+import { getAllPostTypes, getPostBySlug } from "@/lib/markdown";
 import Client from "./Client";
 import ArticleContent from "@/components/featured/article/Article";
 import path from "path";
@@ -86,8 +86,35 @@ const PostPage = async (props: { params: Promise<{ slug: string }> }) => {
   }
 
   const post = getPostBySlug(category as PostType, slug);
+
+  const allPosts = await getAllPostTypes();
+  const currentIndex = allPosts.findIndex((p) => p.slug === post.slug);
+  const nextPostData = currentIndex > 0 ? allPosts[currentIndex - 1] : null;
+  const previousPostData =
+    currentIndex < allPosts.length - 1 ? allPosts[currentIndex + 1] : null;
+
+  // LinkCardに必要な情報だけを抽出して渡す
+  const previousPost = previousPostData
+    ? {
+        href: `/posts/${previousPostData.slug}`,
+        title: previousPostData.title,
+      }
+    : undefined;
+
+  const nextPost = nextPostData
+    ? {
+        href: `/posts/${nextPostData.slug}`,
+        title: nextPostData.title,
+      }
+    : undefined;
+
+  if (!post) {
+    // 404などのエラーハンドリング
+    return <div>記事が見つかりませんでした。</div>;
+  }
+
   return (
-    <Client post={post}>
+    <Client post={post} previousPost={previousPost} nextPost={nextPost}>
       <ArticleContent content={post.content} currentPostType={post.type} />
     </Client>
   );
