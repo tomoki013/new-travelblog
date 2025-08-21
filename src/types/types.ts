@@ -35,12 +35,10 @@ export interface Author {
 }
 
 // 地域別ページ用の地域の型
-export interface regionProps {
-  city: string;
-  images: string[];
-  country: string;
-  title: string;
-  description: string;
+export interface Region {
+  slug: string;
+  name: string;
+  parent?: string;
 }
 
 // Seriesデータの型定義

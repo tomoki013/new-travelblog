@@ -6,6 +6,7 @@ import { Post } from "@/types/types";
 import Link from "next/link";
 import { ArrowRight, Calendar, MapPin } from "lucide-react";
 import { featuredSeries } from "@/data/series";
+import { getRegionsBySlugs } from "@/lib/regionUtil";
 
 interface PostCardProps {
   post: Post;
@@ -28,6 +29,8 @@ const PostCard = ({
   };
 
   const series = featuredSeries.find((s) => s.slug === post.series);
+
+  const regionTags = getRegionsBySlugs(post.location);
 
   return (
     <Link href={`/posts/${post.slug}`} className="block group">
@@ -77,9 +80,13 @@ const PostCard = ({
         {/* Contentセクション */}
         <div className="w-full md:w-1/2 text-center md:text-left text-foreground">
           {showMetadata && (
-            <div className="text-sm text-muted-foreground mb-2 flex items-center">
-              <MapPin className="inline mr-1.5" size={16} />
-              {post.location.join(", ")}
+            <div className="text-sm text-muted-foreground mb-2 flex items-center gap-2">
+              {regionTags.map((r) => (
+                <p key={r.slug}>
+                  <MapPin className="inline mr-0.5" size={16} />
+                  {r.name}
+                </p>
+              ))}
             </div>
           )}
           <h3 className="font-heading text-3xl font-bold mb-4">{post.title}</h3>
