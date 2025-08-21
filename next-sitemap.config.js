@@ -3,7 +3,7 @@ import path from "path";
 import matter from "gray-matter";
 
 // lib/markdown.ts のロジックをこのファイル内に再現
-const postsDirectory = path.join(process.cwd(), "posts");
+const postsDirectory = path.join(process.cwd(), "src", "posts");
 
 function getPostSlugs(type) {
   const typeDirectory = path.join(postsDirectory, type);
