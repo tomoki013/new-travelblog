@@ -3,6 +3,7 @@ import { Metadata } from "next";
 import { Post } from "@/types/types";
 import { getAllPostTypes } from "@/lib/markdown";
 import HeroSection from "@/components/sections/HeroSection";
+import { featuredSeries } from "@/data/series";
 
 export const metadata: Metadata = {
   title: "サイトマップ",
@@ -125,32 +126,16 @@ export default async function SitemapPage() {
                 シリーズ一覧
               </h2>
               <ul className="space-y-2 text-foreground">
-                <li>
-                  <Link
-                    href="/series/travel-history"
-                    className="hover:text-secondary"
-                  >
-                    ともきちの海外旅行遍歴
-                  </Link>
-                </li>
-                <li>
-                  <Link
-                    href="/series/architecture"
-                    className="hover:text-secondary"
-                  >
-                    私の見た、世界の絶景 建築編
-                  </Link>
-                </li>
-                <li>
-                  <Link href="/series/sunsets" className="hover:text-secondary">
-                    世界の夕陽から
-                  </Link>
-                </li>
-                <li>
-                  <Link href="/series/kyoto" className="hover:text-secondary">
-                    京都在住大学生による、京都の景色
-                  </Link>
-                </li>
+                {featuredSeries.map((series) => (
+                  <li key={series.id}>
+                    <Link
+                      href={`/series/${series.slug}`}
+                      className="hover:text-secondary"
+                    >
+                      {series.title}
+                    </Link>
+                  </li>
+                ))}
               </ul>
             </section>
 
