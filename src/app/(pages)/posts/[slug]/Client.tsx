@@ -200,24 +200,24 @@ const Client = ({ children, post, previousPost, nextPost }: ClientProps) => {
 
           {/* シリーズナビゲーション */}
           <div className="flex justify-between border-y border-gray-200 py-6 mb-10">
-            {previousPost ? (
+            {nextPost ? (
               <Link
-                href={previousPost.href}
+                href={nextPost.href}
                 className="text-gray-600 hover:text-teal-600 max-w-[45%]"
               >
-                <span className="text-sm">« 前の記事へ</span>
-                <p className="font-semibold truncate">{previousPost.title}</p>
+                <span className="text-sm">« 次の記事へ</span>
+                <p className="font-semibold truncate">{nextPost.title}</p>
               </Link>
             ) : (
               <div />
             )}
-            {nextPost ? (
+            {previousPost ? (
               <Link
-                href={nextPost.href}
+                href={previousPost.href}
                 className="text-gray-600 hover:text-teal-600 max-w-[45%] text-right"
               >
-                <span className="text-sm">次の記事へ »</span>
-                <p className="font-semibold truncate">{nextPost.title}</p>
+                <span className="text-sm">前の記事へ »</span>
+                <p className="font-semibold truncate">{previousPost.title}</p>
               </Link>
             ) : (
               <div />

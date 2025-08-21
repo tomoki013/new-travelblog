@@ -12,10 +12,7 @@ const getRegionBySlug = (slug: string): Region | undefined => {
  * slugの配列から、対応する地域情報の配列を取得します。
  */
 export const getRegionsBySlugs = (slugs: string[]): Region[] => {
-  console.log("受け取ったslugs:", slugs); // ①渡されたslugの配列を確認
-
   const mappedRegions = slugs.map((slug) => getRegionBySlug(slug));
-  console.log("マップ処理後の配列:", mappedRegions); // ②slugが見つかっているか確認
 
   const filteredRegions = mappedRegions.filter(
     (region): region is Region => region !== undefined
