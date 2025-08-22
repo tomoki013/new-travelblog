@@ -155,7 +155,7 @@ const BlogClient = ({ allPosts }: BlogClientProps) => {
         </section>
 
         {/* ==================== Pagination ==================== */}
-        <section className="mt-16 flex justify-center items-center gap-2">
+        <section className="mt-16 flex flex-wrap justify-center items-center gap-2">
           {/* Prevボタン: 1ページ目では非表示 */}
           {currentPage !== 1 && (
             <button

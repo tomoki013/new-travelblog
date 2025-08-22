@@ -4,6 +4,7 @@ import { Suspense } from "react";
 // getAllPostTypes()が返す記事の型を定義しておくと便利です
 import { Post } from "@/types/types"; // 仮の型定義パス
 import { Metadata } from "next";
+import { LoadingAnimation } from "@/components/featured/LoadingAnimation/LoadingAnimation";
 
 export const metadata: Metadata = {
   title: "全記事一覧 - Blog ",
@@ -17,7 +18,7 @@ const PostsPage = () => {
 
   // 2. クライアントコンポーネントにプロップとして渡す
   return (
-    <Suspense fallback={<div>Loading...</div>}>
+    <Suspense fallback={<LoadingAnimation variant="mapRoute" />}>
       <BlogClient allPosts={allPosts} />
     </Suspense>
   );

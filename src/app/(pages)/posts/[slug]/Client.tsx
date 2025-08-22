@@ -77,7 +77,7 @@ const Client = ({ children, post, previousPost, nextPost }: ClientProps) => {
         >
           {/* パンくずリスト */}
           <nav
-            className="flex items-center text-sm text-gray-500 mb-4"
+            className="flex flex-col md:flex-row md:items-center text-sm text-gray-500 mb-4"
             aria-label="Breadcrumb"
           >
             <Link href="/" className="hover:text-teal-600">
@@ -124,7 +124,7 @@ const Client = ({ children, post, previousPost, nextPost }: ClientProps) => {
             <p>
               {getDatePrefix(post.type)}: {post.dates.join("～")}
             </p>
-            <section className="flex items-center gap-2">
+            <section className="flex flex-col md:flex-row md:items-center gap-2">
               {regionTags.map((r) => (
                 <Link
                   key={r.slug}
@@ -196,6 +196,15 @@ const Client = ({ children, post, previousPost, nextPost }: ClientProps) => {
                 </span>
               )}
             </button>
+          </div>
+
+          <div className="flex justify-center items-center mb-10">
+            <Link
+              href={`/posts`}
+              className="text-foreground hover:text-secondary"
+            >
+              ブログ一覧へ
+            </Link>
           </div>
 
           {/* シリーズナビゲーション */}

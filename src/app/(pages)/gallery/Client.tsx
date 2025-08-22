@@ -52,6 +52,19 @@ const Client = ({ posts }: ClientProps) => {
     return () => clearTimeout(timer);
   }, [activeFilter]);
 
+  // モーダル表示時に背景のスクロールを禁止する
+  useEffect(() => {
+    if (selectedPhoto) {
+      document.body.style.overflowY = "hidden";
+    } else {
+      document.body.style.overflowY = "auto";
+    }
+    // コンポーネントがアンマウントされた際にもスクロールを有効に戻す
+    return () => {
+      document.body.style.overflowY = "auto";
+    };
+  }, [selectedPhoto]);
+
   // idが未定義の写真にはuuidでidを付与
   // idが未定義の写真にはuuidでidを付与
   const galleryWithId = useMemo(
@@ -184,7 +197,7 @@ const Client = ({ posts }: ClientProps) => {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             onClick={() => setSelectedPhoto(null)}
-            className="fixed inset-0 bg-black/80 z-50 flex items-center justify-center p-4 overflow-y-hidden"
+            className="fixed inset-0 bg-black/80 z-50 flex items-center justify-center p-4"
           >
             {/* Photo Counter */}
             <div className="absolute top-4 left-4 z-10">
