@@ -11,7 +11,7 @@ interface SeriesCardProps {
 const SeriesCard = ({ series }: SeriesCardProps) => {
   return (
     // motion.divをLinkコンポーネントでラップ
-    <Link href={series.slug} passHref>
+    <Link href={`/series/${series.slug}`} passHref>
       <motion.div
         className="relative flex flex-col justify-end h-96 p-6 rounded-md overflow-hidden text-white no-underline bg-cover bg-center"
         style={{ backgroundImage: `url(${series.imageUrl})` }}

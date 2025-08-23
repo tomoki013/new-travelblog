@@ -8,7 +8,7 @@ import { motion } from "framer-motion";
 const FeaturedSeries = () => {
   return (
     <motion.section
-      className="py-12 md:py-16 px-6 md:px-8 max-w-6xl mx-auto"
+      className="py-24 px-6 md:px-8 max-w-6xl mx-auto"
       initial={{ opacity: 0, y: 50 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, amount: 0.2 }}

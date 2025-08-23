@@ -183,7 +183,7 @@ export default async function SitemapPage() {
                           {posts.map((post) => (
                             <li key={post.slug}>
                               <Link
-                                href={`/blog/${post.slug}`}
+                                href={`/posts/${post.slug}`}
                                 className="hover:text-secondary"
                               >
                                 {post.title}

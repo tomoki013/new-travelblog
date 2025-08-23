@@ -496,14 +496,13 @@ article {
   font-family: monospace;
   font-size: 24px;
   font-weight: bold;
-  color: #1f2937;
+  color: var(--foreground);
 }
 .flap {
   position: absolute;
   width: 100%;
   height: 50%;
   left: 0;
-  background-color: #f9fafb;
   overflow: hidden;
   backface-visibility: hidden;
   line-height: 30px;

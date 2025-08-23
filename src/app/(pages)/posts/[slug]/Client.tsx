@@ -154,7 +154,7 @@ const Client = ({ children, post, previousPost, nextPost }: ClientProps) => {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.2 }}
-          className="prose prose-lg max-w-none mt-12"
+          className="max-w-none mt-12"
         >
           <article>{children}</article>
         </motion.div>

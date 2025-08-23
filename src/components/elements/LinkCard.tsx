@@ -24,7 +24,7 @@ export const LinkCard: React.FC<LinkCardProps> = ({
     return (
       <Link
         href={href}
-        className="group flex flex-col md:flex-row items-center gap-4 my-6 p-4 bg-white/80 border border-gray-200 rounded-lg transition-colors shadow-sm"
+        className="group flex flex-col md:flex-row items-center md:gap-4 my-6 p-4 bg-white/80 border border-gray-200 rounded-lg transition-colors shadow-sm not-prose"
       >
         {imageUrl && (
           <p className="md:w-1/4 flex-shrink-0">

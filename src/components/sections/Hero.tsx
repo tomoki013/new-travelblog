@@ -1,4 +1,5 @@
 import Image from "next/image";
+import { LoadingAnimation } from "../featured/LoadingAnimation/LoadingAnimation";
 
 const Hero = () => {
   return (
@@ -18,7 +19,13 @@ const Hero = () => {
         <p className="text-lg md:text-xl font-medium">
           世界を旅した記憶と体験を、あなたと共有したい
         </p>
-        <div className="font-code text-4xl mt-4 text-white/90">Tomokichi</div>
+        <div className="font-code text-4xl my-4 text-white/90">Tomokichi</div>
+        <LoadingAnimation
+          variant="splitFlap"
+          className="flex justify-center items-center mt-12"
+          words={[" POSTS ", " KYOTO ", " PARIS "]}
+          flapBG=""
+        />
       </div>
     </section>
   );

@@ -26,6 +26,8 @@ type LoadingVariant =
 interface LoadingAnimationProps {
   variant: LoadingVariant;
   className?: string;
+  words?: string[];
+  flapBG?: string;
 }
 
 // Data for animations that use it
@@ -41,18 +43,17 @@ const lanterns = [
   { left: "50%", animationDuration: "7s", animationDelay: "3.5s" },
   { left: "85%", animationDuration: "8s", animationDelay: "5s" },
 ];
-const words = [
-  "LOADING",
-  "JOURNEY",
-  " KYOTO ",
-  " PARIS ",
-  "NEWYORK",
-  "LONDON ",
-];
+const defaultWords = ["LOADING", "JOURNEY", "EXPLORE"];
 const chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ.,!?";
 
 // Sub-component for SplitFlap
-const SplitFlapCharacter = ({ char }: { char: string }) => {
+const SplitFlapCharacter = ({
+  char,
+  flapBG,
+}: {
+  char: string;
+  flapBG: string;
+}) => {
   const [currentChar, setCurrentChar] = useState(" ");
   const [prevChar, setPrevChar] = useState(" ");
   const [isFlipping, setIsFlipping] = useState(false);
@@ -80,9 +81,11 @@ const SplitFlapCharacter = ({ char }: { char: string }) => {
 
   return (
     <div className="char-container">
-      <div className="flap top">{currentChar}</div>
-      <div className="flap bottom">{currentChar}</div>
-      {isFlipping && <div className="flap top flipping">{prevChar}</div>}
+      <div className={`flap top ${flapBG}`}>{currentChar}</div>
+      <div className={`flap bottom ${flapBG}`}>{currentChar}</div>
+      {isFlipping && (
+        <div className={`flap top flipping ${flapBG}`}>{prevChar}</div>
+      )}
     </div>
   );
 };
@@ -90,6 +93,8 @@ const SplitFlapCharacter = ({ char }: { char: string }) => {
 export const LoadingAnimation = ({
   variant,
   className = "",
+  words = defaultWords,
+  flapBG = "bg-background",
 }: LoadingAnimationProps) => {
   const [currentIconIndex, setCurrentIconIndex] = useState(0);
   const [currentWord, setCurrentWord] = useState(words[0]);
@@ -120,7 +125,7 @@ export const LoadingAnimation = ({
     case 'passportStamp': return <div className={`loader-passport-stamp ${className}`}><div className="stamp">{icons[currentIconIndex]}</div></div>;
     case 'airplaneWindow': return <div className={`loader-airplane-window ${className}`}><div className="clouds"></div></div>;
     case 'luggageCarousel': return <div className={`loader-carousel ${className}`}><div className="track"></div><div className="luggage l1"></div><div className="luggage l2"></div><div className="luggage l3"></div></div>;
-    case 'splitFlap': return <div className={`loader-split-flap ${className}`}>{currentWord.padEnd(7, " ").split("").map((char, index) => <SplitFlapCharacter key={index} char={char} />)}</div>;
+    case 'splitFlap': return <div className={`loader-split-flap ${className}`}>{currentWord.padEnd(7, " ").split("").map((char, index) => <SplitFlapCharacter key={index} char={char} flapBG={flapBG} />)}</div>;
     case 'floatingLanterns': return <div className={`loader-lantern ${className}`}>{lanterns.map((style, index) => <div key={index} className="lantern" style={style as React.CSSProperties} />)}</div>;
     case 'backpack': return <div className={`loader-backpack ${className}`}><div className="flap"></div><div className="item passport"></div><div className="item camera"></div></div>;
     case 'boardingPass': return <div className={`loader-boarding-pass ${className}`}><div className="stub"></div></div>;
