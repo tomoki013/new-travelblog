@@ -31,7 +31,7 @@ const Header = () => {
             <span className="font-bold text-lg text-foreground font-heading">
               ともきちの旅行日記
             </span>
-            <span className="text-muted-foreground font-heading">
+            <span className="text-xl text-muted-foreground font-code">
               Traveldiary
             </span>
           </Link>

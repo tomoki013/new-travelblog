@@ -143,7 +143,7 @@ const Client = ({ allPosts, series }: SeriesPageProps) => {
         <section className="mt-16 text-center">
           <Link
             href="/series"
-            className="inline-block px-6 py-3 rounded-lg bg-gray-800 text-white font-semibold hover:bg-gray-700 transition-colors"
+            className="inline-block px-6 py-3 rounded-full bg-secondary text-white border border-secondary font-semibold hover:bg-background hover:text-secondary transition-colors"
           >
             ← すべてのシリーズ一覧へ戻る
           </Link>
