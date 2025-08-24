@@ -5,6 +5,7 @@ import path from "path";
 import { promises as fs } from "fs";
 import type { PostType } from "@/types/types";
 import { Metadata } from "next";
+import { getRelatedPosts } from "@/lib/getPostData";
 
 const categories: PostType[] = ["diary", "tourism", "itinerary", "series"];
 
@@ -112,9 +113,15 @@ const PostPage = async (props: { params: Promise<{ slug: string }> }) => {
     // 404などのエラーハンドリング
     return <div>記事が見つかりませんでした。</div>;
   }
+  const relatedPosts = getRelatedPosts(post.slug, post.location, 3);
 
   return (
-    <Client post={post} previousPost={previousPost} nextPost={nextPost}>
+    <Client
+      post={post}
+      previousPost={previousPost}
+      nextPost={nextPost}
+      relatedPosts={relatedPosts}
+    >
       <ArticleContent content={post.content} currentPostType={post.type} />
     </Client>
   );

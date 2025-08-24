@@ -7,17 +7,20 @@ import Link from "next/link";
 import { ArrowRight, Calendar, MapPin } from "lucide-react";
 import { featuredSeries } from "@/data/series";
 import { getRegionsBySlugs } from "@/lib/regionUtil";
+import { Card, CardContent, CardHeader, CardTitle } from "../ui/card";
 
 interface PostCardProps {
   post: Post;
   isReversed?: boolean;
   showMetadata?: boolean; // メタデータ表示を制御するprop
+  variant?: "default" | "relate";
 }
 
 const PostCard = ({
   post,
   isReversed = false,
   showMetadata = true,
+  variant = "default",
 }: PostCardProps) => {
   const itemVariants: Variants = {
     hidden: { opacity: 0, y: 30 },
@@ -32,73 +35,101 @@ const PostCard = ({
 
   const regionTags = getRegionsBySlugs(post.location);
 
-  return (
-    <Link href={`/posts/${post.slug}`} className="block group">
-      <motion.article
-        initial="hidden"
-        whileInView="visible"
-        viewport={{ once: true, amount: 0.1 }}
-        variants={itemVariants}
-        className={`relative flex flex-col md:flex-row items-center gap-8 md:gap-12 p-6 rounded-md hover:shadow-lg transition-shadow duration-300 ${
-          isReversed ? "md:flex-row-reverse" : ""
-        }`}
-      >
-        {/* Imageセクション */}
-        <div className="w-full md:w-1/2 relative">
-          <Image
-            src={post.image}
-            alt={post.title}
-            width={600}
-            height={400}
-            className="w-full h-auto max-h-96 rounded-md object-cover"
-          />
-          {showMetadata && (
-            <div className="absolute bottom-0 left-0 p-4 w-full bg-gradient-to-t from-black/60 to-transparent rounded-b-lg pointer-events-none">
-              {series && (
-                <span className="bg-amber-100 text-amber-700 px-3 py-1 text-xs font-semibold rounded-full hover:bg-amber-200">
-                  {series.title}
-                </span>
+  switch (variant) {
+    case "default":
+      return (
+        <Link href={`/posts/${post.slug}`} className="block group">
+          <motion.article
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, amount: 0.1 }}
+            variants={itemVariants}
+            className={`relative flex flex-col md:flex-row items-center gap-8 md:gap-12 p-6 rounded-md hover:shadow-lg transition-shadow duration-300 ${
+              isReversed ? "md:flex-row-reverse" : ""
+            }`}
+          >
+            {/* Imageセクション */}
+            <div className="w-full md:w-1/2 relative">
+              <Image
+                src={post.image}
+                alt={post.title}
+                width={600}
+                height={400}
+                className="w-full h-auto max-h-96 rounded-md object-cover"
+              />
+              {showMetadata && (
+                <div className="absolute bottom-0 left-0 p-4 w-full bg-gradient-to-t from-black/60 to-transparent rounded-b-lg pointer-events-none">
+                  {series && (
+                    <span className="bg-amber-100 text-amber-700 px-3 py-1 text-xs font-semibold rounded-full hover:bg-amber-200">
+                      {series.title}
+                    </span>
+                  )}
+                  <div className="my-1">
+                    {post.category.map((cat) => (
+                      <span
+                        key={cat}
+                        className="bg-teal-100 text-teal-700 px-3 py-1 text-xs font-semibold rounded-full hover:bg-teal-200 mr-1"
+                      >
+                        {cat}
+                      </span>
+                    ))}
+                  </div>
+                  <div className="text-white text-sm mt-1 flex items-center">
+                    <Calendar className="inline mr-1.5" size={16} />
+                    {post.dates.join("～")}
+                  </div>
+                </div>
               )}
-              <div className="my-1">
-                {post.category.map((cat) => (
-                  <span
-                    key={cat}
-                    className="bg-teal-100 text-teal-700 px-3 py-1 text-xs font-semibold rounded-full hover:bg-teal-200 mr-1"
-                  >
-                    {cat}
-                  </span>
-                ))}
-              </div>
-              <div className="text-white text-sm mt-1 flex items-center">
-                <Calendar className="inline mr-1.5" size={16} />
-                {post.dates.join("～")}
-              </div>
             </div>
-          )}
-        </div>
 
-        {/* Contentセクション */}
-        <div className="w-full md:w-1/2 text-center md:text-left text-foreground">
-          {showMetadata && (
-            <div className="text-sm text-muted-foreground mb-2 flex items-center gap-2">
-              {regionTags.map((r) => (
-                <p key={r.slug}>
-                  <MapPin className="inline mr-0.5" size={16} />
-                  {r.name}
-                </p>
-              ))}
+            {/* Contentセクション */}
+            <div className="w-full md:w-1/2 text-center md:text-left text-foreground">
+              {showMetadata && (
+                <div className="text-sm text-muted-foreground mb-2 flex items-center gap-2">
+                  {regionTags.map((r) => (
+                    <p key={r.slug}>
+                      <MapPin className="inline mr-0.5" size={16} />
+                      {r.name}
+                    </p>
+                  ))}
+                </div>
+              )}
+              <h3 className="font-heading text-3xl font-bold mb-4">
+                {post.title}
+              </h3>
+              <p className="font-body leading-relaxed">{post.excerpt}</p>
+              <span className="mt-4 text-teal-600 hover:text-teal-700 text-xl font-semibold inline-flex items-center">
+                続きを読む
+                <ArrowRight className="inline-block ml-2" size={20} />
+              </span>
             </div>
-          )}
-          <h3 className="font-heading text-3xl font-bold mb-4">{post.title}</h3>
-          <p className="font-body leading-relaxed">{post.excerpt}</p>
-          <span className="mt-4 text-teal-600 hover:text-teal-700 text-xl font-semibold inline-flex items-center">
-            続きを読む
-            <ArrowRight className="inline-block ml-2" size={20} />
-          </span>
-        </div>
-      </motion.article>
-    </Link>
-  );
+          </motion.article>
+        </Link>
+      );
+    case "relate":
+      return (
+        <Link href={`/posts/${post.slug}`} className="group block">
+          <Card className="overflow-hidden h-full transition-all duration-300 hover:shadow-lg dark:hover:bg-slate-800">
+            <CardHeader className="p-0">
+              <div className="aspect-[4/3] relative">
+                <Image
+                  src={post.image}
+                  alt={post.title}
+                  fill
+                  className="object-cover"
+                  sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                />
+              </div>
+            </CardHeader>
+            <CardContent className="p-4">
+              <CardTitle className="text-lg leading-snug group-hover:text-secondary transition-colors duration-300">
+                {post.title}
+              </CardTitle>
+            </CardContent>
+          </Card>
+        </Link>
+      );
+  }
 };
 
 export default PostCard;
