@@ -7,7 +7,7 @@ import Link from "next/link";
 import { ArrowRight, Calendar, MapPin } from "lucide-react";
 import { featuredSeries } from "@/data/series";
 import { getRegionsBySlugs } from "@/lib/regionUtil";
-import { Card, CardContent, CardHeader, CardTitle } from "../ui/card";
+import { FaGlobeAsia } from "react-icons/fa";
 
 interface PostCardProps {
   post: Post;
@@ -108,25 +108,49 @@ const PostCard = ({
       );
     case "relate":
       return (
-        <Link href={`/posts/${post.slug}`} className="group block">
-          <Card className="overflow-hidden h-full transition-all duration-300 hover:shadow-lg dark:hover:bg-slate-800">
-            <CardHeader className="p-0">
-              <div className="aspect-[4/3] relative">
-                <Image
-                  src={post.image}
-                  alt={post.title}
-                  fill
-                  className="object-cover"
-                  sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                />
-              </div>
-            </CardHeader>
-            <CardContent className="p-4">
-              <CardTitle className="text-lg leading-snug group-hover:text-secondary transition-colors duration-300">
+        <Link
+          href={`/posts/${post.slug}`}
+          className="group block bg-amber-50 rounded-lg shadow-md hover:shadow-xl transition-shadow duration-300 relative"
+        >
+          {/* ポストカードの画像部分 */}
+          <div className="w-full">
+            <Image
+              src={post.image}
+              alt={post.title}
+              width={800}
+              height={600}
+              className="rounded-t-lg object-cover aspect-video"
+            />
+          </div>
+
+          {/* 切手と消印 */}
+          <div className="absolute top-4 left-4 flex items-center gap-4">
+            <div className="w-10 h-10 bg-white p-1 border-2 border-dashed border-gray-300 flex items-center justify-center">
+              <FaGlobeAsia className="text-teal-600 text-2xl" />
+            </div>
+            <div className="text-center text-xs text-muted-foreground">
+              <p className="font-semibold group-hover:text-secondary">
+                POST DATE
+              </p>
+              <p className="group-hover:text-secondary">{post.dates[0]}</p>
+            </div>
+          </div>
+
+          {/* ポストカードのテキスト部分 */}
+          <div className="p-4">
+            {/* メインコンテンツ */}
+            <div>
+              <h3 className="font-serif text-xl font-bold text-foreground group-hover:text-secondary mb-2 min-h-[56px] truncate">
                 {post.title}
-              </CardTitle>
-            </CardContent>
-          </Card>
+              </h3>
+              <p className="text-sm text-muted-foreground mb-4 group-hover:text-secondary">
+                カテゴリー: {post.category[0]}
+              </p>
+              <p className="font-semibold text-foreground text-right group-hover:text-secondary">
+                続きを読む →
+              </p>
+            </div>
+          </div>
         </Link>
       );
   }

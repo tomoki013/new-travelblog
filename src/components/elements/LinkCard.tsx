@@ -1,6 +1,7 @@
 import Link from "next/link";
 import Image from "next/image";
 import { Link as LinkIcon } from "lucide-react";
+import { Separator } from "../ui/separator";
 
 interface LinkCardProps {
   href: string;
@@ -41,12 +42,13 @@ export const LinkCard: React.FC<LinkCardProps> = ({
           <p className="font-bold text-foreground group-hover:text-muted-foreground">
             {title}
           </p>
+          <Separator />
           {excerpt && (
             <p className="text-sm text-foreground mt-1 line-clamp-2 group-hover:text-muted-foreground">
               {excerpt}
             </p>
           )}
-          <p className="text-xs text-muted-foreground mt-2 flex items-center gap-1">
+          <p className="text-xs text-muted-foreground mt-2 flex items-center gap-1 underline">
             <LinkIcon size={12} /> {domain + href}
           </p>
         </p>
