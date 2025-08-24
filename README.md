@@ -1,36 +1,112 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# ともきちの旅行日記 - A Next.js Travel Blog
 
-## Getting Started
+[![Deploy with Netlify](https://tomokichidiary.netlify.app)]
 
-First, run the development server:
+**ともきちの旅行日記**は、「旅に出るワクワク感」をコンセプトにした、モダンな技術で構築された個人旅行ブログです。インタラクティブな世界地図やテーマ別のシリーズ記事を通じて、読者の冒険心を刺激するユニークな視覚体験を提供します。
+
+---
+
+## ✨ 主な特徴
+
+このプロジェクトは、多機能でメンテナンス性の高いブログサイトを実現するための様々な機能を備えています。
+
+<!-- * **インタラクティブな世界地図**: `D3.js`を利用したクリック可能な世界地図から、直感的に旅先を探せます。 -->
+
+- **動的なコンテンツハブ**: 国・地域別の「Destinationページ」や、テーマ別の「Seriesページ」を自動生成し、関連コンテンツをまとめて表示します。
+- **Markdownベースのコンテンツ**: 記事はすべてMarkdownで管理されており、`gray-matter`によるフロントマターで豊富なメタデータを扱えます。
+- **カスタムMarkdownコンポーネント**: 内部リンクカードや、デザインされたテーブルなど、Markdownの表現力を拡張するカスタムコンポーネントを実装しています。
+- **豊富なアニメーション**: `Framer Motion`による心地よいページ遷移やローディングアニメーションが、サイト体験を向上させます。
+- **ユーザー参加型機能**: 読者が記事のテーマをリクエストできる専用ページを設置し、「ユーザーと共に作り上げるメディア」を目指します。
+- **レスポンシブデザイン**: PC、タブレット、スマートフォンなど、あらゆるデバイスで最適化された表示を実現します。
+
+---
+
+## 🛠️ 技術スタック
+
+- **フレームワーク**: [Next.js](https://nextjs.org/) (App Router)
+- **言語**: [TypeScript](https://www.typescriptlang.org/)
+- **スタイリング**: [Tailwind CSS](https://tailwindcss.com/)
+- **アニメーション**: [Framer Motion](https://www.framer.com/motion/)
+<!-- * **地図描画**: [D3.js](https://d3js.org/) -->
+- **Markdown処理**: [React Markdown](https://github.com/remarkjs/react-markdown), [Gray Matter](https://github.com/jonschlinkert/gray-matter)
+- **デプロイメント**: [Netlify](https://netlify.com/)
+
+---
+
+## 🚀 導入方法
+
+このプロジェクトをローカル環境でセットアップする手順は以下の通りです。
+
+1. **リポジトリをクローン**:
+
+```bash
+git clone [https://github.com/tomoki013/new-travelblog.git](https://github.com/tomoki013/new-travelblog.git)
+```
+
+2. **ディレクトリを移動**:
+
+```bash
+cd new-travelblog
+```
+
+3. **依存関係をインストール**:
+
+```bash
+npm install
+# or
+yarn install
+```
+
+4. **開発サーバーを起動**:
 
 ```bash
 npm run dev
 # or
 yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+5. **ブラウザで確認**:
+   ブラウザで `http://localhost:3000` を開くと、サイトが表示されます。
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+---
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+<!-- ## 📁 ディレクトリ構成
 
-## Learn More
+プロジェクトの主要なディレクトリ構成です。
+.
+├── src
+│ ├── app/ # App Routerのルートとページ
+│ ├── components/ # 再利用可能なUIコンポーネント
+│ ├── data/ # 地域情報などの静的データ
+│ ├── lib/ # 汎用的なヘルパー関数
+│ └── posts/ # Markdown形式のブログ記事
+├── public/ # 画像などの静的アセット
+└── README.md
 
-To learn more about Next.js, take a look at the following resources:
+---
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## 📝 コンテンツ管理
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+新しいブログ記事は、`src/posts/` ディレクトリ内にMarkdownファイル (`.md`) として追加します。
+各記事ファイルは、メタデータを定義する**フロントマター**を持つ必要があります。
 
-## Deploy on Vercel
+**例 (`example-post.md`):**
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+```markdown
+---
+title: "サンプル記事のタイトル"
+publishDate: "2025-08-25"
+image: "/images/posts/sample.jpg"
+category: "旅行日記"
+series: "sunsets"
+location: ["kyoto", "osaka"]
+excerpt: "この記事はサンプルです。フロントマターにはこのようにメタデータを記述します。"
+---
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## ここから本文
+
+Markdown記法で自由に記事を記述できます。 -->
+
+```
+
+```

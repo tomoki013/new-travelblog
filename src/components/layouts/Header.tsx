@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { useState } from "react";
-import { LogoIcon, SearchIcon, MenuIcon, XIcon } from "@/components/Icons";
+import { SearchIcon, MenuIcon, XIcon } from "@/components/Icons";
 import ModeToggle from "../mode-toggle";
 import { motion, AnimatePresence } from "framer-motion";
 import Image from "next/image";
