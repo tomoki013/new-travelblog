@@ -23,7 +23,7 @@ const Hero = () => {
         <LoadingAnimation
           variant="splitFlap"
           className="flex justify-center items-center mt-12"
-          words={[" POSTS ", " KYOTO ", " PARIS "]}
+          words={[" KYOTO ", " PARIS ", "LONDON ", "NEWYORK", "BANGKOK"]}
           flapBG=""
         />
       </div>
