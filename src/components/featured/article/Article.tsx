@@ -4,11 +4,21 @@ import remarkGfm from "remark-gfm";
 import remarkToc from "remark-toc";
 import { Post } from "@/types/types";
 import { getAllPostTypes } from "@/lib/markdown";
-import { createCustomHeading, CustomImg, CustomLink } from "./CustomMarkdown";
+import {
+  createCustomHeading,
+  CustomImg,
+  CustomLink,
+  CustomTable,
+  Tbody,
+  Td,
+  Th,
+  Thead,
+  Tr,
+} from "./CustomMarkdown";
 
 interface ArticleContentProps {
   content: string;
-  currentPostType: Post["type"]; // 現在の記事のタイプを受け取る
+  currentPostType: Post["type"];
 }
 
 const ArticleContent = ({ content, currentPostType }: ArticleContentProps) => {
@@ -27,7 +37,6 @@ const ArticleContent = ({ content, currentPostType }: ArticleContentProps) => {
         node: props.node,
         children: props.children,
       }),
-    // aタグにpropsを追加で渡すため、アロー関数でラップする
     a: (props: React.ComponentProps<"a">) => (
       <CustomLink
         {...props}
@@ -48,9 +57,19 @@ const ArticleContent = ({ content, currentPostType }: ArticleContentProps) => {
         />
       );
     },
+    // ▼ 2. テーブル関連のコンポーネントをマッピングに追加
+    table: (props) => <CustomTable {...props} />,
+    thead: (props) => <Thead {...props} />,
+    tbody: (props) => <Tbody {...props} />,
+    tr: (props) => <Tr {...props} />,
+    th: (props) => <Th {...props} />,
+    td: (props) => <Td {...props} />,
   };
 
   return (
+    // proseクラスはデフォルトでtableにもスタイルを当てるため、
+    // 競合を避けるためにprose-table:border-noneなどのクラスを追加するか、
+    // prose-invertなどダークモード用のクラスを調整する必要があるかもしれません。
     <div className="prose prose-lg max-w-none dark:prose-invert">
       <ReactMarkdown
         remarkPlugins={[remarkGfm, remarkToc]}

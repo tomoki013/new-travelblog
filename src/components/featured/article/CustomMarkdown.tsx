@@ -112,3 +112,49 @@ export const CustomLink = ({
     </a>
   );
 };
+
+/**
+ * テーブルのtheadとtbodyを子要素として受け取る
+ */
+interface CustomTableProps {
+  children?: React.ReactNode;
+}
+
+export const CustomTable = ({ children }: CustomTableProps) => {
+  return (
+    // 横スクロールを実現するためのラッパーdiv
+    <div className="my-6 w-full overflow-x-auto rounded-lg border border-slate-200 p-2">
+      <table className="w-full text-sm text-left text-foreground">
+        {children}
+      </table>
+    </div>
+  );
+};
+
+// テーブルの各要素にもスタイルを適用するため、関連コンポーネントも定義しておくと便利です
+export const Thead = ({ children }: CustomTableProps) => (
+  <thead className="text-xs text-foreground uppercase bg-background">
+    {children}
+  </thead>
+);
+
+export const Tbody = ({ children }: CustomTableProps) => (
+  <tbody className="bg-background">{children}</tbody>
+);
+
+export const Tr = ({ children }: CustomTableProps) => (
+  // 奇数行と偶数行で背景色を変える（ゼブラストライピング）
+  <tr className="border-b border-slate-200 last:border-b-0 odd:bg-muted even:bg-background">
+    {children}
+  </tr>
+);
+
+export const Th = ({ children }: CustomTableProps) => (
+  <th scope="col" className="px-6 py-3 font-bold">
+    {children}
+  </th>
+);
+
+export const Td = ({ children }: CustomTableProps) => (
+  <td className="px-6 py-4 whitespace-nowrap">{children}</td>
+);

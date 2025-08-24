@@ -110,7 +110,7 @@ const PostCard = ({
       return (
         <Link
           href={`/posts/${post.slug}`}
-          className="group block bg-amber-50 rounded-lg shadow-md hover:shadow-xl transition-shadow duration-300 relative"
+          className="group block border border-amber-50 bg-background rounded-lg shadow-md hover:shadow-xl transition-shadow duration-300 relative"
         >
           {/* ポストカードの画像部分 */}
           <div className="w-full">
@@ -140,7 +140,7 @@ const PostCard = ({
           <div className="p-4">
             {/* メインコンテンツ */}
             <div>
-              <h3 className="font-serif text-xl font-bold text-foreground group-hover:text-secondary mb-2 min-h-[56px] truncate">
+              <h3 className="font-serif text-xl font-bold text-foreground group-hover:text-secondary mb-2 min-h-[56px]">
                 {post.title}
               </h3>
               <p className="text-sm text-muted-foreground mb-4 group-hover:text-secondary">
