@@ -11,15 +11,23 @@ import { Post } from "@/types/types";
 import { featuredSeries } from "@/data/series";
 import { FaFacebook, FaTwitter } from "react-icons/fa";
 import { getRegionPath, getRegionsBySlugs } from "@/lib/regionUtil";
+import RelatedPosts from "@/components/featured/article/RelatedPosts";
 
 interface ClientProps {
   children: React.ReactNode;
   post: Post;
   previousPost?: { href: string; title: string }; // 前の記事へのリンク
   nextPost?: { href: string; title: string }; // 次の記事へのリンク
+  relatedPosts?: Post[];
 }
 
-const Client = ({ children, post, previousPost, nextPost }: ClientProps) => {
+const Client = ({
+  children,
+  post,
+  previousPost,
+  nextPost,
+  relatedPosts,
+}: ClientProps) => {
   const [currentUrl, setCurrentUrl] = useState("");
   const [isCopied, setIsCopied] = useState(false);
 
@@ -198,15 +206,6 @@ const Client = ({ children, post, previousPost, nextPost }: ClientProps) => {
             </button>
           </div>
 
-          <div className="flex justify-center items-center mb-10">
-            <Link
-              href={`/posts`}
-              className="text-foreground hover:text-secondary"
-            >
-              ブログ一覧へ
-            </Link>
-          </div>
-
           {/* シリーズナビゲーション */}
           <div className="flex justify-between border-y border-gray-200 py-6 mb-10">
             {nextPost ? (
@@ -255,23 +254,24 @@ const Client = ({ children, post, previousPost, nextPost }: ClientProps) => {
               </Link>
             </div>
           </div>
+
+          {/* ==================== 関連記事セクション ==================== */}
+          {relatedPosts && (
+            <div className="mb-10">
+              <RelatedPosts posts={relatedPosts} />
+            </div>
+          )}
         </motion.footer>
 
-        {/* ==================== 関連記事セクション ==================== */}
-        {/* <motion.section
-          className="mt-16"
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, amount: 0.3 }}
-          transition={{ duration: 0.8 }}
-        >
-          <h2 className="text-2xl font-bold text-center mb-8">
-            この地域の他の記事
-          </h2>
-          <div className="text-center bg-gray-100 p-10 rounded-lg">
-            関連記事カードがここに表示されます
-          </div>
-        </motion.section> */}
+        {/* ブログ一覧へ戻る */}
+        <div className="flex justify-center items-center mb-10">
+          <Link
+            href={`/posts`}
+            className="text-foreground hover:text-secondary"
+          >
+            ブログ一覧へ
+          </Link>
+        </div>
 
         {/* ==================== コメント欄 ==================== */}
         {/* <section className="mt-16">
