@@ -4,6 +4,7 @@ import { Post } from "@/types/types";
 import { getAllPostTypes } from "@/lib/markdown";
 import HeroSection from "@/components/sections/HeroSection";
 import { featuredSeries } from "@/data/series";
+import { allRegions } from "@/data/regions";
 
 export const metadata: Metadata = {
   title: "サイトマップ",
@@ -42,11 +43,26 @@ const groupPostsByYearMonth = (posts: Post[]): YearMonthPosts => {
     }));
 };
 
+const mainList = [
+  { pass: "/", name: "ホーム" },
+  { pass: "/about", name: "プロフィール" },
+  { pass: "/posts", name: "ブログ一覧" },
+  { pass: "/series", name: "シリーズ一覧" },
+  { pass: "/destination", name: "地域別" },
+  { pass: "/gallery", name: "写真ギャラリー" },
+  { pass: "/social", name: "SNSページ" },
+  { pass: "/request", name: "記事テーマ募集ページ" },
+  { pass: "/contact", name: "お問い合わせページ" },
+  { pass: "/privacy", name: "プライバシーポリシー/免責事項" },
+  { pass: "/terms", name: "利用規約/免責事項" },
+];
+
 // --- Page Component ---
 
 export default async function SitemapPage() {
   const allPosts = await getAllPostTypes();
   const postsByYearMonth = groupPostsByYearMonth(allPosts);
+  const regions = allRegions;
 
   return (
     <div>
@@ -68,56 +84,13 @@ export default async function SitemapPage() {
                 メインページ
               </h2>
               <ul className="space-y-2 text-foreground">
-                <li>
-                  <Link href="/" className="hover:text-secondary">
-                    ホーム
-                  </Link>
-                </li>
-                <li>
-                  <Link href="/about" className="hover:text-secondary">
-                    プロフィール
-                  </Link>
-                </li>
-                <li>
-                  <Link href="/blog" className="hover:text-secondary">
-                    ブログ一覧
-                  </Link>
-                </li>
-                <li>
-                  <Link href="/series" className="hover:text-secondary">
-                    シリーズ一覧
-                  </Link>
-                </li>
-                <li>
-                  <Link href="/gallery" className="hover:text-secondary">
-                    ギャラリー
-                  </Link>
-                </li>
-                <li>
-                  <Link href="/social" className="hover:text-secondary">
-                    SNSページ
-                  </Link>
-                </li>
-                <li>
-                  <Link href="/request" className="hover:text-secondary">
-                    記事テーマ募集ページ
-                  </Link>
-                </li>
-                <li>
-                  <Link href="/contact" className="hover:text-secondary">
-                    お問い合わせページ
-                  </Link>
-                </li>
-                <li>
-                  <Link href="/privacy" className="hover:text-secondary">
-                    プライバシーポリシー/免責事項
-                  </Link>
-                </li>
-                <li>
-                  <Link href="/terms" className="hover:text-secondary">
-                    利用規約
-                  </Link>
-                </li>
+                {mainList.map((p) => (
+                  <li key={p.pass}>
+                    <Link href={p.pass} className="hover:text-secondary">
+                      {p.name}
+                    </Link>
+                  </li>
+                ))}
               </ul>
             </section>
 
@@ -139,29 +112,23 @@ export default async function SitemapPage() {
               </ul>
             </section>
 
-            {/* <section>
+            <section>
               <h2 className="text-2xl font-bold border-b-2 border-teal-500 pb-2 mb-4">
                 国・地域別一覧
               </h2>
               <ul className="space-y-2 text-foreground">
-                <li>
-                  <Link
-                    href="/destinations/italy"
-                    className="hover:text-secondary"
-                  >
-                    イタリア
-                  </Link>
-                </li>
-                <li>
-                  <Link
-                    href="/destinations/japan"
-                    className="hover:text-secondary"
-                  >
-                    日本
-                  </Link>
-                </li>
+                {regions.map((region) => (
+                  <li key={region.slug}>
+                    <Link
+                      href={`/destination/${region.slug}`}
+                      className="hover:text-secondary"
+                    >
+                      {region.name}
+                    </Link>
+                  </li>
+                ))}
               </ul>
-            </section> */}
+            </section>
           </div>
 
           {/* ==================== 自動更新エリア ==================== */}

@@ -4,7 +4,7 @@ import { Region } from "@/types/types";
 /**
  * slugから単一の地域情報を取得します。
  */
-const getRegionBySlug = (slug: string): Region | undefined => {
+export const getRegionBySlug = (slug: string): Region | undefined => {
   return allRegions.find((region) => region.slug === slug);
 };
 

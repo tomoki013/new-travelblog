@@ -3,6 +3,7 @@ import Link from "next/link";
 import { FaBlog, FaGithub, FaTiktok, FaYoutube } from "react-icons/fa";
 
 export const contentsList = [
+  { name: "地域別", pass: "/destination" },
   { name: "シリーズ一覧", pass: "/series" },
   { name: "ブログ一覧", pass: "/posts" },
   { name: "写真ギャラリー", pass: "/gallery" },
