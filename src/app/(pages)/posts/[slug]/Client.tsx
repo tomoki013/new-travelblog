@@ -12,6 +12,7 @@ import { featuredSeries } from "@/data/series";
 import { FaFacebook, FaTwitter } from "react-icons/fa";
 import { getRegionPath, getRegionsBySlugs } from "@/lib/regionUtil";
 import RelatedPosts from "@/components/featured/article/RelatedPosts";
+import Index from "@/components/featured/article/Index";
 
 interface ClientProps {
   children: React.ReactNode;
@@ -156,6 +157,9 @@ const Client = ({
             priority
           />
         </motion.header>
+
+        {/* 目次 */}
+        <Index />
 
         {/* ==================== 記事本文エリア ==================== */}
         <motion.div

@@ -1,6 +1,7 @@
 import type { Components } from "react-markdown";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
+import remarkToc from "remark-toc";
 import { Post } from "@/types/types";
 import { getAllPostTypes } from "@/lib/markdown";
 import { createCustomHeading, CustomImg, CustomLink } from "./CustomMarkdown";
@@ -52,7 +53,7 @@ const ArticleContent = ({ content, currentPostType }: ArticleContentProps) => {
   return (
     <div className="prose prose-lg max-w-none dark:prose-invert">
       <ReactMarkdown
-        remarkPlugins={[remarkGfm]}
+        remarkPlugins={[remarkGfm, remarkToc]}
         components={markdownComponents}
       >
         {content}
