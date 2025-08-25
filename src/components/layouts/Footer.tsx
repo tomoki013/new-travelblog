@@ -1,43 +1,11 @@
+import {
+  FOOTER_CONTENTS_LIST,
+  FOOTER_LINK_LIST,
+  SOCIAL_LIST,
+} from "@/constants/navigation";
 import { Mail } from "lucide-react";
 import Link from "next/link";
-import { FaBlog, FaGithub, FaTiktok, FaYoutube } from "react-icons/fa";
-
-export const contentsList = [
-  { name: "地域別", pass: "/destination" },
-  { name: "シリーズ一覧", pass: "/series" },
-  { name: "ブログ一覧", pass: "/posts" },
-  { name: "写真ギャラリー", pass: "/gallery" },
-];
-
-export const linkList = [
-  { name: "サイトについて", pass: "/about" },
-  { name: "プライバシーポリシー", pass: "/privacy" },
-  { name: "利用規約", pass: "/terms" },
-  { name: "サイトマップ", pass: "/sitemap" },
-];
-
-export const socialList = [
-  // {
-  //   name: "Instagram",
-  //   pass: "https://www.instagram.com/tomokichi_travel/",
-  //   icon: <FaInstagram />,
-  // },
-  {
-    name: "YouTube",
-    pass: "https://www.youtube.com/@tomokichi_travel",
-    icon: <FaYoutube />,
-  },
-  {
-    name: "TikTok",
-    pass: "https://www.tiktok.com/@tomokichitravel",
-    icon: <FaTiktok />,
-  },
-  {
-    name: "GitHub",
-    pass: "https://github.com/tomoki013/new-travelblog",
-    icon: <FaGithub />,
-  },
-];
+import { FaBlog } from "react-icons/fa";
 
 const Footer = () => {
   return (
@@ -52,7 +20,7 @@ const Footer = () => {
               日本と世界の旅行記録と観光情報を発信するブログサイトです。
             </p>
             <div className="flex space-x-3">
-              {socialList.map((sns) => (
+              {SOCIAL_LIST.map((sns) => (
                 <Link
                   key={sns.name}
                   href={sns.pass}
@@ -75,7 +43,7 @@ const Footer = () => {
           <div className="space-y-3">
             <h3 className="text-lg font-medium">コンテンツ</h3>
             <ul className="space-y-2 text-sm">
-              {contentsList.map((content) => (
+              {FOOTER_CONTENTS_LIST.map((content) => (
                 <li key={content.name}>
                   <Link
                     href={content.pass}
@@ -90,7 +58,7 @@ const Footer = () => {
           <div className="space-y-3">
             <h3 className="text-lg font-medium">リンク</h3>
             <ul className="space-y-2 text-sm">
-              {linkList.map((link) => (
+              {FOOTER_LINK_LIST.map((link) => (
                 <li key={link.name}>
                   <Link
                     href={link.pass}
