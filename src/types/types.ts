@@ -39,6 +39,7 @@ export interface Region {
   slug: string;
   name: string;
   parent?: string;
+  imageURL: string;
 }
 
 // Seriesデータの型定義

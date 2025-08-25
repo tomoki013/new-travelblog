@@ -1,20 +1,14 @@
 "use client";
+import AllDestination, {
+  AllDestinationProps,
+} from "@/components/featured/destination/allDestination";
 
-import { motion } from "framer-motion";
-import { Region } from "@/types/types";
-import Link from "next/link";
-import { sectionVariants } from "@/components/animation";
-
-interface ClientProps {
-  groupedRegions: Record<string, (Region & { children: Region[] })[]>;
-}
-
-const Client = ({ groupedRegions }: ClientProps) => {
+const Client = ({ groupedRegions }: AllDestinationProps) => {
   return (
     <div>
       {/* ==================== Hero Section ==================== */}
       <section className="relative h-72 md:h-96 flex items-center justify-center text-white text-center">
-        <div className="absolute inset-0 bg-gray-800" />
+        <div className="absolute inset-0 bg-secondary" />
         <div className="relative z-10 p-4">
           <h1 className="text-4xl md:text-6xl font-bold tracking-tight">
             DESTINATIONS
@@ -47,51 +41,7 @@ const Client = ({ groupedRegions }: ClientProps) => {
         </motion.section> */}
 
         {/* ==================== 地域別リスト ==================== */}
-        <motion.section
-          variants={sectionVariants}
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, amount: 0.3 }}
-        >
-          <h2 className="text-3xl font-bold text-center mb-12">
-            すべての旅行先一覧
-          </h2>
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8">
-            {Object.entries(groupedRegions).map(([continent, countries]) => (
-              <div key={continent}>
-                <h3 className="text-2xl font-bold border-b-2 border-secondary pb-2 mb-4">
-                  {continent}
-                </h3>
-                <ul className="space-y-2">
-                  {countries.map((country) => (
-                    <li key={country.slug}>
-                      <Link
-                        href={`/destination/${country.slug}`}
-                        className="font-semibold text-foreground hover:text-secondary"
-                      >
-                        ・{country.name}
-                      </Link>
-                      {country.children.length > 0 && (
-                        <ul className="ml-6 mt-1 space-y-1">
-                          {country.children.map((city) => (
-                            <li key={city.slug}>
-                              <Link
-                                href={`/destination/${city.slug}`}
-                                className="text-foreground hover:text-secondary"
-                              >
-                                - {city.name}
-                              </Link>
-                            </li>
-                          ))}
-                        </ul>
-                      )}
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            ))}
-          </div>
-        </motion.section>
+        <AllDestination groupedRegions={groupedRegions} />
       </div>
     </div>
   );
