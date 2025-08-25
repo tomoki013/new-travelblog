@@ -4,7 +4,7 @@ import { Post } from "@/types/types";
 import { getAllPostTypes } from "@/lib/markdown";
 import HeroSection from "@/components/sections/HeroSection";
 import { featuredSeries } from "@/data/series";
-import { allRegions } from "@/data/regions";
+import { regionsData } from "@/data/regions";
 
 export const metadata: Metadata = {
   title: "サイトマップ",
@@ -62,7 +62,7 @@ const mainList = [
 export default async function SitemapPage() {
   const allPosts = await getAllPostTypes();
   const postsByYearMonth = groupPostsByYearMonth(allPosts);
-  const regions = allRegions;
+  const regions = regionsData;
 
   return (
     <div>

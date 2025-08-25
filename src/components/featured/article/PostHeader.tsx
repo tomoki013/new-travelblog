@@ -7,7 +7,7 @@ import { ChevronRight, MapPin } from "lucide-react";
 import { getDatePrefix } from "@/lib/dateFormat";
 import { Post } from "@/types/types";
 import { featuredSeries } from "@/data/series";
-import { getRegionPath, getRegionsBySlugs } from "@/lib/regionUtil";
+import { getRegionPath, getValidRegionsBySlugs } from "@/lib/regionUtil";
 
 interface PostHeaderProps {
   post: Post;
@@ -15,7 +15,7 @@ interface PostHeaderProps {
 
 const PostHeader = ({ post }: PostHeaderProps) => {
   const series = featuredSeries.find((s) => s.slug === post.series);
-  const regionTags = getRegionsBySlugs(post.location);
+  const regionTags = getValidRegionsBySlugs(post.location);
   const primarySlug = post.location.length > 0 ? post.location[0] : undefined;
   const regionPath = primarySlug ? getRegionPath(primarySlug) : [];
   const country = regionPath.length > 0 ? regionPath[0] : null;

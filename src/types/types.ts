@@ -70,3 +70,7 @@ export interface Series {
   imageUrl: string;
   IconComponent: string;
 }
+
+export interface AllDestinationProps {
+  regionsData: ContinentData[];
+}

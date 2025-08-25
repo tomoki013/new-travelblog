@@ -1,11 +1,9 @@
+"use client";
+
 import Link from "next/link";
 import { motion } from "framer-motion";
 import { sectionVariants } from "@/components/animation";
-import { ContinentData } from "@/types/types";
-
-export interface AllDestinationProps {
-  regionsData: ContinentData[];
-}
+import { AllDestinationProps } from "@/types/types";
 
 const AllDestination = ({ regionsData }: AllDestinationProps) => {
   return (

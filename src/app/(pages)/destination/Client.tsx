@@ -1,7 +1,7 @@
 "use client";
-import AllDestination, {
-  AllDestinationProps,
-} from "@/components/featured/destination/allDestination";
+
+import AllDestination from "@/components/featured/destination/allDestination";
+import { AllDestinationProps } from "@/types/types";
 
 const Client = ({ regionsData }: AllDestinationProps) => {
   return (

@@ -2,13 +2,11 @@
 
 import Image from "next/image";
 import { motion } from "framer-motion";
-import { Region, Post } from "@/types/types";
+import { Region, Post, AllDestinationProps } from "@/types/types";
 import PostCard from "@/components/elements/PostCard";
 import { sectionVariants } from "@/components/animation";
 import { Wind } from "lucide-react";
-import AllDestination, {
-  AllDestinationProps,
-} from "@/components/featured/destination/allDestination";
+import AllDestination from "@/components/featured/destination/allDestination";
 
 interface ClientProps extends AllDestinationProps {
   region: Region;
