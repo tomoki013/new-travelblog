@@ -1,26 +1,15 @@
 "use client";
 
-import Link from "next/link";
-import { useState } from "react";
-import { SearchIcon, MenuIcon, XIcon } from "@/components/Icons";
-import ModeToggle from "../mode-toggle";
-import { motion, AnimatePresence } from "framer-motion";
+import { MenuIcon, XIcon } from "@/components/Icons";
+import { NAV_LINKS } from "@/constants/navigation";
+import { useMobileMenu } from "@/hooks/useMobileMenu";
+import { AnimatePresence, motion } from "framer-motion";
 import Image from "next/image";
+import Link from "next/link";
+import ModeToggle from "../mode-toggle";
 
 const Header = () => {
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
-
-  const toggleMenu = () => {
-    setIsMenuOpen(!isMenuOpen);
-  };
-
-  const navLinks = [
-    { href: "/destination", label: "Destination" },
-    { href: "/series", label: "Series" },
-    { href: "/posts", label: "Blog" },
-    { href: "/gallery", label: "Gallery" },
-    { href: "/about", label: "About" },
-  ];
+  const { isMenuOpen, toggleMenu, closeMenu } = useMobileMenu();
 
   return (
     <>
@@ -29,7 +18,7 @@ const Header = () => {
           {/* Logo */}
           <Link href="/" className="flex items-center gap-2 max-h-16">
             <Image
-              src={`favicon.ico`}
+              src={`/favicon.ico`}
               alt={`ともきちの旅行日記`}
               width={40}
               height={40}
@@ -47,7 +36,7 @@ const Header = () => {
 
           {/* Desktop Navigation */}
           <nav className="hidden md:flex items-center gap-6 text-sm font-medium">
-            {navLinks.map((link) => (
+            {NAV_LINKS.map((link) => (
               <Link
                 key={link.label}
                 href={link.href}
@@ -107,12 +96,12 @@ const Header = () => {
 
               {/* Mobile Navigation */}
               <nav className="flex flex-col items-center gap-6 text-lg font-medium">
-                {navLinks.map((link) => (
+                {NAV_LINKS.map((link) => (
                   <Link
                     key={link.label}
                     href={link.href}
                     className="relative pb-[5px] font-medium text-muted-foreground transition-colors hover:text-secondary after:content-[''] after:absolute after:bottom-0 after:left-0 after:h-[1px] after:w-0 after:bg-secondary after:transition-all after:duration-300 hover:after:w-full"
-                    onClick={() => setIsMenuOpen(false)}
+                    onClick={closeMenu}
                   >
                     {link.label}
                   </Link>

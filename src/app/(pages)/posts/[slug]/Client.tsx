@@ -4,15 +4,14 @@ import { useState, useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { motion } from "framer-motion";
-import { ChevronRight, Copy, MapPin } from "lucide-react";
-import { getDatePrefix } from "@/lib/dateFormat";
+import { Copy } from "lucide-react";
 import { members } from "@/data/member";
 import { Post } from "@/types/types";
-import { featuredSeries } from "@/data/series";
 import { FaFacebook, FaTwitter } from "react-icons/fa";
-import { getRegionPath, getRegionsBySlugs } from "@/lib/regionUtil";
 import RelatedPosts from "@/components/featured/article/RelatedPosts";
 import Index from "@/components/featured/article/Index";
+import PostHeader from "@/components/featured/article/PostHeader";
+import PostNavigation from "@/components/featured/article/PostNavigation";
 
 interface ClientProps {
   children: React.ReactNode;
@@ -32,136 +31,39 @@ const Client = ({
   const [currentUrl, setCurrentUrl] = useState("");
   const [isCopied, setIsCopied] = useState(false);
 
-  // ページが読み込まれた際に、現在のURLを取得
   useEffect(() => {
-    // windowオブジェクトが利用可能な場合にのみ実行
     if (typeof window !== "undefined") {
       setCurrentUrl(window.location.href);
     }
   }, []);
 
   const author = members.find((m) => m.name === post.author);
-  const series = featuredSeries.find((s) => s.slug === post.series);
 
-  // Twitterでシェアする
   const shareOnTwitter = () => {
     const text = encodeURIComponent(`${post.title} | ともきちの旅行日記`);
     const url = encodeURIComponent(currentUrl);
     window.open(`https://twitter.com/intent/tweet?text=${text}&url=${url}`);
   };
 
-  // Facebookでシェアする
   const shareOnFacebook = () => {
     const url = encodeURIComponent(currentUrl);
     window.open(`https://www.facebook.com/sharer/sharer.php?u=${url}`);
   };
 
-  // URLをクリップボードにコピーする
   const copyUrlToClipboard = () => {
-    navigator.clipboard
-      .writeText(currentUrl)
-      .then(() => {
-        setIsCopied(true);
-        // 2秒後に「Copied!」の表示を消す
-        setTimeout(() => setIsCopied(false), 2000);
-      })
-      .catch((err) => {
-        console.error("URLのコピーに失敗しました: ", err);
-      });
+    navigator.clipboard.writeText(currentUrl).then(() => {
+      setIsCopied(true);
+      setTimeout(() => setIsCopied(false), 2000);
+    });
   };
-
-  const regionTags = getRegionsBySlugs(post.location);
-  const primarySlug = post.location.length > 0 ? post.location[0] : undefined;
-  const regionPath = primarySlug ? getRegionPath(primarySlug) : [];
-  const country = regionPath.length > 0 ? regionPath[0] : null;
 
   return (
     <div>
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-        {/* ==================== 記事タイトルエリア ==================== */}
-        <motion.header
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 0.8 }}
-        >
-          {/* パンくずリスト */}
-          <nav
-            className="flex flex-col md:flex-row md:items-center text-sm text-gray-500 mb-4"
-            aria-label="Breadcrumb"
-          >
-            <Link href="/" className="hover:text-teal-600">
-              ホーム
-            </Link>
-            <ChevronRight size={16} className="mx-1" />
-            {country && (
-              <Link
-                href={`/destination/${country.slug}`}
-                className="hover:text-teal-600"
-              >
-                {country.name}
-              </Link>
-            )}
-            <ChevronRight size={16} className="mx-1" />
-            <span className="truncate">{post.title}</span>
-          </nav>
+        <PostHeader post={post} />
 
-          {/* メタ情報 */}
-          <div className="flex flex-wrap gap-2 mb-4">
-            {post.category.map((cat) => (
-              <Link
-                key={cat}
-                href={`/categories/${cat}`}
-                className="bg-teal-100 text-teal-700 px-3 py-1 text-xs font-semibold rounded-full hover:bg-teal-200"
-              >
-                {cat}
-              </Link>
-            ))}
-            {series && (
-              <Link
-                href={`/series/${series.slug}`}
-                className="bg-amber-100 text-amber-700 px-3 py-1 text-xs font-semibold rounded-full hover:bg-amber-200"
-              >
-                {series.title}
-              </Link>
-            )}
-          </div>
-
-          <h1 className="text-3xl md:text-5xl font-bold text-gray-900 mb-4">
-            {post.title}
-          </h1>
-          <div className="text-muted-foreground mb-6 flex justify-between items-center">
-            <p>
-              {getDatePrefix(post.type)}: {post.dates.join("～")}
-            </p>
-            <section className="flex flex-col md:flex-row md:items-center gap-2">
-              {regionTags.map((r) => (
-                <Link
-                  key={r.slug}
-                  href={`/destinations/${r.slug}`}
-                  className="hover:text-foreground"
-                >
-                  <MapPin className="inline mr-0.5" size={16} />
-                  {r.name}
-                </Link>
-              ))}
-            </section>
-          </div>
-
-          {/* アイキャッチ画像 */}
-          <Image
-            src={post.image}
-            alt={post.title}
-            width={1200}
-            height={675}
-            className="w-full rounded-lg shadow-lg aspect-video object-cover"
-            priority
-          />
-        </motion.header>
-
-        {/* 目次 */}
         <Index />
 
-        {/* ==================== 記事本文エリア ==================== */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -171,7 +73,6 @@ const Client = ({
           <article>{children}</article>
         </motion.div>
 
-        {/* ==================== 記事フッターエリア ==================== */}
         <motion.footer
           className="mt-16"
           initial={{ opacity: 0, y: 20 }}
@@ -179,7 +80,6 @@ const Client = ({
           viewport={{ once: true, amount: 0.3 }}
           transition={{ duration: 0.8 }}
         >
-          {/* SNSシェアボタン */}
           <div className="flex items-center justify-center gap-4 mb-10">
             <span className="font-semibold">Share:</span>
             <button
@@ -210,33 +110,8 @@ const Client = ({
             </button>
           </div>
 
-          {/* シリーズナビゲーション */}
-          <div className="flex justify-between border-y border-gray-200 py-6 mb-10">
-            {nextPost ? (
-              <Link
-                href={nextPost.href}
-                className="text-gray-600 hover:text-teal-600 max-w-[45%]"
-              >
-                <span className="text-sm">« 次の記事へ</span>
-                <p className="font-semibold truncate">{nextPost.title}</p>
-              </Link>
-            ) : (
-              <div />
-            )}
-            {previousPost ? (
-              <Link
-                href={previousPost.href}
-                className="text-gray-600 hover:text-teal-600 max-w-[45%] text-right"
-              >
-                <span className="text-sm">前の記事へ »</span>
-                <p className="font-semibold truncate">{previousPost.title}</p>
-              </Link>
-            ) : (
-              <div />
-            )}
-          </div>
+          <PostNavigation previousPost={previousPost} nextPost={nextPost} />
 
-          {/* 著者プロフィール */}
           <div className="bg-gray-50 p-6 rounded-lg flex items-center gap-6">
             <Image
               src={author?.image || "/favicon.ico"}

@@ -32,6 +32,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+import { sendContactForm } from "@/services/contactService";
 
 const formSchema = z.object({
   name: z.string().min(2, {
@@ -71,27 +72,16 @@ const ContactForm = () => {
     },
   });
 
-  const onSubmit = (values: ContactFormValues) => {
+  const onSubmit = async (values: ContactFormValues) => {
     setErrorMessage(null);
-    fetch("/api/send-email", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(values),
-    })
-      .then((response) => {
-        if (response.ok) {
-          setIsSubmitted(true);
-        } else {
-          setErrorMessage("メール送信に失敗しました。もう一度お試しください。");
-        }
-      })
-      .catch(() => {
-        setErrorMessage(
-          "エラーが発生しました。ネットワーク接続を確認してください。"
-        );
-      });
+    try {
+      await sendContactForm(values);
+      setIsSubmitted(true);
+    } catch (error) {
+      setErrorMessage(
+        "メール送信に失敗しました。もう一度お試しいただくか、ネットワーク接続を確認してください。"
+      );
+    }
   };
 
   return (
