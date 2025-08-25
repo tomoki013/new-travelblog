@@ -22,7 +22,7 @@ const Client = ({
   seriesPosts,
   tourismPosts,
   itineraryPosts,
-  groupedRegions,
+  regionsData,
 }: ClientProps) => {
   const noPosts =
     seriesPosts.length === 0 &&
@@ -141,7 +141,7 @@ const Client = ({
         )}
       </div>
       <div className="mt-16 max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
-        <AllDestination groupedRegions={groupedRegions} />
+        <AllDestination regionsData={regionsData} />
       </div>
     </div>
   );
