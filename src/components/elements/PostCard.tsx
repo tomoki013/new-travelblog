@@ -6,8 +6,8 @@ import { Post } from "@/types/types";
 import Link from "next/link";
 import { ArrowRight, Calendar, MapPin } from "lucide-react";
 import { featuredSeries } from "@/data/series";
-import { getRegionsBySlugs } from "@/lib/regionUtil";
 import { FaGlobeAsia } from "react-icons/fa";
+import { getValidRegionsBySlugs } from "@/lib/regionUtil";
 
 interface PostCardProps {
   post: Post;
@@ -33,7 +33,7 @@ const PostCard = ({
 
   const series = featuredSeries.find((s) => s.slug === post.series);
 
-  const regionTags = getRegionsBySlugs(post.location);
+  const regionTags = getValidRegionsBySlugs(post.location);
 
   switch (variant) {
     case "default":

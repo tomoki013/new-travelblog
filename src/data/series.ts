@@ -41,4 +41,12 @@ export const featuredSeries: Series[] = [
     imageUrl: "/images/Kyoto/kiyomizu-temple-autumn-leaves-lightup.jpg",
     IconComponent: "Castle",
   },
+  {
+    id: 6,
+    slug: "travel-diary",
+    title: "旅行日記",
+    description: "私が旅した各地の旅行記",
+    imageUrl: "/images/Introduce/introduce.jpg",
+    IconComponent: "Globe2",
+  },
 ];

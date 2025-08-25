@@ -9,8 +9,9 @@ const getAllRegions = (): Region[] => {
   regionsData.forEach((continent) => {
     continent.countries.forEach((country) => {
       allRegions.push({ ...country, children: undefined }); // 子要素は含めない
-      if (country.children) {
+      if (country.children && country.children.length > 0) {
         allRegions.push(...country.children);
+        console.log(allRegions);
       }
     });
   });
@@ -18,7 +19,6 @@ const getAllRegions = (): Region[] => {
 };
 
 const allRegions = getAllRegions(); // 事前に全リージョンをキャッシュ
-
 /**
  * slugから単一の地域情報を取得します。
  */
@@ -31,6 +31,18 @@ export const getRegionBySlug = (slug: string): Region | undefined => {
 const regionMap = new Map(allRegions.map((region) => [region.slug, region]));
 export const getRegionBySlugOptimized = (slug: string): Region | undefined => {
   return regionMap.get(slug);
+};
+
+/**
+ * slugの配列を受け取り、存在する地域オブジェクトのみの配列を返します。
+ * 内部で `undefined` は自動的に除外されます。
+ * @param slugs - 地域slugの配列
+ * @returns `Region`オブジェクトの配列（undefinedを含まない）
+ */
+export const getValidRegionsBySlugs = (slugs: string[]): Region[] => {
+  return slugs
+    .map((slug) => getRegionBySlugOptimized(slug)) // まずslugをRegion | undefinedに変換
+    .filter((region): region is Region => region !== undefined); // 次にundefinedを取り除く
 };
 
 /**
