@@ -3,7 +3,7 @@ import AllDestination, {
   AllDestinationProps,
 } from "@/components/featured/destination/allDestination";
 
-const Client = ({ groupedRegions }: AllDestinationProps) => {
+const Client = ({ regionsData }: AllDestinationProps) => {
   return (
     <div>
       {/* ==================== Hero Section ==================== */}
@@ -41,7 +41,7 @@ const Client = ({ groupedRegions }: AllDestinationProps) => {
         </motion.section> */}
 
         {/* ==================== 地域別リスト ==================== */}
-        <AllDestination groupedRegions={groupedRegions} />
+        <AllDestination regionsData={regionsData} />
       </div>
     </div>
   );
