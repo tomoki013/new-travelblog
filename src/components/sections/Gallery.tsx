@@ -11,6 +11,7 @@ import { Autoplay } from "swiper/modules";
 
 // 変更点 2: Grid用のCSSインポートを削除
 import "swiper/css";
+import Button from "../elements/Button";
 
 const Gallery = () => {
   // 変更点 3: ギャラリーデータを上段用（偶数インデックス）と下段用（奇数インデックス）に分割
@@ -144,14 +145,7 @@ const Gallery = () => {
       </div>
 
       {/* ボタン */}
-      <div className="text-center mt-16">
-        <Link
-          href={`/gallery`}
-          className="inline-block py-3 px-10 bg-secondary text-white uppercase text-sm font-bold tracking-wider rounded-full border-2 border-secondary transition-all duration-300 ease-in-out hover:bg-transparent hover:text-secondary"
-        >
-          ギャラリーをもっと見る
-        </Link>
-      </div>
+      <Button href={`/gallery`}>ギャラリーをもっと見る</Button>
     </motion.section>
   );
 };

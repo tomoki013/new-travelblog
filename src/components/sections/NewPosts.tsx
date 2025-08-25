@@ -1,6 +1,7 @@
 import { getAllPostTypes } from "@/lib/markdown";
 import PostCard from "@/components/elements/PostCard";
 import Link from "next/link";
+import Button from "../elements/Button";
 
 const NewPosts = () => {
   const posts = getAllPostTypes();
@@ -28,14 +29,7 @@ const NewPosts = () => {
       </div>
 
       {/* ボタン */}
-      <div className="text-center">
-        <Link
-          href={`/posts`}
-          className="inline-block py-3 px-10 bg-secondary text-white uppercase text-sm font-bold tracking-wider rounded-full border-2 border-secondary transition-all duration-300 ease-in-out hover:bg-transparent hover:text-secondary"
-        >
-          ブログ一覧を見る
-        </Link>
-      </div>
+      <Button href={`/posts`}>ブログ一覧を見る</Button>
     </section>
   );
 };

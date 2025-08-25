@@ -77,7 +77,7 @@ const ContactForm = () => {
     try {
       await sendContactForm(values);
       setIsSubmitted(true);
-    } catch (error) {
+    } catch {
       setErrorMessage(
         "メール送信に失敗しました。もう一度お試しいただくか、ネットワーク接続を確認してください。"
       );
