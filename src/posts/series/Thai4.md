@@ -6,6 +6,7 @@ image: "/images/Thai/do-dee-cafe.jpg"
 location: "bangkok"
 category: "海外旅行"
 author: "ともきち"
+series: 'travel-diary'
 tags: ["海外"]
 ---
 

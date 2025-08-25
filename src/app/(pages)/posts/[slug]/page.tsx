@@ -7,7 +7,7 @@ import type { PostType } from "@/types/types";
 import { Metadata } from "next";
 import { getRelatedPosts } from "@/lib/getPostData";
 
-const categories: PostType[] = ["diary", "tourism", "itinerary", "series"];
+const categories: PostType[] = ["tourism", "itinerary", "series"];
 
 const findCategoryBySlug = async (slug: string): Promise<PostType | null> => {
   for (const category of categories) {

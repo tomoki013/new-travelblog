@@ -6,6 +6,7 @@ image: "/images/Hokkaido/sapporo-tv-tower.jpg"
 location: "hokkaido"
 category: "国内旅行"
 author: "ともきち"
+series: 'travel-diary'
 tags:
   [
     "日本",

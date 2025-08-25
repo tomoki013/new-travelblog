@@ -6,6 +6,7 @@ image: "/images/India/indian-gate-at-noon.jpg"
 location: "new-delhi"
 category: "海外旅行"
 author: "ともきち"
+series: 'travel-diary'
 tags: ["海外", "アジア", "インド", "ニューデリー", "世界遺産"]
 ---
 

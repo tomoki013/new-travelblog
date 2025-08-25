@@ -6,6 +6,7 @@ image: "/images/India/varanasi-alley4.jpg"
 location: "varanasi"
 category: "海外旅行"
 author: "ともきち"
+series: 'travel-diary'
 tags:
   ["海外", "アジア", "インド", "バラナシ", "聖地", "火葬場", "ローカルフード"]
 ---

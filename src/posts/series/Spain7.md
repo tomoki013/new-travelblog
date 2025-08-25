@@ -6,6 +6,7 @@ image: "/images/Belgium/galeries-royales-saint-hubert.jpg"
 location: "madrid, brussels"
 category: "海外旅行, 一人旅"
 author: "ともきち"
+series: 'travel-diary'
 tags:
   [
     "海外",

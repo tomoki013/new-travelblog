@@ -1,4 +1,4 @@
-export type PostType = "diary" | "tourism" | "itinerary" | "series";
+export type PostType = "tourism" | "itinerary" | "series";
 export interface Post {
   id: string;
   slug: string;

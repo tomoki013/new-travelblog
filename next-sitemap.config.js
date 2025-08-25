@@ -38,7 +38,7 @@ function getAllPosts(type) {
 }
 
 function getAllPostTypes() {
-  const postTypes = ["diary", "tourism", "itinerary", "series"];
+  const postTypes = ["tourism", "itinerary", "series"];
   let allPosts = [];
   for (const type of postTypes) {
     allPosts = allPosts.concat(getAllPosts(type));

@@ -6,6 +6,7 @@ image: "/images/Spain/royal-palace-in-the-daytime.jpg"
 location: "madrid"
 category: "海外旅行, 一人旅"
 author: "ともきち"
+series: 'travel-diary'
 tags: ["海外", "スペイン", "マドリード"]
 ---
 

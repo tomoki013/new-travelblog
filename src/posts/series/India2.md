@@ -6,6 +6,7 @@ image: "/images/India/tajmahal.jpg"
 location: "agra, jaipur"
 category: "海外旅行"
 author: "ともきち"
+series: 'travel-diary'
 tags:
   [
     "海外",

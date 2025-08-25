@@ -77,16 +77,10 @@ export default function getAllPosts(type: PostType): Post[] {
 }
 
 export function getAllPostTypes(): Post[] {
-  const diaryPosts = getAllPosts("diary");
   const tourismPosts = getAllPosts("tourism");
   const itineraryPosts = getAllPosts("itinerary");
   const seriesPosts = getAllPosts("series");
-  const allPosts = [
-    ...diaryPosts,
-    ...tourismPosts,
-    ...itineraryPosts,
-    ...seriesPosts,
-  ];
+  const allPosts = [...tourismPosts, ...itineraryPosts, ...seriesPosts];
 
   return allPosts.sort((a, b) => {
     const dateA = new Date(a.dates[0]).getTime();
