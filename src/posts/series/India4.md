@@ -6,6 +6,7 @@ image: "/images/India/train-view1.jpg"
 location: "jaipur, varanasi"
 category: "海外旅行"
 author: "ともきち"
+series: 'travel-diary'
 tags: ["海外", "アジア", "インド", "バラナシ", "寝台列車", "ガンジス川", "聖地"]
 ---
 

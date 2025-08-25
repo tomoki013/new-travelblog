@@ -17,7 +17,6 @@ interface BlogClientProps {
 // 絞り込み用の選択肢
 const categories = [
   { slug: "all", title: "すべてのカテゴリー" },
-  { slug: "diary", title: "旅行日記" },
   { slug: "tourism", title: "観光情報" },
   { slug: "itinerary", title: "旅程&費用レポート" },
 ];

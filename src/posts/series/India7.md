@@ -6,6 +6,7 @@ image: "/images/India/festival-of-ganga1.jpg"
 location: "varanasi"
 category: "海外旅行"
 author: "ともきち"
+series: 'travel-diary'
 tags:
   ["海外", "アジア", "インド", "バラナシ", "ガンジス川", "お祭り", "インド料理"]
 ---

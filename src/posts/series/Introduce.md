@@ -6,6 +6,7 @@ image: "/images/Introduce/introduce.jpg"
 location: "kyoto"
 category: "その他"
 author: "ともきち"
+series: 'travel-diary'
 ---
 
 ## 自己紹介します

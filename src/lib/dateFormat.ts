@@ -2,7 +2,6 @@ import { Post } from "../types/types"; // Post型をインポート
 
 export function getDatePrefix(postType: Post["type"]): string {
   switch (postType) {
-    case "diary":
     case "itinerary":
       return "旅行日：";
     case "tourism":

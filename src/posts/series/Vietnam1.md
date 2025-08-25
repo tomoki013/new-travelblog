@@ -6,6 +6,7 @@ image: "/images/Vietnam/dong-kinh-nghia-thuc-square.jpg"
 location: "hanoi"
 category: "海外旅行"
 author: "ともきち"
+series: 'travel-diary'
 tags: ["海外", "アジア", "インド", "ベトナム", "トランジット"]
 ---
 
