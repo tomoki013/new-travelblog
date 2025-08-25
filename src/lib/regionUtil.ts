@@ -2,23 +2,22 @@ import { regionsData } from "@/data/regions";
 import { Region } from "@/types/types";
 
 /**
- * すべての地域情報をフラットな配列で取得します。（キャッシュすることも可能）
+ * 全てのリージョン（国と、その子要素）をフラットな配列として取得します。
+ * @returns {Region[]} 全てのリージョンを含む配列
  */
 const getAllRegions = (): Region[] => {
-  const allRegions: Region[] = [];
-  regionsData.forEach((continent) => {
-    continent.countries.forEach((country) => {
-      allRegions.push({ ...country, children: undefined }); // 子要素は含めない
-      if (country.children && country.children.length > 0) {
-        allRegions.push(...country.children);
-        console.log(allRegions);
-      }
-    });
-  });
-  return allRegions;
+  return regionsData.flatMap((continent) =>
+    continent.countries.flatMap((country) => [
+      { ...country, children: undefined }, // 親となる国を追加（childrenプロパティは削除）
+      ...(country.children || []), // 子要素があれば展開して追加
+    ])
+  );
 };
 
-const allRegions = getAllRegions(); // 事前に全リージョンをキャッシュ
+// 事前に全リージョンをキャッシュ
+const allRegions = getAllRegions();
+
+console.log(allRegions);
 /**
  * slugから単一の地域情報を取得します。
  */

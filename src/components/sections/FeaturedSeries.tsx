@@ -2,8 +2,8 @@
 
 import { featuredSeries } from "@/data/series";
 import SeriesCard from "../elements/SeriesCard";
-import Link from "next/link";
 import { motion } from "framer-motion";
+import Button from "../elements/Button";
 
 const FeaturedSeries = () => {
   return (
@@ -30,14 +30,7 @@ const FeaturedSeries = () => {
       </div>
 
       {/* ボタン */}
-      <div className="text-center">
-        <Link
-          href={`/series`}
-          className="inline-block py-3 px-10 bg-secondary text-white uppercase text-sm font-bold tracking-wider rounded-full border-2 border-secondary transition-all duration-300 ease-in-out hover:bg-transparent hover:text-secondary"
-        >
-          シリーズ一覧を見る
-        </Link>
-      </div>
+      <Button href={`/series`}>シリーズ一覧を見る</Button>
     </motion.section>
   );
 };

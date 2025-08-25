@@ -1,11 +1,12 @@
 "use client";
 
-import Link from "next/link";
 import { useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { Post, Series } from "@/types/types";
 import PostCard from "@/components/elements/PostCard";
 import HeroSection from "@/components/sections/HeroSection";
+import Button from "@/components/elements/Button";
+import { ChevronLeft } from "lucide-react";
 
 interface SeriesPageProps {
   allPosts: Post[];
@@ -140,14 +141,10 @@ const Client = ({ allPosts, series }: SeriesPageProps) => {
         </section>
 
         {/* ==================== Back to Series Index ==================== */}
-        <section className="mt-16 text-center">
-          <Link
-            href="/series"
-            className="inline-block px-6 py-3 rounded-full bg-secondary text-white border border-secondary font-semibold hover:bg-background hover:text-secondary transition-colors"
-          >
-            ← すべてのシリーズ一覧へ戻る
-          </Link>
-        </section>
+        <Button href={`/series`}>
+          <ChevronLeft size={16} />
+          シリーズ一覧へ戻る
+        </Button>
       </div>
     </div>
   );

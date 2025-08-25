@@ -48,9 +48,7 @@ export const createCustomHeading = ({ level }: createCustomHeadingProps) => {
 };
 
 export const CustomImg = ({ src, alt }: CustomImgProps) => {
-  return (
-    <Image src={src} alt={alt} layout="responsive" width={700} height={400} />
-  );
+  return <Image src={src} alt={alt} width={700} height={400} />;
 };
 
 /**

@@ -12,6 +12,7 @@ import RelatedPosts from "@/components/featured/article/RelatedPosts";
 import Index from "@/components/featured/article/Index";
 import PostHeader from "@/components/featured/article/PostHeader";
 import PostNavigation from "@/components/featured/article/PostNavigation";
+import Button from "@/components/elements/Button";
 
 interface ClientProps {
   children: React.ReactNode;
@@ -143,14 +144,7 @@ const Client = ({
         </motion.footer>
 
         {/* ブログ一覧へ戻る */}
-        <div className="flex justify-center items-center mb-10">
-          <Link
-            href={`/posts`}
-            className="text-foreground hover:text-secondary"
-          >
-            ブログ一覧へ
-          </Link>
-        </div>
+        <Button href={`/posts`}>ブログ一覧へ</Button>
 
         {/* ==================== コメント欄 ==================== */}
         {/* <section className="mt-16">
