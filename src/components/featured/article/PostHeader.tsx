@@ -81,7 +81,7 @@ const PostHeader = ({ post }: PostHeaderProps) => {
           {regionTags.map((r) => (
             <Link
               key={r.slug}
-              href={`/destinations/${r.slug}`}
+              href={`/destination/${r.slug}`}
               className="hover:text-foreground"
             >
               <MapPin className="inline mr-0.5" size={16} />
