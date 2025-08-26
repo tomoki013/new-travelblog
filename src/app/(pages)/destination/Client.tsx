@@ -41,7 +41,11 @@ const Client = ({ regionData }: AllDestinationProps) => {
         </motion.section> */}
 
         {/* ==================== 地域別リスト ==================== */}
-        <AllDestination regionData={regionData} />
+        <AllDestination
+          regionData={regionData}
+          className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8"
+          countryStyle="border-b-2 border-secondary"
+        />
       </div>
     </div>
   );

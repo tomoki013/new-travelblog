@@ -18,7 +18,7 @@ const PostHeader = ({ post }: PostHeaderProps) => {
   const regionTags = getValidRegionsBySlugs(post.location);
   const primarySlug = post.location.length > 0 ? post.location[0] : undefined;
   const regionPath = primarySlug ? getRegionPath(primarySlug) : [];
-  const country = regionPath.length > 0 ? regionPath[0] : null;
+  const country = regionPath.length > 0 ? regionPath[1] : null;
 
   return (
     <motion.header

@@ -146,6 +146,9 @@ const PostCard = ({
               <p className="text-sm text-muted-foreground mb-4 group-hover:text-secondary">
                 カテゴリー: {post.category[0]}
               </p>
+              <p className="text-sm text-muted-foreground mb-4 group-hover:text-secondary">
+                地域: {regionTags.map((r) => r.name).join(", ")}
+              </p>
               <p className="font-semibold text-foreground text-right group-hover:text-secondary">
                 続きを読む →
               </p>

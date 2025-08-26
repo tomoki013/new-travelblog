@@ -5,16 +5,18 @@ import { motion } from "framer-motion";
 import { sectionVariants } from "@/components/animation";
 import { AllDestinationProps } from "@/types/types";
 
-const AllDestination = ({ regionData }: AllDestinationProps) => {
+interface PageProps extends AllDestinationProps {
+  className: string;
+  countryStyle?: string;
+}
+
+const AllDestination = ({ regionData, className, countryStyle }: PageProps) => {
   return (
     <motion.section variants={sectionVariants}>
-      <h2 className="text-3xl font-bold text-center mb-12">
-        すべての旅行先一覧
-      </h2>
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8">
+      <div className={`${className}`}>
         {regionData.map((continent) => (
           <div key={continent.slug}>
-            <h3 className="text-2xl font-bold border-b-2 border-secondary pb-2 mb-4">
+            <h3 className={`text-2xl font-bold pb-2 mb-4 ${countryStyle}`}>
               {continent.name}
             </h3>
             <ul className="space-y-2">

@@ -5,6 +5,7 @@ import { getAllPostTypes } from "@/lib/markdown";
 import HeroSection from "@/components/sections/HeroSection";
 import { featuredSeries } from "@/data/series";
 import { regionData } from "@/data/region";
+import AllDestination from "@/components/featured/destination/allDestination";
 
 export const metadata: Metadata = {
   title: "サイトマップ",
@@ -62,7 +63,6 @@ const mainList = [
 export default async function SitemapPage() {
   const allPosts = await getAllPostTypes();
   const postsByYearMonth = groupPostsByYearMonth(allPosts);
-  const regions = regionData;
 
   return (
     <div>
@@ -112,44 +112,18 @@ export default async function SitemapPage() {
               </ul>
             </section>
 
-            <section>
+            <div>
               <h2 className="text-2xl font-bold border-b-2 border-teal-500 pb-2 mb-4">
                 国・地域別一覧
               </h2>
-              <ul className="space-y-4 text-foreground">
-                {regions.map((continent) => (
-                  <li key={continent.slug}>
-                    <h3 className="font-bold text-lg">{continent.name}</h3>
-                    <ul className="ml-4 mt-2 space-y-2">
-                      {continent.countries.map((country) => (
-                        <li key={country.slug}>
-                          <Link
-                            href={`/destination/${country.slug}`}
-                            className="hover:text-secondary font-semibold"
-                          >
-                            {country.name}
-                          </Link>
-                          {country.children && country.children.length > 0 && (
-                            <ul className="ml-4 mt-1 space-y-1">
-                              {country.children.map((city) => (
-                                <li key={city.slug}>
-                                  <Link
-                                    href={`/destination/${city.slug}`}
-                                    className="text-sm hover:text-secondary"
-                                  >
-                                    {city.name}
-                                  </Link>
-                                </li>
-                              ))}
-                            </ul>
-                          )}
-                        </li>
-                      ))}
-                    </ul>
-                  </li>
-                ))}
-              </ul>
-            </section>
+              <section className="space-y-4">
+                <AllDestination
+                  regionData={regionData}
+                  className="flex flex-col gap-8"
+                  countryStyle="text-xl"
+                />
+              </section>
+            </div>
           </div>
 
           {/* ==================== 自動更新エリア ==================== */}
