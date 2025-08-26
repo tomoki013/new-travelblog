@@ -139,7 +139,14 @@ const Client = ({
         )}
       </div>
       <div className="mt-16 max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
-        <AllDestination regionData={regionData} />
+        <h2 className="text-3xl font-bold text-center mb-12">
+          全ての旅行先を見る
+        </h2>
+        <AllDestination
+          regionData={regionData}
+          className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8"
+          countryStyle="border-b-2 border-secondary"
+        />
       </div>
     </div>
   );

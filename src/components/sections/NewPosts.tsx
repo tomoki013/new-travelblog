@@ -1,6 +1,5 @@
 import { getAllPostTypes } from "@/lib/markdown";
 import PostCard from "@/components/elements/PostCard";
-import Link from "next/link";
 import Button from "../elements/Button";
 
 const NewPosts = () => {
