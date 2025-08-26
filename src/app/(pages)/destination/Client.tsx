@@ -3,7 +3,7 @@
 import AllDestination from "@/components/featured/destination/allDestination";
 import { AllDestinationProps } from "@/types/types";
 
-const Client = ({ regionsData }: AllDestinationProps) => {
+const Client = ({ regionData }: AllDestinationProps) => {
   return (
     <div>
       {/* ==================== Hero Section ==================== */}
@@ -41,7 +41,7 @@ const Client = ({ regionsData }: AllDestinationProps) => {
         </motion.section> */}
 
         {/* ==================== 地域別リスト ==================== */}
-        <AllDestination regionsData={regionsData} />
+        <AllDestination regionData={regionData} />
       </div>
     </div>
   );

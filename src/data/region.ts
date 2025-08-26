@@ -1,6 +1,6 @@
 import { ContinentData } from "@/types/types";
 
-export const regionsData: ContinentData[] = [
+export const regionData: ContinentData[] = [
   {
     slug: "asia",
     name: "アジア",
