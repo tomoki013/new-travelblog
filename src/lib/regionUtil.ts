@@ -10,7 +10,7 @@ const getAllRegions = (): Region[] => {
   regionData.forEach((continent: ContinentData) => {
     // 大陸を追加（国リストは不要なので除外）
     const { countries: _countries, ...continentInfo } = continent;
-    allRegions.push(continentInfo);
+    allRegions.push({ ...continentInfo, imageURL: "" });
 
     continent.countries.forEach((country: Country) => {
       // 国を追加（子都市リストは不要なので除外）
