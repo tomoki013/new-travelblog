@@ -5,14 +5,14 @@ import { motion } from "framer-motion";
 import { sectionVariants } from "@/components/animation";
 import { AllDestinationProps } from "@/types/types";
 
-const AllDestination = ({ regionsData }: AllDestinationProps) => {
+const AllDestination = ({ regionData }: AllDestinationProps) => {
   return (
     <motion.section variants={sectionVariants}>
       <h2 className="text-3xl font-bold text-center mb-12">
         すべての旅行先一覧
       </h2>
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8">
-        {regionsData.map((continent) => (
+        {regionData.map((continent) => (
           <div key={continent.slug}>
             <h3 className="text-2xl font-bold border-b-2 border-secondary pb-2 mb-4">
               {continent.name}

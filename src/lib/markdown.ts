@@ -91,3 +91,28 @@ export function getAllPostTypes(): Post[] {
     return dateB - dateA;
   });
 }
+
+let slugToCategoryMap: Map<string, PostType>;
+
+/**
+ * すべての記事のslugとカテゴリの対応関係をMapとして生成し、キャッシュします。
+ * @returns {Map<string, PostType>} slugをキー、カテゴリを値とするMap
+ */
+export const getSlugToCategoryMap = (): Map<string, PostType> => {
+  if (slugToCategoryMap) {
+    return slugToCategoryMap;
+  }
+
+  const map = new Map<string, PostType>();
+  const categories: PostType[] = ["tourism", "itinerary", "series"];
+
+  categories.forEach((category) => {
+    const slugs = getPostSlugs(category);
+    slugs.forEach((slug) => {
+      map.set(slug, category);
+    });
+  });
+
+  slugToCategoryMap = map;
+  return slugToCategoryMap;
+};
