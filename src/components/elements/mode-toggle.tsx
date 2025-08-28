@@ -1,5 +1,5 @@
 import { useTheme } from "next-themes";
-import { MoonIcon, SunIcon } from "./Icons";
+import { MoonIcon, SunIcon } from "../Icons";
 import { motion, AnimatePresence } from "framer-motion";
 import { useEffect, useState } from "react";
 
