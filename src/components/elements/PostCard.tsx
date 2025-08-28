@@ -58,17 +58,19 @@ const PostCard = ({
                 className="w-full h-auto max-h-96 rounded-md object-cover"
               />
               {showMetadata && (
-                <div className="absolute bottom-0 left-0 p-4 w-full bg-gradient-to-t from-black/60 to-transparent rounded-b-lg pointer-events-none">
-                  {series && (
-                    <span className="bg-amber-100 text-amber-700 px-3 py-1 text-xs font-semibold rounded-full hover:bg-amber-200">
-                      {series.title}
-                    </span>
-                  )}
-                  <div className="my-1">
+                <div className="absolute bottom-0 left-0 p-4 w-full bg-gradient-to-t from-black/60 to-transparent rounded-b-lg pointer-events-none flex flex-col gap-2">
+                  <div>
+                    {series && (
+                      <span className="bg-amber-100 text-amber-700 px-3 py-1 text-xs font-semibold rounded-full hover:bg-amber-200">
+                        {series.title}
+                      </span>
+                    )}
+                  </div>
+                  <div>
                     {post.category.map((cat) => (
                       <span
                         key={cat}
-                        className="bg-teal-100 text-teal-700 px-3 py-1 text-xs font-semibold rounded-full hover:bg-teal-200 mr-1 mt-1"
+                        className="bg-teal-100 text-teal-700 px-3 py-1 text-xs font-semibold rounded-full hover:bg-teal-200 mr-1"
                       >
                         {cat}
                       </span>
