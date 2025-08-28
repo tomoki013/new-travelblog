@@ -1,10 +1,26 @@
-import { getAllPostTypes } from "@/lib/markdown";
-import PostCard from "@/components/elements/PostCard";
+"use client";
 
-const PopularPosts = () => {
-  const posts = getAllPostTypes();
+import PostCard from "@/components/elements/PostCard";
+import { motion } from "framer-motion";
+import {
+  staggerContainerVariants,
+  slideInUpVariants,
+} from "@/components/animation";
+import { Post } from "@/types/types";
+
+interface PopularPostsProps {
+  posts: Post[];
+}
+
+const PopularPosts = ({ posts }: PopularPostsProps) => {
   return (
-    <section className="py-24 px-6 md:px-8 max-w-5xl mx-auto">
+    <motion.section
+      initial="hidden"
+      whileInView="visible"
+      viewport={{ once: true, amount: 0.1 }}
+      variants={staggerContainerVariants(0.2)}
+      className="py-24 px-6 md:px-8 max-w-5xl mx-auto"
+    >
       {/* セクションタイトル */}
       <div className="text-center mb-16">
         <h2 className="font-heading text-4xl md:text-5xl font-bold text-foreground">
@@ -15,17 +31,21 @@ const PopularPosts = () => {
       </div>
 
       {/* 記事一覧 */}
-      <div className="flex flex-col gap-16 md:gap-20">
+      <motion.div
+        className="flex flex-col gap-16 md:gap-20"
+        variants={staggerContainerVariants(0.2)}
+      >
         {posts.slice(0, 2).map((post, index) => (
-          <PostCard
-            key={post.slug}
-            post={post}
-            isReversed={index % 2 !== 0} // 偶数番目と奇数番目でレイアウトを反転
-            showMetadata={false} // メタデータを表示
-          />
+          <motion.div key={post.slug} variants={slideInUpVariants}>
+            <PostCard
+              post={post}
+              isReversed={index % 2 !== 0} // 偶数番目と奇数番目でレイアウトを反転
+              showMetadata={false} // メタデータを表示
+            />
+          </motion.div>
         ))}
-      </div>
-    </section>
+      </motion.div>
+    </motion.section>
   );
 };
 

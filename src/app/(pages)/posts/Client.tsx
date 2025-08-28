@@ -1,8 +1,13 @@
 "use client";
 
 import { useState, useMemo } from "react";
+import { motion } from "framer-motion";
 import { Post } from "@/types/types";
 import PostCard from "@/components/elements/PostCard";
+import {
+  staggerContainerVariants,
+  slideInUpVariants,
+} from "@/components/animation";
 import { CustomSelect } from "@/components/elements/CustomSelect";
 import { featuredSeries } from "@/data/series";
 import { POSTS_PER_PAGE } from "@/constants/constants";
@@ -142,16 +147,23 @@ const BlogClient = ({ allPosts }: BlogClientProps) => {
         </section>
 
         {/* ==================== Article List ==================== */}
-        <section className="flex flex-col gap-16 md:gap-20 mb-12">
+        <motion.section
+          key={currentPage} // ページが変わるたびにアニメーションを再トリガー
+          variants={staggerContainerVariants(0.1)}
+          initial="hidden"
+          animate="visible"
+          className="flex flex-col gap-16 md:gap-20 mb-12"
+        >
           {paginatedPosts.map((post, index) => (
-            <PostCard
-              key={post.slug}
-              post={post}
-              isReversed={index % 2 !== 0}
-              showMetadata={true}
-            />
+            <motion.div key={post.slug} variants={slideInUpVariants}>
+              <PostCard
+                post={post}
+                isReversed={index % 2 !== 0}
+                showMetadata={true}
+              />
+            </motion.div>
           ))}
-        </section>
+        </motion.section>
 
         {/* ==================== Pagination ==================== */}
         <section className="mt-16 flex flex-wrap justify-center items-center gap-2">

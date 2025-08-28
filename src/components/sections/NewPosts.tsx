@@ -1,11 +1,27 @@
-import { getAllPostTypes } from "@/lib/markdown";
+"use client";
+
 import PostCard from "@/components/elements/PostCard";
 import Button from "../elements/Button";
+import { motion } from "framer-motion";
+import {
+  staggerContainerVariants,
+  slideInUpVariants,
+} from "@/components/animation";
+import { Post } from "@/types/types";
 
-const NewPosts = () => {
-  const posts = getAllPostTypes();
+interface NewPostsProps {
+  posts: Post[];
+}
+
+const NewPosts = ({ posts }: NewPostsProps) => {
   return (
-    <section className="py-24 px-6 md:px-8 max-w-5xl mx-auto">
+    <motion.section
+      initial="hidden"
+      whileInView="visible"
+      viewport={{ once: true, amount: 0.1 }}
+      variants={staggerContainerVariants(0.2)}
+      className="py-24 px-6 md:px-8 max-w-5xl mx-auto"
+    >
       {/* セクションタイトル */}
       <div className="text-center mb-16">
         <h2 className="font-heading text-4xl md:text-5xl font-bold text-foreground">
@@ -18,18 +34,19 @@ const NewPosts = () => {
       {/* 記事一覧 */}
       <div className="flex flex-col gap-16 md:gap-20 mb-12">
         {posts.slice(0, 3).map((post, index) => (
-          <PostCard
-            key={post.slug}
-            post={post}
-            isReversed={index % 2 !== 0}
-            showMetadata={false}
-          />
+          <motion.div key={post.slug} variants={slideInUpVariants}>
+            <PostCard
+              post={post}
+              isReversed={index % 2 !== 0}
+              showMetadata={false}
+            />
+          </motion.div>
         ))}
       </div>
 
       {/* ボタン */}
       <Button href={`/posts`}>ブログ一覧を見る</Button>
-    </section>
+    </motion.section>
   );
 };
 

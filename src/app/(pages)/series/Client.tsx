@@ -4,12 +4,15 @@ import Image from "next/image";
 import Link from "next/link";
 import { motion } from "framer-motion";
 import {
+  staggerContainerVariants,
+  slideInUpVariants,
+} from "@/components/animation";
+import {
   Castle,
   Sunset,
   Landmark,
   Globe2,
   MountainSnow,
-  BookText,
   type LucideProps, // 型としてインポート
 } from "lucide-react";
 import { featuredSeries } from "@/data/series";
@@ -36,27 +39,19 @@ const Client = () => {
       />
 
       {/* ==================== Series List ==================== */}
-      <section className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+      <motion.section
+        variants={staggerContainerVariants(0.1)}
+        initial="hidden"
+        animate="visible"
+        className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-16"
+      >
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-          {featuredSeries.map((series, idx) => {
+          {featuredSeries.map((series) => {
             const IconComponent = iconMap[series.IconComponent];
-            const motionProps =
-              idx === 0 || 1
-                ? {
-                    initial: { opacity: 0, y: 30 },
-                    animate: { opacity: 1, y: 0 },
-                    transition: { duration: 0.8 },
-                  }
-                : {
-                    initial: { opacity: 0, y: 30 },
-                    whileInView: { opacity: 1, y: 0 },
-                    viewport: { once: true, amount: 0.3 },
-                    transition: { duration: 0.8 },
-                  };
             return (
               <Link href={`/series/${series.slug}`} key={series.id} passHref>
                 <motion.div
-                  {...motionProps}
+                  variants={slideInUpVariants}
                   whileHover={{ scale: 1.03, transition: { duration: 0.3 } }}
                   className="relative aspect-[4/5] rounded-lg overflow-hidden shadow-xl text-white flex flex-col justify-end p-6 cursor-pointer group"
                 >
@@ -114,7 +109,7 @@ const Client = () => {
             );
           })}
         </div>
-      </section>
+      </motion.section>
     </div>
   );
 };

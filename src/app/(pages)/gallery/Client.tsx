@@ -4,6 +4,10 @@ import { useState, useMemo, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import Image from "next/image";
 import { X, ArrowLeft, ArrowRight, MapPin } from "lucide-react";
+import {
+  modalContentVariants,
+  modalOverlayVariants,
+} from "@/components/animation";
 import { Photo, Post } from "@/types/types";
 import { gallery } from "@/data/gallery";
 import { v4 as uuidv4 } from "uuid";
@@ -193,9 +197,11 @@ const Client = ({ posts }: ClientProps) => {
       <AnimatePresence>
         {selectedPhoto && (
           <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
+            key="modal-overlay"
+            variants={modalOverlayVariants}
+            initial="hidden"
+            animate="visible"
+            exit="exit"
             onClick={() => setSelectedPhoto(null)}
             className="fixed inset-0 bg-black/80 z-50 flex items-center justify-center p-4"
           >
@@ -208,9 +214,11 @@ const Client = ({ posts }: ClientProps) => {
             </div>
 
             <motion.div
-              initial={{ scale: 0.9, opacity: 0 }}
-              animate={{ scale: 1, opacity: 1 }}
-              exit={{ scale: 0.9, opacity: 0 }}
+              key="modal-content"
+              variants={modalContentVariants}
+              initial="hidden"
+              animate="visible"
+              exit="exit"
               onClick={(e) => e.stopPropagation()}
               className="relative bg-white text-black rounded-lg w-full max-w-4xl max-h-[80vh] flex flex-col md:flex-row overflow-y-auto md:overflow-y-hidden"
             >

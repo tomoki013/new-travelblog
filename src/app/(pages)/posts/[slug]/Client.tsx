@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { motion } from "framer-motion";
+import { slideInUpVariants } from "@/components/animation";
 import { Copy } from "lucide-react";
 import { members } from "@/data/member";
 import { Post } from "@/types/types";
@@ -66,8 +67,9 @@ const Client = ({
         <Index />
 
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
+          initial="hidden"
+          animate="visible"
+          variants={slideInUpVariants}
           transition={{ duration: 0.8, delay: 0.2 }}
           className="max-w-none mt-12"
         >
@@ -76,10 +78,10 @@ const Client = ({
 
         <motion.footer
           className="mt-16"
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, amount: 0.3 }}
-          transition={{ duration: 0.8 }}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, amount: 0.1 }}
+          variants={slideInUpVariants}
         >
           <div className="flex items-center justify-center gap-4 mb-10">
             <span className="font-semibold">Share:</span>

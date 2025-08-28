@@ -4,7 +4,11 @@ import Image from "next/image";
 import { motion } from "framer-motion";
 import { Region, Post, AllDestinationProps } from "@/types/types";
 import PostCard from "@/components/elements/PostCard";
-import { sectionVariants } from "@/components/animation";
+import {
+  sectionVariants,
+  staggerContainerVariants,
+  slideInUpVariants,
+} from "@/components/animation";
 import { Wind } from "lucide-react";
 import AllDestination from "@/components/featured/destination/allDestination";
 
@@ -49,9 +53,9 @@ const Client = ({
       <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
         {noPosts ? (
           <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5 }}
+            initial="hidden"
+            animate="visible"
+            variants={slideInUpVariants}
             className="text-center bg-slate-50 border-2 border-dashed border-slate-300 rounded-xl p-8 md:p-12"
           >
             <div className="flex justify-center mb-4">
@@ -69,7 +73,12 @@ const Client = ({
         ) : (
           <div className="space-y-16">
             {/* ==================== イントロダクション ==================== */}
-            <motion.section variants={sectionVariants}>
+            <motion.section
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true, amount: 0.2 }}
+              variants={sectionVariants}
+            >
               <p className="text-lg text-center text-gray-700 leading-relaxed">
                 {region.name}
                 の旅で役立つ情報や、旅の記録をまとめました。あなたの次の冒険の参考にしてください。
@@ -78,61 +87,88 @@ const Client = ({
 
             {/* ==================== 関連シリーズセクション ==================== */}
             {seriesPosts.length > 0 && (
-              <motion.section variants={sectionVariants}>
+              <motion.section
+                initial="hidden"
+                whileInView="visible"
+                viewport={{ once: true, amount: 0.2 }}
+                variants={sectionVariants}
+              >
                 <h2 className="text-3xl font-bold text-center mb-8">
                   この地域が登場するシリーズ記事
                 </h2>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <motion.div
+                  className="grid grid-cols-1 md:grid-cols-2 gap-8"
+                  variants={staggerContainerVariants(0.1)}
+                >
                   {seriesPosts.map((post, index) => (
-                    <PostCard
-                      key={post.id}
-                      post={post}
-                      isReversed={index % 2 !== 0}
-                      showMetadata
-                      variant="relate"
-                    />
+                    <motion.div key={post.id} variants={slideInUpVariants}>
+                      <PostCard
+                        post={post}
+                        isReversed={index % 2 !== 0}
+                        showMetadata
+                        variant="relate"
+                      />
+                    </motion.div>
                   ))}
-                </div>
+                </motion.div>
               </motion.section>
             )}
 
             {/* ==================== 観光情報セクション ==================== */}
             {tourismPosts.length > 0 && (
-              <motion.section variants={sectionVariants}>
+              <motion.section
+                initial="hidden"
+                whileInView="visible"
+                viewport={{ once: true, amount: 0.2 }}
+                variants={sectionVariants}
+              >
                 <h2 className="text-3xl font-bold text-center mb-8">
                   観光情報 - Tourist Information
                 </h2>
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <motion.div
+                  className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
+                  variants={staggerContainerVariants(0.1)}
+                >
                   {tourismPosts.map((post, index) => (
-                    <PostCard
-                      key={post.id}
-                      post={post}
-                      isReversed={index % 2 !== 0}
-                      showMetadata
-                      variant="relate"
-                    />
+                    <motion.div key={post.id} variants={slideInUpVariants}>
+                      <PostCard
+                        post={post}
+                        isReversed={index % 2 !== 0}
+                        showMetadata
+                        variant="relate"
+                      />
+                    </motion.div>
                   ))}
-                </div>
+                </motion.div>
               </motion.section>
             )}
 
             {/* ==================== 旅程&費用セクション ==================== */}
             {itineraryPosts.length > 0 && (
-              <motion.section variants={sectionVariants}>
+              <motion.section
+                initial="hidden"
+                whileInView="visible"
+                viewport={{ once: true, amount: 0.2 }}
+                variants={sectionVariants}
+              >
                 <h2 className="text-3xl font-bold text-center mb-8">
                   旅程&費用 - Itinerary & Cost
                 </h2>
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <motion.div
+                  className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
+                  variants={staggerContainerVariants(0.1)}
+                >
                   {itineraryPosts.map((post, index) => (
-                    <PostCard
-                      key={post.id}
-                      post={post}
-                      isReversed={index % 2 !== 0}
-                      showMetadata
-                      variant="relate"
-                    />
+                    <motion.div key={post.id} variants={slideInUpVariants}>
+                      <PostCard
+                        post={post}
+                        isReversed={index % 2 !== 0}
+                        showMetadata
+                        variant="relate"
+                      />
+                    </motion.div>
                   ))}
-                </div>
+                </motion.div>
               </motion.section>
             )}
           </div>
