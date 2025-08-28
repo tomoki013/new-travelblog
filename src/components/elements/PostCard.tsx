@@ -68,7 +68,7 @@ const PostCard = ({
                     {post.category.map((cat) => (
                       <span
                         key={cat}
-                        className="bg-teal-100 text-teal-700 px-3 py-1 text-xs font-semibold rounded-full hover:bg-teal-200 mr-1"
+                        className="bg-teal-100 text-teal-700 px-3 py-1 text-xs font-semibold rounded-full hover:bg-teal-200 mr-1 mt-1"
                       >
                         {cat}
                       </span>
