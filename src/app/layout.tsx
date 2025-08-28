@@ -6,7 +6,7 @@ import {
   Playfair_Display,
 } from "next/font/google";
 import "./globals.css";
-import { ThemeProvider } from "@/components/theme-provider";
+import { ThemeProvider } from "@/components/providers/theme-provider";
 import Header from "@/components/layouts/Header";
 import Footer from "@/components/layouts/Footer";
 import Script from "next/script";

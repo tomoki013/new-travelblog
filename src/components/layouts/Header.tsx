@@ -6,7 +6,7 @@ import { useMobileMenu } from "@/hooks/useMobileMenu";
 import { AnimatePresence, motion } from "framer-motion";
 import Image from "next/image";
 import Link from "next/link";
-import ModeToggle from "../mode-toggle";
+import ModeToggle from "../elements/mode-toggle";
 
 const Header = () => {
   const { isMenuOpen, toggleMenu, closeMenu } = useMobileMenu();
