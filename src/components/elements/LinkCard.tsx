@@ -11,13 +11,13 @@ interface LinkCardProps {
   variant: "standard" | "analog" | "minimal";
 }
 
-export const LinkCard: React.FC<LinkCardProps> = ({
+export const LinkCard = ({
   href,
   title,
   excerpt,
   imageUrl,
   variant,
-}) => {
+}: LinkCardProps) => {
   const domain = new URL(href, "https://tomokichidiary.netlify.app").hostname;
 
   // ===== スタンダード型 =====
