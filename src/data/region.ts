@@ -6,7 +6,7 @@ export const regionData: ContinentData[] = [
     name: "アジア",
     countries: [
       {
-        slug: "jp",
+        slug: "japan",
         name: "日本",
         imageURL: "/images/Kyoto/kiyomizu-temple-autumn-leaves-lightup.jpg",
         children: [
@@ -24,7 +24,7 @@ export const regionData: ContinentData[] = [
         ],
       },
       {
-        slug: "kr",
+        slug: "korea",
         name: "韓国",
         imageURL: "/images/Korea/monument.jpg",
         children: [
@@ -36,7 +36,7 @@ export const regionData: ContinentData[] = [
         ],
       },
       {
-        slug: "in",
+        slug: "india",
         name: "インド",
         imageURL: "/images/India/tajmahal.jpg",
         children: [
@@ -63,7 +63,7 @@ export const regionData: ContinentData[] = [
         ],
       },
       {
-        slug: "th",
+        slug: "thailand",
         name: "タイ",
         imageURL: "/images/Thai/emotional-wat-arun.jpg",
         children: [
@@ -75,7 +75,7 @@ export const regionData: ContinentData[] = [
         ],
       },
       {
-        slug: "vn",
+        slug: "vietnam",
         name: "ベトナム",
         imageURL: "/images/Vietnam/vietnam-old-town2.jpg",
         children: [
@@ -93,7 +93,7 @@ export const regionData: ContinentData[] = [
     name: "ヨーロッパ",
     countries: [
       {
-        slug: "fr",
+        slug: "france",
         name: "フランス",
         imageURL: "/images/France/eiffel-tower-and-sunset.jpg",
         children: [
@@ -105,7 +105,7 @@ export const regionData: ContinentData[] = [
         ],
       },
       {
-        slug: "es",
+        slug: "spain",
         name: "スペイン",
         imageURL: "/images/Spain/las-ventas-bullring.jpg",
         children: [
@@ -127,7 +127,7 @@ export const regionData: ContinentData[] = [
         ],
       },
       {
-        slug: "be",
+        slug: "belgium",
         name: "ベルギー",
         imageURL: "/images/Belgium/galeries-royales-saint-hubert.jpg",
         children: [
@@ -139,7 +139,7 @@ export const regionData: ContinentData[] = [
         ],
       },
       {
-        slug: "gr",
+        slug: "greece",
         name: "ギリシャ",
         imageURL: "/images/Greece/oia-castle-sunset-view.jpg",
         children: [
@@ -156,7 +156,7 @@ export const regionData: ContinentData[] = [
         ],
       },
       {
-        slug: "tr",
+        slug: "turkey",
         name: "トルコ",
         imageURL: "/images/Turkey/balloons-in-cappadocia.jpg",
         children: [
@@ -174,7 +174,7 @@ export const regionData: ContinentData[] = [
     name: "アフリカ",
     countries: [
       {
-        slug: "eg",
+        slug: "egypt",
         name: "エジプト",
         imageURL:
           "/images/Egypt/the-three-great-pyramids-of-giza-with-sunset.jpg",

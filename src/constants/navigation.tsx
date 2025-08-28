@@ -9,7 +9,7 @@ export const NAV_LINKS = [
 ];
 
 export const FOOTER_CONTENTS_LIST = [
-  { name: "地域別", pass: "/destination" },
+  { name: "地域別一覧", pass: "/destination" },
   { name: "シリーズ一覧", pass: "/series" },
   { name: "ブログ一覧", pass: "/posts" },
   { name: "写真ギャラリー", pass: "/gallery" },
