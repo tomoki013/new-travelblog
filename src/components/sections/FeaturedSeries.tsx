@@ -4,15 +4,20 @@ import { featuredSeries } from "@/data/series";
 import SeriesCard from "../elements/SeriesCard";
 import { motion } from "framer-motion";
 import Button from "../elements/Button";
+import {
+  sectionVariants,
+  staggerContainerVariants,
+  slideInUpVariants,
+} from "@/components/animation";
 
 const FeaturedSeries = () => {
   return (
     <motion.section
       className="py-24 px-6 md:px-8 max-w-6xl mx-auto"
-      initial={{ opacity: 0, y: 50 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, amount: 0.2 }}
-      transition={{ duration: 0.8 }}
+      initial="hidden"
+      whileInView="visible"
+      viewport={{ once: true, amount: 0.1 }}
+      variants={sectionVariants}
     >
       {/* セクションタイトル */}
       <div className="text-center mb-16">
@@ -23,11 +28,16 @@ const FeaturedSeries = () => {
       </div>
 
       {/* カードグリッド */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-12">
+      <motion.div
+        className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-12"
+        variants={staggerContainerVariants(0.1)}
+      >
         {featuredSeries.slice(0, 6).map((series) => (
-          <SeriesCard key={series.id} series={series} />
+          <motion.div key={series.id} variants={slideInUpVariants}>
+            <SeriesCard series={series} />
+          </motion.div>
         ))}
-      </div>
+      </motion.div>
 
       {/* ボタン */}
       <Button href={`/series`}>シリーズ一覧を見る</Button>

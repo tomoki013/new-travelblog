@@ -2,8 +2,13 @@
 
 import { useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
+import { motion } from "framer-motion";
 import { Post, Series } from "@/types/types";
 import PostCard from "@/components/elements/PostCard";
+import {
+  staggerContainerVariants,
+  slideInUpVariants,
+} from "@/components/animation";
 import HeroSection from "@/components/sections/HeroSection";
 import Button from "@/components/elements/Button";
 import { ChevronLeft } from "lucide-react";
@@ -87,16 +92,23 @@ const Client = ({ allPosts, series }: SeriesPageProps) => {
 
       <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
         {/* ==================== Article List ==================== */}
-        <section className="space-y-16">
+        <motion.section
+          key={currentPage}
+          variants={staggerContainerVariants(0.1)}
+          initial="hidden"
+          animate="visible"
+          className="space-y-16"
+        >
           {paginatedPosts.map((post, index) => (
-            <PostCard
-              key={post.slug}
-              post={post}
-              isReversed={index % 2 !== 0}
-              showMetadata={true}
-            />
+            <motion.div key={post.slug} variants={slideInUpVariants}>
+              <PostCard
+                post={post}
+                isReversed={index % 2 !== 0}
+                showMetadata={true}
+              />
+            </motion.div>
           ))}
-        </section>
+        </motion.section>
 
         {/* ==================== Pagination ==================== */}
         <section className="mt-16 flex justify-center items-center gap-2">

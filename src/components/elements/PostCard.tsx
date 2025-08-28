@@ -1,7 +1,6 @@
 "use client";
 
 import Image from "next/image";
-import { motion, Variants } from "framer-motion";
 import { Post } from "@/types/types";
 import Link from "next/link";
 import { ArrowRight, Calendar, MapPin } from "lucide-react";
@@ -22,15 +21,6 @@ const PostCard = ({
   showMetadata = true,
   variant = "default",
 }: PostCardProps) => {
-  const itemVariants: Variants = {
-    hidden: { opacity: 0, y: 30 },
-    visible: {
-      opacity: 1,
-      y: 0,
-      transition: { duration: 0.6, ease: "easeOut" },
-    },
-  };
-
   const series = featuredSeries.find((s) => s.slug === post.series);
 
   const regionTags = getValidRegionsBySlugs(post.location);
@@ -39,11 +29,7 @@ const PostCard = ({
     case "default":
       return (
         <Link href={`/posts/${post.slug}`} className="block group">
-          <motion.article
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true, amount: 0.1 }}
-            variants={itemVariants}
+          <article
             className={`relative flex flex-col md:flex-row items-center gap-8 md:gap-12 p-6 rounded-md hover:shadow-lg transition-shadow duration-300 ${
               isReversed ? "md:flex-row-reverse" : ""
             }`}
@@ -105,7 +91,7 @@ const PostCard = ({
                 <ArrowRight className="inline-block ml-2" size={20} />
               </span>
             </div>
-          </motion.article>
+          </article>
         </Link>
       );
     case "relate":
