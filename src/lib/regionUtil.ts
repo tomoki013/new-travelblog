@@ -27,7 +27,7 @@ const getAllRegions = (): Region[] => {
 };
 
 // 事前に全リージョンをキャッシュ
-const allRegions = getAllRegions();
+export const allRegions = getAllRegions();
 
 // パフォーマンス向上のため、slugをキーにしたMapを作成
 const regionMap = new Map(allRegions.map((region) => [region.slug, region]));
