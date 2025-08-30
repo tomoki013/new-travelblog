@@ -1,13 +1,12 @@
 ---
----
-type: series
+category: series
 title: 私が見た、世界の絶景｜建築編【#2】
 date:
-  - '2025-08-09'
+  - "2025-08-09"
 excerpt: >-
   世界中を旅して見てきた絶景建築を紹介するシリーズ第2弾！今回は、パリの象徴エッフェル塔、エジプトの秘境アブシンベル神殿、そしてSNSで話題のタイのワット・パクナムをピックアップ。王道の観光名所から、静かに楽しめる穴場まで、それぞれの建築が持つ特別な魅力と感動を、筆者の実体験と共にお届けします。
 image: /images/France/eiffel-tower.jpg
-location: 'paris, abu-simbel, bangkok'
+location: "paris, abu-simbel, bangkok"
 author: ともきち
 series: architecture
 tags:

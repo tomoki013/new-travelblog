@@ -13,19 +13,12 @@ import { CustomSelect } from "@/components/elements/CustomSelect";
 import { POSTS_PER_PAGE } from "@/constants/constants";
 import { useSearchParams, useRouter } from "next/navigation";
 import HeroSection from "@/components/sections/HeroSection";
+import { categories } from "@/data/categories";
 
 // Propsの型を定義
 interface BlogClientProps {
   allPosts: PostMetadata[];
 }
-
-// 絞り込み用の選択肢
-export const categories = [
-  { slug: "all", title: "すべてのカテゴリー" },
-  { slug: "series", title: "シリーズ" },
-  { slug: "tourism", title: "観光情報" },
-  { slug: "itinerary", title: "旅程&費用レポート" },
-];
 
 const BlogClient = ({ allPosts }: BlogClientProps) => {
   // URLパラメータからページ番号・カテゴリー・シリーズを取得
@@ -33,7 +26,6 @@ const BlogClient = ({ allPosts }: BlogClientProps) => {
   const router = useRouter();
   const pageParam = searchParams.get("page");
   // const categoryParam = searchParams.get("category");
-  // const seriesParam = searchParams.get("series");
   const [currentPage, setCurrentPage] = useState(
     pageParam ? Number(pageParam) : 1
   );
@@ -61,7 +53,7 @@ const BlogClient = ({ allPosts }: BlogClientProps) => {
   // 絞り込みとソートのロジック
   const filteredAndSortedPosts = useMemo(() => {
     return allPosts.filter(
-      (post) => filterCategory === "all" || post.type === filterCategory
+      (post) => filterCategory === "all" || post.category === filterCategory
     );
   }, [allPosts, filterCategory]);
 

@@ -1,13 +1,12 @@
 ---
----
-type: tourism
+category: tourism
 title: 【2025年最新】関空から梅田・難波・京都へ！目的地別アクセス完全ガイド
 date:
-  - '2025-07-04'
+  - "2025-07-04"
 excerpt: >-
   【2025年最新】関西国際空港から梅田・難波・京都へのアクセスガイド。JR特急はるか、南海特急ラピート、リムジンバスの料金・時間を、目的地別に分かりやすく徹底比較します。お得な割引切符の情報も満載で、速く快適な特急も格安に。あなたの旅行プランに最適な移動手段が確実に見つかります。
 image: /images/Osaka/kansai-airport.jpg
-location: 'osaka, kyoto'
+location: "osaka, kyoto"
 author: ともきち
 tags:
   - 国内旅行

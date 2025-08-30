@@ -1,13 +1,12 @@
 ---
----
-type: tourism
+category: tourism
 title: スペインおすすめレストランガイド
 date:
-  - '2025-02-27'
+  - "2025-02-27"
 excerpt: >-
   スペイン各都市の特色を活かした絶品グルメを堪能できる、食の旅ガイド。マドリードの老舗タパスバー、バルセロナの洗練された創作料理、トレドの伝統的なビアレストランなど、旅の計画に役立つおすすめレストランを厳選紹介。
 image: /images/Spain/la-casa-del-abuelo's-ajilo.jpg
-location: 'madrid, barcelona, toledo'
+location: "madrid, barcelona, toledo"
 author: ともきち
 tags:
   - 海外旅行

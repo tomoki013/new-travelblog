@@ -1,12 +1,11 @@
 ---
----
-type: series
+category: series
 title: ヨーロッパ旅行記 第10回：初一人旅の終わり
-date: '2024-01-01'
+date: "2024-01-01"
 excerpt: >-
   【ヨーロッパ旅行記第10回】スペイン最終日からブリュッセル経由帰国まで。マドリード最後の食事とお土産探し、空港移動でのハプニング。ブリュッセルでグランプラス、サン・ミッシェル大聖堂観光、シェ・レオンでベルギービールとエスカルゴ堪能。13日間のヨーロッパ一人旅を締めくくる充実エピローグ
 image: /images/Belgium/galeries-royales-saint-hubert.jpg
-location: 'madrid, brussels'
+location: "madrid, brussels"
 author: ともきち
 series: travel-diary
 tags:

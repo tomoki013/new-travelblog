@@ -19,7 +19,7 @@ export interface CustomLinkProps {
   href: string;
   children: React.ReactNode;
   allPosts: PostMetadata[];
-  currentPostType: string;
+  currentPostCategory: string;
 }
 
 /**
@@ -57,13 +57,13 @@ export const CustomImg = ({ src, alt }: CustomImgProps) => {
  * @param {string} props.href - リンク先のURL
  * @param {React.ReactNode} props.children - リンクのテキスト
  * @param {Post[]} props.allPosts - すべての投稿データの配列
- * @param {string} props.currentPostType - 現在表示している投稿のタイプ
+ * @param {string} props.currentPostCategory - 現在表示している投稿のタイプ
  */
 export const CustomLink = ({
   href,
   children,
   allPosts,
-  currentPostType,
+  currentPostCategory,
 }: CustomLinkProps) => {
   const hrefStr = href || "";
   let linkedPost;
@@ -72,7 +72,7 @@ export const CustomLink = ({
   const absoluteLinkMatch = hrefStr.match(/^(?:\.\.\/|\/)(\w+)\/([\w-]+)$/);
   if (absoluteLinkMatch) {
     const [, type, slug] = absoluteLinkMatch;
-    linkedPost = allPosts.find((p) => p.type === type && p.slug === slug);
+    linkedPost = allPosts.find((p) => p.category === type && p.slug === slug);
   }
 
   // パターン2: ./slug
@@ -80,7 +80,7 @@ export const CustomLink = ({
   if (relativeLinkMatch && !linkedPost) {
     const [, slug] = relativeLinkMatch;
     linkedPost = allPosts.find(
-      (p) => p.type === currentPostType && p.slug === slug
+      (p) => p.category === currentPostCategory && p.slug === slug
     );
   }
 

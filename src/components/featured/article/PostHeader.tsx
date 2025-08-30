@@ -8,6 +8,7 @@ import { getDatePrefix } from "@/lib/dateFormat";
 import { Post } from "@/types/types";
 import { featuredSeries } from "@/data/series";
 import { getRegionPath, getValidRegionsBySlugs } from "@/lib/regionUtil";
+import { categories } from "@/data/categories";
 
 interface PostHeaderProps {
   post: Post;
@@ -20,6 +21,9 @@ const PostHeader = ({ post }: PostHeaderProps) => {
     post.location && post.location.length > 0 ? post.location[0] : undefined;
   const regionPath = primarySlug ? getRegionPath(primarySlug) : [];
   const country = regionPath.length > 0 ? regionPath[1] : null;
+  const category = categories.filter(
+    (category) => category.slug === post.category
+  );
 
   return (
     <motion.header
@@ -60,14 +64,15 @@ const PostHeader = ({ post }: PostHeaderProps) => {
             {series.title}
           </Link>
         )}
-        {post.tags &&
-          post.tags.map((tag) => (
-            <span
-              key={tag}
+        {category &&
+          category.map((cat) => (
+            <Link
+              key={cat.slug}
+              href={`/posts?category=${cat.slug}`}
               className="bg-teal-100 text-teal-700 px-3 py-1 text-xs font-semibold rounded-full"
             >
-              {tag}
-            </span>
+              {cat.title}
+            </Link>
           ))}
       </div>
 
@@ -76,7 +81,7 @@ const PostHeader = ({ post }: PostHeaderProps) => {
       </h1>
       <div className="text-muted-foreground mb-6 flex justify-between items-center">
         <p>
-          {getDatePrefix(post.type)}: {post.date}
+          {getDatePrefix(post.category)}: {post.date}
         </p>
         <section className="flex flex-col md:flex-row md:items-center gap-2">
           {regionTags.map((r) => (

@@ -1,13 +1,12 @@
 ---
----
-type: series
+category: series
 title: ヨーロッパ旅行記 第4回：パリとの別れ、そしてバルセロナへ
-date: '2024-01-01'
+date: "2024-01-01"
 excerpt: >-
   【ヨーロッパ旅行記
   第4回】パリ最終日のガレット朝食とショッピング、コスパ抜群のフランス料理店での夕食からバルセロナへの移動まで。EU内フライトでの免税手続き注意点、バルセロナ到着後のガウディ建築巡り、初めてのパエリアとサングリア体験。フランスからスペインへと旅が進む中での文化の違いを感じる一日。
 image: /images/Spain/casa-mira.jpg
-location: 'paris, barcelona'
+location: "paris, barcelona"
 author: ともきち
 series: travel-diary
 tags:

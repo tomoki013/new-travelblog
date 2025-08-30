@@ -9,11 +9,11 @@ export function sortByDate(posts: PostMetadata[]): PostMetadata[] {
   });
 }
 
-export function filterByType(
+export function filterByCategory(
   posts: PostMetadata[],
   type: string
 ): PostMetadata[] {
-  return posts.filter((post) => post.type === type);
+  return posts.filter((post) => post.category === type);
 }
 
 export function filterByTag(

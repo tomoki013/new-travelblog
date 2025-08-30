@@ -4,10 +4,7 @@ export interface Post {
   title: string;
   date: string;
   content: string;
-  type: string;
-  // The following properties are now part of the frontmatter but not explicitly handled by the new API.
-  // They can be accessed via `data` object from `matter(fileContents)`.
-  // If they are needed, the new API functions must be updated to return them.
+  category: string;
   id?: string;
   excerpt?: string;
   image?: string;
@@ -63,7 +60,6 @@ export interface Region {
   imageURL: string;
   children?: Region[];
 }
-
 
 // Seriesデータの型定義
 export interface Series {

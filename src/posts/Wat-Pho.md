@@ -1,9 +1,8 @@
 ---
----
-type: tourism
+category: tourism
 title: バンコク三大寺院の一つ、ワット・ポーの魅力！
 date:
-  - '2024-03-03'
+  - "2024-03-03"
 excerpt: >-
   タイのバンコク三大寺院の一つ、ワット・ポーを徹底解説！圧倒的な存在感の寝釈迦仏や美しい仏塔群、タイマッサージの本場で心身を癒す体験ができる魅力的なスポット。アクセス情報や訪問時のポイントも紹介。
 image: /images/Thai/wat-pho-nirvana-buddha.jpg

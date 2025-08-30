@@ -1,14 +1,13 @@
 ---
----
 title: タイ・バンコク2泊4日の旅程と総費用を大公開！
-date: '2024-03-01'
+date: "2024-03-01"
 excerpt: >-
   タイ・バンコクを2泊4日で巡る旅の全貌を公開！飛行機代からホテル、食事、観光まで一人分の費用を詳細に解説。ワット・アルン、ワット・プラ・ケオなどの人気観光地からタリンチャン水上マーケットやチャトゥチャック市場での買い物まで、実際の旅程に沿って紹介。約11万円で楽しめたタイの魅力と文化体験をぎゅっと詰め込んだ旅行記です。
 image: /images/Thai/emotional-wat-arun.jpg
 location: bangkok
 author: ともきち
 budget: 110613
-type: itinerary
+category: itinerary
 costs:
   flight: 85140
   train: 0
