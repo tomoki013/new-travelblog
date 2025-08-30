@@ -1,14 +1,16 @@
 ---
-type: "series"
-title: "波乱の幕開け！3時間遅れのタイ・バンコクへ【#1】"
-date: ["2025-06-10"]
-excerpt: "タイ・トルコ・エジプト・ギリシャを巡る旅行記の第1回。タイ初日は出発から大波乱。3週間にわたる長い旅の始まりの1日"
-image: "/images/Thai/do-dee-cafe.jpg"
-location: "bangkok"
-category: "海外旅行"
-author: "ともきち"
-series: 'travel-diary'
-tags: ["海外"]
+---
+type: series
+title: 波乱の幕開け！3時間遅れのタイ・バンコクへ【#1】
+date:
+  - '2025-06-10'
+excerpt: タイ・トルコ・エジプト・ギリシャを巡る旅行記の第1回。タイ初日は出発から大波乱。3週間にわたる長い旅の始まりの1日
+image: /images/Thai/do-dee-cafe.jpg
+location: bangkok
+author: ともきち
+series: travel-diary
+tags:
+  - 海外旅行
 ---
 
 2025年6月10日、私の大旅行がついに始まった。最初の目的地は、熱気あふれるタイ・バンコク。しかしこの旅は出発から波乱万丈だった。

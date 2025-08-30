@@ -1,14 +1,13 @@
 ---
-title: "ヨーロッパ13泊15日の旅程と総費用を大公開！"
-date: "2025-02-13"
-excerpt: "ヨーロッパ（フランス・スペイン）を巡る旅の旅程＆費用レポートを鋭意作成中です。しばらくお待ちください。"
-image: "/images/France/louvre-museum1.jpg"
-location: "paris, barcelona, madrid, toledo"
-category: "海外旅行, 一人旅"
-author: "ともきち"
-tags: ["海外"]
+---
+title: ヨーロッパ13泊15日の旅程と総費用を大公開！
+date: '2025-02-13'
+excerpt: ヨーロッパ（フランス・スペイン）を巡る旅の旅程＆費用レポートを鋭意作成中です。しばらくお待ちください。
+image: /images/France/louvre-museum1.jpg
+location: 'paris, barcelona, madrid, toledo'
+author: ともきち
 budget: 368509
-type: "itinerary"
+type: itinerary
 costs:
   flight: 123940
   train: 5180
@@ -17,6 +16,9 @@ costs:
   sightseeing: 17126
   food: 78346
   other: 9650
+tags:
+  - 海外旅行
+  - 一人旅
 ---
 
 2025年2月13日から2月27日にかけて、フランスとスペインを巡る15日間のヨーロッパ一人旅の記録です。実際に巡ったルートや、かかった費用をまとめました。

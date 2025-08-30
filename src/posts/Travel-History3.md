@@ -1,14 +1,17 @@
 ---
-type: "series"
-title: "ともきちの海外旅行遍歴【#3】｜タイ・バンコク編 #3"
-date: ["2025-08-02"]
-excerpt: "初海外のタイ・バンコク旅行記、完結編。すっかり現地に慣れ、ボートを乗りこなしワット・アルンやワット・ポーなどの三大寺院、カオサン通り、巨大なチャトゥチャック市場など王道観光を満喫！「もう海外はいいかな」と一度は思った私が、旅の魅力に気づくまでを綴ります。初海外の葛藤と楽しさが詰まった最終回です。"
-image: "/images/Thai/chatuchak-weekend-market.jpg"
-location: "bangkok"
-category: "海外旅行"
-author: "ともきち"
-tags: ["海外"]
-series: "travel-history"
+---
+type: series
+title: 'ともきちの海外旅行遍歴【#3】｜タイ・バンコク編 #3'
+date:
+  - '2025-08-02'
+excerpt: >-
+  初海外のタイ・バンコク旅行記、完結編。すっかり現地に慣れ、ボートを乗りこなしワット・アルンやワット・ポーなどの三大寺院、カオサン通り、巨大なチャトゥチャック市場など王道観光を満喫！「もう海外はいいかな」と一度は思った私が、旅の魅力に気づくまでを綴ります。初海外の葛藤と楽しさが詰まった最終回です。
+image: /images/Thai/chatuchak-weekend-market.jpg
+location: bangkok
+author: ともきち
+series: travel-history
+tags:
+  - 海外旅行
 ---
 
 前回に引き続き、初海外旅行の様子をお届けします

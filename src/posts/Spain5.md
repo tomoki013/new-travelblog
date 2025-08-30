@@ -1,14 +1,19 @@
 ---
-type: "series"
-title: "ヨーロッパ旅行記 第8回：マドリード市民と同化してみた"
-date: "2024-01-01"
-excerpt: "【ヨーロッパ旅行記 第8回】マドリード市民生活体験記。ラスベンタス闘牛場とセバダ市場巡り、サンミゲル市場で本場生ハム堪能。VIANDASの生ハムサンドやGoconutのチュロス、Puerto Ricoでタコグリルを満喫。観光を忘れて地元の雰囲気に溶け込んだ2日間のスペイン一人旅記録。"
-image: "/images/Spain/royal-palace-in-the-daytime.jpg"
-location: "madrid"
-category: "海外旅行, 一人旅"
-author: "ともきち"
-series: 'travel-diary'
-tags: ["海外", "スペイン", "マドリード"]
+---
+type: series
+title: ヨーロッパ旅行記 第8回：マドリード市民と同化してみた
+date: '2024-01-01'
+excerpt: >-
+  【ヨーロッパ旅行記
+  第8回】マドリード市民生活体験記。ラスベンタス闘牛場とセバダ市場巡り、サンミゲル市場で本場生ハム堪能。VIANDASの生ハムサンドやGoconutのチュロス、Puerto
+  Ricoでタコグリルを満喫。観光を忘れて地元の雰囲気に溶け込んだ2日間のスペイン一人旅記録。
+image: /images/Spain/royal-palace-in-the-daytime.jpg
+location: madrid
+author: ともきち
+series: travel-diary
+tags:
+  - 海外旅行
+  - 一人旅
 ---
 
 前回ですっかりマドリードの魅力に魅了されてしまった私は、今回ついにマドリード市民になり切ってしまいます。

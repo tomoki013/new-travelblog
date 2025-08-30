@@ -1,13 +1,16 @@
 ---
-type: "tourism"
-title: "インドのe-VISAの取り方を徹底解説！"
-date: ["2024-09-20"]
-excerpt: "インドのe-VISA申請手順、必要書類、注意点、さらには利用可能な空港・港情報までを徹底解説。初めての方も安心して申請できる、実体験に基づくわかりやすいガイドです。"
-image: "/images/India/tajmahal.jpg"
-location: "india"
-category: "海外旅行"
-author: "ともきち"
-tags: ["海外", "インド"]
+---
+type: tourism
+title: インドのe-VISAの取り方を徹底解説！
+date:
+  - '2024-09-20'
+excerpt: >-
+  インドのe-VISA申請手順、必要書類、注意点、さらには利用可能な空港・港情報までを徹底解説。初めての方も安心して申請できる、実体験に基づくわかりやすいガイドです。
+image: /images/India/tajmahal.jpg
+location: india
+author: ともきち
+tags:
+  - 海外旅行
 ---
 
 ## インドのe-VISAの取り方を解説

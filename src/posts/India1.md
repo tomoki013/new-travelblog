@@ -1,14 +1,17 @@
 ---
-type: "series"
-title: "インド旅行記 第2回：デリーの街角で出会った人情と絶景"
-date: "2024-01-01"
-excerpt: "【インド旅行記 第2回】入国時のビザトラブルに始まり、深夜のタクシーハプニング。しかし親切な現地の人々との出会いで一転、本場のマサラチャイとカレーを堪能し、インド門やロータス寺院など名所を巡る。予想外の展開から始まったデリーでの温かな1日。"
-image: "/images/India/indian-gate-at-noon.jpg"
-location: "new-delhi"
-category: "海外旅行"
-author: "ともきち"
-series: 'travel-diary'
-tags: ["海外", "アジア", "インド", "ニューデリー", "世界遺産"]
+---
+type: series
+title: インド旅行記 第2回：デリーの街角で出会った人情と絶景
+date: '2024-01-01'
+excerpt: >-
+  【インド旅行記
+  第2回】入国時のビザトラブルに始まり、深夜のタクシーハプニング。しかし親切な現地の人々との出会いで一転、本場のマサラチャイとカレーを堪能し、インド門やロータス寺院など名所を巡る。予想外の展開から始まったデリーでの温かな1日。
+image: /images/India/indian-gate-at-noon.jpg
+location: new-delhi
+author: ともきち
+series: travel-diary
+tags:
+  - 海外旅行
 ---
 
 ## いきなりピンチ！？夜タクシーに降ろされたのは

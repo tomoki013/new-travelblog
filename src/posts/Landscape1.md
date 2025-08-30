@@ -1,14 +1,17 @@
 ---
-type: "series"
-title: "私が見た、世界の絶景｜街並み・風景編【#1】"
-date: ["2025-08-04"]
-excerpt: "世界の絶景を紹介する新シリーズ！街並み・風景編の第1弾では、「人生で一度は見て欲しい」王道の絶景を厳選。世界一と称されるサントリーニ島の夕陽、スペインの古都トレドの美しい旧市街、そしてトルコ・カッパドキアの気球が織りなす幻想的な朝の景色。筆者が旅で出会った息をのむほどの風景の魅力をお届けします。"
-image: "/images/Spain/toledo-view.jpg"
-location: "santorini, toledo, cappadocia"
-category: "海外旅行"
-author: "ともきち"
-tags: ["海外"]
-series: "landscape"
+---
+type: series
+title: 私が見た、世界の絶景｜街並み・風景編【#1】
+date:
+  - '2025-08-04'
+excerpt: >-
+  世界の絶景を紹介する新シリーズ！街並み・風景編の第1弾では、「人生で一度は見て欲しい」王道の絶景を厳選。世界一と称されるサントリーニ島の夕陽、スペインの古都トレドの美しい旧市街、そしてトルコ・カッパドキアの気球が織りなす幻想的な朝の景色。筆者が旅で出会った息をのむほどの風景の魅力をお届けします。
+image: /images/Spain/toledo-view.jpg
+location: 'santorini, toledo, cappadocia'
+author: ともきち
+series: landscape
+tags:
+  - 海外旅行
 ---
 
 今回の記事から、私がこれまで見てきた世界の絶景を、いくつかのパートに分けて紹介していきます

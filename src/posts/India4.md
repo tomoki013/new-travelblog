@@ -1,14 +1,17 @@
 ---
-type: "series"
-title: "インド旅行記 第5回：寝台列車で行く聖地バラナシへの道"
-date: "2024-01-01"
-excerpt: "【インド旅行記 第5回】快適な寝台列車での車窓の旅、バラナシ到着後のローカルな朝食体験、そして突然のスコールまで。インドの日常と非日常が交差する街での最初の1日。ガンジス川での沐浴を前に期待が高まる聖地バラナシでの冒険。"
-image: "/images/India/train-view1.jpg"
-location: "jaipur, varanasi"
-category: "海外旅行"
-author: "ともきち"
-series: 'travel-diary'
-tags: ["海外", "アジア", "インド", "バラナシ", "寝台列車", "ガンジス川", "聖地"]
+---
+type: series
+title: インド旅行記 第5回：寝台列車で行く聖地バラナシへの道
+date: '2024-01-01'
+excerpt: >-
+  【インド旅行記
+  第5回】快適な寝台列車での車窓の旅、バラナシ到着後のローカルな朝食体験、そして突然のスコールまで。インドの日常と非日常が交差する街での最初の1日。ガンジス川での沐浴を前に期待が高まる聖地バラナシでの冒険。
+image: /images/India/train-view1.jpg
+location: 'jaipur, varanasi'
+author: ともきち
+series: travel-diary
+tags:
+  - 海外旅行
 ---
 
 ## いよいよバラナシへ！寝台列車を初体験

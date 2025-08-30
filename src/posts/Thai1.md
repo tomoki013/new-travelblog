@@ -1,24 +1,18 @@
 ---
-type: "series"
-title: "初めての海外旅行に挑戦！in Thailand"
-date: ["2024-03-01"]
-excerpt: "【タイ旅行記 第1回】パスポート取得のドタバタから始まる初めての海外旅行。スワンナプーム空港到着、チャオプラヤ川沿いの絶景ホテル、そしてタイならではの交通事情や現地グルメまで。戸惑いと発見に満ちた、バンコク初日の体験記。"
-image: "/images/Thai/river-view-from-the-hotel-at-noon.jpg"
-location: "bangkok"
-category: "海外旅行"
-author: "ともきち"
-series: 'travel-diary'
+---
+type: series
+title: 初めての海外旅行に挑戦！in Thailand
+date:
+  - '2024-03-01'
+excerpt: >-
+  【タイ旅行記
+  第1回】パスポート取得のドタバタから始まる初めての海外旅行。スワンナプーム空港到着、チャオプラヤ川沿いの絶景ホテル、そしてタイならではの交通事情や現地グルメまで。戸惑いと発見に満ちた、バンコク初日の体験記。
+image: /images/Thai/river-view-from-the-hotel-at-noon.jpg
+location: bangkok
+author: ともきち
+series: travel-diary
 tags:
-  [
-    "海外",
-    "アジア",
-    "タイ",
-    "バンコク",
-    "初海外",
-    "パスポート",
-    "チャオプラヤ川",
-    "ローカルフード",
-  ]
+  - 海外旅行
 ---
 
 20歳ともきち、初めての海外旅行に挑戦します。
