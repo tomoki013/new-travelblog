@@ -1,25 +1,116 @@
-import { getAllPosts } from "@/lib/posts";
-import BlogClient from "./Client";
-import { Suspense } from "react";
+import { getAllPosts, getPostBySlug } from "@/lib/posts";
+import Client from "./Client";
+import ArticleContent from "@/components/featured/article/Article";
 import { Metadata } from "next";
-import { LoadingAnimation } from "@/components/featured/LoadingAnimation/LoadingAnimation";
+import { notFound } from "next/navigation";
+import { Post } from "@/types/types";
 
-export const metadata: Metadata = {
-  title: "全記事一覧 - Blog ",
-  description:
-    "「ともきちの旅行日記」の全記事を時系列で掲載しています。世界中の旅の記録や旅行記、観光情報をお届け。あなたの次の冒険のヒントがきっと見つかります。",
-};
+type PostMetadata = Omit<Post, "content">;
 
-const PostsPage = async () => {
-  // 1. サーバーサイドで全記事データを取得
+// 1. 静的パスを生成
+export async function generateStaticParams() {
+  const posts = await getAllPosts();
+  return posts.map((post) => ({
+    slug: post.slug,
+  }));
+}
+
+// 2. 動的にメタデータを生成
+export async function generateMetadata(props: {
+  params: Promise<{ slug: string }>;
+}): Promise<Metadata> {
+  const params = await props.params;
+  try {
+    const post = await getPostBySlug(params.slug);
+
+    return {
+      title: post.title,
+      description: post.excerpt,
+      authors: post.author ? [{ name: post.author }] : [],
+      openGraph: {
+        title: post.title,
+        description: post.excerpt,
+        type: "article",
+        images: post.image
+          ? [
+              {
+                url: post.image,
+                width: 1200,
+                height: 630,
+                alt: post.title,
+              },
+            ]
+          : [],
+      },
+      twitter: {
+        title: post.title,
+        description: post.excerpt,
+        images: post.image ? [post.image] : [],
+      },
+    };
+  } catch {
+    return {
+      title: "記事が見つかりませんでした",
+      description: "指定された記事は存在しません。",
+    };
+  }
+}
+
+// 3. Pageコンポーネント
+const PostPage = async (props: { params: Promise<{ slug: string }> }) => {
+  const params = await props.params;
+  const slug = params.slug;
+
+  let post: Post;
+  try {
+    post = await getPostBySlug(slug);
+  } catch {
+    return notFound();
+  }
+
   const allPosts = await getAllPosts();
+  const currentIndex = allPosts.findIndex((p) => p.slug === post.slug);
 
-  // 2. クライアントコンポーネントにプロップとして渡す
+  const previousPostData =
+    currentIndex < allPosts.length - 1 ? allPosts[currentIndex + 1] : null;
+  const nextPostData = currentIndex > 0 ? allPosts[currentIndex - 1] : null;
+
+  const previousPost = previousPostData
+    ? {
+        href: `/posts/${previousPostData.slug}`,
+        title: previousPostData.title,
+      }
+    : undefined;
+
+  const nextPost = nextPostData
+    ? {
+        href: `/posts/${nextPostData.slug}`,
+        title: nextPostData.title,
+      }
+    : undefined;
+
+  // Re-implement related posts logic: find posts with a shared tag.
+  let relatedPosts: PostMetadata[] = [];
+  if (post.tags && post.tags.length > 0) {
+    const primaryTag = post.tags[0];
+    const postsWithTag = await getAllPosts({ tag: primaryTag });
+    relatedPosts = postsWithTag.filter((p) => p.slug !== post.slug).slice(0, 3);
+  }
+
   return (
-    <Suspense fallback={<LoadingAnimation variant="mapRoute" />}>
-      <BlogClient allPosts={allPosts} />
-    </Suspense>
+    <Client
+      post={post}
+      previousPost={previousPost}
+      nextPost={nextPost}
+      relatedPosts={relatedPosts}
+    >
+      <ArticleContent
+        content={post.content}
+        currentPostType={post.type}
+        allPosts={allPosts}
+      />
+    </Client>
   );
 };
 
-export default PostsPage;
+export default PostPage;
