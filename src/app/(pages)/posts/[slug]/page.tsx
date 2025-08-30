@@ -51,7 +51,7 @@ export async function generateMetadata(props: {
         images: post.image ? [post.image] : [],
       },
     };
-  } catch (error) {
+  } catch {
     return {
       title: "記事が見つかりませんでした",
       description: "指定された記事は存在しません。",
@@ -60,13 +60,14 @@ export async function generateMetadata(props: {
 }
 
 // 3. Pageコンポーネント
-const PostPage = async (props: { params: { slug: string } }) => {
-  const slug = props.params.slug;
+const PostPage = async (props: { params: Promise<{ slug: string }> }) => {
+  const params = await props.params;
+  const slug = await params.slug;
 
   let post: Post;
   try {
     post = (await getPosts({ slug })) as Post;
-  } catch (error) {
+  } catch {
     return notFound();
   }
 
