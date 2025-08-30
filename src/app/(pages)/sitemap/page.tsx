@@ -1,7 +1,8 @@
 import Link from "next/link";
 import { Metadata } from "next";
 import { Post } from "@/types/types";
-import { getAllPostTypes } from "@/lib/markdown";
+type PostMetadata = Omit<Post, "content">;
+import { getAllPosts } from "@/lib/posts";
 import HeroSection from "@/components/sections/HeroSection";
 import { featuredSeries } from "@/data/series";
 import { regionData } from "@/data/region";
@@ -16,14 +17,14 @@ export const metadata: Metadata = {
 // 記事を「年 > 月」の形式にグループ分けしてソートする関数
 type YearMonthPosts = {
   year: string;
-  months: { month: string; posts: Post[] }[];
+  months: { month: string; posts: PostMetadata[] }[];
 }[];
 
-const groupPostsByYearMonth = (posts: Post[]): YearMonthPosts => {
+const groupPostsByYearMonth = (posts: PostMetadata[]): YearMonthPosts => {
   // 年月ごとにグループ化
-  const grouped: Record<string, Record<string, Post[]>> = {};
+  const grouped: Record<string, Record<string, PostMetadata[]>> = {};
   posts.forEach((post) => {
-    const date = new Date(post.dates[0]);
+    const date = new Date(post.date);
     const year = date.getFullYear().toString();
     const month = `${date.getMonth() + 1}月`;
     if (!grouped[year]) grouped[year] = {};
@@ -61,7 +62,7 @@ const mainList = [
 // --- Page Component ---
 
 export default async function SitemapPage() {
-  const allPosts = await getAllPostTypes();
+  const allPosts = await getAllPosts();
   const postsByYearMonth = groupPostsByYearMonth(allPosts);
 
   return (

@@ -2,7 +2,7 @@ import { getRegionBySlug, getAllRegionSlugs } from "@/lib/regionUtil";
 import Client from "./Client";
 import { notFound } from "next/navigation";
 import { regionData } from "@/data/region";
-import { getPostsByRegion } from "@/lib/getPostData";
+import { getAllPosts } from "@/lib/posts";
 
 // 1. 静的パスを生成
 export async function generateStaticParams() {
@@ -14,7 +14,7 @@ export async function generateStaticParams() {
 
 // 2. Pageコンポーネント
 const DestinationPage = async (props: {
-  params: Promise<{ region: string }>;
+  params: Promise<{ region:string }>;
 }) => {
   const params = await props.params;
   const regionSlug = params.region;
@@ -26,8 +26,29 @@ const DestinationPage = async (props: {
   }
 
   // 3. 関連する記事を取得
-  const { seriesPosts, tourismPosts, itineraryPosts } =
-    getPostsByRegion(regionSlug);
+  const allPosts = await getAllPosts();
+
+  const country = regionData
+    .flatMap((continent) => continent.countries)
+    .find((c) => c.slug === regionSlug);
+
+  const targetSlugs = [regionSlug];
+  if (country && country.children) {
+    targetSlugs.push(...country.children.map((child) => child.slug));
+  }
+
+  const filteredPosts = allPosts.filter(
+    (post) =>
+      post.location && post.location.some((loc) => targetSlugs.includes(loc))
+  );
+
+  const seriesPosts = filteredPosts.filter((post) => post.type === "series");
+  const tourismPosts = filteredPosts.filter(
+    (post) => post.type === "tourism"
+  );
+  const itineraryPosts = filteredPosts.filter(
+    (post) => post.type === "itinerary"
+  );
 
   return (
     <Client

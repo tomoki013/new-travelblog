@@ -3,6 +3,7 @@
 import { useState, useMemo } from "react";
 import { motion } from "framer-motion";
 import { Post } from "@/types/types";
+type PostMetadata = Omit<Post, "content">;
 import PostCard from "@/components/elements/PostCard";
 import {
   staggerContainerVariants,
@@ -16,7 +17,7 @@ import HeroSection from "@/components/sections/HeroSection";
 
 // Propsの型を定義
 interface BlogClientProps {
-  allPosts: Post[];
+  allPosts: PostMetadata[];
 }
 
 // 絞り込み用の選択肢
@@ -63,10 +64,6 @@ const BlogClient = ({ allPosts }: BlogClientProps) => {
   // 絞り込みとソートのロジック
   const filteredAndSortedPosts = useMemo(() => {
     return allPosts
-      .sort(
-        (a, b) =>
-          new Date(b.dates[0]).getTime() - new Date(a.dates[0]).getTime()
-      )
       .filter(
         (post) => filterCategory === "all" || post.type === filterCategory
       )

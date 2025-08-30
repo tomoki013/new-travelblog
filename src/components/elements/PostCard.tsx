@@ -3,13 +3,14 @@
 import Image from "next/image";
 import { Post } from "@/types/types";
 import Link from "next/link";
+type PostMetadata = Omit<Post, "content">;
 import { ArrowRight, Calendar, MapPin } from "lucide-react";
 import { featuredSeries } from "@/data/series";
 import { FaGlobeAsia } from "react-icons/fa";
 import { getValidRegionsBySlugs } from "@/lib/regionUtil";
 
 interface PostCardProps {
-  post: Post;
+  post: PostMetadata;
   isReversed?: boolean;
   showMetadata?: boolean; // メタデータ表示を制御するprop
   variant?: "default" | "relate";
@@ -23,7 +24,7 @@ const PostCard = ({
 }: PostCardProps) => {
   const series = featuredSeries.find((s) => s.slug === post.series);
 
-  const regionTags = getValidRegionsBySlugs(post.location);
+  const regionTags = getValidRegionsBySlugs(post.location || []);
 
   switch (variant) {
     case "default":
@@ -36,13 +37,15 @@ const PostCard = ({
           >
             {/* Imageセクション */}
             <div className="w-full md:w-1/2 relative">
-              <Image
-                src={post.image}
-                alt={post.title}
-                width={600}
-                height={400}
-                className="w-full h-auto max-h-96 rounded-md object-cover"
-              />
+              {post.image && (
+                <Image
+                  src={post.image}
+                  alt={post.title}
+                  width={600}
+                  height={400}
+                  className="w-full h-auto max-h-96 rounded-md object-cover"
+                />
+              )}
               {showMetadata && (
                 <div className="absolute bottom-0 left-0 p-4 w-full bg-gradient-to-t from-black/60 to-transparent rounded-b-lg pointer-events-none flex flex-col gap-2">
                   <div>
@@ -53,7 +56,7 @@ const PostCard = ({
                     )}
                   </div>
                   <div>
-                    {post.category.map((cat) => (
+                    {post.category && post.category.map((cat) => (
                       <span
                         key={cat}
                         className="bg-teal-100 text-teal-700 px-3 py-1 text-xs font-semibold rounded-full hover:bg-teal-200 mr-1"
@@ -64,7 +67,7 @@ const PostCard = ({
                   </div>
                   <div className="text-white text-sm mt-1 flex items-center">
                     <Calendar className="inline mr-1.5" size={16} />
-                    {post.dates.join("～")}
+                    {post.date}
                   </div>
                 </div>
               )}
@@ -101,15 +104,17 @@ const PostCard = ({
           className="group block border border-amber-50 bg-background rounded-lg shadow-md hover:shadow-xl transition-shadow duration-300 relative"
         >
           {/* ポストカードの画像部分 */}
-          <div className="w-full">
-            <Image
-              src={post.image}
-              alt={post.title}
-              width={800}
-              height={600}
-              className="rounded-t-lg object-cover aspect-video"
-            />
-          </div>
+          {post.image && (
+            <div className="w-full">
+              <Image
+                src={post.image}
+                alt={post.title}
+                width={800}
+                height={600}
+                className="rounded-t-lg object-cover aspect-video"
+              />
+            </div>
+          )}
 
           {/* 切手と消印 */}
           <div className="absolute top-4 left-4 flex items-center gap-4">
@@ -120,7 +125,7 @@ const PostCard = ({
               <p className="font-semibold group-hover:text-secondary">
                 POST DATE
               </p>
-              <p className="group-hover:text-secondary">{post.dates[0]}</p>
+              <p className="group-hover:text-secondary">{post.date}</p>
             </div>
           </div>
 
@@ -131,9 +136,11 @@ const PostCard = ({
               <h3 className="font-serif text-xl font-bold text-foreground group-hover:text-secondary mb-2 min-h-[56px]">
                 {post.title}
               </h3>
-              <p className="text-sm text-muted-foreground mb-4 group-hover:text-secondary">
-                カテゴリー: {post.category[0]}
-              </p>
+              {post.category && post.category.length > 0 && (
+                <p className="text-sm text-muted-foreground mb-4 group-hover:text-secondary">
+                  カテゴリー: {post.category[0]}
+                </p>
+              )}
               <p className="text-sm text-muted-foreground mb-4 group-hover:text-secondary">
                 地域: {regionTags.map((r) => r.name).join(", ")}
               </p>

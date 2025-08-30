@@ -4,6 +4,7 @@ import { useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { motion } from "framer-motion";
 import { Post, Series } from "@/types/types";
+type PostMetadata = Omit<Post, "content">;
 import PostCard from "@/components/elements/PostCard";
 import {
   staggerContainerVariants,
@@ -14,7 +15,7 @@ import Button from "@/components/elements/Button";
 import { ChevronLeft } from "lucide-react";
 
 interface SeriesPageProps {
-  allPosts: Post[];
+  allPosts: PostMetadata[];
   series: Series;
 }
 
