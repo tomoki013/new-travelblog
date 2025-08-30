@@ -4,16 +4,18 @@ import FeaturedSeries from "@/components/sections/FeaturedSeries";
 import PopularPosts from "@/components/sections/PopularPosts";
 import Gallery from "@/components/sections/Gallery";
 import Request from "@/components/sections/Request";
-import { getAllPosts } from "@/lib/posts";
+import getPosts from "@/lib/posts";
+import { Post } from "@/types/types";
 
 export default async function HomePage() {
-  const allPosts = await getAllPosts();
+  const newPosts = (await getPosts({ limit: 5 })) as Post[];
+  const popularPosts = (await getPosts({ popular: true, limit: 5 })) as Post[];
   return (
     <>
       <Hero />
-      <NewPosts posts={allPosts} />
+      <NewPosts posts={newPosts} />
       <FeaturedSeries />
-      <PopularPosts posts={allPosts} />
+      <PopularPosts posts={popularPosts} />
       <Gallery />
       <Request />
     </>
