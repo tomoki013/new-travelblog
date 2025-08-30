@@ -14,7 +14,7 @@ export async function generateStaticParams() {
 
 // 2. Pageコンポーネント
 const DestinationPage = async (props: {
-  params: Promise<{ region:string }>;
+  params: Promise<{ region: string }>;
 }) => {
   const params = await props.params;
   const regionSlug = params.region;
@@ -43,9 +43,7 @@ const DestinationPage = async (props: {
   );
 
   const seriesPosts = filteredPosts.filter((post) => post.type === "series");
-  const tourismPosts = filteredPosts.filter(
-    (post) => post.type === "tourism"
-  );
+  const tourismPosts = filteredPosts.filter((post) => post.type === "tourism");
   const itineraryPosts = filteredPosts.filter(
     (post) => post.type === "itinerary"
   );

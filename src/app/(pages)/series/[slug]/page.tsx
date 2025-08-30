@@ -1,7 +1,6 @@
 import { featuredSeries } from "@/data/series";
 import { getAllPosts } from "@/lib/posts";
 import Client from "./Client";
-import { Post } from "@/types/types";
 
 const eachSeries = async (props: {
   params: Promise<{ slug: string }>;
