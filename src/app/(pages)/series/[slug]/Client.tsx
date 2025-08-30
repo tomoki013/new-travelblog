@@ -12,7 +12,6 @@ import {
 } from "@/components/animation";
 import HeroSection from "@/components/sections/HeroSection";
 import Button from "@/components/elements/Button";
-import { ChevronLeft } from "lucide-react";
 
 interface SeriesPageProps {
   allPosts: PostMetadata[];
@@ -154,10 +153,7 @@ const Client = ({ allPosts, series }: SeriesPageProps) => {
         </section>
 
         {/* ==================== Back to Series Index ==================== */}
-        <Button href={`/series`}>
-          <ChevronLeft size={16} />
-          シリーズ一覧へ戻る
-        </Button>
+        <Button href={`/series`}>シリーズ一覧へ戻る</Button>
       </div>
     </div>
   );
