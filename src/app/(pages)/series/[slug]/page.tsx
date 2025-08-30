@@ -12,7 +12,7 @@ const eachSeries = async (props: {
   const series = featuredSeries.find((s) => s.slug === slug);
   if (!series) return <div>シリーズが見つかりませんでした。</div>;
 
-  const allSeriesPosts = await getAllPosts({ type: "series" });
+  const allSeriesPosts = await getAllPosts({ category: "series" });
   const allPosts = allSeriesPosts.filter((post) => post.series === slug);
 
   return <Client allPosts={allPosts} series={series} />;
