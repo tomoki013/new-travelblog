@@ -4,6 +4,7 @@ import React from "react";
 import { toString } from "mdast-util-to-string";
 import { Post } from "@/types/types";
 import { LinkCard } from "@/components/elements/LinkCard";
+type PostMetadata = Omit<Post, "content">;
 
 export interface createCustomHeadingProps {
   level: number; // 見出しのレベル (2ならh2, 3ならh3)
@@ -17,7 +18,7 @@ export interface CustomImgProps {
 export interface CustomLinkProps {
   href: string;
   children: React.ReactNode;
-  allPosts: Post[];
+  allPosts: PostMetadata[];
   currentPostType: string;
 }
 

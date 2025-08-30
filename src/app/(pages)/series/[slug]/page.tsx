@@ -1,5 +1,5 @@
 import { featuredSeries } from "@/data/series";
-import getAllPosts from "@/lib/markdown";
+import { getAllPosts } from "@/lib/posts";
 import Client from "./Client";
 
 const eachSeries = async (props: {
@@ -11,7 +11,7 @@ const eachSeries = async (props: {
   const series = featuredSeries.find((s) => s.slug === slug);
   if (!series) return <div>シリーズが見つかりませんでした。</div>;
 
-  const allSeriesPosts = await getAllPosts("series");
+  const allSeriesPosts = await getAllPosts({ type: "series" });
   const allPosts = allSeriesPosts.filter((post) => post.series === slug);
 
   return <Client allPosts={allPosts} series={series} />;

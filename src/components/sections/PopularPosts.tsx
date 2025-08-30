@@ -7,9 +7,10 @@ import {
   slideInUpVariants,
 } from "@/components/animation";
 import { Post } from "@/types/types";
+type PostMetadata = Omit<Post, "content">;
 
 interface PopularPostsProps {
-  posts: Post[];
+  posts: PostMetadata[];
 }
 
 const PopularPosts = ({ posts }: PopularPostsProps) => {

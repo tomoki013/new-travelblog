@@ -2,6 +2,7 @@
 
 import { useState, useMemo, useEffect } from "react";
 import { Photo, Post } from "@/types/types";
+type PostMetadata = Omit<Post, "content">;
 import { gallery } from "@/data/gallery";
 import { v4 as uuidv4 } from "uuid";
 import HeroSection from "@/components/sections/HeroSection";
@@ -36,7 +37,7 @@ function getFilterCategory(category: string): string {
 }
 
 interface ClientProps {
-  posts: Post[];
+  posts: PostMetadata[];
 }
 
 const Client = ({ posts }: ClientProps) => {
@@ -87,15 +88,10 @@ const Client = ({ posts }: ClientProps) => {
     const foundPostByTitle = posts.find((post) =>
       post.title.includes(photo.title)
     );
-    const foundPostByContent = posts.find((post) =>
-      post.content.includes(photo.title)
-    );
     if (foundPostByImage) {
       setPostSlug(`/posts/${foundPostByImage.slug}`);
     } else if (foundPostByTitle) {
       setPostSlug(`/posts/${foundPostByTitle?.slug}`);
-    } else if (foundPostByContent) {
-      setPostSlug(`/posts/${foundPostByContent?.slug}`);
     } else {
       setPostSlug(null);
     }

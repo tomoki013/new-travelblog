@@ -1,19 +1,22 @@
 export type PostType = "tourism" | "itinerary" | "series";
 export interface Post {
-  id: string;
   slug: string;
   title: string;
-  dates: string[];
+  date: string;
   content: string;
-  excerpt: string;
-  image: string;
-  category: string[];
-  location:string[];
-  author: string;
-  tags: string[];
+  type: string;
+  tags?: string[];
+  // The following properties are now part of the frontmatter but not explicitly handled by the new API.
+  // They can be accessed via `data` object from `matter(fileContents)`.
+  // If they are needed, the new API functions must be updated to return them.
+  id?: string;
+  excerpt?: string;
+  image?: string;
+  category?: string[];
+  location?: string[];
+  author?: string;
   budget?: number;
   costs?: Record<string, number>;
-  type: PostType;
   series?: string;
 }
 
