@@ -126,7 +126,7 @@ const Client = ({
               className="rounded-full"
             />
             <div>
-              <h3 className="text-lg font-bold">
+              <h3 className="text-lg font-bold text-gray-600">
                 {author?.name || "ともきちの旅行日記"}
               </h3>
               <p className="text-gray-600 mb-2">{author?.description || ""}</p>

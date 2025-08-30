@@ -4,7 +4,6 @@ import { MenuIcon, XIcon } from "@/components/Icons";
 import { NAV_LINKS } from "@/constants/navigation";
 import { useMobileMenu } from "@/hooks/useMobileMenu";
 import { AnimatePresence, motion } from "framer-motion";
-import Image from "next/image";
 import Link from "next/link";
 import ModeToggle from "../elements/mode-toggle";
 
@@ -17,15 +16,6 @@ const Header = () => {
         <div className="container mx-auto flex h-16 max-w-screen-2xl items-center justify-between px-4 sm:px-6 lg:px-8">
           {/* Logo */}
           <Link href="/" className="flex items-center gap-2 max-h-16">
-            <Image
-              src={`/favicon.ico`}
-              alt={`ともきちの旅行日記`}
-              width={40}
-              height={40}
-              priority
-              loading="eager"
-              className="rounded-full"
-            />
             <span className="font-bold text-lg text-foreground font-heading">
               ともきちの旅行日記
             </span>
