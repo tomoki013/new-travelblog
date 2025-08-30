@@ -1,14 +1,13 @@
 ---
----
-type: tourism
+category: tourism
 title: あしゅみな聖地巡礼旅！ in スペイン！
 date:
-  - '2025-02-27'
+  - "2025-02-27"
 excerpt: >-
   「AbemaTVの『乃木坂世界旅
   今野さんほっといてよ！』で齋藤飛鳥さん＆星野みなみさん（あしゅみな）が訪れたスペインの聖地巡礼レポート！オペラ座、サンタ・エウラリア、サン・ミゲル市場、トレドなど2人の足跡をたどって、スペインの魅力をたっぷり紹介しています。乃木坂ファン＆旅行好き必見！」
 image: /images/Spain/toledo-view.jpg
-location: 'madrid, toledo'
+location: "madrid, toledo"
 author: ともきち
 tags:
   - 海外旅行

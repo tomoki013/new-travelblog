@@ -37,10 +37,14 @@ const DestinationPage = async (props: {
 
   const filteredPosts = await getAllPosts({ region: targetSlugs });
 
-  const seriesPosts = filteredPosts.filter((post) => post.type === "series");
-  const tourismPosts = filteredPosts.filter((post) => post.type === "tourism");
+  const seriesPosts = filteredPosts.filter(
+    (post) => post.category === "series"
+  );
+  const tourismPosts = filteredPosts.filter(
+    (post) => post.category === "tourism"
+  );
   const itineraryPosts = filteredPosts.filter(
-    (post) => post.type === "itinerary"
+    (post) => post.category === "itinerary"
   );
 
   return (

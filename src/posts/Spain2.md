@@ -1,14 +1,13 @@
 ---
----
-type: series
+category: series
 title: ヨーロッパ旅行記 第5回：アントニ・ガウディの傑作と地中海の風
 date:
-  - '2025-02-19'
+  - "2025-02-19"
 excerpt: >-
   【ヨーロッパ旅行記
   第5回】バルセロナ一人旅でガウディ建築の傑作カサ・ミラとサグラダ・ファミリアを巡る詳細体験記。カサ・ミラの曲線美と屋上からの絶景、未完の大聖堂サグラダファミリアの圧倒的スケールに感動。本場のチュロス・コン・チョコラテ、絶品生ハム、濃厚イカ墨パエリアなどスペイン料理グルメも満喫。
 image: /images/Spain/sagrada-familia.jpg
-location: 'barcelona, madrid'
+location: "barcelona, madrid"
 author: ともきち
 series: travel-diary
 tags:

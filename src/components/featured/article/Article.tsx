@@ -19,11 +19,15 @@ type PostMetadata = Omit<Post, "content">;
 
 export interface ArticleContentProps {
   content: string;
-  currentPostType: Post["type"];
+  currentPostCategory: Post["category"];
   allPosts: PostMetadata[];
 }
 
-const ArticleContent = ({ content, currentPostType, allPosts }: ArticleContentProps) => {
+const ArticleContent = ({
+  content,
+  currentPostCategory,
+  allPosts,
+}: ArticleContentProps) => {
   const markdownComponents: Components = {
     h2: (props) =>
       createCustomHeading({ level: 2 })({
@@ -42,7 +46,7 @@ const ArticleContent = ({ content, currentPostType, allPosts }: ArticleContentPr
         {...props}
         href={props.href ?? ""}
         allPosts={allPosts}
-        currentPostType={currentPostType}
+        currentPostCategory={currentPostCategory}
       >
         {props.children}
       </CustomLink>

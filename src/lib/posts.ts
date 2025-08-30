@@ -9,7 +9,7 @@ import { ensureStringArray } from "@/lib/utils";
 type PostMetadata = Omit<Post, "content">;
 
 type GetAllPostsOptions = {
-  type?: string;
+  category?: string;
   tag?: string;
   region?: string[];
   limit?: number;
@@ -23,8 +23,8 @@ export async function getAllPosts(
 ): Promise<PostMetadata[]> {
   let posts = getRawPostsData();
 
-  if (options.type) {
-    posts = postFilters.filterByType(posts, options.type);
+  if (options.category) {
+    posts = postFilters.filterByCategory(posts, options.category);
   }
   if (options.tag) {
     posts = postFilters.filterByTag(posts, options.tag);
@@ -61,7 +61,7 @@ export async function getPostBySlug(slug: string): Promise<Post> {
     content,
     title: data.title,
     date: data.date,
-    type: data.type,
+    category: data.category,
     // Pass through other properties
     excerpt: data.excerpt,
     image: data.image,
@@ -88,9 +88,7 @@ export async function getPostData(slug: string) {
   if (post.location && post.location.length > 0) {
     const regionPosts = await getAllPosts({ region: post.location });
     // Exclude the current post itself and limit to 3
-    relatedPosts = regionPosts
-      .filter((p) => p.slug !== post.slug)
-      .slice(0, 3);
+    relatedPosts = regionPosts.filter((p) => p.slug !== post.slug).slice(0, 3);
   }
 
   // Format the next/previous post data to match the expected structure in the component

@@ -71,7 +71,7 @@ const PostPage = async (props: { params: Promise<{ slug: string }> }) => {
       >
         <ArticleContent
           content={post.content}
-          currentPostType={post.type}
+          currentPostCategory={post.category}
           allPosts={allPosts}
         />
       </Client>

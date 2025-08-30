@@ -8,6 +8,7 @@ import { ArrowRight, Calendar, MapPin } from "lucide-react";
 import { featuredSeries } from "@/data/series";
 import { FaGlobeAsia } from "react-icons/fa";
 import { getValidRegionsBySlugs } from "@/lib/regionUtil";
+import { categories } from "@/data/categories";
 
 interface PostCardProps {
   post: PostMetadata;
@@ -25,6 +26,10 @@ const PostCard = ({
   const series = featuredSeries.find((s) => s.slug === post.series);
 
   const regionTags = getValidRegionsBySlugs(post.location || []);
+
+  const category = categories.filter(
+    (category) => category.slug === post.category
+  );
 
   switch (variant) {
     case "default":
@@ -56,14 +61,15 @@ const PostCard = ({
                     )}
                   </div>
                   <div>
-                    {post.category && post.category.map((cat) => (
-                      <span
-                        key={cat}
-                        className="bg-teal-100 text-teal-700 px-3 py-1 text-xs font-semibold rounded-full hover:bg-teal-200 mr-1"
-                      >
-                        {cat}
-                      </span>
-                    ))}
+                    {category &&
+                      category.map((cat) => (
+                        <span
+                          key={cat.slug}
+                          className="bg-teal-100 text-teal-700 px-3 py-1 text-xs font-semibold rounded-full hover:bg-teal-200 mr-1"
+                        >
+                          {cat.title}
+                        </span>
+                      ))}
                   </div>
                   <div className="text-white text-sm mt-1 flex items-center">
                     <Calendar className="inline mr-1.5" size={16} />
@@ -136,9 +142,9 @@ const PostCard = ({
               <h3 className="font-serif text-xl font-bold text-foreground group-hover:text-secondary mb-2 min-h-[56px]">
                 {post.title}
               </h3>
-              {post.category && post.category.length > 0 && (
+              {post.category && (
                 <p className="text-sm text-muted-foreground mb-4 group-hover:text-secondary">
-                  カテゴリー: {post.category[0]}
+                  カテゴリー: {post.category}
                 </p>
               )}
               <p className="text-sm text-muted-foreground mb-4 group-hover:text-secondary">
