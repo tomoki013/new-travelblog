@@ -13,7 +13,7 @@ const PostNavigation = ({ previousPost, nextPost }: PostNavigationProps) => {
       {nextPost ? (
         <Link
           href={nextPost.href}
-          className="text-gray-600 hover:text-teal-600 max-w-[45%]"
+          className="text-foreground hover:text-secondary max-w-[45%]"
         >
           <span className="text-sm">« 次の記事へ</span>
           <p className="font-semibold truncate">{nextPost.title}</p>
@@ -24,7 +24,7 @@ const PostNavigation = ({ previousPost, nextPost }: PostNavigationProps) => {
       {previousPost ? (
         <Link
           href={previousPost.href}
-          className="text-gray-600 hover:text-teal-600 max-w-[45%] text-right"
+          className="text-foreground hover:text-secondary max-w-[45%] text-right"
         >
           <span className="text-sm">前の記事へ »</span>
           <p className="font-semibold truncate">{previousPost.title}</p>

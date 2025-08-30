@@ -67,9 +67,6 @@ const ArticleContent = ({ content, currentPostType }: ArticleContentProps) => {
   };
 
   return (
-    // proseクラスはデフォルトでtableにもスタイルを当てるため、
-    // 競合を避けるためにprose-table:border-noneなどのクラスを追加するか、
-    // prose-invertなどダークモード用のクラスを調整する必要があるかもしれません。
     <div className="prose prose-lg max-w-none dark:prose-invert">
       <ReactMarkdown
         remarkPlugins={[remarkGfm, remarkToc]}
