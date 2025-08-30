@@ -1,12 +1,12 @@
-import fs from 'fs';
-import path from 'path';
-import matter from 'gray-matter';
-import { getRawPostsData } from './markdown';
-import * as postFilters from './post-filters';
-import { Post } from '@/types/types';
-import { ensureStringArray } from '@/lib/utils';
+import fs from "fs";
+import path from "path";
+import matter from "gray-matter";
+import { getRawPostsData } from "./markdown";
+import * as postFilters from "./post-filters";
+import { Post } from "@/types/types";
+import { ensureStringArray } from "@/lib/utils";
 
-type PostMetadata = Omit<Post, 'content'>;
+type PostMetadata = Omit<Post, "content">;
 
 type GetAllPostsOptions = {
   type?: string;
@@ -17,7 +17,9 @@ type GetAllPostsOptions = {
 /**
  * Gets all post metadata and processes it based on options.
  */
-export async function getAllPosts(options: GetAllPostsOptions = {}): Promise<PostMetadata[]> {
+export async function getAllPosts(
+  options: GetAllPostsOptions = {}
+): Promise<PostMetadata[]> {
   let posts = getRawPostsData();
 
   if (options.type) {
@@ -39,7 +41,7 @@ export async function getAllPosts(options: GetAllPostsOptions = {}): Promise<Pos
  * Gets a single post data (including raw Markdown content) based on the slug.
  */
 export async function getPostBySlug(slug: string): Promise<Post> {
-  const postsDirectory = path.join(process.cwd(), 'src/posts');
+  const postsDirectory = path.join(process.cwd(), "src/posts");
   const fullPath = path.join(postsDirectory, `${slug}.md`);
 
   // Check if the file exists
@@ -47,7 +49,7 @@ export async function getPostBySlug(slug: string): Promise<Post> {
     throw new Error(`Post with slug "${slug}" not found.`);
   }
 
-  const fileContents = fs.readFileSync(fullPath, 'utf8');
+  const fileContents = fs.readFileSync(fullPath, "utf8");
   const { data, content } = matter(fileContents);
 
   return {

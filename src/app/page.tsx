@@ -7,13 +7,13 @@ import Request from "@/components/sections/Request";
 import { getAllPosts } from "@/lib/posts";
 
 export default async function HomePage() {
-  const allPosts = await getAllPosts();
+  const allPosts = await getAllPosts({ limit: 3 });
   return (
     <>
       <Hero />
-      <NewPosts posts={newPosts} />
+      <NewPosts posts={allPosts} />
       <FeaturedSeries />
-      <PopularPosts posts={popularPosts} />
+      <PopularPosts posts={allPosts} />
       <Gallery />
       <Request />
     </>

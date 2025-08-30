@@ -1,166 +1,211 @@
 "use client";
 
-import { useState, useEffect } from "react";
-import Image from "next/image";
-import Link from "next/link";
+import { useState, useMemo } from "react";
 import { motion } from "framer-motion";
-import { slideInUpVariants } from "@/components/animation";
-import { Copy } from "lucide-react";
-import { members } from "@/data/member";
 import { Post } from "@/types/types";
-import { FaFacebook, FaTwitter } from "react-icons/fa";
-import RelatedPosts from "@/components/featured/article/RelatedPosts";
-import Index from "@/components/featured/article/Index";
-import PostHeader from "@/components/featured/article/PostHeader";
-import PostNavigation from "@/components/featured/article/PostNavigation";
-import Button from "@/components/elements/Button";
+type PostMetadata = Omit<Post, "content">;
+import PostCard from "@/components/elements/PostCard";
+import {
+  staggerContainerVariants,
+  slideInUpVariants,
+} from "@/components/animation";
+import { CustomSelect } from "@/components/elements/CustomSelect";
+import { featuredSeries } from "@/data/series";
+import { POSTS_PER_PAGE } from "@/constants/constants";
+import { useSearchParams, useRouter } from "next/navigation";
+import HeroSection from "@/components/sections/HeroSection";
 
-import React from "react";
-
-interface ClientProps {
-  children: React.ReactNode;
-  post: Post;
-  previousPost?: { href: string; title: string }; // 前の記事へのリンク
-  nextPost?: { href: string; title: string }; // 次の記事へのリンク
-  relatedPosts?: Omit<Post, "content">[];
+// Propsの型を定義
+interface BlogClientProps {
+  allPosts: PostMetadata[];
 }
 
-const Client = ({
-  children,
-  post,
-  previousPost,
-  nextPost,
-  relatedPosts,
-}: ClientProps) => {
-  const [currentUrl, setCurrentUrl] = useState("");
-  const [isCopied, setIsCopied] = useState(false);
+// 絞り込み用の選択肢
+const categories = [
+  { slug: "all", title: "すべてのカテゴリー" },
+  { slug: "tourism", title: "観光情報" },
+  { slug: "itinerary", title: "旅程&費用レポート" },
+];
+// featuredSeriesの先頭に「すべてのシリーズ」を追加した新しい配列seriesを作成
+const series = [{ slug: "all", title: "すべてのシリーズ" }, ...featuredSeries];
 
-  useEffect(() => {
-    if (typeof window !== "undefined") {
-      setCurrentUrl(window.location.href);
+const BlogClient = ({ allPosts }: BlogClientProps) => {
+  // URLパラメータからページ番号・カテゴリー・シリーズを取得
+  const searchParams = useSearchParams();
+  const router = useRouter();
+  const pageParam = searchParams.get("page");
+  // const categoryParam = searchParams.get("category");
+  // const seriesParam = searchParams.get("series");
+  const [currentPage, setCurrentPage] = useState(
+    pageParam ? Number(pageParam) : 1
+  );
+  const [filterCategory, setFilterCategory] = useState("all");
+  const [filterSeries, setFilterSeries] = useState("all");
+  // ページ番号クリック時もスクロール＆URL更新（category, seriesも含める）
+  const handlePageChange = async (page: number) => {
+    await router.push(`?page=${page}`);
+    setCurrentPage(page);
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  };
+  // ページ移動時にスクロール＆URL更新（category, seriesも含める）
+  const handlePrev = async () => {
+    const prevPage = Math.max(1, currentPage - 1);
+    await router.push(`?page=${prevPage}`);
+    setCurrentPage(prevPage);
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  };
+  const handleNext = async () => {
+    const nextPage = Math.min(totalPages, currentPage + 1);
+    await router.push(`?page=${nextPage}`);
+    setCurrentPage(nextPage);
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  };
+
+  // 絞り込みとソートのロジック
+  const filteredAndSortedPosts = useMemo(() => {
+    return allPosts
+      .filter(
+        (post) => filterCategory === "all" || post.type === filterCategory
+      )
+      .filter((post) => filterSeries === "all" || post.series === filterSeries);
+  }, [allPosts, filterCategory, filterSeries]); // allPostsも依存配列に追加
+
+  // ページネーションのロジック
+  const totalPages = Math.ceil(filteredAndSortedPosts.length / POSTS_PER_PAGE);
+  const paginatedPosts = filteredAndSortedPosts.slice(
+    (currentPage - 1) * POSTS_PER_PAGE,
+    currentPage * POSTS_PER_PAGE
+  );
+
+  // ページネーション表示用ページ番号リスト生成
+  const getPaginationNumbers = () => {
+    if (totalPages <= 7) {
+      // ページ数が少ない場合は全て表示
+      return Array.from({ length: totalPages }, (_, i) => i + 1);
     }
-  }, []);
-
-  const author = members.find((m) => m.name === post.author);
-
-  const shareOnTwitter = () => {
-    const text = encodeURIComponent(`${post.title} | ともきちの旅行日記`);
-    const url = encodeURIComponent(currentUrl);
-    window.open(`https://twitter.com/intent/tweet?text=${text}&url=${url}`);
+    const pages: number[] = [];
+    pages.push(1);
+    // 前後2ページ分表示
+    const start = Math.max(2, currentPage - 1);
+    const end = Math.min(totalPages - 1, currentPage + 1);
+    if (start > 2) {
+      // ...を表示
+      pages.push(-1); // -1は省略記号
+    }
+    for (let i = start; i <= end; i++) {
+      pages.push(i);
+    }
+    if (end < totalPages - 1) {
+      pages.push(-1);
+    }
+    pages.push(totalPages);
+    return pages;
   };
 
-  const shareOnFacebook = () => {
-    const url = encodeURIComponent(currentUrl);
-    window.open(`https://www.facebook.com/sharer/sharer.php?u=${url}`);
+  // イベントハンドラ（フィルター変更時もURLパラメータ更新）
+  const handleCategoryChange = (slug: string) => {
+    // await router.push(`?page=1&category=${slug}&series=${filterSeries}`);
+    setFilterCategory(slug);
+    setCurrentPage(1);
   };
 
-  const copyUrlToClipboard = () => {
-    navigator.clipboard.writeText(currentUrl).then(() => {
-      setIsCopied(true);
-      setTimeout(() => setIsCopied(false), 2000);
-    });
+  const handleSeriesChange = (slug: string) => {
+    // await router.push(`?page=1&category=${filterCategory}&series=${slug}`);
+    setFilterSeries(slug);
+    setCurrentPage(1);
   };
 
+  // 以下、元のコンポーネントのJSXをそのまま貼り付け
   return (
     <div>
-      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-        <PostHeader post={post} />
+      {/* ==================== Hero Section ==================== */}
+      <HeroSection
+        src="/images/Spain/toledo-view.jpg"
+        alt="Blog Hero Image"
+        pageTitle="BLOG"
+        pageMessage="旅の記録を、時系列で"
+      />
 
-        <Index />
+      <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+        {/* ==================== Filters ==================== */}
+        <section className="mb-12 flex flex-col sm:flex-row gap-4">
+          <CustomSelect
+            options={categories}
+            value={filterCategory}
+            onChange={handleCategoryChange}
+            labelPrefix="カテゴリー"
+          />
+          <CustomSelect
+            options={series}
+            value={filterSeries}
+            onChange={handleSeriesChange}
+            labelPrefix="シリーズ"
+          />
+        </section>
 
-        <motion.div
+        {/* ==================== Article List ==================== */}
+        <motion.section
+          key={currentPage} // ページが変わるたびにアニメーションを再トリガー
+          variants={staggerContainerVariants(0.1)}
           initial="hidden"
           animate="visible"
-          variants={slideInUpVariants}
-          transition={{ duration: 0.8, delay: 0.2 }}
-          className="max-w-none mt-12"
+          className="flex flex-col gap-16 md:gap-20 mb-12"
         >
-          <article>{children}</article>
-        </motion.div>
+          {paginatedPosts.map((post, index) => (
+            <motion.div key={post.slug} variants={slideInUpVariants}>
+              <PostCard
+                post={post}
+                isReversed={index % 2 !== 0}
+                showMetadata={true}
+              />
+            </motion.div>
+          ))}
+        </motion.section>
 
-        <motion.footer
-          className="mt-16"
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, amount: 0.1 }}
-          variants={slideInUpVariants}
-        >
-          <div className="flex items-center justify-center gap-4 mb-10">
-            <span className="font-semibold">Share:</span>
+        {/* ==================== Pagination ==================== */}
+        <section className="mt-16 flex flex-wrap justify-center items-center gap-2">
+          {/* Prevボタン: 1ページ目では非表示 */}
+          {currentPage !== 1 && (
             <button
-              onClick={shareOnTwitter}
-              className="p-3 rounded-full bg-gray-100 hover:bg-gray-200 transition-colors"
-              aria-label="Share on Twitter"
+              onClick={handlePrev}
+              className="px-4 py-2 rounded-lg bg-gray-200 text-black"
             >
-              <FaTwitter size={20} />
+              Prev
             </button>
-            <button
-              onClick={shareOnFacebook}
-              className="p-3 rounded-full bg-gray-100 hover:bg-gray-200 transition-colors"
-              aria-label="Share on Facebook"
-            >
-              <FaFacebook size={20} />
-            </button>
-            <button
-              onClick={copyUrlToClipboard}
-              className="p-3 rounded-full bg-gray-100 hover:bg-gray-200 transition-colors relative"
-              aria-label="Copy link"
-            >
-              <Copy size={20} />
-              {isCopied && (
-                <span className="absolute -top-10 left-1/2 -translate-x-1/2 bg-gray-700 text-white text-xs px-2 py-1 rounded">
-                  Copied!
-                </span>
-              )}
-            </button>
-          </div>
-
-          <PostNavigation previousPost={previousPost} nextPost={nextPost} />
-
-          <div className="bg-gray-50 p-6 rounded-lg flex items-center gap-6">
-            <Image
-              src={author?.image || "/favicon.ico"}
-              alt={author?.name || "ともきちの旅行日記"}
-              width={80}
-              height={80}
-              className="rounded-full"
-            />
-            <div>
-              <h3 className="text-lg font-bold text-gray-600">
-                {author?.name || "ともきちの旅行日記"}
-              </h3>
-              <p className="text-gray-600 mb-2">{author?.description || ""}</p>
-              <Link
-                href="/about"
-                className="font-semibold text-teal-600 hover:text-teal-700"
-              >
-                プロフィール詳細へ →
-              </Link>
-            </div>
-          </div>
-
-          {/* ==================== 関連記事セクション ==================== */}
-          {relatedPosts && (
-            <div className="mb-10">
-              <RelatedPosts posts={relatedPosts} />
-            </div>
           )}
-        </motion.footer>
-
-        {/* ブログ一覧へ戻る */}
-        <Button href={`/posts`}>ブログ一覧へ</Button>
-
-        {/* ==================== コメント欄 ==================== */}
-        {/* <section className="mt-16">
-          <div className="text-center border-2 border-dashed border-gray-300 p-10 rounded-lg">
-            <p className="text-gray-500">
-              将来的にはここにコメント機能が入ります
-            </p>
-          </div>
-        </section> */}
+          {/* ページ番号表示 */}
+          {getPaginationNumbers().map((page, idx) =>
+            page === -1 ? (
+              <span key={"ellipsis-" + idx} className="px-2">
+                ...
+              </span>
+            ) : (
+              <button
+                key={page}
+                onClick={() => handlePageChange(page)}
+                className={`px-4 py-2 rounded-lg ${
+                  currentPage === page
+                    ? "bg-teal-600 text-white"
+                    : "bg-gray-200 text-black"
+                }`}
+              >
+                {page}
+              </button>
+            )
+          )}
+          {/* Nextボタン: 最終ページでは非表示 */}
+          {currentPage !== totalPages && (
+            <button
+              onClick={handleNext}
+              className="px-4 py-2 rounded-lg bg-gray-200 text-black"
+            >
+              Next
+            </button>
+          )}
+        </section>
       </div>
     </div>
   );
 };
 
-export default Client;
+export default BlogClient;
