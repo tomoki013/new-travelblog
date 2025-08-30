@@ -3,6 +3,7 @@ import Client from "./Client";
 import { notFound } from "next/navigation";
 import { regionData } from "@/data/region";
 import getPosts from "@/lib/posts";
+import { Post } from "@/types/types";
 
 // 1. 静的パスを生成
 export async function generateStaticParams() {
@@ -14,7 +15,7 @@ export async function generateStaticParams() {
 
 // 2. Pageコンポーネント
 const DestinationPage = async (props: {
-  params: Promise<{ region:string }>;
+  params: Promise<{ region: string }>;
 }) => {
   const params = await props.params;
   const regionSlug = params.region;
@@ -24,8 +25,6 @@ const DestinationPage = async (props: {
   if (!currentRegion) {
     return notFound();
   }
-
-import { Post } from "@/types/types";
 
   // 3. 関連する記事を取得
   const allPosts = (await getPosts()) as Post[];
@@ -45,9 +44,7 @@ import { Post } from "@/types/types";
   );
 
   const seriesPosts = filteredPosts.filter((post) => post.type === "series");
-  const tourismPosts = filteredPosts.filter(
-    (post) => post.type === "tourism"
-  );
+  const tourismPosts = filteredPosts.filter((post) => post.type === "tourism");
   const itineraryPosts = filteredPosts.filter(
     (post) => post.type === "itinerary"
   );
