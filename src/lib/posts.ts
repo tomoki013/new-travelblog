@@ -28,7 +28,6 @@ export async function getAllPosts(options: GetAllPostsOptions = {}): Promise<Pos
   }
 
   let sortedPosts = postFilters.sortByDate(posts);
-
   if (options.limit) {
     sortedPosts = sortedPosts.slice(0, options.limit);
   }

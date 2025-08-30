@@ -32,7 +32,7 @@ const PostHeader = ({ post }: PostHeaderProps) => {
         className="flex flex-col md:flex-row md:items-center text-sm text-gray-500 mb-4"
         aria-label="Breadcrumb"
       >
-        <Link href="/" className="hover:text-teal-600">
+        <Link href="/" className="hover:text-secondary">
           ホーム
         </Link>
         {country && (
@@ -40,7 +40,7 @@ const PostHeader = ({ post }: PostHeaderProps) => {
             <ChevronRight size={16} className="mx-1" />
             <Link
               href={`/destination/${country.slug}`}
-              className="hover:text-teal-600"
+              className="hover:text-secondary"
             >
               {country.name}
             </Link>
@@ -71,7 +71,7 @@ const PostHeader = ({ post }: PostHeaderProps) => {
         )}
       </div>
 
-      <h1 className="text-3xl md:text-5xl font-bold text-gray-900 mb-4">
+      <h1 className="text-3xl md:text-5xl font-bold text-foreground mb-4">
         {post.title}
       </h1>
       <div className="text-muted-foreground mb-6 flex justify-between items-center">

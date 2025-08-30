@@ -72,17 +72,17 @@ const PostPage = async (props: { params: Promise<{ slug: string }> }) => {
   const previousPostData = currentIndex > 0 ? allPosts[currentIndex - 1] : null;
   const nextPostData = currentIndex < allPosts.length - 1 ? allPosts[currentIndex + 1] : null;
 
-  const previousPost = previousPostData
+  const previousPost = prevPost
     ? {
-        href: `/posts/${previousPostData.slug}`,
-        title: previousPostData.title,
+        href: `/posts/${prevPost.slug}`,
+        title: prevPost.title,
       }
     : undefined;
 
-  const nextPost = nextPostData
+  const nextPostData = nextPost
     ? {
-        href: `/posts/${nextPostData.slug}`,
-        title: nextPostData.title,
+        href: `/posts/${nextPost.slug}`,
+        title: nextPost.title,
       }
     : undefined;
 
@@ -98,7 +98,7 @@ const PostPage = async (props: { params: Promise<{ slug: string }> }) => {
     <Client
       post={post}
       previousPost={previousPost}
-      nextPost={nextPost}
+      nextPost={nextPostData}
       relatedPosts={relatedPosts}
     >
       <ArticleContent

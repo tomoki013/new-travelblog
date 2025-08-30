@@ -1,6 +1,7 @@
 import { featuredSeries } from "@/data/series";
 import { getAllPosts } from "@/lib/posts";
 import Client from "./Client";
+import { Post } from "@/types/types";
 
 const eachSeries = async (props: {
   params: Promise<{ slug: string }>;
@@ -8,6 +9,7 @@ const eachSeries = async (props: {
 }) => {
   const params = await props.params;
   const slug = await params.slug;
+
   const series = featuredSeries.find((s) => s.slug === slug);
   if (!series) return <div>シリーズが見つかりませんでした。</div>;
 

@@ -31,7 +31,7 @@ const PostCard = ({
       return (
         <Link href={`/posts/${post.slug}`} className="block group">
           <article
-            className={`relative flex flex-col md:flex-row items-center gap-8 md:gap-12 p-6 rounded-md hover:shadow-lg transition-shadow duration-300 ${
+            className={`relative flex flex-col md:flex-row items-center gap-8 md:gap-12 p-6 rounded-md hover:shadow-lg dark:hover:shadow-white/20 transition-shadow duration-300 ${
               isReversed ? "md:flex-row-reverse" : ""
             }`}
           >
