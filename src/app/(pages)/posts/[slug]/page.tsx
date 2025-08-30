@@ -1,11 +1,8 @@
-import { getAllPosts, getPostBySlug } from "@/lib/posts";
+import { getAllPosts, getPostBySlug, getPostData } from "@/lib/posts";
 import Client from "./Client";
 import ArticleContent from "@/components/featured/article/Article";
 import { Metadata } from "next";
 import { notFound } from "next/navigation";
-import { Post } from "@/types/types";
-
-type PostMetadata = Omit<Post, "content">;
 
 // 1. 静的パスを生成
 export async function generateStaticParams() {
@@ -61,56 +58,27 @@ const PostPage = async (props: { params: Promise<{ slug: string }> }) => {
   const params = await props.params;
   const slug = params.slug;
 
-  let post: Post;
   try {
-    post = await getPostBySlug(slug);
+    const { post, previousPost, nextPost, relatedPosts, allPosts } =
+      await getPostData(slug);
+
+    return (
+      <Client
+        post={post}
+        previousPost={previousPost}
+        nextPost={nextPost}
+        relatedPosts={relatedPosts}
+      >
+        <ArticleContent
+          content={post.content}
+          currentPostType={post.type}
+          allPosts={allPosts}
+        />
+      </Client>
+    );
   } catch {
     return notFound();
   }
-
-  const allPosts = await getAllPosts();
-  const currentIndex = allPosts.findIndex((p) => p.slug === post.slug);
-
-  const previousPostData =
-    currentIndex < allPosts.length - 1 ? allPosts[currentIndex + 1] : null;
-  const nextPostData = currentIndex > 0 ? allPosts[currentIndex - 1] : null;
-
-  const previousPost = previousPostData
-    ? {
-        href: `/posts/${previousPostData.slug}`,
-        title: previousPostData.title,
-      }
-    : undefined;
-
-  const nextPost = nextPostData
-    ? {
-        href: `/posts/${nextPostData.slug}`,
-        title: nextPostData.title,
-      }
-    : undefined;
-
-  // Re-implement related posts logic: find posts with a shared tag.
-  let relatedPosts: PostMetadata[] = [];
-  if (post.tags && post.tags.length > 0) {
-    const primaryTag = post.tags[0];
-    const postsWithTag = await getAllPosts({ tag: primaryTag });
-    relatedPosts = postsWithTag.filter((p) => p.slug !== post.slug).slice(0, 3);
-  }
-
-  return (
-    <Client
-      post={post}
-      previousPost={previousPost}
-      nextPost={nextPost}
-      relatedPosts={relatedPosts}
-    >
-      <ArticleContent
-        content={post.content}
-        currentPostType={post.type}
-        allPosts={allPosts}
-      />
-    </Client>
-  );
 };
 
 export default PostPage;

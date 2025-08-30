@@ -23,3 +23,35 @@ export function filterByTag(
   // `tags` is now guaranteed to be an array by the data layer.
   return posts.filter((post) => post.tags && post.tags.includes(tag));
 }
+
+export function getNextPost(
+  slug: string,
+  allPosts: PostMetadata[]
+): PostMetadata | null {
+  const currentIndex = allPosts.findIndex((p) => p.slug === slug);
+  if (currentIndex === -1 || currentIndex === 0) {
+    return null; // No next post if it's the first one or not found
+  }
+  return allPosts[currentIndex - 1];
+}
+
+export function getPreviousPost(
+  slug: string,
+  allPosts: PostMetadata[]
+): PostMetadata | null {
+  const currentIndex = allPosts.findIndex((p) => p.slug === slug);
+  if (currentIndex === -1 || currentIndex === allPosts.length - 1) {
+    return null; // No previous post if it's the last one or not found
+  }
+  return allPosts[currentIndex + 1];
+}
+
+export function getRegionPosts(
+  posts: PostMetadata[],
+  targetSlugs: string[]
+): PostMetadata[] {
+  return posts.filter(
+    (post) =>
+      post.location && post.location.some((loc) => targetSlugs.includes(loc))
+  );
+}
