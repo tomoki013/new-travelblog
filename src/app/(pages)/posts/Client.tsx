@@ -10,7 +10,6 @@ import {
   slideInUpVariants,
 } from "@/components/animation";
 import { CustomSelect } from "@/components/elements/CustomSelect";
-import { featuredSeries } from "@/data/series";
 import { POSTS_PER_PAGE } from "@/constants/constants";
 import { useSearchParams, useRouter } from "next/navigation";
 import HeroSection from "@/components/sections/HeroSection";
@@ -21,13 +20,12 @@ interface BlogClientProps {
 }
 
 // 絞り込み用の選択肢
-const categories = [
+export const categories = [
   { slug: "all", title: "すべてのカテゴリー" },
+  { slug: "series", title: "シリーズ" },
   { slug: "tourism", title: "観光情報" },
   { slug: "itinerary", title: "旅程&費用レポート" },
 ];
-// featuredSeriesの先頭に「すべてのシリーズ」を追加した新しい配列seriesを作成
-const series = [{ slug: "all", title: "すべてのシリーズ" }, ...featuredSeries];
 
 const BlogClient = ({ allPosts }: BlogClientProps) => {
   // URLパラメータからページ番号・カテゴリー・シリーズを取得
@@ -40,7 +38,6 @@ const BlogClient = ({ allPosts }: BlogClientProps) => {
     pageParam ? Number(pageParam) : 1
   );
   const [filterCategory, setFilterCategory] = useState("all");
-  const [filterSeries, setFilterSeries] = useState("all");
   // ページ番号クリック時もスクロール＆URL更新（category, seriesも含める）
   const handlePageChange = async (page: number) => {
     await router.push(`?page=${page}`);
@@ -63,12 +60,10 @@ const BlogClient = ({ allPosts }: BlogClientProps) => {
 
   // 絞り込みとソートのロジック
   const filteredAndSortedPosts = useMemo(() => {
-    return allPosts
-      .filter(
-        (post) => filterCategory === "all" || post.type === filterCategory
-      )
-      .filter((post) => filterSeries === "all" || post.series === filterSeries);
-  }, [allPosts, filterCategory, filterSeries]); // allPostsも依存配列に追加
+    return allPosts.filter(
+      (post) => filterCategory === "all" || post.type === filterCategory
+    );
+  }, [allPosts, filterCategory]);
 
   // ページネーションのロジック
   const totalPages = Math.ceil(filteredAndSortedPosts.length / POSTS_PER_PAGE);
@@ -109,12 +104,6 @@ const BlogClient = ({ allPosts }: BlogClientProps) => {
     setCurrentPage(1);
   };
 
-  const handleSeriesChange = (slug: string) => {
-    // await router.push(`?page=1&category=${filterCategory}&series=${slug}`);
-    setFilterSeries(slug);
-    setCurrentPage(1);
-  };
-
   // 以下、元のコンポーネントのJSXをそのまま貼り付け
   return (
     <div>
@@ -134,12 +123,6 @@ const BlogClient = ({ allPosts }: BlogClientProps) => {
             value={filterCategory}
             onChange={handleCategoryChange}
             labelPrefix="カテゴリー"
-          />
-          <CustomSelect
-            options={series}
-            value={filterSeries}
-            onChange={handleSeriesChange}
-            labelPrefix="シリーズ"
           />
         </section>
 

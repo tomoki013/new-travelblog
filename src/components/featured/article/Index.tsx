@@ -17,7 +17,6 @@ const Index = ({ isScrollSyncEnabled = false }: IndexProps) => {
   const navRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    // ... (既存のロジックは変更なし) ...
     const articleElement = document.querySelector("article");
     if (!articleElement) return;
 
@@ -75,7 +74,6 @@ const Index = ({ isScrollSyncEnabled = false }: IndexProps) => {
   }, [isScrollSyncEnabled]);
 
   const handleClick = (id: string) => {
-    // ... (既存のロジックは変更なし) ...
     const escapedId = CSS.escape(id);
     document.querySelector(`#${escapedId}`)?.scrollIntoView({
       behavior: "smooth",
@@ -88,17 +86,35 @@ const Index = ({ isScrollSyncEnabled = false }: IndexProps) => {
     return null;
   }
 
-  // --- ▼ JSXとクラス名をデザイン案に合わせて変更 ---
   return (
-    <div className="bg-muted rounded-lg p-6 my-6 border-l-4 border-secondary">
-      {/* ヘッダー */}
-      <div className="mb-4 flex items-center gap-2">
-        <MapPin className="h-5 w-5 text-foreground" />
-        <h3 className="text-lg font-bold text-foreground">今回の旅程 (目次)</h3>
-      </div>
+    <details className="group bg-muted rounded-lg p-6 my-6 border-l-4 border-secondary">
+      <summary className="flex cursor-pointer items-center transition-opacity hover:opacity-80">
+        <div className="h-5 w-5 text-foreground transition-transform duration-300 group-open:rotate-90">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+            strokeWidth={2.5}
+            stroke="currentColor"
+            className="h-full w-full"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              d="m8.25 4.5 7.5 7.5-7.5 7.5"
+            />
+          </svg>
+        </div>
+        <div className="flex items-center gap-2 ml-4">
+          <MapPin className="h-5 w-5 text-foreground" />
+          <h3 className="text-lg font-bold text-foreground">
+            今回の旅程 (目次)
+          </h3>
+        </div>
+      </summary>
 
-      {/* タイムライン形式のナビゲーション */}
-      <nav ref={navRef} className="relative pl-3">
+      {/* タイムライン形式のナビゲーション (開くと表示される部分) */}
+      <nav ref={navRef} className="relative pl-3 pt-4">
         {/* タイムラインの縦線 */}
         <div className="absolute left-3 top-2 bottom-2 w-0.5 bg-background" />
 
@@ -134,7 +150,7 @@ const Index = ({ isScrollSyncEnabled = false }: IndexProps) => {
           </li>
         ))}
       </nav>
-    </div>
+    </details>
   );
 };
 

@@ -52,15 +52,6 @@ const PostHeader = ({ post }: PostHeaderProps) => {
 
       {/* Meta Info */}
       <div className="flex flex-wrap gap-2 mb-4">
-        {post.category && post.category.map((cat) => (
-          <Link
-            key={cat}
-            href={`/categories/${cat}`}
-            className="bg-teal-100 text-teal-700 px-3 py-1 text-xs font-semibold rounded-full hover:bg-teal-200"
-          >
-            {cat}
-          </Link>
-        ))}
         {series && (
           <Link
             href={`/series/${series.slug}`}
@@ -69,6 +60,16 @@ const PostHeader = ({ post }: PostHeaderProps) => {
             {series.title}
           </Link>
         )}
+        {post.category &&
+          post.category.map((cat) => (
+            <Link
+              key={cat}
+              href={`/categories/${cat}`}
+              className="bg-teal-100 text-teal-700 px-3 py-1 text-xs font-semibold rounded-full hover:bg-teal-200"
+            >
+              {cat}
+            </Link>
+          ))}
       </div>
 
       <h1 className="text-3xl md:text-5xl font-bold text-foreground mb-4">
