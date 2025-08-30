@@ -11,6 +11,7 @@ type PostMetadata = Omit<Post, "content">;
 type GetAllPostsOptions = {
   type?: string;
   tag?: string;
+  region?: string[];
   limit?: number;
 };
 
@@ -27,6 +28,9 @@ export async function getAllPosts(
   }
   if (options.tag) {
     posts = postFilters.filterByTag(posts, options.tag);
+  }
+  if (options.region) {
+    posts = postFilters.getRegionPosts(posts, options.region);
   }
 
   let sortedPosts = postFilters.sortByDate(posts);
@@ -69,4 +73,47 @@ export async function getPostBySlug(slug: string): Promise<Post> {
     costs: data.costs,
     series: data.series,
   } as Post;
+}
+
+/**
+ * Gets all the necessary data for a single post page.
+ */
+export async function getPostData(slug: string) {
+  const post = await getPostBySlug(slug);
+  const allPosts = await getAllPosts(); // Get all posts for next/previous links
+
+  const previousPostData = postFilters.getPreviousPost(slug, allPosts);
+  const nextPostData = postFilters.getNextPost(slug, allPosts);
+
+  let relatedPosts: PostMetadata[] = [];
+  if (post.location && post.location.length > 0) {
+    const regionPosts = await getAllPosts({ region: post.location });
+    // Exclude the current post itself and limit to 3
+    relatedPosts = regionPosts
+      .filter((p) => p.slug !== post.slug)
+      .slice(0, 3);
+  }
+
+  // Format the next/previous post data to match the expected structure in the component
+  const previousPost = previousPostData
+    ? {
+        href: `/posts/${previousPostData.slug}`,
+        title: previousPostData.title,
+      }
+    : undefined;
+
+  const nextPost = nextPostData
+    ? {
+        href: `/posts/${nextPostData.slug}`,
+        title: nextPostData.title,
+      }
+    : undefined;
+
+  return {
+    post,
+    previousPost,
+    nextPost,
+    relatedPosts,
+    allPosts, // For use in CustomLink component
+  };
 }

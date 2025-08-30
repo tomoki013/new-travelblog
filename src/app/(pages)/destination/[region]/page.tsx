@@ -26,8 +26,6 @@ const DestinationPage = async (props: {
   }
 
   // 3. 関連する記事を取得
-  const allPosts = await getAllPosts();
-
   const country = regionData
     .flatMap((continent) => continent.countries)
     .find((c) => c.slug === regionSlug);
@@ -37,10 +35,7 @@ const DestinationPage = async (props: {
     targetSlugs.push(...country.children.map((child) => child.slug));
   }
 
-  const filteredPosts = allPosts.filter(
-    (post) =>
-      post.location && post.location.some((loc) => targetSlugs.includes(loc))
-  );
+  const filteredPosts = await getAllPosts({ region: targetSlugs });
 
   const seriesPosts = filteredPosts.filter((post) => post.type === "series");
   const tourismPosts = filteredPosts.filter((post) => post.type === "tourism");
