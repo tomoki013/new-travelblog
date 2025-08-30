@@ -2,7 +2,7 @@ import { getRegionBySlug, getAllRegionSlugs } from "@/lib/regionUtil";
 import Client from "./Client";
 import { notFound } from "next/navigation";
 import { regionData } from "@/data/region";
-import { getAllPosts } from "@/lib/posts";
+import getPosts from "@/lib/posts";
 
 // 1. 静的パスを生成
 export async function generateStaticParams() {
@@ -25,8 +25,10 @@ const DestinationPage = async (props: {
     return notFound();
   }
 
+import { Post } from "@/types/types";
+
   // 3. 関連する記事を取得
-  const allPosts = await getAllPosts();
+  const allPosts = (await getPosts()) as Post[];
 
   const country = regionData
     .flatMap((continent) => continent.countries)

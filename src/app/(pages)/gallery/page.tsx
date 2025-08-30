@@ -1,4 +1,4 @@
-import { getAllPosts } from "@/lib/posts";
+import getPosts from "@/lib/posts";
 import Client from "./Client";
 import { Metadata } from "next";
 
@@ -27,8 +27,10 @@ export const metadata: Metadata = {
   },
 };
 
+import { Post } from "@/types/types";
+
 const GalleryPage = async () => {
-  const allPosts = await getAllPosts();
+  const allPosts = (await getPosts()) as Post[];
   return <Client posts={allPosts} />;
 };
 
