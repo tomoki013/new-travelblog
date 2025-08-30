@@ -2,7 +2,7 @@ import Link from "next/link";
 import { Metadata } from "next";
 import { Post } from "@/types/types";
 type PostMetadata = Omit<Post, "content">;
-import getPosts from "@/lib/posts";
+import { getAllPosts } from "@/lib/posts";
 import HeroSection from "@/components/sections/HeroSection";
 import { featuredSeries } from "@/data/series";
 import { regionData } from "@/data/region";
@@ -62,7 +62,7 @@ const mainList = [
 // --- Page Component ---
 
 export default async function SitemapPage() {
-  const allPosts = (await getPosts()) as PostMetadata[];
+  const allPosts = await getAllPosts();
   const postsByYearMonth = groupPostsByYearMonth(allPosts);
 
   return (

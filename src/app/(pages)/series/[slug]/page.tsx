@@ -1,5 +1,5 @@
 import { featuredSeries } from "@/data/series";
-import getPosts from "@/lib/posts";
+import { getAllPosts } from "@/lib/posts";
 import Client from "./Client";
 import { Post } from "@/types/types";
 
@@ -13,7 +13,8 @@ const eachSeries = async (props: {
   const series = featuredSeries.find((s) => s.slug === slug);
   if (!series) return <div>シリーズが見つかりませんでした。</div>;
 
-  const allPosts = (await getPosts({ series: slug })) as Post[];
+  const allSeriesPosts = await getAllPosts({ type: "series" });
+  const allPosts = allSeriesPosts.filter((post) => post.series === slug);
 
   return <Client allPosts={allPosts} series={series} />;
 };

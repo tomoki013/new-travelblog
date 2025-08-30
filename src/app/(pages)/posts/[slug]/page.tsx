@@ -1,19 +1,15 @@
-import getPosts from "@/lib/posts";
+import { getAllPosts, getPostBySlug } from "@/lib/posts";
 import Client from "./Client";
 import ArticleContent from "@/components/featured/article/Article";
 import { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { Post } from "@/types/types";
 
-// Define the type for the object returned by getPosts for navigation
-type NavigationPosts = {
-  prevPost: Post | null;
-  nextPost: Post | null;
-};
+type PostMetadata = Omit<Post, "content">;
 
 // 1. 静的パスを生成
 export async function generateStaticParams() {
-  const posts = (await getPosts()) as Post[];
+  const posts = await getAllPosts();
   return posts.map((post) => ({
     slug: post.slug,
   }));
@@ -21,10 +17,11 @@ export async function generateStaticParams() {
 
 // 2. 動的にメタデータを生成
 export async function generateMetadata(props: {
-  params: { slug: string };
+  params: Promise<{ slug: string }>;
 }): Promise<Metadata> {
+  const params = await props.params;
   try {
-    const post = (await getPosts({ slug: props.params.slug })) as Post;
+    const post = await getPostBySlug(params.slug);
 
     return {
       title: post.title,
@@ -34,16 +31,14 @@ export async function generateMetadata(props: {
         title: post.title,
         description: post.excerpt,
         type: "article",
-        images: post.image
-          ? [
-              {
-                url: post.image,
-                width: 1200,
-                height: 630,
-                alt: post.title,
-              },
-            ]
-          : [],
+        images: post.image ? [
+          {
+            url: post.image,
+            width: 1200,
+            height: 630,
+            alt: post.title,
+          },
+        ] : [],
       },
       twitter: {
         title: post.title,
@@ -60,27 +55,22 @@ export async function generateMetadata(props: {
 }
 
 // 3. Pageコンポーネント
-const PostPage = async (props: { params: { slug: string } }) => {
-  const slug = props.params.slug;
+const PostPage = async (props: { params: Promise<{ slug: string }> }) => {
+  const params = await props.params;
+  const slug = params.slug;
 
   let post: Post;
   try {
-    post = (await getPosts({ slug })) as Post;
+    post = await getPostBySlug(slug);
   } catch (error) {
     return notFound();
   }
 
-  // 関連記事を取得
-  const relatedPosts = (await getPosts({
-    series: post.series,
-    excludeSlug: slug,
-    limit: 3,
-  })) as Post[];
+  const allPosts = await getAllPosts();
+  const currentIndex = allPosts.findIndex((p) => p.slug === post.slug);
 
-  // 前後の記事ナビゲーションを取得
-  const { prevPost, nextPost } = (await getPosts({
-    navigationForSlug: slug,
-  })) as NavigationPosts;
+  const previousPostData = currentIndex > 0 ? allPosts[currentIndex - 1] : null;
+  const nextPostData = currentIndex < allPosts.length - 1 ? allPosts[currentIndex + 1] : null;
 
   const previousPost = prevPost
     ? {
@@ -96,7 +86,13 @@ const PostPage = async (props: { params: { slug: string } }) => {
       }
     : undefined;
 
-  const allPosts = (await getPosts()) as Post[];
+  // Re-implement related posts logic: find posts with a shared tag.
+  let relatedPosts: PostMetadata[] = [];
+  if (post.tags && post.tags.length > 0) {
+    const primaryTag = post.tags[0];
+    const postsWithTag = await getAllPosts({ tag: primaryTag });
+    relatedPosts = postsWithTag.filter(p => p.slug !== post.slug).slice(0, 3);
+  }
 
   return (
     <Client
