@@ -1,13 +1,19 @@
 ---
-type: "tourism"
-title: "【2025年最新版】パリ旅行の新定番！交通系ICカード「Navigo Easy」を徹底解説"
-date: ["2025-02-14"]
-excerpt: "パリ旅行の新定番ICカード「Navigo Easy」を徹底解説。2025年最新の料金や、券売機・スマホアプリでの簡単な購入・チャージ方法、使い方までこの記事一本で解決！メトロやバス移動の不安をなくし、Navigo Easyを賢く使って快適なパリ観光を実現しましょう。【2025年最新版】"
-image: "/images/France/navigo-easy.jpg"
-location: "paris"
-category: "海外旅行, 交通情報"
-author: "ともきち"
-tags: ["海外"]
+---
+type: tourism
+title: 【2025年最新版】パリ旅行の新定番！交通系ICカード「Navigo Easy」を徹底解説
+date:
+  - '2025-02-14'
+excerpt: >-
+  パリ旅行の新定番ICカード「Navigo
+  Easy」を徹底解説。2025年最新の料金や、券売機・スマホアプリでの簡単な購入・チャージ方法、使い方までこの記事一本で解決！メトロやバス移動の不安をなくし、Navigo
+  Easyを賢く使って快適なパリ観光を実現しましょう。【2025年最新版】
+image: /images/France/navigo-easy.jpg
+location: paris
+author: ともきち
+tags:
+  - 海外旅行
+  - 交通情報
 ---
 
 パリの街を縦横無尽に走るメトロやバス。石畳の美しい街並みを満喫するには、公共交通機関の攻略が欠かせません。かつては紙の切符「Ticket t+」が主流でしたが、現在はICカード「Navigo Easy（ナヴィゴ・イージー）」への移行が進み、旅行者にとって必須アイテムとなりつつあります。

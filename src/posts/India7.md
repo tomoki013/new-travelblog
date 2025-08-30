@@ -1,15 +1,17 @@
 ---
-type: "series"
-title: "インド旅行記 第8回：バラナシのお祭りと波乱の帰国"
-date: "2024-01-01"
-excerpt: "【インド旅行記 最終回】土器チャイとラッシーで味わう本場の味、ガンジス川沿いのお祭りでの感動、そして予期せぬ体調不良での長い帰国の道のり。苦楽を共にしたインド旅行、その最後の思い出と次回への期待を込めて。"
-image: "/images/India/festival-of-ganga1.jpg"
-location: "varanasi"
-category: "海外旅行"
-author: "ともきち"
-series: 'travel-diary'
+---
+type: series
+title: インド旅行記 第8回：バラナシのお祭りと波乱の帰国
+date: '2024-01-01'
+excerpt: >-
+  【インド旅行記
+  最終回】土器チャイとラッシーで味わう本場の味、ガンジス川沿いのお祭りでの感動、そして予期せぬ体調不良での長い帰国の道のり。苦楽を共にしたインド旅行、その最後の思い出と次回への期待を込めて。
+image: /images/India/festival-of-ganga1.jpg
+location: varanasi
+author: ともきち
+series: travel-diary
 tags:
-  ["海外", "アジア", "インド", "バラナシ", "ガンジス川", "お祭り", "インド料理"]
+  - 海外旅行
 ---
 
 ## 火葬場を後にして、バラナシの街で時間つぶし

@@ -1,30 +1,20 @@
 ---
-type: "series"
-title: "ヨーロッパ旅行記 第7回：マドリードの魅力を発見！？"
-date: ["2025-02-21"]
-excerpt: "【ヨーロッパ旅行記 第7回】マドリード観光本格スタート。乃木坂46聖地巡礼でSanta Eulalíaとllao llaoを訪問、シベレス宮殿やエルレティーロ公園散策。プラド美術館の長蛇の列を断念し、Restaurante Loredoでシーフードパエリアとサングリアを堪能。スペイン文化と街の魅力を満喫した一人旅の実体験記録。"
-image: "/images/Spain/prado-museum.jpg"
-location: "madrid"
-category: "海外旅行, 一人旅"
-author: "ともきち"
-series: 'travel-diary'
+---
+type: series
+title: ヨーロッパ旅行記 第7回：マドリードの魅力を発見！？
+date:
+  - '2025-02-21'
+excerpt: >-
+  【ヨーロッパ旅行記 第7回】マドリード観光本格スタート。乃木坂46聖地巡礼でSanta Eulalíaとllao
+  llaoを訪問、シベレス宮殿やエルレティーロ公園散策。プラド美術館の長蛇の列を断念し、Restaurante
+  Loredoでシーフードパエリアとサングリアを堪能。スペイン文化と街の魅力を満喫した一人旅の実体験記録。
+image: /images/Spain/prado-museum.jpg
+location: madrid
+author: ともきち
+series: travel-diary
 tags:
-  [
-    "海外",
-    "ヨーロッパ",
-    "スペイン",
-    "マドリード",
-    "一人旅",
-    "ラスベンタス闘牛場",
-    "サン・ミゲル市場",
-    "セバダ市場",
-    "グルメ",
-    "スペイン料理",
-    "生ハム",
-    "チュロス",
-    "教会建築",
-    "伝統文化",
-  ]
+  - 海外旅行
+  - 一人旅
 ---
 
 いよいよマドリード観光が本格スタート。

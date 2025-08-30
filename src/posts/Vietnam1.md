@@ -1,14 +1,18 @@
 ---
-type: "series"
-title: "インド旅行記 第1回：思いがけないベトナム観光から始まる冒険"
-date: ["2024-09-24"]
-excerpt: "【インド旅行記 第1回】関空からインドへの道中、7時間のトランジットを活用してベトナム・ハノイを観光。旧市街でバインミーを味わい、ホエンキエム湖を眺めながらベトナムコーヒーを楽しむ予期せぬ寄り道の記録。インドへの期待が高まる旅の序章。"
-image: "/images/Vietnam/dong-kinh-nghia-thuc-square.jpg"
-location: "hanoi"
-category: "海外旅行"
-author: "ともきち"
-series: 'travel-diary'
-tags: ["海外", "アジア", "インド", "ベトナム", "トランジット"]
+---
+type: series
+title: インド旅行記 第1回：思いがけないベトナム観光から始まる冒険
+date:
+  - '2024-09-24'
+excerpt: >-
+  【インド旅行記
+  第1回】関空からインドへの道中、7時間のトランジットを活用してベトナム・ハノイを観光。旧市街でバインミーを味わい、ホエンキエム湖を眺めながらベトナムコーヒーを楽しむ予期せぬ寄り道の記録。インドへの期待が高まる旅の序章。
+image: /images/Vietnam/dong-kinh-nghia-thuc-square.jpg
+location: hanoi
+author: ともきち
+series: travel-diary
+tags:
+  - 海外旅行
 ---
 
 ## インド旅行記のはじまり：ベトナムでの思い出

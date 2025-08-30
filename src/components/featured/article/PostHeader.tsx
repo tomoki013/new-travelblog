@@ -60,15 +60,14 @@ const PostHeader = ({ post }: PostHeaderProps) => {
             {series.title}
           </Link>
         )}
-        {post.category &&
-          post.category.map((cat) => (
-            <Link
-              key={cat}
-              href={`/categories/${cat}`}
-              className="bg-teal-100 text-teal-700 px-3 py-1 text-xs font-semibold rounded-full hover:bg-teal-200"
+        {post.tags &&
+          post.tags.map((tag) => (
+            <span
+              key={tag}
+              className="bg-teal-100 text-teal-700 px-3 py-1 text-xs font-semibold rounded-full"
             >
-              {cat}
-            </Link>
+              {tag}
+            </span>
           ))}
       </div>
 

@@ -5,14 +5,13 @@ export interface Post {
   date: string;
   content: string;
   type: string;
-  tags?: string[];
   // The following properties are now part of the frontmatter but not explicitly handled by the new API.
   // They can be accessed via `data` object from `matter(fileContents)`.
   // If they are needed, the new API functions must be updated to return them.
   id?: string;
   excerpt?: string;
   image?: string;
-  category?: string[];
+  tags?: string[];
   location?: string[];
   author?: string;
   budget?: number;

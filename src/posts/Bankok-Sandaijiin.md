@@ -1,13 +1,17 @@
 ---
-type: "tourism"
-title: "タイ観光の定番！バンコク三大寺院"
-date: ["2024-03-03"]
-excerpt: "バンコク三大寺院「ワット・プラケオ」「ワット・ポー」「ワット・アルン」を巡る旅ガイド！歴史や文化、アクセス方法、入場料情報を詳しく紹介。タイ観光の魅力を体験しよう！"
-image: "/images/Thai/wat-arun-right-up.jpg"
-location: "bangkok"
-category: "海外旅行, 観光スポット"
-author: "ともきち"
-tags: ["海外", "アジア", "タイ"]
+---
+type: tourism
+title: タイ観光の定番！バンコク三大寺院
+date:
+  - '2024-03-03'
+excerpt: >-
+  バンコク三大寺院「ワット・プラケオ」「ワット・ポー」「ワット・アルン」を巡る旅ガイド！歴史や文化、アクセス方法、入場料情報を詳しく紹介。タイ観光の魅力を体験しよう！
+image: /images/Thai/wat-arun-right-up.jpg
+location: bangkok
+author: ともきち
+tags:
+  - 海外旅行
+  - 観光スポット
 ---
 
 ## バンコク三大寺院って？
