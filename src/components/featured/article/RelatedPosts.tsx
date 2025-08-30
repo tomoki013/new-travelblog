@@ -1,6 +1,7 @@
 "use client";
 
 import { Post } from "@/types/types";
+type PostMetadata = Omit<Post, "content">;
 import PostCard from "@/components/elements/PostCard";
 import { motion } from "framer-motion";
 import {
@@ -9,7 +10,7 @@ import {
 } from "@/components/animation";
 
 interface RelatedPostsProps {
-  posts: Post[];
+  posts: PostMetadata[];
 }
 
 const RelatedPosts = ({ posts }: RelatedPostsProps) => {

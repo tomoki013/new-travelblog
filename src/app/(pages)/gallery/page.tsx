@@ -1,4 +1,4 @@
-import { getAllPostTypes } from "@/lib/markdown";
+import { getAllPosts } from "@/lib/posts";
 import Client from "./Client";
 import { Metadata } from "next";
 
@@ -27,8 +27,8 @@ export const metadata: Metadata = {
   },
 };
 
-const GalleryPage = () => {
-  const allPosts = getAllPostTypes();
+const GalleryPage = async () => {
+  const allPosts = await getAllPosts();
   return <Client posts={allPosts} />;
 };
 

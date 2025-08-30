@@ -3,6 +3,7 @@
 import Image from "next/image";
 import { motion } from "framer-motion";
 import { Region, Post, AllDestinationProps } from "@/types/types";
+type PostMetadata = Omit<Post, "content">;
 import PostCard from "@/components/elements/PostCard";
 import {
   sectionVariants,
@@ -14,9 +15,9 @@ import AllDestination from "@/components/featured/destination/allDestination";
 
 interface ClientProps extends AllDestinationProps {
   region: Region;
-  seriesPosts: Post[];
-  tourismPosts: Post[];
-  itineraryPosts: Post[];
+  seriesPosts: PostMetadata[];
+  tourismPosts: PostMetadata[];
+  itineraryPosts: PostMetadata[];
 }
 
 const Client = ({

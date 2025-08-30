@@ -15,8 +15,9 @@ interface PostHeaderProps {
 
 const PostHeader = ({ post }: PostHeaderProps) => {
   const series = featuredSeries.find((s) => s.slug === post.series);
-  const regionTags = getValidRegionsBySlugs(post.location);
-  const primarySlug = post.location.length > 0 ? post.location[0] : undefined;
+  const regionTags = getValidRegionsBySlugs(post.location || []);
+  const primarySlug =
+    post.location && post.location.length > 0 ? post.location[0] : undefined;
   const regionPath = primarySlug ? getRegionPath(primarySlug) : [];
   const country = regionPath.length > 0 ? regionPath[1] : null;
 
@@ -51,7 +52,7 @@ const PostHeader = ({ post }: PostHeaderProps) => {
 
       {/* Meta Info */}
       <div className="flex flex-wrap gap-2 mb-4">
-        {post.category.map((cat) => (
+        {post.category && post.category.map((cat) => (
           <Link
             key={cat}
             href={`/categories/${cat}`}
@@ -75,7 +76,7 @@ const PostHeader = ({ post }: PostHeaderProps) => {
       </h1>
       <div className="text-muted-foreground mb-6 flex justify-between items-center">
         <p>
-          {getDatePrefix(post.type)}: {post.dates.join("～")}
+          {getDatePrefix(post.type)}: {post.date}
         </p>
         <section className="flex flex-col md:flex-row md:items-center gap-2">
           {regionTags.map((r) => (
@@ -92,14 +93,16 @@ const PostHeader = ({ post }: PostHeaderProps) => {
       </div>
 
       {/* Featured Image */}
-      <Image
-        src={post.image}
-        alt={post.title}
-        width={1200}
-        height={675}
-        className="w-full rounded-lg shadow-lg aspect-video object-cover"
-        priority
-      />
+      {post.image && (
+        <Image
+          src={post.image}
+          alt={post.title}
+          width={1200}
+          height={675}
+          className="w-full rounded-lg shadow-lg aspect-video object-cover"
+          priority
+        />
+      )}
     </motion.header>
   );
 };

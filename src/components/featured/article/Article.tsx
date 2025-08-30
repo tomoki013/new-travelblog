@@ -3,7 +3,6 @@ import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import remarkToc from "remark-toc";
 import { Post } from "@/types/types";
-import { getAllPostTypes } from "@/lib/markdown";
 import {
   createCustomHeading,
   CustomImg,
@@ -16,14 +15,15 @@ import {
   Tr,
 } from "./CustomMarkdown";
 
-interface ArticleContentProps {
+type PostMetadata = Omit<Post, "content">;
+
+export interface ArticleContentProps {
   content: string;
   currentPostType: Post["type"];
+  allPosts: PostMetadata[];
 }
 
-const ArticleContent = ({ content, currentPostType }: ArticleContentProps) => {
-  const allPosts = getAllPostTypes();
-
+const ArticleContent = ({ content, currentPostType, allPosts }: ArticleContentProps) => {
   const markdownComponents: Components = {
     h2: (props) =>
       createCustomHeading({ level: 2 })({

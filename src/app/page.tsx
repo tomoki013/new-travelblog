@@ -4,10 +4,10 @@ import FeaturedSeries from "@/components/sections/FeaturedSeries";
 import PopularPosts from "@/components/sections/PopularPosts";
 import Gallery from "@/components/sections/Gallery";
 import Request from "@/components/sections/Request";
-import { getAllPostTypes } from "@/lib/markdown";
+import { getAllPosts } from "@/lib/posts";
 
-export default function HomePage() {
-  const allPosts = getAllPostTypes();
+export default async function HomePage() {
+  const allPosts = await getAllPosts();
   return (
     <>
       <Hero />

@@ -15,12 +15,14 @@ import PostHeader from "@/components/featured/article/PostHeader";
 import PostNavigation from "@/components/featured/article/PostNavigation";
 import Button from "@/components/elements/Button";
 
+import React from "react";
+
 interface ClientProps {
   children: React.ReactNode;
   post: Post;
   previousPost?: { href: string; title: string }; // 前の記事へのリンク
   nextPost?: { href: string; title: string }; // 次の記事へのリンク
-  relatedPosts?: Post[];
+  relatedPosts?: Omit<Post, "content">[];
 }
 
 const Client = ({
