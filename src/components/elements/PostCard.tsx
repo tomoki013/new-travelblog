@@ -142,11 +142,15 @@ const PostCard = ({
               <h3 className="font-serif text-xl font-bold text-foreground group-hover:text-secondary mb-2 min-h-[56px]">
                 {post.title}
               </h3>
-              {post.category && (
-                <p className="text-sm text-muted-foreground mb-4 group-hover:text-secondary">
-                  カテゴリー: {post.category}
-                </p>
-              )}
+              {category &&
+                category.map((cat) => (
+                  <p
+                    key={cat.slug}
+                    className="text-sm text-muted-foreground mb-4 group-hover:text-secondary"
+                  >
+                    カテゴリー: {cat.title}
+                  </p>
+                ))}
               <p className="text-sm text-muted-foreground mb-4 group-hover:text-secondary">
                 地域: {regionTags.map((r) => r.name).join(", ")}
               </p>

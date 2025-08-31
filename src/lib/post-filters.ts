@@ -11,9 +11,9 @@ export function sortByDate(posts: PostMetadata[]): PostMetadata[] {
 
 export function filterByCategory(
   posts: PostMetadata[],
-  type: string
+  category: string
 ): PostMetadata[] {
-  return posts.filter((post) => post.category === type);
+  return posts.filter((post) => post.category === category);
 }
 
 export function filterByTag(
