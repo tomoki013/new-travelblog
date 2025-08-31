@@ -14,6 +14,7 @@ export interface Post {
   budget?: number;
   costs?: Record<string, number>;
   series?: string;
+  isPromotion?: boolean;
 }
 
 export interface Photo {
