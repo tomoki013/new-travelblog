@@ -4,7 +4,6 @@ import { Suspense } from "react";
 import { Metadata } from "next";
 import { LoadingAnimation } from "@/components/featured/LoadingAnimation/LoadingAnimation";
 import { POSTS_PER_PAGE } from "@/constants/constants";
-import { Post, PostMetadata } from "@/types/types";
 import { filterPostsBySearch, calculateScores } from "@/lib/search";
 
 export const metadata: Metadata = {
