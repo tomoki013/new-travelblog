@@ -3,7 +3,7 @@
 import { useState, FormEvent, useEffect } from "react";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import { SearchIcon, XIcon } from "lucide-react";
+import { SearchIcon } from "lucide-react";
 
 interface SearchInputProps {
   initialValue?: string;
@@ -33,7 +33,10 @@ export const SearchInput = ({
   };
 
   return (
-    <form onSubmit={handleSubmit} className="flex items-center gap-2">
+    <form
+      onSubmit={handleSubmit}
+      className="flex flex-col md:flex-row items-center gap-2"
+    >
       <div className="relative flex-grow">
         <Input
           type="search"
@@ -46,12 +49,14 @@ export const SearchInput = ({
           <SearchIcon className="h-5 w-5 text-gray-400" />
         </div>
       </div>
-      <Button type="submit" variant="default">
-        検索
-      </Button>
-      <Button type="button" variant="outline" onClick={handleReset}>
-        リセット
-      </Button>
+      <div className="flex items-center gap-2">
+        <Button type="submit" variant="default">
+          検索
+        </Button>
+        <Button type="button" variant="outline" onClick={handleReset}>
+          リセット
+        </Button>
+      </div>
     </form>
   );
 };
