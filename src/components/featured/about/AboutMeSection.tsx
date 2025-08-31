@@ -3,8 +3,14 @@
 import Image from "next/image";
 import { motion } from "framer-motion";
 import { sectionVariants } from "@/components/animation";
+import WorldMap from "../worldMap/WorldMap";
+import { regionData } from "@/data/region";
 
 const AboutMeSection = () => {
+  // 訪問した国名を小文字の配列として抽出
+  const visitedCountryNames = regionData.flatMap((continent) =>
+    continent.countries.map((country) => country.slug)
+  );
   return (
     <motion.section
       className="py-20 md:py-28"
@@ -54,6 +60,16 @@ const AboutMeSection = () => {
               </p>
             </div>
           </div>
+        </div>
+        {/* 訪問国を可視化するマップ */}
+        <div className="mt-20">
+          <h3 className="text-2xl md:text-3xl font-bold text-center mb-10">
+            私が旅した国々
+          </h3>
+          <WorldMap
+            highlightedRegions={visitedCountryNames}
+            isClickable={false}
+          />
         </div>
       </div>
     </motion.section>
