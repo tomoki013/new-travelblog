@@ -99,6 +99,97 @@ const filterPostsBySearch = (
   });
 };
 
+// スコアリングロジックを定義
+const calculateScores = (
+  posts: PostMetadata[],
+  query: string
+): { post: PostMetadata; score: number }[] => {
+  if (!query) {
+    return posts.map((post) => ({ post, score: 0 }));
+  }
+
+  // Helper to escape regex special characters
+  const escapeRegExp = (str: string) => {
+    return str.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+  };
+
+  // 1. Parse query (same as filterPostsBySearch)
+  let remainingQuery = query.toLowerCase();
+
+  // Phrases
+  const phrases = (remainingQuery.match(/"[^"]+"/g) || []).map((p) =>
+    p.slice(1, -1)
+  );
+  remainingQuery = remainingQuery.replace(/"[^"]+"/g, "").trim();
+
+  // NOT terms are ignored for scoring as they are for filtering
+  remainingQuery = remainingQuery.replace(/-\S+/g, "").trim();
+
+  // OR groups
+  const orGroups = remainingQuery
+    .split(/\s+OR\s+/i)
+    .map((group) => group.trim().split(/\s+/).filter(Boolean))
+    .filter((group) => group.length > 0);
+
+  const allTerms = orGroups.flat();
+
+  const weights = {
+    title: 10,
+    excerpt: 5,
+    category: 3,
+    location: 3,
+    author: 3,
+    series: 3,
+    tags: 3,
+  };
+
+  const calculateTermFrequency = (text: string, term: string): number => {
+    if (!text || !term) return 0;
+    const lowerText = text.toLowerCase();
+    const lowerTerm = term.toLowerCase();
+    // Use a simple split and count for non-regex approach to avoid complexity with special chars in terms
+    // This is generally safer and sufficient for whole word counting.
+    // For more complex pattern matching (like wildcards), a regex approach would be needed.
+    const escapedTerm = escapeRegExp(lowerTerm);
+    const regex = new RegExp(escapedTerm, "g");
+    return (lowerText.match(regex) || []).length;
+  };
+
+  return posts.map((post) => {
+    let score = 0;
+
+    const searchableFields = {
+      title: post.title,
+      excerpt: post.excerpt,
+      category: post.category,
+      location: post.location,
+      author: post.author,
+      series: post.series,
+      tags: Array.isArray(post.tags) ? post.tags.join(" ") : post.tags,
+    };
+
+    const processTerms = (terms: string[], multiplier = 1) => {
+      terms.forEach((term) => {
+        for (const [field, weight] of Object.entries(weights)) {
+          const fieldValue = searchableFields[field as keyof typeof searchableFields];
+          if (typeof fieldValue === "string") {
+            const tf = calculateTermFrequency(fieldValue, term);
+            score += tf * weight * multiplier;
+          }
+        }
+      });
+    };
+
+    // Score based on individual terms
+    processTerms(allTerms);
+
+    // Score based on phrases with a bonus multiplier
+    processTerms(phrases, 2); // Phrases get double weight
+
+    return { post, score };
+  });
+};
+
 const PostsPage = async (props: {
   searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
 }) => {
@@ -116,11 +207,10 @@ const PostsPage = async (props: {
 
   if (searchQuery) {
     processedPosts = filterPostsBySearch(processedPosts, searchQuery);
-    // 将来的には、ここでスコアリングとソートの処理が入る
-    // const scoredPosts = calculateScores(processedPosts, searchQuery);
-    // processedPosts = scoredPosts
-    //   .sort((a, b) => b.score - a.score)
-    //   .map((item) => item.post);
+    const scoredPosts = calculateScores(processedPosts, searchQuery);
+    processedPosts = scoredPosts
+      .sort((a, b) => b.score - a.score)
+      .map((item) => item.post);
   }
 
   if (category !== "all") {
