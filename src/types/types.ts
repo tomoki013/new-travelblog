@@ -17,6 +17,8 @@ export interface Post {
   isPromotion?: boolean;
 }
 
+export type PostMetadata = Omit<Post, "content">;
+
 export interface Photo {
   id: string;
   title: string;
