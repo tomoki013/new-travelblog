@@ -84,7 +84,7 @@ export const CustomSelect = ({
         whileTap={{ scale: 0.98 }}
       >
         <div className="flex flex-col">
-          <span className="text-xs font-medium text-gray-800 uppercase tracking-wider">
+          <span className="text-xs font-medium text-gray-500 uppercase tracking-wider">
             {labelPrefix}
           </span>
           <span className="text-lg font-semibold text-gray-800">
