@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo } from "react";
+import { FormEvent, useEffect, useMemo, useState } from "react";
 import { motion } from "framer-motion";
 import { Post } from "@/types/types";
 import PostCard from "@/components/elements/PostCard";
@@ -26,42 +26,60 @@ interface BlogClientProps {
 const BlogClient = ({ posts, totalPages, currentPage }: BlogClientProps) => {
   const router = useRouter();
   const searchParams = useSearchParams();
-  const categoryParam = searchParams.get("category") || "all";
 
-  // URLを組み立てて遷移するヘルパー関数
-  const navigate = (page: number, category: string) => {
+  // URLパラメータを取得
+  const categoryParam = searchParams.get("category") || "all";
+  const searchParam = searchParams.get("search") || "";
+
+  // 検索フォームの入力状態を管理
+  const [searchQuery, setSearchQuery] = useState(searchParam);
+
+  // URLパラメータが変更されたら、フォームの入力値を更新
+  useEffect(() => {
+    setSearchQuery(searchParam);
+  }, [searchParam]);
+
+  // URLを組み立てて遷移するヘルパー関数 (searchも扱うように修正)
+  const navigate = (page: number, category: string, search: string) => {
     const params = new URLSearchParams();
     params.set("page", String(page));
     if (category && category !== "all") {
       params.set("category", category);
     }
+    if (search) {
+      params.set("search", search);
+    }
     router.push(`?${params.toString()}`);
-    window.scrollTo({ top: 0, behavior: "smooth" });
+    // ページ上部へのスクロールはここでは不要な場合があるため、各ハンドラで制御
   };
 
   // --- イベントハンドラ ---
 
-  // カテゴリー変更時の処理
+  // 検索フォーム送信時の処理
+  const handleSearchSubmit = (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault(); // フォームのデフォルト送信をキャンセル
+    navigate(1, categoryParam, searchQuery); // 検索時は1ページ目に戻す
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  };
+
   const handleCategoryChange = (slug: string) => {
-    // カテゴリーを変更した際は1ページ目に戻す
-    navigate(1, slug);
+    navigate(1, slug, searchParam); // カテゴリ変更時も1ページ目に戻す
+    window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
-  // ページ番号クリック時の処理
   const handlePageChange = (page: number) => {
-    navigate(page, categoryParam);
+    navigate(page, categoryParam, searchParam);
+    window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
-  // 前のページへ
   const handlePrev = () => {
-    const prevPage = Math.max(1, currentPage - 1);
-    navigate(prevPage, categoryParam);
+    navigate(Math.max(1, currentPage - 1), categoryParam, searchParam);
+    window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
-  // 次のページへ
   const handleNext = () => {
-    const nextPage = Math.min(totalPages, currentPage + 1);
-    navigate(nextPage, categoryParam);
+    navigate(Math.min(totalPages, currentPage + 1), categoryParam, searchParam);
+    window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
   // --- ページネーション番号の生成ロジック (useMemoで不要な再計算を防ぐ) ---
@@ -96,34 +114,56 @@ const BlogClient = ({ posts, totalPages, currentPage }: BlogClientProps) => {
       />
 
       <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+        {/* ==================== Search ==================== */}
+        <section className="mb-2">
+          <form onSubmit={handleSearchSubmit} className="flex-grow">
+            <input
+              type="search"
+              placeholder="キーワードで検索..."
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-secondary"
+            />
+          </form>
+        </section>
+
         {/* ==================== Filters ==================== */}
-        <section className="mb-12 flex flex-col sm:flex-row gap-4">
+        <section className="mb-12">
           <CustomSelect
             options={categories}
-            value={categoryParam} // URLパラメータを直接参照
+            value={categoryParam}
             onChange={handleCategoryChange}
             labelPrefix="カテゴリー"
           />
         </section>
 
         {/* ==================== Article List ==================== */}
-        <motion.section
-          key={currentPage} // ページが変わるたびにアニメーションを再トリガー
-          variants={staggerContainerVariants(0.1)}
-          initial="hidden"
-          animate="visible"
-          className="flex flex-col gap-16 md:gap-20 mb-12"
-        >
-          {posts.map((post, index) => (
-            <motion.div key={post.slug} variants={slideInUpVariants}>
-              <PostCard
-                post={post}
-                isReversed={index % 2 !== 0}
-                showMetadata={true}
-              />
-            </motion.div>
-          ))}
-        </motion.section>
+        {posts.length > 0 ? (
+          <motion.section
+            key={currentPage} // ページが変わるたびにアニメーションを再トリガー
+            variants={staggerContainerVariants(0.1)}
+            initial="hidden"
+            animate="visible"
+            className="flex flex-col gap-16 md:gap-20 mb-12"
+          >
+            {posts.map((post, index) => (
+              <motion.div key={post.slug} variants={slideInUpVariants}>
+                <PostCard
+                  post={post}
+                  isReversed={index % 2 !== 0}
+                  showMetadata={true}
+                />
+              </motion.div>
+            ))}
+          </motion.section>
+        ) : (
+          // 検索結果がない場合の表示
+          <div className="text-center py-16">
+            <p className="text-xl text-foreground">
+              該当する記事が見つかりませんでした。
+            </p>
+          </div>
+        )}
 
         {/* ==================== Pagination ==================== */}
         {totalPages > 1 && (
