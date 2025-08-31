@@ -80,11 +80,11 @@ export const CustomSelect = ({
     <div ref={wrapperRef} className="relative w-full font-sans">
       <motion.button
         onClick={() => setIsOpen(!isOpen)}
-        className="w-full flex items-center justify-between text-left p-4 bg-white/60 border border-gray-200/80 rounded-xl shadow-sm hover:border-gray-300 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-secondary transition-all duration-300"
+        className="w-full flex items-center justify-between text-left p-4 bg-white/80 border border-gray-200/80 rounded-xl shadow-sm hover:border-gray-300 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-secondary transition-all duration-300"
         whileTap={{ scale: 0.98 }}
       >
         <div className="flex flex-col">
-          <span className="text-xs font-medium text-gray-400 uppercase tracking-wider">
+          <span className="text-xs font-medium text-gray-800 uppercase tracking-wider">
             {labelPrefix}
           </span>
           <span className="text-lg font-semibold text-gray-800">
@@ -106,7 +106,7 @@ export const CustomSelect = ({
             initial="closed"
             animate="open"
             exit="closed"
-            className="absolute z-10 w-full mt-2 origin-top bg-white/80 backdrop-blur-lg rounded-xl shadow-2xl ring-1 ring-secondary overflow-hidden"
+            className="absolute z-10 w-full mt-2 origin-top bg-white/80 text-gray-800 backdrop-blur-lg rounded-xl shadow-2xl ring-1 ring-secondary overflow-hidden"
           >
             {options.map((option) => (
               <motion.li

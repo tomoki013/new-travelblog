@@ -125,7 +125,7 @@ const BlogClient = ({ posts, totalPages, currentPage }: BlogClientProps) => {
                 placeholder="キーワードで検索..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                className="pl-10" // アイコンのスペースを確保
+                className="pl-10 bg-white/80 text-gray-800" // アイコンのスペースを確保
               />
               <div className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
                 <SearchIcon className="h-5 w-5 text-gray-400" />
