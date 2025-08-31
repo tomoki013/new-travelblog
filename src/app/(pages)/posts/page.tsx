@@ -56,10 +56,11 @@ const filterPostsBySearch = (
       post.location,
       post.author,
       post.series,
-      ...(post.tags || []),
+      post.tags,
     ]
-      .filter(Boolean)
-      .map((f) => f.toLowerCase());
+      .flat()
+      .filter((value): value is string => typeof value === "string")
+      .map((value) => value.toLowerCase());
 
     const checkMatch = (term: string) => {
       const lowerTerm = term.toLowerCase();
