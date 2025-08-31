@@ -65,7 +65,7 @@ export async function getPostBySlug(slug: string): Promise<Post> {
     // Pass through other properties
     excerpt: data.excerpt,
     image: data.image,
-    tags: ensureStringArray(data.category),
+    tags: ensureStringArray(data.tags),
     location: ensureStringArray(data.location),
     author: data.author,
     budget: data.budget,

@@ -69,9 +69,19 @@ const PostHeader = ({ post }: PostHeaderProps) => {
             <Link
               key={cat.slug}
               href={`/posts?category=${cat.slug}`}
-              className="bg-teal-100 text-teal-700 px-3 py-1 text-xs font-semibold rounded-full"
+              className="bg-teal-100 text-teal-700 px-3 py-1 text-xs font-semibold rounded-full hover:bg-teal-200"
             >
               {cat.title}
+            </Link>
+          ))}
+        {post.tags &&
+          post.tags.map((tag) => (
+            <Link
+              key={tag}
+              href={`/posts?search=${tag}`}
+              className="bg-purple-100 text-purple-700 px-3 py-1 text-xs font-semibold rounded-full hover:bg-purple-200"
+            >
+              {tag}
             </Link>
           ))}
       </div>

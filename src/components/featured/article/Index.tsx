@@ -87,8 +87,11 @@ const Index = ({ isScrollSyncEnabled = false }: IndexProps) => {
   }
 
   return (
-    <details className="group bg-muted rounded-lg p-6 my-6 border-l-4 border-secondary">
-      <summary className="flex cursor-pointer items-center transition-opacity hover:opacity-80">
+    <details
+      className="group bg-muted rounded-lg p-6 my-6 border-l-4 border-secondary"
+      open
+    >
+      <summary className="flex cursor-pointer items-center list-none transition-opacity hover:opacity-80">
         <div className="h-5 w-5 text-foreground transition-transform duration-300 group-open:rotate-90">
           <svg
             xmlns="http://www.w3.org/2000/svg"
