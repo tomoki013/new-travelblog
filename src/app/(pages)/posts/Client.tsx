@@ -12,6 +12,8 @@ import { CustomSelect } from "@/components/elements/CustomSelect";
 import { useSearchParams, useRouter } from "next/navigation";
 import HeroSection from "@/components/sections/HeroSection";
 import { categories } from "@/data/categories";
+import { Input } from "@/components/ui/input";
+import { SearchIcon } from "@/components/Icons";
 
 // Postのメタデータの型を定義
 type PostMetadata = Omit<Post, "content">;
@@ -117,13 +119,18 @@ const BlogClient = ({ posts, totalPages, currentPage }: BlogClientProps) => {
         {/* ==================== Search ==================== */}
         <section className="mb-2">
           <form onSubmit={handleSearchSubmit} className="flex-grow">
-            <input
-              type="search"
-              placeholder="キーワードで検索..."
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-              className="w-full px-4 py-2 bg-white/80 text-gray-800 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-secondary"
-            />
+            <div className="relative">
+              <Input
+                type="search"
+                placeholder="キーワードで検索..."
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                className="pl-10 bg-white/80 text-gray-800" // アイコンのスペースを確保
+              />
+              <div className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
+                <SearchIcon className="h-5 w-5 text-gray-400" />
+              </div>
+            </div>
           </form>
         </section>
 
