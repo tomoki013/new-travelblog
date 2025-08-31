@@ -11,11 +11,10 @@ export const metadata: Metadata = {
     "「ともきちの旅行日記」の全記事を時系列で掲載しています。世界中の旅の記録や旅行記、観光情報をお届け。あなたの次の冒険のヒントがきっと見つかります。",
 };
 
-const PostsPage = async ({
-  searchParams,
-}: {
-  searchParams: { [key: string]: string | string[] | undefined };
+const PostsPage = async (props: {
+  searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
 }) => {
+  const searchParams = await props.searchParams;
   const category =
     typeof searchParams.category === "string" ? searchParams.category : "all";
   const page =
