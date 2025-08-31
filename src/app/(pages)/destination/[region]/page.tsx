@@ -35,17 +35,21 @@ const DestinationPage = async (props: {
     targetSlugs.push(...country.children.map((child) => child.slug));
   }
 
-  const filteredPosts = await getAllPosts({ region: targetSlugs });
-
-  const seriesPosts = filteredPosts.filter(
-    (post) => post.category === "series"
-  );
-  const tourismPosts = filteredPosts.filter(
-    (post) => post.category === "tourism"
-  );
-  const itineraryPosts = filteredPosts.filter(
-    (post) => post.category === "itinerary"
-  );
+  const seriesPosts = await getAllPosts({
+    category: "series",
+    region: targetSlugs,
+    limit: 4,
+  });
+  const tourismPosts = await getAllPosts({
+    category: "tourism",
+    region: targetSlugs,
+    limit: 3,
+  });
+  const itineraryPosts = await getAllPosts({
+    category: "itinerary",
+    region: targetSlugs,
+    limit: 3,
+  });
 
   return (
     <Client

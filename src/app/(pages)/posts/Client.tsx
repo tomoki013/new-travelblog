@@ -1,102 +1,90 @@
 "use client";
 
-import { useState, useMemo } from "react";
+import { useMemo } from "react";
 import { motion } from "framer-motion";
 import { Post } from "@/types/types";
-type PostMetadata = Omit<Post, "content">;
 import PostCard from "@/components/elements/PostCard";
 import {
   staggerContainerVariants,
   slideInUpVariants,
 } from "@/components/animation";
 import { CustomSelect } from "@/components/elements/CustomSelect";
-import { POSTS_PER_PAGE } from "@/constants/constants";
 import { useSearchParams, useRouter } from "next/navigation";
 import HeroSection from "@/components/sections/HeroSection";
 import { categories } from "@/data/categories";
 
+// Postのメタデータの型を定義
+type PostMetadata = Omit<Post, "content">;
+
 // Propsの型を定義
 interface BlogClientProps {
-  allPosts: PostMetadata[];
+  posts: PostMetadata[]; // 表示するページ分割済みの記事
+  totalPages: number; // 総ページ数
+  currentPage: number; // 現在のページ番号
 }
 
-const BlogClient = ({ allPosts }: BlogClientProps) => {
-  // URLパラメータからページ番号・カテゴリー・シリーズを取得
-  const searchParams = useSearchParams();
+const BlogClient = ({ posts, totalPages, currentPage }: BlogClientProps) => {
   const router = useRouter();
-  const pageParam = searchParams.get("page");
-  // const categoryParam = searchParams.get("category");
-  const [currentPage, setCurrentPage] = useState(
-    pageParam ? Number(pageParam) : 1
-  );
-  const [filterCategory, setFilterCategory] = useState("all");
-  // ページ番号クリック時もスクロール＆URL更新（category, seriesも含める）
-  const handlePageChange = async (page: number) => {
-    await router.push(`?page=${page}`);
-    setCurrentPage(page);
+  const searchParams = useSearchParams();
+  const categoryParam = searchParams.get("category") || "all";
+
+  // URLを組み立てて遷移するヘルパー関数
+  const navigate = (page: number, category: string) => {
+    const params = new URLSearchParams();
+    params.set("page", String(page));
+    if (category && category !== "all") {
+      params.set("category", category);
+    }
+    router.push(`?${params.toString()}`);
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
-  // ページ移動時にスクロール＆URL更新（category, seriesも含める）
-  const handlePrev = async () => {
+
+  // --- イベントハンドラ ---
+
+  // カテゴリー変更時の処理
+  const handleCategoryChange = (slug: string) => {
+    // カテゴリーを変更した際は1ページ目に戻す
+    navigate(1, slug);
+  };
+
+  // ページ番号クリック時の処理
+  const handlePageChange = (page: number) => {
+    navigate(page, categoryParam);
+  };
+
+  // 前のページへ
+  const handlePrev = () => {
     const prevPage = Math.max(1, currentPage - 1);
-    await router.push(`?page=${prevPage}`);
-    setCurrentPage(prevPage);
-    window.scrollTo({ top: 0, behavior: "smooth" });
+    navigate(prevPage, categoryParam);
   };
-  const handleNext = async () => {
+
+  // 次のページへ
+  const handleNext = () => {
     const nextPage = Math.min(totalPages, currentPage + 1);
-    await router.push(`?page=${nextPage}`);
-    setCurrentPage(nextPage);
-    window.scrollTo({ top: 0, behavior: "smooth" });
+    navigate(nextPage, categoryParam);
   };
 
-  // 絞り込みとソートのロジック
-  const filteredAndSortedPosts = useMemo(() => {
-    return allPosts.filter(
-      (post) => filterCategory === "all" || post.category === filterCategory
-    );
-  }, [allPosts, filterCategory]);
-
-  // ページネーションのロジック
-  const totalPages = Math.ceil(filteredAndSortedPosts.length / POSTS_PER_PAGE);
-  const paginatedPosts = filteredAndSortedPosts.slice(
-    (currentPage - 1) * POSTS_PER_PAGE,
-    currentPage * POSTS_PER_PAGE
-  );
-
-  // ページネーション表示用ページ番号リスト生成
-  const getPaginationNumbers = () => {
+  // --- ページネーション番号の生成ロジック (useMemoで不要な再計算を防ぐ) ---
+  const paginationNumbers = useMemo(() => {
     if (totalPages <= 7) {
-      // ページ数が少ない場合は全て表示
       return Array.from({ length: totalPages }, (_, i) => i + 1);
     }
-    const pages: number[] = [];
-    pages.push(1);
-    // 前後2ページ分表示
+    const pages: (number | string)[] = [];
     const start = Math.max(2, currentPage - 1);
     const end = Math.min(totalPages - 1, currentPage + 1);
-    if (start > 2) {
-      // ...を表示
-      pages.push(-1); // -1は省略記号
-    }
+
+    pages.push(1);
+    if (start > 2) pages.push("...");
     for (let i = start; i <= end; i++) {
       pages.push(i);
     }
-    if (end < totalPages - 1) {
-      pages.push(-1);
-    }
+    if (end < totalPages - 1) pages.push("...");
     pages.push(totalPages);
+
     return pages;
-  };
+  }, [totalPages, currentPage]);
 
-  // イベントハンドラ（フィルター変更時もURLパラメータ更新）
-  const handleCategoryChange = (slug: string) => {
-    // await router.push(`?page=1&category=${slug}&series=${filterSeries}`);
-    setFilterCategory(slug);
-    setCurrentPage(1);
-  };
-
-  // 以下、元のコンポーネントのJSXをそのまま貼り付け
+  // --- JSX ---
   return (
     <div>
       {/* ==================== Hero Section ==================== */}
@@ -112,7 +100,7 @@ const BlogClient = ({ allPosts }: BlogClientProps) => {
         <section className="mb-12 flex flex-col sm:flex-row gap-4">
           <CustomSelect
             options={categories}
-            value={filterCategory}
+            value={categoryParam} // URLパラメータを直接参照
             onChange={handleCategoryChange}
             labelPrefix="カテゴリー"
           />
@@ -126,7 +114,7 @@ const BlogClient = ({ allPosts }: BlogClientProps) => {
           animate="visible"
           className="flex flex-col gap-16 md:gap-20 mb-12"
         >
-          {paginatedPosts.map((post, index) => (
+          {posts.map((post, index) => (
             <motion.div key={post.slug} variants={slideInUpVariants}>
               <PostCard
                 post={post}
@@ -138,46 +126,50 @@ const BlogClient = ({ allPosts }: BlogClientProps) => {
         </motion.section>
 
         {/* ==================== Pagination ==================== */}
-        <section className="mt-16 flex flex-wrap justify-center items-center gap-2">
-          {/* Prevボタン: 1ページ目では非表示 */}
-          {currentPage !== 1 && (
-            <button
-              onClick={handlePrev}
-              className="px-4 py-2 rounded-lg bg-gray-200 text-black"
-            >
-              Prev
-            </button>
-          )}
-          {/* ページ番号表示 */}
-          {getPaginationNumbers().map((page, idx) =>
-            page === -1 ? (
-              <span key={"ellipsis-" + idx} className="px-2">
-                ...
-              </span>
-            ) : (
+        {totalPages > 1 && (
+          <section className="mt-16 flex flex-wrap justify-center items-center gap-2">
+            {/* Prevボタン */}
+            {currentPage > 1 && (
               <button
-                key={page}
-                onClick={() => handlePageChange(page)}
-                className={`px-4 py-2 rounded-lg ${
-                  currentPage === page
-                    ? "bg-teal-600 text-white"
-                    : "bg-gray-200 text-black"
-                }`}
+                onClick={handlePrev}
+                className="px-4 py-2 rounded-lg bg-gray-200 text-black"
               >
-                {page}
+                Prev
               </button>
-            )
-          )}
-          {/* Nextボタン: 最終ページでは非表示 */}
-          {currentPage !== totalPages && (
-            <button
-              onClick={handleNext}
-              className="px-4 py-2 rounded-lg bg-gray-200 text-black"
-            >
-              Next
-            </button>
-          )}
-        </section>
+            )}
+
+            {/* ページ番号 */}
+            {paginationNumbers.map((page, idx) =>
+              page === "..." ? (
+                <span key={`ellipsis-${idx}`} className="px-2">
+                  ...
+                </span>
+              ) : (
+                <button
+                  key={page}
+                  onClick={() => handlePageChange(page as number)}
+                  className={`px-4 py-2 rounded-lg ${
+                    currentPage === page
+                      ? "bg-teal-600 text-white"
+                      : "bg-gray-200 text-black"
+                  }`}
+                >
+                  {page}
+                </button>
+              )
+            )}
+
+            {/* Nextボタン */}
+            {currentPage < totalPages && (
+              <button
+                onClick={handleNext}
+                className="px-4 py-2 rounded-lg bg-gray-200 text-black"
+              >
+                Next
+              </button>
+            )}
+          </section>
+        )}
       </div>
     </div>
   );
