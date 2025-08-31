@@ -12,8 +12,7 @@ import { CustomSelect } from "@/components/elements/CustomSelect";
 import { useSearchParams, useRouter } from "next/navigation";
 import HeroSection from "@/components/sections/HeroSection";
 import { categories } from "@/data/categories";
-import { Input } from "@/components/ui/input";
-import { SearchIcon } from "@/components/Icons";
+import { SearchInput } from "@/components/elements/SearchInput";
 
 // Postのメタデータの型を定義
 type PostMetadata = Omit<Post, "content">;
@@ -33,15 +32,7 @@ const BlogClient = ({ posts, totalPages, currentPage }: BlogClientProps) => {
   const categoryParam = searchParams.get("category") || "all";
   const searchParam = searchParams.get("search") || "";
 
-  // 検索フォームの入力状態を管理
-  const [searchQuery, setSearchQuery] = useState(searchParam);
-
-  // URLパラメータが変更されたら、フォームの入力値を更新
-  useEffect(() => {
-    setSearchQuery(searchParam);
-  }, [searchParam]);
-
-  // URLを組み立てて遷移するヘルパー関数 (searchも扱うように修正)
+  // URLを組み立てて遷移するヘルパー関数
   const navigate = (page: number, category: string, search: string) => {
     const params = new URLSearchParams();
     params.set("page", String(page));
@@ -52,20 +43,22 @@ const BlogClient = ({ posts, totalPages, currentPage }: BlogClientProps) => {
       params.set("search", search);
     }
     router.push(`?${params.toString()}`);
-    // ページ上部へのスクロールはここでは不要な場合があるため、各ハンドラで制御
   };
 
   // --- イベントハンドラ ---
 
-  // 検索フォーム送信時の処理
-  const handleSearchSubmit = (e: FormEvent<HTMLFormElement>) => {
-    e.preventDefault(); // フォームのデフォルト送信をキャンセル
-    navigate(1, categoryParam, searchQuery); // 検索時は1ページ目に戻す
+  const handleSearch = (query: string) => {
+    navigate(1, categoryParam, query);
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  };
+
+  const handleResetSearch = () => {
+    navigate(1, categoryParam, "");
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
   const handleCategoryChange = (slug: string) => {
-    navigate(1, slug, searchParam); // カテゴリ変更時も1ページ目に戻す
+    navigate(1, slug, searchParam);
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
@@ -118,20 +111,11 @@ const BlogClient = ({ posts, totalPages, currentPage }: BlogClientProps) => {
       <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
         {/* ==================== Search ==================== */}
         <section className="mb-2">
-          <form onSubmit={handleSearchSubmit} className="flex-grow">
-            <div className="relative">
-              <Input
-                type="search"
-                placeholder="キーワードで検索..."
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
-                className="pl-10 bg-white/80 text-gray-800" // アイコンのスペースを確保
-              />
-              <div className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
-                <SearchIcon className="h-5 w-5 text-gray-400" />
-              </div>
-            </div>
-          </form>
+          <SearchInput
+            initialValue={searchParam}
+            onSearch={handleSearch}
+            onReset={handleResetSearch}
+          />
         </section>
 
         {/* ==================== Filters ==================== */}
