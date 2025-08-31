@@ -10,6 +10,20 @@ import { FaBlog } from "react-icons/fa";
 const Footer = () => {
   return (
     <footer className="bg-background text-foreground py-16 px-8">
+      {/* アフィリエイトポリシー */}
+      <div className="italic">
+        <p>
+          ※当サイトはアフィリエイト広告を利用しています。掲載する商品・サービスは、運営者が実際に試し、自信を持っておすすめできるものに限定しています。
+          {/* 詳しい運営方針については
+          <Link
+            href={`/about#promotionPolicy`}
+            className="text-secondary underline hover:text-secondary-foreground"
+          >
+            こちら
+          </Link>
+          のページをご覧ください。 */}
+        </p>
+      </div>
       <div className="container py-10">
         <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 md:grid-cols-5">
           <div className="space-y-3">

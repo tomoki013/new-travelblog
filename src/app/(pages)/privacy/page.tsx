@@ -214,19 +214,18 @@ const PrivacyPage = () => {
 
           {/* <Separator className="my-8" /> */}
 
-          {/* <h2 className="text-2xl font-bold">
+          <h2 className="text-2xl font-bold">
             8. アフィリエイトプログラムについて
           </h2>
-          <p>
-            当サイトは、「Amazon.co.jp」を宣伝しリンクすることによってサイトが紹介料を獲得できる手段を提供することを目的に設定されたアフィリエイトプログラムである、Amazonアソシエイト・プログラムの参加者です。
-          </p>
+          <p>当サイトは、アフィリエイトプログラム参加者です。</p>
           <p>
             第三者がコンテンツおよび宣伝を提供し、訪問者から直接情報を収集し、訪問者のブラウザにCookieを設定したりこれを認識したりする場合があります。
-          </p> */}
+          </p>
+          {/* <p>詳細はアフィリエイトに関するサイトポリシーをご覧ください。</p> */}
 
           <Separator className="my-8" />
 
-          <h2 className="text-2xl font-bold">8. 免責事項</h2>
+          <h2 className="text-2xl font-bold">9. 免責事項</h2>
           <p>
             当サイトに掲載された内容によって生じた損害等の一切の責任を負いかねますのでご了承ください。当サイトからリンクやバナーなどによって他のサイトに移動した場合、移動先サイトで提供される情報、サービス等についても一切の責任を負いません。
           </p>
@@ -236,7 +235,7 @@ const PrivacyPage = () => {
 
           <Separator className="my-8" />
 
-          <h2 className="text-2xl font-bold">9. お問い合わせ</h2>
+          <h2 className="text-2xl font-bold">10. お問い合わせ</h2>
           <p>
             本プライバシーポリシーに関するお問い合わせは、
             <Link
@@ -250,7 +249,7 @@ const PrivacyPage = () => {
 
           <Separator className="my-8" />
 
-          <h2 className="text-2xl font-bold">10. プライバシーポリシーの変更</h2>
+          <h2 className="text-2xl font-bold">11. プライバシーポリシーの変更</h2>
           <p>
             当サイトは、法令の変更やサービスの改善に伴い、本プライバシーポリシーを事前の予告なく変更することがあります。変更後のプライバシーポリシーは、当サイトに掲載したときから効力を生じるものとします。
           </p>
