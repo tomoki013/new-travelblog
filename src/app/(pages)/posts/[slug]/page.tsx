@@ -59,7 +59,7 @@ const PostPage = async (props: { params: Promise<{ slug: string }> }) => {
   const slug = params.slug;
 
   try {
-    const { post, previousPost, nextPost, relatedPosts, allPosts } =
+    const { post, previousPost, nextPost, regionRelatedPosts, allPosts } =
       await getPostData(slug);
 
     return (
@@ -67,7 +67,7 @@ const PostPage = async (props: { params: Promise<{ slug: string }> }) => {
         post={post}
         previousPost={previousPost}
         nextPost={nextPost}
-        relatedPosts={relatedPosts}
+        regionRelatedPosts={regionRelatedPosts}
       >
         <ArticleContent
           content={post.content}

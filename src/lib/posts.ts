@@ -5,6 +5,7 @@ import { getRawPostsData } from "./markdown";
 import * as postFilters from "./post-filters";
 import { Post } from "@/types/types";
 import { ensureStringArray } from "@/lib/utils";
+import { calculateScores } from "@/lib/search";
 
 type PostMetadata = Omit<Post, "content">;
 
@@ -78,18 +79,48 @@ export async function getPostBySlug(slug: string): Promise<Post> {
 /**
  * Gets all the necessary data for a single post page.
  */
-export async function getPostData(slug: string) {
+export async function getPostData(slug:string) {
   const post = await getPostBySlug(slug);
   const allPosts = await getAllPosts(); // Get all posts for next/previous links
 
   const previousPostData = postFilters.getPreviousPost(slug, allPosts);
   const nextPostData = postFilters.getNextPost(slug, allPosts);
 
-  let relatedPosts: PostMetadata[] = [];
+  let regionRelatedPosts: PostMetadata[] = [];
   if (post.location && post.location.length > 0) {
     const regionPosts = await getAllPosts({ region: post.location });
-    // Exclude the current post itself and limit to 3
-    relatedPosts = regionPosts.filter((p) => p.slug !== post.slug).slice(0, 3);
+    // Exclude the current post itself
+    const filteredRegionPosts = regionPosts.filter(
+      (p) => p.slug !== post.slug
+    );
+
+    const query = [
+      post.title,
+      post.excerpt,
+      post.category,
+      ...(post.tags || []),
+    ]
+      .join(" ")
+      .toLowerCase();
+
+    const weights = {
+      tags: 10,
+      title: 5,
+      excerpt: 2,
+      category: 2,
+    };
+
+    const scoredPosts = calculateScores(
+      filteredRegionPosts,
+      query,
+      weights,
+      ["title", "excerpt", "category", "tags"]
+    );
+
+    regionRelatedPosts = scoredPosts
+      .sort((a, b) => b.score - a.score)
+      .slice(0, 3)
+      .map((sp) => sp.post);
   }
 
   // Format the next/previous post data to match the expected structure in the component
@@ -111,7 +142,7 @@ export async function getPostData(slug: string) {
     post,
     previousPost,
     nextPost,
-    relatedPosts,
+    regionRelatedPosts,
     allPosts, // For use in CustomLink component
   };
 }
