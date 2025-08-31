@@ -19,10 +19,36 @@ const filterPostsBySearch = (
   posts: PostMetadata[],
   query: string
 ): PostMetadata[] => {
-  const lowercasedQuery = query.toLowerCase();
+  if (!query) {
+    return posts;
+  }
+
+  // Helper to escape regex special characters
+  const escapeRegExp = (str: string) => {
+    return str.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+  };
+
+  // 1. Parse query
+  let remainingQuery = query;
+
+  // Phrases
+  const phrases = (remainingQuery.match(/"[^"]+"/g) || []).map((p) =>
+    p.slice(1, -1)
+  );
+  remainingQuery = remainingQuery.replace(/"[^"]+"/g, "").trim();
+
+  // NOT terms
+  const notTerms =
+    (remainingQuery.match(/-\S+/g) || []).map((t) => t.slice(1)) || [];
+  remainingQuery = remainingQuery.replace(/-\S+/g, "").trim();
+
+  // OR groups (split by OR, then by space for AND terms)
+  const orGroups = remainingQuery
+    .split(/\s+OR\s+/i)
+    .map((group) => group.trim().split(/\s+/).filter(Boolean))
+    .filter((group) => group.length > 0);
 
   return posts.filter((post) => {
-    // 検索対象のフィールドをここで定義
     const searchableFields = [
       post.title,
       post.excerpt,
@@ -31,29 +57,44 @@ const filterPostsBySearch = (
       post.author,
       post.series,
       ...(post.tags || []),
-    ];
+    ]
+      .filter(Boolean)
+      .map((f) => f.toLowerCase());
 
-    return searchableFields.some((field) => {
-      // 1. fieldがnullやundefinedの場合はfalseを返す
-      if (!field) {
+    const checkMatch = (term: string) => {
+      const lowerTerm = term.toLowerCase();
+      if (lowerTerm.includes("*")) {
+        const regex = new RegExp(
+          escapeRegExp(lowerTerm).replace(/\\\*/g, ".*"),
+          "i"
+        );
+        return searchableFields.some((field) => regex.test(field));
+      }
+      return searchableFields.some((field) => field.includes(lowerTerm));
+    };
+
+    // 2. Filter logic
+    // NOT condition: must not match any
+    if (notTerms.some(checkMatch)) {
+      return false;
+    }
+
+    // Phrase condition: must match all
+    if (!phrases.every(checkMatch)) {
+      return false;
+    }
+
+    // AND/OR conditions
+    if (orGroups.length > 0) {
+      // Must match at least one OR group
+      // Each OR group must match all its AND terms
+      const match = orGroups.some((andTerms) => andTerms.every(checkMatch));
+      if (!match) {
         return false;
       }
+    }
 
-      // 2. fieldが文字列の場合
-      if (typeof field === "string") {
-        return field.toLowerCase().includes(lowercasedQuery);
-      }
-
-      // 3. fieldが配列の場合 (post.tags)
-      if (Array.isArray(field)) {
-        // 配列の各要素（タグ）をチェックし、一つでも一致すればtrueを返す
-        return field.some((item) =>
-          item.toLowerCase().includes(lowercasedQuery)
-        );
-      }
-
-      return false;
-    });
+    return true;
   });
 };
 
