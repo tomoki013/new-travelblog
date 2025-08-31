@@ -22,7 +22,7 @@ interface ClientProps {
   post: Post;
   previousPost?: { href: string; title: string }; // 前の記事へのリンク
   nextPost?: { href: string; title: string }; // 次の記事へのリンク
-  relatedPosts?: Omit<Post, "content">[];
+  regionRelatedPosts?: Omit<Post, "content">[];
 }
 
 const Client = ({
@@ -30,7 +30,7 @@ const Client = ({
   post,
   previousPost,
   nextPost,
-  relatedPosts,
+  regionRelatedPosts,
 }: ClientProps) => {
   const [currentUrl, setCurrentUrl] = useState("");
   const [isCopied, setIsCopied] = useState(false);
@@ -140,9 +140,9 @@ const Client = ({
           </div>
 
           {/* ==================== 関連記事セクション ==================== */}
-          {relatedPosts && (
+          {regionRelatedPosts && (
             <div className="mb-10">
-              <RelatedPosts posts={relatedPosts} />
+              <RelatedPosts posts={regionRelatedPosts} />
             </div>
           )}
         </motion.footer>
