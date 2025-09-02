@@ -32,6 +32,8 @@ interface WorldMapProps {
 
 export interface WorldMapHandle {
   resetZoom: () => void;
+  zoomIn: () => void;
+  zoomOut: () => void;
 }
 
 const WorldMap = forwardRef<WorldMapHandle, WorldMapProps>(
@@ -50,6 +52,7 @@ const WorldMap = forwardRef<WorldMapHandle, WorldMapProps>(
       null
     );
     const [isLoading, setIsLoading] = useState(true);
+    const [showZoomHint, setShowZoomHint] = useState(false);
     const router = useRouter();
 
     useImperativeHandle(ref, () => ({
@@ -62,7 +65,31 @@ const WorldMap = forwardRef<WorldMapHandle, WorldMapProps>(
             .call(zoomRef.current.transform, d3.zoomIdentity);
         }
       },
+      zoomIn: () => {
+        if (svgRef.current && zoomRef.current) {
+          const svg = d3.select(svgRef.current);
+          zoomRef.current.scaleBy(svg.transition().duration(750), 1.2);
+        }
+      },
+      zoomOut: () => {
+        if (svgRef.current && zoomRef.current) {
+          const svg = d3.select(svgRef.current);
+          zoomRef.current.scaleBy(svg.transition().duration(750), 0.8);
+        }
+      },
     }));
+
+    useEffect(() => {
+      // ズームヒントメッセージの表示を管理
+      if (!isLoading && isZoomable) {
+        setShowZoomHint(true);
+        const timer = setTimeout(() => {
+          setShowZoomHint(false);
+        }, 3000); // 3秒後に非表示
+
+        return () => clearTimeout(timer);
+      }
+    }, [isLoading, isZoomable]);
 
     useEffect(() => {
       const drawMap = async () => {
@@ -222,6 +249,19 @@ const WorldMap = forwardRef<WorldMapHandle, WorldMapProps>(
           ${isLoading ? "opacity-0" : "opacity-100"}
         `}
         />
+        {/* 3. Zoom hint message */}
+        {isZoomable && (
+          <div
+            className={`
+            absolute top-4 left-1/2 -translate-x-1/2
+            bg-background/80 text-foreground py-2 px-4 rounded-md shadow-lg
+            transition-opacity duration-500 ease-in-out
+            ${showZoomHint ? "opacity-100" : "opacity-0 pointer-events-none"}
+          `}
+          >
+            <p className="text-sm">スクロールやピンチで拡大できます</p>
+          </div>
+        )}
       </div>
     );
   }
