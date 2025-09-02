@@ -68,13 +68,13 @@ const WorldMap = forwardRef<WorldMapHandle, WorldMapProps>(
       zoomIn: () => {
         if (svgRef.current && zoomRef.current) {
           const svg = d3.select(svgRef.current);
-          zoomRef.current.scaleBy(svg.transition().duration(750), 1.2);
+          zoomRef.current.scaleBy(svg.transition().duration(750), 1.5);
         }
       },
       zoomOut: () => {
         if (svgRef.current && zoomRef.current) {
           const svg = d3.select(svgRef.current);
-          zoomRef.current.scaleBy(svg.transition().duration(750), 0.8);
+          zoomRef.current.scaleBy(svg.transition().duration(750), 0.5);
         }
       },
     }));
