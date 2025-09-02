@@ -4,6 +4,9 @@ import React from "react";
 import { toString } from "mdast-util-to-string";
 import { Post } from "@/types/types";
 import { LinkCard } from "@/components/elements/LinkCard";
+import fs from "fs";
+import sizeOf from "image-size";
+import path from "path";
 type PostMetadata = Omit<Post, "content">;
 
 export interface createCustomHeadingProps {
@@ -49,7 +52,34 @@ export const createCustomHeading = ({ level }: createCustomHeadingProps) => {
 };
 
 export const CustomImg = ({ src, alt }: CustomImgProps) => {
-  return <Image src={src} alt={alt} width={700} height={400} />;
+  // 画像のパスが外部URL（http/https）であるか、または空であるかを確認
+  if (src.startsWith("http") || src.startsWith("https") || !src) {
+    // 外部リンクや無効なsrcの場合は、デフォルトのサイズで表示
+    return <Image src={src} alt={alt} width={700} height={400} />;
+  }
+
+  const decodedSrc = decodeURIComponent(src);
+  const imagePath = path.join(process.cwd(), "public", decodedSrc);
+
+  // ファイルが存在するかどうかを確認
+  if (fs.existsSync(imagePath)) {
+    try {
+      const buffer = fs.readFileSync(imagePath);
+      const dimensions = sizeOf(buffer);
+      const { width, height } = dimensions;
+
+      return <Image src={src} alt={alt} width={width} height={height} />;
+    } catch (error) {
+      console.error(`Error getting dimensions for image: ${src}`, error);
+      // 寸法が取得できなかった場合はデフォルトのサイズでフォールバック
+      return <Image src={src} alt={alt} width={700} height={400} />;
+    }
+  } else {
+    // ファイルが存在しない場合は、代替テキストと共にメッセージを表示するか、
+    // デフォルトの画像やサイズを使用
+    console.warn(`Image not found at path: ${imagePath}`);
+    return <Image src={src} alt={alt} width={700} height={400} />;
+  }
 };
 
 /**
