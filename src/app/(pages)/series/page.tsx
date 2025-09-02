@@ -1,5 +1,8 @@
 import { Metadata } from "next";
 import Client from "./Client";
+import { getAllPosts } from "@/lib/posts";
+import { featuredSeries } from "@/data/series";
+import SeriesCard from "@/components/featured/series/SeriesCard";
 
 export const metadata: Metadata = {
   title: "テーマで旅を深掘り - Series",
@@ -8,7 +11,17 @@ export const metadata: Metadata = {
 };
 
 const SeriesPage = () => {
-  return <Client />;
+  return (
+    <Client>
+      {featuredSeries.map(async (series, index) => {
+        const allPosts = await getAllPosts({ series: series.slug });
+        const postsLength = allPosts.length;
+        return (
+          <SeriesCard key={index} series={series} postsLength={postsLength} />
+        );
+      })}
+    </Client>
+  );
 };
 
 export default SeriesPage;
