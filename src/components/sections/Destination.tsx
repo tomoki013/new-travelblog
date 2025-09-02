@@ -6,6 +6,62 @@ import WorldMap, { WorldMapHandle } from "../featured/worldMap/WorldMap";
 import { motion } from "framer-motion";
 import { regionData } from "@/data/region";
 
+// Icon Components
+const ZoomInIcon = ({ className }: { className?: string }) => (
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    width="24"
+    height="24"
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="2"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+    className={className || "h-6 w-6"}
+  >
+    <line x1="12" y1="5" x2="12" y2="19" />
+    <line x1="5" y1="12" x2="19" y2="12" />
+  </svg>
+);
+
+const ZoomOutIcon = ({ className }: { className?: string }) => (
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    width="24"
+    height="24"
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="2"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+    className={className || "h-6 w-6"}
+  >
+    <line x1="5" y1="12" x2="19" y2="12" />
+  </svg>
+);
+
+const ResetIcon = ({ className }: { className?: string }) => (
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    width="24"
+    height="24"
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="2"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+    className={className || "h-6 w-6"}
+  >
+    <path d="M3 2v6h6" />
+    <path d="M21 12a9 9 0 0 0-9-9 9.75 9.75 0 0 0-6.74 2.74L3 8" />
+    <path d="M21 22v-6h-6" />
+    <path d="M3 12a9 9 0 0 0 9 9 9.75 9.75 0 0 0 6.74-2.74L21 16" />
+  </svg>
+);
+
 const Destination = () => {
   const worldMapRef = useRef<WorldMapHandle>(null);
   // すべての国名を小文字の配列として抽出
@@ -15,6 +71,14 @@ const Destination = () => {
 
   const handleResetZoom = () => {
     worldMapRef.current?.resetZoom();
+  };
+
+  const handleZoomIn = () => {
+    worldMapRef.current?.zoomIn();
+  };
+
+  const handleZoomOut = () => {
+    worldMapRef.current?.zoomOut();
   };
 
   return (
@@ -40,27 +104,30 @@ const Destination = () => {
           regionData={regionData}
           isZoomable={true}
         />
-        <button
-          onClick={handleResetZoom}
-          className="absolute bottom-4 right-4 bg-primary text-primary-foreground p-2 rounded-full shadow-lg hover:bg-primary/90 focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2"
-          aria-label="ズームをリセット"
-        >
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            width="24"
-            height="24"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            strokeWidth="2"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            className="h-6 w-6"
+        {/* Zoom Controls */}
+        <div className="absolute bottom-4 right-4 flex flex-col space-y-2">
+          <button
+            onClick={handleZoomIn}
+            className="bg-primary text-primary-foreground p-2 rounded-full shadow-lg hover:bg-primary/90 focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2"
+            aria-label="ズームイン"
           >
-            <path d="m15 18-6-6 6-6" />
-            <path d="m9 18 6-6-6-6" />
-          </svg>
-        </button>
+            <ZoomInIcon />
+          </button>
+          <button
+            onClick={handleZoomOut}
+            className="bg-primary text-primary-foreground p-2 rounded-full shadow-lg hover:bg-primary/90 focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2"
+            aria-label="ズームアウト"
+          >
+            <ZoomOutIcon />
+          </button>
+          <button
+            onClick={handleResetZoom}
+            className="bg-primary text-primary-foreground p-2 rounded-full shadow-lg hover:bg-primary/90 focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2"
+            aria-label="ズームをリセット"
+          >
+            <ResetIcon />
+          </button>
+        </div>
       </div>
     </motion.section>
   );
