@@ -3,6 +3,7 @@ import Link from "next/link";
 import React from "react";
 import { toString } from "mdast-util-to-string";
 import { Post } from "@/types/types";
+import { MoveHorizontal } from "lucide-react";
 import { LinkCard } from "@/components/elements/LinkCard";
 import fs from "fs";
 import sizeOf from "image-size";
@@ -151,11 +152,16 @@ interface CustomTableProps {
 
 export const CustomTable = ({ children }: CustomTableProps) => {
   return (
-    // 横スクロールを実現するためのラッパーdiv
-    <div className="my-6 w-full overflow-x-auto rounded-lg border border-slate-200 p-2">
-      <table className="w-full text-sm text-left text-foreground">
-        {children}
-      </table>
+    <div className="my-6">
+      <div className="w-full overflow-x-auto rounded-lg border border-slate-200 p-2">
+        <table className="w-full text-sm text-left text-foreground">
+          {children}
+        </table>
+      </div>
+      <div className="mt-2 flex items-center justify-end text-sm text-muted-foreground">
+        <MoveHorizontal className="mr-2 h-4 w-4" />
+        <span>横にスクロールできます</span>
+      </div>
     </div>
   );
 };
