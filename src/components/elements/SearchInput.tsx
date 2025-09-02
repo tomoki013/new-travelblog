@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, FormEvent, useEffect } from "react";
+import { useState, FormEvent, useEffect, useRef } from "react";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { SearchIcon } from "lucide-react";
@@ -17,6 +17,7 @@ export const SearchInput = ({
   onReset,
 }: SearchInputProps) => {
   const [query, setQuery] = useState(initialValue);
+  const inputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
     setQuery(initialValue);
@@ -25,6 +26,7 @@ export const SearchInput = ({
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     onSearch(query);
+    inputRef.current?.blur(); // Add this line
   };
 
   const handleReset = () => {
@@ -35,10 +37,11 @@ export const SearchInput = ({
   return (
     <form
       onSubmit={handleSubmit}
-      className="flex flex-col md:flex-row items-center gap-2"
+      className="flex items-center gap-2"
     >
       <div className="relative flex-grow">
         <Input
+          ref={inputRef} // Add this line
           type="search"
           placeholder="キーワードで検索..."
           value={query}
