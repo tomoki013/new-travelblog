@@ -35,6 +35,9 @@ const WorldMap: React.FC<WorldMapProps> = ({
 
   useEffect(() => {
     const drawMap = async () => {
+      if (!svgRef.current) {
+        return;
+      }
       const width = 960;
       const height = 600;
 
