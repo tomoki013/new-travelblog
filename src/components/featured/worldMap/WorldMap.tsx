@@ -1,6 +1,12 @@
 "use client";
 
-import React, { useEffect, useRef, useState } from "react";
+import React, {
+  useEffect,
+  useRef,
+  useState,
+  forwardRef,
+  useImperativeHandle,
+} from "react";
 import { useRouter } from "next/navigation";
 import * as d3 from "d3";
 import * as topojson from "topojson-client";
@@ -21,169 +27,205 @@ interface WorldMapProps {
   isClickable: boolean;
   isTooltip?: boolean;
   regionData?: ContinentData[];
+  isZoomable?: boolean;
 }
 
-const WorldMap: React.FC<WorldMapProps> = ({
-  highlightedRegions,
-  isClickable,
-  isTooltip = false,
-  regionData = [],
-}) => {
-  const svgRef = useRef<SVGSVGElement | null>(null);
-  const [isLoading, setIsLoading] = useState(true);
-  const router = useRouter();
+export interface WorldMapHandle {
+  resetZoom: () => void;
+}
 
-  useEffect(() => {
-    const drawMap = async () => {
-      if (!svgRef.current) {
-        return;
-      }
-      const width = 960;
-      const height = 600;
+const WorldMap = forwardRef<WorldMapHandle, WorldMapProps>(
+  (
+    {
+      highlightedRegions,
+      isClickable,
+      isTooltip = false,
+      regionData = [],
+      isZoomable = false,
+    },
+    ref
+  ) => {
+    const svgRef = useRef<SVGSVGElement | null>(null);
+    const [isLoading, setIsLoading] = useState(true);
+    const router = useRouter();
 
-      const svg = d3
-        .select(svgRef.current)
-        .attr("viewBox", `0 0 ${width} ${height}`)
-        .attr("class", "w-full h-auto mx-auto");
+    useImperativeHandle(ref, () => ({
+      resetZoom: () => {
+        if (svgRef.current) {
+          const svg = d3.select(svgRef.current);
+          svg
+            .transition()
+            .duration(750)
+            .call(
+              d3.zoom<SVGSVGElement, unknown>().transform,
+              d3.zoomIdentity
+            );
+        }
+      },
+    }));
 
-      // Clear previous SVG content
-      svg.selectAll("*").remove();
-      const g = svg.append("g");
+    useEffect(() => {
+      const drawMap = async () => {
+        if (!svgRef.current) {
+          return;
+        }
+        const width = 960;
+        const height = 600;
 
-      const projection = d3
-        .geoMercator()
-        .rotate([-163, 0])
-        .scale(150)
-        .translate([width / 2, height / 1.5]);
+        const svg = d3
+          .select(svgRef.current)
+          .attr("viewBox", `0 0 ${width} ${height}`)
+          .attr("class", "w-full h-auto mx-auto");
 
-      const pathGenerator = d3.geoPath().projection(projection);
+        // Clear previous SVG content
+        svg.selectAll("*").remove();
+        const g = svg.append("g");
 
-      // Tooltip setup
-      const tooltip = d3
-        .select("body")
-        .append("div")
-        .attr("class", "tooltip")
-        .style("opacity", 0);
+        const projection = d3
+          .geoMercator()
+          .rotate([-163, 0])
+          .scale(150)
+          .translate([width / 2, height / 1.5]);
 
-      try {
-        const world = (await d3.json("/world-110m.json")) as WorldTopology;
-        const countries = topojson.feature(
-          world,
-          world.objects.countries
-        ) as unknown as FeatureCollection<Geometry, GeoJsonProperties>;
+        const pathGenerator = d3.geoPath().projection(projection);
 
-        g.selectAll("path")
-          .data(countries.features)
-          .join("path")
-          .attr("d", pathGenerator)
-          .attr("class", (d) => {
-            const countryName = d.properties?.name.toLowerCase();
-            const isHighlighted = highlightedRegions.includes(countryName);
+        // Tooltip setup
+        const tooltip = d3
+          .select("body")
+          .append("div")
+          .attr("class", "tooltip")
+          .style("opacity", 0);
 
-            let classes = "stroke-secondary transition-colors duration-200 ";
-            if (isHighlighted) {
-              classes += "fill-primary stroke-primary-foreground";
-              if (isClickable) {
-                classes += " cursor-pointer hover:fill-secondary";
+        try {
+          const world = (await d3.json("/world-110m.json")) as WorldTopology;
+          const countries = topojson.feature(
+            world,
+            world.objects.countries
+          ) as unknown as FeatureCollection<Geometry, GeoJsonProperties>;
+
+          g.selectAll("path")
+            .data(countries.features)
+            .join("path")
+            .attr("d", pathGenerator)
+            .attr("class", (d) => {
+              const countryName = d.properties?.name.toLowerCase();
+              const isHighlighted = highlightedRegions.includes(countryName);
+
+              let classes = "stroke-secondary transition-colors duration-200 ";
+              if (isHighlighted) {
+                classes += "fill-primary stroke-primary-foreground";
+                if (isClickable) {
+                  classes += " cursor-pointer hover:fill-secondary";
+                }
+              } else {
+                classes += "fill-muted";
               }
-            } else {
-              classes += "fill-muted";
-            }
-            return classes;
-          })
-          .on("click", (event, d) => {
-            if (!isClickable) return;
+              return classes;
+            })
+            .on("click", (event, d) => {
+              if (!isClickable) return;
 
-            const countryName = d.properties?.name.toLowerCase();
-            const isHighlighted = highlightedRegions.includes(countryName);
+              const countryName = d.properties?.name.toLowerCase();
+              const isHighlighted = highlightedRegions.includes(countryName);
 
-            if (isHighlighted) {
-              router.push(`/destination/${countryName}`);
-            }
-          })
-          .on("mouseover", (event, d) => {
-            if (!isTooltip) return;
-            const countryName = d.properties?.name.toLowerCase();
-            const isHighlighted = highlightedRegions.includes(countryName);
-
-            if (isHighlighted) {
-              const allCountries = regionData.flatMap(
-                (continent) => continent.countries
-              );
-              const countryData = allCountries.find(
-                (c) => c.slug === countryName
-              );
-
-              if (countryData) {
-                tooltip.transition().duration(200).style("opacity", 0.9);
-                tooltip
-                  .html(
-                    `<strong>${countryData.name}</strong><br/><img src="${countryData.imageURL}" alt="${countryData.name}" class="tooltip-image"/>`
-                  )
-                  .style("left", event.pageX + 15 + "px")
-                  .style("top", event.pageY - 28 + "px");
+              if (isHighlighted) {
+                router.push(`/destination/${countryName}`);
               }
-            }
-          })
-          .on("mousemove", (event) => {
-            if (!isTooltip) return;
-            tooltip
-              .style("left", event.pageX + 15 + "px")
-              .style("top", event.pageY - 28 + "px");
-          })
-          .on("mouseout", () => {
-            if (!isTooltip) return;
-            tooltip.transition().duration(500).style("opacity", 0);
-          });
+            })
+            .on("mouseover", (event, d) => {
+              if (!isTooltip) return;
+              const countryName = d.properties?.name.toLowerCase();
+              const isHighlighted = highlightedRegions.includes(countryName);
 
-        // Zoom setup
-        const zoom = d3
-          .zoom<SVGSVGElement, unknown>()
-          .scaleExtent([1, 8])
-          .on("zoom", (event) => {
-            g.attr("transform", event.transform.toString());
-          });
+              if (isHighlighted) {
+                const allCountries = regionData.flatMap(
+                  (continent) => continent.countries
+                );
+                const countryData = allCountries.find(
+                  (c) => c.slug === countryName
+                );
 
-        svg.call(zoom);
+                if (countryData) {
+                  tooltip.transition().duration(200).style("opacity", 0.9);
+                  tooltip
+                    .html(
+                      `<strong>${countryData.name}</strong><br/><img src="${countryData.imageURL}" alt="${countryData.name}" class="tooltip-image"/>`
+                    )
+                    .style("left", event.pageX + 15 + "px")
+                    .style("top", event.pageY - 28 + "px");
+                }
+              }
+            })
+            .on("mousemove", (event) => {
+              if (!isTooltip) return;
+              tooltip
+                .style("left", event.pageX + 15 + "px")
+                .style("top", event.pageY - 28 + "px");
+            })
+            .on("mouseout", () => {
+              if (!isTooltip) return;
+              tooltip.transition().duration(500).style("opacity", 0);
+            });
 
-        setIsLoading(false);
-      } catch (error) {
-        console.error("Error loading or drawing the map:", error);
-        setIsLoading(false);
-      }
-    };
+          // Zoom setup
+          if (isZoomable) {
+            const zoom = d3
+              .zoom<SVGSVGElement, unknown>()
+              .scaleExtent([1, 8])
+              .on("zoom", (event) => {
+                g.attr("transform", event.transform.toString());
+              });
 
-    drawMap();
+            svg.call(zoom);
+          }
 
-    // Cleanup tooltip on component unmount
-    return () => {
-      d3.select(".tooltip").remove();
-    };
-  }, [highlightedRegions, isClickable, isTooltip, regionData, router]);
+          setIsLoading(false);
+        } catch (error) {
+          console.error("Error loading or drawing the map:", error);
+          setIsLoading(false);
+        }
+      };
 
-  return (
-    <div className="relative w-full h-auto mx-auto">
-      {/* 1. ローディングアニメーション */}
-      <div
-        className={`
+      drawMap();
+
+      // Cleanup tooltip on component unmount
+      return () => {
+        d3.select(".tooltip").remove();
+      };
+    }, [
+      highlightedRegions,
+      isClickable,
+      isTooltip,
+      isZoomable,
+      regionData,
+      router,
+    ]);
+
+    return (
+      <div className="relative w-full h-auto mx-auto">
+        {/* 1. ローディングアニメーション */}
+        <div
+          className={`
           absolute inset-0 flex items-center justify-center
           transition-opacity duration-500 ease-in-out
           ${isLoading ? "opacity-100" : "opacity-0 pointer-events-none"}
         `}
-      >
-        <LoadingAnimation variant="mapRoute" />
-      </div>
-      {/* 2. 世界地図SVG */}
-      <svg
-        ref={svgRef}
-        className={`
+        >
+          <LoadingAnimation variant="mapRoute" />
+        </div>
+        {/* 2. 世界地図SVG */}
+        <svg
+          ref={svgRef}
+          className={`
           w-full h-full
           transition-opacity duration-500 ease-in-out
           ${isLoading ? "opacity-0" : "opacity-100"}
         `}
-      />
-    </div>
-  );
-};
+        />
+      </div>
+    );
+  }
+);
 
+WorldMap.displayName = "WorldMap";
 export default WorldMap;
