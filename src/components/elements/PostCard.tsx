@@ -107,7 +107,7 @@ const PostCard = ({
       return (
         <Link
           href={`/posts/${post.slug}`}
-          className="group block border border-amber-50 bg-background rounded-lg shadow-md hover:shadow-xl transition-shadow duration-300 relative"
+          className="group flex flex-col border border-amber-50 bg-background rounded-lg shadow-md hover:shadow-xl transition-shadow duration-300 relative"
         >
           {/* ポストカードの画像部分 */}
           {post.image && (
@@ -136,10 +136,10 @@ const PostCard = ({
           </div>
 
           {/* ポストカードのテキスト部分 */}
-          <div className="p-4">
+          <div className="p-4 flex flex-col flex-grow">
             {/* メインコンテンツ */}
-            <div>
-              <h3 className="font-serif text-xl font-bold text-foreground group-hover:text-secondary mb-2 min-h-[56px]">
+            <div className="flex-grow">
+              <h3 className="font-serif text-xl font-bold text-foreground group-hover:text-secondary mb-2 h-14 line-clamp-2">
                 {post.title}
               </h3>
               {category &&
@@ -154,10 +154,10 @@ const PostCard = ({
               <p className="text-sm text-muted-foreground mb-4 group-hover:text-secondary">
                 地域: {regionTags.map((r) => r.name).join(", ")}
               </p>
-              <p className="font-semibold text-foreground text-right group-hover:text-secondary">
-                続きを読む →
-              </p>
             </div>
+            <p className="font-semibold text-foreground text-right group-hover:text-secondary">
+              続きを読む →
+            </p>
           </div>
         </Link>
       );
