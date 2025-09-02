@@ -1,6 +1,6 @@
 # ともきちの旅行日記 - A Next.js Travel Blog
 
-[![Deploy with Netlify](https://tomokichidiary.netlify.app)]
+[Deploy with Netlify](https://tomokichidiary.netlify.app)
 
 **ともきちの旅行日記**は、「旅に出るワクワク感」をコンセプトにした、モダンな技術で構築された個人旅行ブログです。インタラクティブな世界地図やテーマ別のシリーズ記事を通じて、読者の冒険心を刺激するユニークな視覚体験を提供します。
 
@@ -10,8 +10,7 @@
 
 このプロジェクトは、多機能でメンテナンス性の高いブログサイトを実現するための様々な機能を備えています。
 
-<!-- * **インタラクティブな世界地図**: `D3.js`を利用したクリック可能な世界地図から、直感的に旅先を探せます。 -->
-
+- **インタラクティブな世界地図**: `D3.js`を利用したクリック可能な世界地図から、直感的に旅先を探せます。
 - **動的なコンテンツハブ**: 国・地域別の「Destinationページ」や、テーマ別の「Seriesページ」を自動生成し、関連コンテンツをまとめて表示します。
 - **Markdownベースのコンテンツ**: 記事はすべてMarkdownで管理されており、`gray-matter`によるフロントマターで豊富なメタデータを扱えます。
 - **カスタムMarkdownコンポーネント**: 内部リンクカードや、デザインされたテーブルなど、Markdownの表現力を拡張するカスタムコンポーネントを実装しています。
@@ -27,7 +26,7 @@
 - **言語**: [TypeScript](https://www.typescriptlang.org/)
 - **スタイリング**: [Tailwind CSS](https://tailwindcss.com/)
 - **アニメーション**: [Framer Motion](https://www.framer.com/motion/)
-<!-- * **地図描画**: [D3.js](https://d3js.org/) -->
+- **地図描画**: [D3.js](https://d3js.org/)
 - **Markdown処理**: [React Markdown](https://github.com/remarkjs/react-markdown), [Gray Matter](https://github.com/jonschlinkert/gray-matter)
 - **デプロイメント**: [Netlify](https://netlify.com/)
 
@@ -40,7 +39,7 @@
 1. **リポジトリをクローン**:
 
 ```bash
-git clone [https://github.com/tomoki013/new-travelblog.git](https://github.com/tomoki013/new-travelblog.git)
+git clone https://github.com/tomoki013/new-travelblog.git
 ```
 
 2. **ディレクトリを移動**:
@@ -70,7 +69,7 @@ yarn dev
 
 ---
 
-<!-- ## 📁 ディレクトリ構成
+## 📁 ディレクトリ構成
 
 プロジェクトの主要なディレクトリ構成です。
 .
@@ -105,8 +104,24 @@ excerpt: "この記事はサンプルです。フロントマターにはこの�
 
 ## ここから本文
 
-Markdown記法で自由に記事を記述できます。 -->
-
+Markdown記法で自由に記事を記述できます。
+```
 ```
 
-```
+---
+
+## 🤝 貢献
+
+このプロジェクトへの貢献に興味がある場合は、以下の手順でプルリクエストを送ってください。
+
+1.  このリポジトリをフォークします。
+2.  新しいブランチを作成します (`git checkout -b feature/your-feature-name`)。
+3.  変更をコミットします (`git commit -m 'Add some feature'`)。
+4.  ブランチにプッシュします (`git push origin feature/your-feature-name`)。
+5.  プルリクエストを作成します。
+
+---
+
+## 📜 ライセンス
+
+このプロジェクトは個人利用を目的としており、ライセンスは付与されていません。
