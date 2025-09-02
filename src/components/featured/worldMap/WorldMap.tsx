@@ -292,7 +292,7 @@ const WorldMap = forwardRef<WorldMapHandle, WorldMapProps>(
         {isZoomable && !isLoading && (
           <div
             className="
-            absolute bottom-4 right-4
+            absolute bottom-4 left-4
             bg-background/80 text-foreground py-1 px-3 rounded-md shadow-lg
             pointer-events-none
           "
