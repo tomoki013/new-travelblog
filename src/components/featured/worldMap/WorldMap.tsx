@@ -46,20 +46,20 @@ const WorldMap = forwardRef<WorldMapHandle, WorldMapProps>(
     ref
   ) => {
     const svgRef = useRef<SVGSVGElement | null>(null);
+    const zoomRef = useRef<d3.ZoomBehavior<SVGSVGElement, unknown> | null>(
+      null
+    );
     const [isLoading, setIsLoading] = useState(true);
     const router = useRouter();
 
     useImperativeHandle(ref, () => ({
       resetZoom: () => {
-        if (svgRef.current) {
+        if (svgRef.current && zoomRef.current) {
           const svg = d3.select(svgRef.current);
           svg
             .transition()
             .duration(750)
-            .call(
-              d3.zoom<SVGSVGElement, unknown>().transform,
-              d3.zoomIdentity
-            );
+            .call(zoomRef.current.transform, d3.zoomIdentity);
         }
       },
     }));
@@ -175,8 +175,8 @@ const WorldMap = forwardRef<WorldMapHandle, WorldMapProps>(
               .on("zoom", (event) => {
                 g.attr("transform", event.transform.toString());
               });
-
-            svg.call(zoom);
+            zoomRef.current = zoom;
+            svg.call(zoomRef.current);
           }
 
           setIsLoading(false);
