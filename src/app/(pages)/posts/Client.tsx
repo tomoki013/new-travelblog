@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo } from "react";
+import { useMemo, useEffect } from "react";
 import { motion } from "framer-motion";
 import { Post } from "@/types/types";
 import PostCard from "@/components/elements/PostCard";
@@ -60,33 +60,35 @@ const BlogClient = ({ posts, totalPages, currentPage }: BlogClientProps) => {
 
   const handleSearch = (query: string) => {
     navigate(1, categoryParam, query);
-    scrollToSearchSection();
   };
 
   const handleResetSearch = () => {
     navigate(1, categoryParam, "");
-    scrollToSearchSection();
   };
 
   const handleCategoryChange = (slug: string) => {
     navigate(1, slug, searchParam);
-    scrollToSearchSection();
   };
 
   const handlePageChange = (page: number) => {
     navigate(page, categoryParam, searchParam);
-    scrollToSearchSection();
   };
 
   const handlePrev = () => {
     navigate(Math.max(1, currentPage - 1), categoryParam, searchParam);
-    scrollToSearchSection();
   };
 
   const handleNext = () => {
     navigate(Math.min(totalPages, currentPage + 1), categoryParam, searchParam);
-    scrollToSearchSection();
   };
+
+  // searchParamsが変更された後にスクロールを実行
+  useEffect(() => {
+    // URLに何らかのクエリパラメータがある場合のみスクロール
+    if (searchParams.toString()) {
+      scrollToSearchSection();
+    }
+  }, [searchParams]);
 
   // --- ページネーション番号の生成ロジック (useMemoで不要な再計算を防ぐ) ---
   const paginationNumbers = useMemo(() => {
