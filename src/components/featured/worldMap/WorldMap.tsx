@@ -297,7 +297,9 @@ const WorldMap = forwardRef<WorldMapHandle, WorldMapProps>(
             pointer-events-none
           "
           >
-            <p className="text-sm font-semibold">x{currentZoom.toFixed(1)}</p>
+            <p className="text-sm font-semibold">
+              ×{currentZoom.toFixed(1)}/×8.0
+            </p>
           </div>
         )}
       </div>
