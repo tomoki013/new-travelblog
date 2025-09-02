@@ -29,7 +29,7 @@ const NewPosts = ({ posts }: NewPostsProps) => {
           New Posts
         </h2>
         {/* タイトル下のアクセントライン */}
-        <div className="w-30 h-0.5 bg-secondary mx-auto mt-6"></div>
+        <div className="w-30 h-0.5 bg-secondary mx-auto mt-6" />
       </div>
 
       {/* 記事一覧 */}

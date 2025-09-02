@@ -24,7 +24,7 @@ export const regionData: ContinentData[] = [
         ],
       },
       {
-        slug: "korea",
+        slug: "south korea",
         name: "韓国",
         imageURL: "/images/Korea/monument.jpg",
         children: [

@@ -1,11 +1,12 @@
 "use client";
 
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 import * as d3 from "d3";
 import * as topojson from "topojson-client";
 import { Topology, GeometryCollection } from "topojson-specification";
 import { FeatureCollection, Geometry, GeoJsonProperties } from "geojson";
+import { LoadingAnimation } from "../LoadingAnimation/LoadingAnimation";
 
 interface WorldTopology extends Topology {
   objects: {
@@ -24,6 +25,7 @@ const WorldMap: React.FC<WorldMapProps> = ({
   isClickable,
 }) => {
   const svgRef = useRef<SVGSVGElement | null>(null);
+  const [isLoading, setIsLoading] = useState(true);
   const router = useRouter();
 
   useEffect(() => {
@@ -67,7 +69,7 @@ const WorldMap: React.FC<WorldMapProps> = ({
             if (isHighlighted) {
               classes += "fill-primary stroke-primary-foreground";
               if (isClickable) {
-                classes += " cursor-pointer hover:fill-primary/90";
+                classes += " cursor-pointer hover:fill-secondary";
               }
             } else {
               classes += "fill-muted";
@@ -84,15 +86,39 @@ const WorldMap: React.FC<WorldMapProps> = ({
               router.push(`/destination/${countryName}`);
             }
           });
+        setIsLoading(false);
       } catch (error) {
         console.error("Error loading or drawing the map:", error);
+        setIsLoading(false);
       }
     };
 
     drawMap();
   }, [highlightedRegions, isClickable, router]);
 
-  return <svg ref={svgRef} />;
+  return (
+    <div className="relative w-full h-auto mx-auto">
+      {/* 1. ローディングアニメーション */}
+      <div
+        className={`
+          absolute inset-0 flex items-center justify-center
+          transition-opacity duration-500 ease-in-out
+          ${isLoading ? "opacity-100" : "opacity-0 pointer-events-none"}
+        `}
+      >
+        <LoadingAnimation variant="mapRoute" />
+      </div>
+      {/* 2. 世界地図SVG */}
+      <svg
+        ref={svgRef}
+        className={`
+          w-full h-full
+          transition-opacity duration-500 ease-in-out
+          ${isLoading ? "opacity-0" : "opacity-100"}
+        `}
+      />
+    </div>
+  );
 };
 
 export default WorldMap;
