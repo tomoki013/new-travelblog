@@ -200,6 +200,27 @@ article {
     stroke-dashoffset: 0;
   }
 }
+
+/* src/app/globals.css に追加 */
+.tooltip {
+  position: absolute;
+  text-align: center;
+  width: 150px;
+  padding: 8px;
+  font: 12px sans-serif;
+  background: lightsteelblue;
+  border: 0px;
+  border-radius: 8px;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.2s;
+}
+
+.tooltip-image {
+  width: 100%;
+  height: auto;
+  border-radius: 4px;
+}
 @keyframes move-plane {
   from {
     motion-offset: 0%;
