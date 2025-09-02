@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import { featuredSeries } from "@/data/series";
 
 interface PostLink {
   href: string;
@@ -69,12 +70,21 @@ const PostNavigation = ({
     (category === "itinerary" || category === "tourism") &&
     (previousCategoryPost || nextCategoryPost);
 
+  const seriesTitle = featuredSeries.find((s) => s.slug === series)?.title;
+
+  const categoryText =
+    category === "itinerary"
+      ? "旅程&費用レポート"
+      : category === "tourism"
+        ? "観光情報"
+        : "";
+
   return (
     <div className="mb-10 space-y-12">
       {showSeriesNav && (
         <div>
           <h3 className="text-center font-semibold mb-4">
-            ▼ シリーズ「{series}」の続きを読む ▼
+            ▼ シリーズ「{seriesTitle}」の続きを読む ▼
           </h3>
           <NavigationLinks
             previousPost={previousSeriesPost}
@@ -86,7 +96,7 @@ const PostNavigation = ({
       {showCategoryNav && (
         <div>
           <h3 className="text-center font-semibold mb-4">
-            ▼ {category === "itinerary" ? "旅程" : "観光"}の別の記事を読む ▼
+            ▼ カテゴリ「{categoryText}」の続きを読む ▼
           </h3>
           <NavigationLinks
             previousPost={previousCategoryPost}
