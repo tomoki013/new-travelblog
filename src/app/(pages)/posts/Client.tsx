@@ -45,36 +45,47 @@ const BlogClient = ({ posts, totalPages, currentPage }: BlogClientProps) => {
     router.push(`?${params.toString()}`);
   };
 
+  // スクロール処理を共通化
+  const scrollToSearchSection = () => {
+    const section = document.getElementById("search-section");
+    if (section) {
+      section.scrollIntoView({ behavior: "smooth" });
+    } else {
+      // フォールバックとしてページ上部にスクロール
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }
+  };
+
   // --- イベントハンドラ ---
 
   const handleSearch = (query: string) => {
     navigate(1, categoryParam, query);
-    window.scrollTo({ top: 0, behavior: "smooth" });
+    scrollToSearchSection();
   };
 
   const handleResetSearch = () => {
     navigate(1, categoryParam, "");
-    window.scrollTo({ top: 0, behavior: "smooth" });
+    scrollToSearchSection();
   };
 
   const handleCategoryChange = (slug: string) => {
     navigate(1, slug, searchParam);
-    window.scrollTo({ top: 0, behavior: "smooth" });
+    scrollToSearchSection();
   };
 
   const handlePageChange = (page: number) => {
     navigate(page, categoryParam, searchParam);
-    window.scrollTo({ top: 0, behavior: "smooth" });
+    scrollToSearchSection();
   };
 
   const handlePrev = () => {
     navigate(Math.max(1, currentPage - 1), categoryParam, searchParam);
-    window.scrollTo({ top: 0, behavior: "smooth" });
+    scrollToSearchSection();
   };
 
   const handleNext = () => {
     navigate(Math.min(totalPages, currentPage + 1), categoryParam, searchParam);
-    window.scrollTo({ top: 0, behavior: "smooth" });
+    scrollToSearchSection();
   };
 
   // --- ページネーション番号の生成ロジック (useMemoで不要な再計算を防ぐ) ---
@@ -110,7 +121,7 @@ const BlogClient = ({ posts, totalPages, currentPage }: BlogClientProps) => {
 
       <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
         {/* ==================== Search ==================== */}
-        <section className="mb-2">
+        <section id="search-section" className="mb-2">
           <SearchInput
             initialValue={searchParam}
             onSearch={handleSearch}
