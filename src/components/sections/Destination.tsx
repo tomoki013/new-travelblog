@@ -25,7 +25,12 @@ const Destination = () => {
         </h2>
         <div className="w-30 h-0.5 bg-secondary mx-auto mt-6" />
       </div>
-      <WorldMap highlightedRegions={allCountryNames} isClickable={true} />
+      <WorldMap
+        highlightedRegions={allCountryNames}
+        isClickable={true}
+        isTooltip={true}
+        regionData={regionData}
+      />
     </motion.section>
   );
 };

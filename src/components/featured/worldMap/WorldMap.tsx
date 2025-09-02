@@ -7,6 +7,7 @@ import * as topojson from "topojson-client";
 import { Topology, GeometryCollection } from "topojson-specification";
 import { FeatureCollection, Geometry, GeoJsonProperties } from "geojson";
 import { LoadingAnimation } from "../LoadingAnimation/LoadingAnimation";
+import { ContinentData } from "@/types/types";
 
 interface WorldTopology extends Topology {
   objects: {
@@ -18,11 +19,15 @@ interface WorldTopology extends Topology {
 interface WorldMapProps {
   highlightedRegions: string[];
   isClickable: boolean;
+  isTooltip?: boolean;
+  regionData?: ContinentData[];
 }
 
 const WorldMap: React.FC<WorldMapProps> = ({
   highlightedRegions,
   isClickable,
+  isTooltip = false,
+  regionData = [],
 }) => {
   const svgRef = useRef<SVGSVGElement | null>(null);
   const [isLoading, setIsLoading] = useState(true);
@@ -30,6 +35,9 @@ const WorldMap: React.FC<WorldMapProps> = ({
 
   useEffect(() => {
     const drawMap = async () => {
+      if (!svgRef.current) {
+        return;
+      }
       const width = 960;
       const height = 600;
 
@@ -37,6 +45,10 @@ const WorldMap: React.FC<WorldMapProps> = ({
         .select(svgRef.current)
         .attr("viewBox", `0 0 ${width} ${height}`)
         .attr("class", "w-full h-auto mx-auto");
+
+      // Clear previous SVG content
+      svg.selectAll("*").remove();
+      const g = svg.append("g");
 
       const projection = d3
         .geoMercator()
@@ -46,7 +58,12 @@ const WorldMap: React.FC<WorldMapProps> = ({
 
       const pathGenerator = d3.geoPath().projection(projection);
 
-      svg.selectAll("*").remove();
+      // Tooltip setup
+      const tooltip = d3
+        .select("body")
+        .append("div")
+        .attr("class", "tooltip")
+        .style("opacity", 0);
 
       try {
         const world = (await d3.json("/world-110m.json")) as WorldTopology;
@@ -55,9 +72,7 @@ const WorldMap: React.FC<WorldMapProps> = ({
           world.objects.countries
         ) as unknown as FeatureCollection<Geometry, GeoJsonProperties>;
 
-        svg
-          .append("g")
-          .selectAll("path")
+        g.selectAll("path")
           .data(countries.features)
           .join("path")
           .attr("d", pathGenerator)
@@ -65,7 +80,7 @@ const WorldMap: React.FC<WorldMapProps> = ({
             const countryName = d.properties?.name.toLowerCase();
             const isHighlighted = highlightedRegions.includes(countryName);
 
-            let classes = "stroke-secondary ";
+            let classes = "stroke-secondary transition-colors duration-200 ";
             if (isHighlighted) {
               classes += "fill-primary stroke-primary-foreground";
               if (isClickable) {
@@ -85,7 +100,52 @@ const WorldMap: React.FC<WorldMapProps> = ({
             if (isHighlighted) {
               router.push(`/destination/${countryName}`);
             }
+          })
+          .on("mouseover", (event, d) => {
+            if (!isTooltip) return;
+            const countryName = d.properties?.name.toLowerCase();
+            const isHighlighted = highlightedRegions.includes(countryName);
+
+            if (isHighlighted) {
+              const allCountries = regionData.flatMap(
+                (continent) => continent.countries
+              );
+              const countryData = allCountries.find(
+                (c) => c.slug === countryName
+              );
+
+              if (countryData) {
+                tooltip.transition().duration(200).style("opacity", 0.9);
+                tooltip
+                  .html(
+                    `<strong>${countryData.name}</strong><br/><img src="${countryData.imageURL}" alt="${countryData.name}" class="tooltip-image"/>`
+                  )
+                  .style("left", event.pageX + 15 + "px")
+                  .style("top", event.pageY - 28 + "px");
+              }
+            }
+          })
+          .on("mousemove", (event) => {
+            if (!isTooltip) return;
+            tooltip
+              .style("left", event.pageX + 15 + "px")
+              .style("top", event.pageY - 28 + "px");
+          })
+          .on("mouseout", () => {
+            if (!isTooltip) return;
+            tooltip.transition().duration(500).style("opacity", 0);
           });
+
+        // Zoom setup
+        const zoom = d3
+          .zoom<SVGSVGElement, unknown>()
+          .scaleExtent([1, 8])
+          .on("zoom", (event) => {
+            g.attr("transform", event.transform.toString());
+          });
+
+        svg.call(zoom);
+
         setIsLoading(false);
       } catch (error) {
         console.error("Error loading or drawing the map:", error);
@@ -94,7 +154,12 @@ const WorldMap: React.FC<WorldMapProps> = ({
     };
 
     drawMap();
-  }, [highlightedRegions, isClickable, router]);
+
+    // Cleanup tooltip on component unmount
+    return () => {
+      d3.select(".tooltip").remove();
+    };
+  }, [highlightedRegions, isClickable, isTooltip, regionData, router]);
 
   return (
     <div className="relative w-full h-auto mx-auto">
