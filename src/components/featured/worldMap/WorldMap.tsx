@@ -51,8 +51,10 @@ const WorldMap = forwardRef<WorldMapHandle, WorldMapProps>(
     const zoomRef = useRef<d3.ZoomBehavior<SVGSVGElement, unknown> | null>(
       null
     );
+    const containerRef = useRef<HTMLDivElement | null>(null);
     const [isLoading, setIsLoading] = useState(true);
     const [showZoomHint, setShowZoomHint] = useState(false);
+    const [currentZoom, setCurrentZoom] = useState(1);
     const router = useRouter();
 
     useImperativeHandle(ref, () => ({
@@ -80,16 +82,39 @@ const WorldMap = forwardRef<WorldMapHandle, WorldMapProps>(
     }));
 
     useEffect(() => {
-      // ズームヒントメッセージの表示を管理
-      if (!isLoading && isZoomable) {
-        setShowZoomHint(true);
-        const timer = setTimeout(() => {
-          setShowZoomHint(false);
-        }, 3000); // 3秒後に非表示
+      if (!isZoomable || isLoading) return;
 
-        return () => clearTimeout(timer);
+      const currentRef = containerRef.current;
+
+      const observer = new IntersectionObserver(
+        ([entry]) => {
+          if (entry.isIntersecting) {
+            setShowZoomHint(true);
+            const timer = setTimeout(() => {
+              setShowZoomHint(false);
+            }, 3000); // 3秒後に非表示
+
+            // 一度表示したら監視をやめる
+            if (currentRef) {
+              observer.unobserve(currentRef);
+            }
+            // クリーンアップ関数を返す
+            return () => clearTimeout(timer);
+          }
+        },
+        { threshold: 0.1 } // 10%表示されたらトリガー
+      );
+
+      if (currentRef) {
+        observer.observe(currentRef);
       }
-    }, [isLoading, isZoomable]);
+
+      return () => {
+        if (currentRef) {
+          observer.unobserve(currentRef);
+        }
+      };
+    }, [isZoomable, isLoading]);
 
     useEffect(() => {
       const drawMap = async () => {
@@ -201,6 +226,7 @@ const WorldMap = forwardRef<WorldMapHandle, WorldMapProps>(
               .scaleExtent([1, 8])
               .on("zoom", (event) => {
                 g.attr("transform", event.transform.toString());
+                setCurrentZoom(event.transform.k);
               });
             zoomRef.current = zoom;
             svg.call(zoomRef.current);
@@ -229,7 +255,7 @@ const WorldMap = forwardRef<WorldMapHandle, WorldMapProps>(
     ]);
 
     return (
-      <div className="relative w-full h-auto mx-auto">
+      <div ref={containerRef} className="relative w-full h-auto mx-auto">
         {/* 1. ローディングアニメーション */}
         <div
           className={`
@@ -260,6 +286,18 @@ const WorldMap = forwardRef<WorldMapHandle, WorldMapProps>(
           `}
           >
             <p className="text-sm">スクロールやピンチで拡大できます</p>
+          </div>
+        )}
+        {/* 4. Zoom level indicator */}
+        {isZoomable && !isLoading && (
+          <div
+            className="
+            absolute bottom-4 right-4
+            bg-background/80 text-foreground py-1 px-3 rounded-md shadow-lg
+            pointer-events-none
+          "
+          >
+            <p className="text-sm font-semibold">x{currentZoom.toFixed(1)}</p>
           </div>
         )}
       </div>
