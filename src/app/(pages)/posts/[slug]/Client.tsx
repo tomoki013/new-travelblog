@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { motion } from "framer-motion";
+import { toast } from "sonner";
 import { slideInUpVariants } from "@/components/animation";
 import { Copy } from "lucide-react";
 import { members } from "@/data/member";
@@ -33,7 +34,6 @@ const Client = ({
   regionRelatedPosts,
 }: ClientProps) => {
   const [currentUrl, setCurrentUrl] = useState("");
-  const [isCopied, setIsCopied] = useState(false);
 
   useEffect(() => {
     if (typeof window !== "undefined") {
@@ -56,8 +56,7 @@ const Client = ({
 
   const copyUrlToClipboard = () => {
     navigator.clipboard.writeText(currentUrl).then(() => {
-      setIsCopied(true);
-      setTimeout(() => setIsCopied(false), 2000);
+      toast.success("クリップボードにコピーしました");
     });
   };
 
@@ -107,11 +106,6 @@ const Client = ({
               aria-label="Copy link"
             >
               <Copy size={20} />
-              {isCopied && (
-                <span className="absolute -top-10 left-1/2 -translate-x-1/2 bg-gray-700 text-white text-xs px-2 py-1 rounded">
-                  Copied!
-                </span>
-              )}
             </button>
           </div>
 

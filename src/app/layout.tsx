@@ -10,6 +10,7 @@ import { ThemeProvider } from "@/components/providers/theme-provider";
 import Header from "@/components/layouts/Header";
 import Footer from "@/components/layouts/Footer";
 import Script from "next/script";
+import { Toaster } from "@/components/ui/sonner";
 import CookieBanner from "@/components/elements/CookieBanner";
 
 const montserrat = Montserrat({
@@ -131,6 +132,7 @@ export default function RootLayout({
             <Footer />
           </div>
           <CookieBanner />
+          <Toaster />
         </ThemeProvider>
       </body>
     </html>
