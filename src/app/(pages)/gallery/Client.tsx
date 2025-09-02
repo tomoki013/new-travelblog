@@ -44,13 +44,6 @@ const Client = ({ posts }: ClientProps) => {
   const [activeFilter, setActiveFilter] = useState("すべて");
   const [selectedPhoto, setSelectedPhoto] = useState<Photo | null>(null);
   const [postSlug, setPostSlug] = useState<string | null>(null);
-  const [isLoading, setIsLoading] = useState(true);
-
-  useEffect(() => {
-    setIsLoading(true);
-    const timer = setTimeout(() => setIsLoading(false), 500);
-    return () => clearTimeout(timer);
-  }, [activeFilter]);
 
   useEffect(() => {
     if (selectedPhoto) {
@@ -138,11 +131,7 @@ const Client = ({ posts }: ClientProps) => {
           activeFilter={activeFilter}
           setActiveFilter={setActiveFilter}
         />
-        <PhotoGrid
-          isLoading={isLoading}
-          photos={filteredPhotos}
-          onSelectPhoto={handleSelectPhoto}
-        />
+        <PhotoGrid photos={filteredPhotos} onSelectPhoto={handleSelectPhoto} />
       </div>
 
       <PhotoModal
