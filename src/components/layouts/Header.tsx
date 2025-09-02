@@ -15,7 +15,11 @@ const Header = () => {
       <header className="sticky top-0 z-50 w-full border-b border-border/40 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
         <div className="container mx-auto flex h-16 max-w-screen-2xl items-center justify-between px-4 sm:px-6 lg:px-8">
           {/* Logo */}
-          <Link href="/" className="flex items-center gap-2 max-h-16">
+          <Link
+            href="/"
+            className="flex items-center gap-2 max-h-16"
+            onClick={closeMenu}
+          >
             <span className="font-bold text-lg text-foreground font-heading">
               ともきちの旅行日記
             </span>
