@@ -50,6 +50,11 @@ const DestinationPage = async (props: {
     region: targetSlugs,
     limit: 3,
   });
+  const oneOffPosts = await getAllPosts({
+    category: "one-off",
+    region: targetSlugs,
+    limit: 3,
+  });
 
   return (
     <Client
@@ -57,6 +62,7 @@ const DestinationPage = async (props: {
       seriesPosts={seriesPosts}
       tourismPosts={tourismPosts}
       itineraryPosts={itineraryPosts}
+      oneOffPosts={oneOffPosts}
       regionData={regionData}
     />
   );

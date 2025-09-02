@@ -11,6 +11,7 @@ type PostMetadata = Omit<Post, "content">;
 
 type GetAllPostsOptions = {
   category?: string;
+  series?: string;
   tag?: string;
   region?: string[];
   limit?: number;
@@ -26,6 +27,9 @@ export async function getAllPosts(
 
   if (options.category) {
     posts = postFilters.filterByCategory(posts, options.category);
+  }
+  if (options.series) {
+    posts = postFilters.filterBySeries(posts, options.series);
   }
   if (options.tag) {
     posts = postFilters.filterByTag(posts, options.tag);
@@ -81,12 +85,15 @@ export async function getPostBySlug(slug: string): Promise<Post> {
  */
 export async function getPostData(slug: string) {
   const post = await getPostBySlug(slug);
-  const allPosts = await getAllPosts(); // Get all posts for next/previous links
-  console.log(allPosts, "全記事");
+  const allPosts = await getAllPosts();
 
   // --- Category-specific navigation ---
   let previousCategoryPost, nextCategoryPost;
-  if (post.category === "itinerary" || post.category === "tourism") {
+  if (
+    post.category === "itinerary" ||
+    post.category === "tourism" ||
+    post.category === "one-off"
+  ) {
     const categoryPosts = postFilters.filterByCategory(allPosts, post.category);
     const previousCategoryPostData = postFilters.getPreviousPost(
       slug,

@@ -67,7 +67,9 @@ const PostNavigation = ({
 }: PostNavigationProps) => {
   const showSeriesNav = previousSeriesPost || nextSeriesPost;
   const showCategoryNav =
-    (category === "itinerary" || category === "tourism") &&
+    (category === "itinerary" ||
+      category === "tourism" ||
+      category === "one-off") &&
     (previousCategoryPost || nextCategoryPost);
 
   const seriesTitle = featuredSeries.find((s) => s.slug === series)?.title;

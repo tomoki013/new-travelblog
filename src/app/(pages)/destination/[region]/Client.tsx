@@ -18,6 +18,7 @@ interface ClientProps extends AllDestinationProps {
   seriesPosts: PostMetadata[];
   tourismPosts: PostMetadata[];
   itineraryPosts: PostMetadata[];
+  oneOffPosts: PostMetadata[];
 }
 
 const Client = ({
@@ -25,12 +26,14 @@ const Client = ({
   seriesPosts,
   tourismPosts,
   itineraryPosts,
+  oneOffPosts,
   regionData,
 }: ClientProps) => {
   const noPosts =
     seriesPosts.length === 0 &&
     tourismPosts.length === 0 &&
-    itineraryPosts.length === 0;
+    itineraryPosts.length === 0 &&
+    oneOffPosts.length === 0;
 
   return (
     <div>
@@ -160,6 +163,35 @@ const Client = ({
                   variants={staggerContainerVariants(0.1)}
                 >
                   {itineraryPosts.map((post, index) => (
+                    <motion.div key={post.id} variants={slideInUpVariants}>
+                      <PostCard
+                        post={post}
+                        isReversed={index % 2 !== 0}
+                        showMetadata
+                        variant="relate"
+                      />
+                    </motion.div>
+                  ))}
+                </motion.div>
+              </motion.section>
+            )}
+
+            {/* ==================== 単発企画セクション ==================== */}
+            {oneOffPosts.length > 0 && (
+              <motion.section
+                initial="hidden"
+                whileInView="visible"
+                viewport={{ once: true, amount: 0.2 }}
+                variants={sectionVariants}
+              >
+                <h2 className="text-3xl font-bold text-center mb-8">
+                  単発企画 - one-off project
+                </h2>
+                <motion.div
+                  className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
+                  variants={staggerContainerVariants(0.1)}
+                >
+                  {oneOffPosts.map((post, index) => (
                     <motion.div key={post.id} variants={slideInUpVariants}>
                       <PostCard
                         post={post}

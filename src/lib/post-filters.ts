@@ -16,6 +16,13 @@ export function filterByCategory(
   return posts.filter((post) => post.category === category);
 }
 
+export function filterBySeries(
+  posts: PostMetadata[],
+  series: string
+): PostMetadata[] {
+  return posts.filter((post) => post.series === series);
+}
+
 export function filterByTag(
   posts: PostMetadata[],
   tag: string

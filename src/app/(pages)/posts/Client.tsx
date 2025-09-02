@@ -13,6 +13,7 @@ import { useSearchParams, useRouter } from "next/navigation";
 import HeroSection from "@/components/sections/HeroSection";
 import { categories } from "@/data/categories";
 import { SearchInput } from "@/components/elements/SearchInput";
+import { LoadingAnimation } from "@/components/featured/LoadingAnimation/LoadingAnimation";
 
 // Postのメタデータの型を定義
 type PostMetadata = Omit<Post, "content">;
@@ -162,7 +163,8 @@ const BlogClient = ({ posts, totalPages, currentPage }: BlogClientProps) => {
           </motion.section>
         ) : (
           // 検索結果がない場合の表示
-          <div className="text-center py-16">
+          <div className="flex justify-center items-center py-16">
+            <LoadingAnimation variant="luggageCarousel" />
             <p className="text-xl text-foreground">
               該当する記事が見つかりませんでした。
             </p>

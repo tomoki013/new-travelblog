@@ -180,6 +180,12 @@ export const regionData: ContinentData[] = [
           "/images/Egypt/the-three-great-pyramids-of-giza-with-sunset.jpg",
         children: [
           {
+            slug: "cairo",
+            name: "カイロ",
+            imageURL:
+              "/images/Egypt/the-three-great-pyramids-of-giza-with-sunset.jpg",
+          },
+          {
             slug: "giza",
             name: "ギザ",
             imageURL:

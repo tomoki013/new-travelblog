@@ -149,7 +149,9 @@ const WorldMap = forwardRef<WorldMapHandle, WorldMapProps>(
           .style("opacity", 0);
 
         try {
-          const world = (await d3.json("/world-110m.json")) as WorldTopology;
+          const world = (await d3.json(
+            "/data/world-110m.json"
+          )) as WorldTopology;
           const countries = topojson.feature(
             world,
             world.objects.countries
