@@ -11,6 +11,10 @@ const AboutMeSection = () => {
   const visitedCountryNames = regionData.flatMap((continent) =>
     continent.countries.map((country) => country.slug)
   );
+
+  const visitedCountriesCount = visitedCountryNames.length;
+  const totalCountries = 195;
+
   return (
     <motion.section
       className="py-20 md:py-28"
@@ -64,12 +68,21 @@ const AboutMeSection = () => {
         {/* 訪問国を可視化するマップ */}
         <div className="mt-20">
           <h3 className="text-2xl md:text-3xl font-bold text-center mb-10">
-            私が旅した国々
+            旅の記録 - My Footprints
           </h3>
           <WorldMap
             highlightedRegions={visitedCountryNames}
-            isClickable={false}
+            isClickable={true}
           />
+          <div className="text-center mt-8">
+            <p className="text-xl md:text-2xl font-bold">
+              <span className="text-3xl md:text-4xl text-primary font-extrabold">
+                {visitedCountriesCount}
+              </span>
+              <span className="text-lg md:text-xl mx-2">/</span>
+              <span className="text-lg md:text-xl">{totalCountries}</span>
+            </p>
+          </div>
         </div>
       </div>
     </motion.section>

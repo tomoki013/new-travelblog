@@ -12,8 +12,8 @@ export default async function HomePage() {
   return (
     <>
       <Hero />
-      <Destination />
       <NewPosts posts={allPosts} />
+      <Destination />
       <FeaturedSeries />
       <PopularPosts posts={allPosts} />
       <Gallery />

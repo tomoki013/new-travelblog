@@ -1,6 +1,8 @@
 import Image from "next/image";
 import { LoadingAnimation } from "../featured/LoadingAnimation/LoadingAnimation";
 import { allRegions } from "@/lib/regionUtil";
+import WorldMap from "../featured/worldMap/WorldMap";
+import { regionData } from "@/data/region";
 
 /**
  * 配列の要素をランダムに並び替える（Fisher-Yatesアルゴリズム）
@@ -25,8 +27,12 @@ const shuffleArray = (array: string[]) => {
 };
 
 const Hero = () => {
+  // すべての国名を小文字の配列として抽出
+  const allCountryNames = regionData.flatMap((continent) =>
+    continent.countries.map((country) => country.slug)
+  );
   return (
-    <section className="relative h-[85vh] flex items-center justify-center text-center text-white">
+    <section className="relative h-[85vh] flex flex-col md:flex-row items-center justify-center text-center text-white">
       <Image
         src={`/images/Turkey/balloons-in-cappadocia.jpg`}
         alt="Man looking at a globe"
@@ -52,6 +58,7 @@ const Hero = () => {
           flapBG=""
         />
       </div>
+      <WorldMap highlightedRegions={allCountryNames} isClickable />
     </section>
   );
 };
