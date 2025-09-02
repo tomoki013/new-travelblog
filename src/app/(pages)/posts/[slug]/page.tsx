@@ -59,8 +59,17 @@ const PostPage = async (props: { params: Promise<{ slug: string }> }) => {
   const slug = params.slug;
 
   try {
-    const { post, previousPost, nextPost, regionRelatedPosts, allPosts } =
-      await getPostData(slug);
+    const {
+      post,
+      previousPost,
+      nextPost,
+      regionRelatedPosts,
+      allPosts,
+      previousCategoryPost,
+      nextCategoryPost,
+      previousSeriesPost,
+      nextSeriesPost,
+    } = await getPostData(slug);
 
     return (
       <Client
@@ -68,6 +77,10 @@ const PostPage = async (props: { params: Promise<{ slug: string }> }) => {
         previousPost={previousPost}
         nextPost={nextPost}
         regionRelatedPosts={regionRelatedPosts}
+        previousCategoryPost={previousCategoryPost}
+        nextCategoryPost={nextCategoryPost}
+        previousSeriesPost={previousSeriesPost}
+        nextSeriesPost={nextSeriesPost}
       >
         <ArticleContent
           content={post.content}

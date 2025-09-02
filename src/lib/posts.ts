@@ -79,9 +79,57 @@ export async function getPostBySlug(slug: string): Promise<Post> {
 /**
  * Gets all the necessary data for a single post page.
  */
-export async function getPostData(slug:string) {
+export async function getPostData(slug: string) {
   const post = await getPostBySlug(slug);
   const allPosts = await getAllPosts(); // Get all posts for next/previous links
+
+  // --- Category-specific navigation ---
+  let previousCategoryPost, nextCategoryPost;
+  if (post.category === "itinerary" || post.category === "tourism") {
+    const categoryPosts = postFilters.filterByCategory(allPosts, post.category);
+    const previousCategoryPostData = postFilters.getPreviousPost(
+      slug,
+      categoryPosts
+    );
+    const nextCategoryPostData = postFilters.getNextPost(slug, categoryPosts);
+
+    if (previousCategoryPostData) {
+      previousCategoryPost = {
+        href: `/posts/${previousCategoryPostData.slug}`,
+        title: previousCategoryPostData.title,
+      };
+    }
+    if (nextCategoryPostData) {
+      nextCategoryPost = {
+        href: `/posts/${nextCategoryPostData.slug}`,
+        title: nextCategoryPostData.title,
+      };
+    }
+  }
+
+  // --- Series-specific navigation ---
+  let previousSeriesPost, nextSeriesPost;
+  if (post.series) {
+    const seriesPosts = allPosts.filter((p) => p.series === post.series);
+    const previousSeriesPostData = postFilters.getPreviousPost(
+      slug,
+      seriesPosts
+    );
+    const nextSeriesPostData = postFilters.getNextPost(slug, seriesPosts);
+
+    if (previousSeriesPostData) {
+      previousSeriesPost = {
+        href: `/posts/${previousSeriesPostData.slug}`,
+        title: previousSeriesPostData.title,
+      };
+    }
+    if (nextSeriesPostData) {
+      nextSeriesPost = {
+        href: `/posts/${nextSeriesPostData.slug}`,
+        title: nextSeriesPostData.title,
+      };
+    }
+  }
 
   const previousPostData = postFilters.getPreviousPost(slug, allPosts);
   const nextPostData = postFilters.getNextPost(slug, allPosts);
@@ -144,5 +192,9 @@ export async function getPostData(slug:string) {
     nextPost,
     regionRelatedPosts,
     allPosts, // For use in CustomLink component
+    previousCategoryPost,
+    nextCategoryPost,
+    previousSeriesPost,
+    nextSeriesPost,
   };
 }
