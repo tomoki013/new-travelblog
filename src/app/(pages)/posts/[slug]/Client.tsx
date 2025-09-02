@@ -97,21 +97,21 @@ const Client = ({
             <span className="font-semibold">Share:</span>
             <button
               onClick={shareOnTwitter}
-              className="p-3 rounded-full bg-gray-100 hover:bg-gray-200 transition-colors"
+              className="p-3 rounded-full text-foreground bg-primary-foreground hover:bg-gray-200 transition-colors"
               aria-label="Share on Twitter"
             >
               <FaTwitter size={20} />
             </button>
             <button
               onClick={shareOnFacebook}
-              className="p-3 rounded-full bg-gray-100 hover:bg-gray-200 transition-colors"
+              className="p-3 rounded-full text-foreground bg-primary-foreground hover:bg-gray-200 transition-colors"
               aria-label="Share on Facebook"
             >
               <FaFacebook size={20} />
             </button>
             <button
               onClick={copyUrlToClipboard}
-              className="p-3 rounded-full bg-gray-100 hover:bg-gray-200 transition-colors relative"
+              className="p-3 rounded-full text-foreground bg-primary-foreground hover:bg-gray-200 transition-colors relative"
               aria-label="Copy link"
             >
               <Copy size={20} />
@@ -144,20 +144,29 @@ const Client = ({
                   className="rounded-full"
                 />
                 <div>
-                  <h3 className="text-lg font-bold">{author?.name || "ともきちの旅行日記"}</h3>
-                  <p className="text-gray-600 dark:text-gray-400 mb-2">{author?.description || ""}</p>
-                  <Link href="/about" className="font-semibold text-teal-600 hover:text-teal-700">
+                  <h3 className="text-lg font-bold">
+                    {author?.name || "ともきちの旅行日記"}
+                  </h3>
+                  <p className="text-gray-600 dark:text-gray-400 mb-2">
+                    {author?.description || ""}
+                  </p>
+                  <Link
+                    href="/about"
+                    className="font-semibold text-teal-600 hover:text-teal-700"
+                  >
                     プロフィール詳細へ →
                   </Link>
                 </div>
               </div>
-              {regionRelatedPosts && <RelatedPosts posts={regionRelatedPosts} />}
+              {regionRelatedPosts && (
+                <RelatedPosts posts={regionRelatedPosts} />
+              )}
             </div>
             {/* Area 3: Monetization & Site Navigation */}
             <div className="space-y-8">
-              <div className="text-center p-8 border border-dashed rounded-lg">
+              {/* <div className="text-center p-8 border border-dashed rounded-lg">
                 <p className="text-gray-500">広告（AdSenseなど）</p>
-              </div>
+              </div> */}
               <div className="text-center">
                 <Button href={`/posts`}>ブログ一覧へ</Button>
               </div>
@@ -176,9 +185,16 @@ const Client = ({
                 className="rounded-full"
               />
               <div>
-                <h3 className="text-lg font-bold">{author?.name || "ともきちの旅行日記"}</h3>
-                <p className="text-gray-600 dark:text-gray-400 mb-2">{author?.description || ""}</p>
-                <Link href="/about" className="font-semibold text-teal-600 hover:text-teal-700">
+                <h3 className="text-lg font-bold">
+                  {author?.name || "ともきちの旅行日記"}
+                </h3>
+                <p className="text-gray-600 dark:text-gray-400 mb-2">
+                  {author?.description || ""}
+                </p>
+                <Link
+                  href="/about"
+                  className="font-semibold text-teal-600 hover:text-teal-700"
+                >
                   プロフィール詳細へ →
                 </Link>
               </div>
@@ -186,9 +202,9 @@ const Client = ({
             {/* Area 2: Core Engagement */}
             {regionRelatedPosts && <RelatedPosts posts={regionRelatedPosts} />}
             {/* Area 3: Monetization & Navigation */}
-            <div className="text-center p-8 border border-dashed rounded-lg">
+            {/* <div className="text-center p-8 border border-dashed rounded-lg">
               <p className="text-gray-500">広告（AdSenseなど）</p>
-            </div>
+            </div> */}
             <PostNavigation
               previousPost={previousPost}
               nextPost={nextPost}

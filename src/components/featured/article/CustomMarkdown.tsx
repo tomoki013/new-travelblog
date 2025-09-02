@@ -23,7 +23,6 @@ export interface CustomLinkProps {
   href: string;
   children: React.ReactNode;
   allPosts: PostMetadata[];
-  currentPostCategory: string;
 }
 
 /**
@@ -90,29 +89,14 @@ export const CustomImg = ({ src, alt }: CustomImgProps) => {
  * @param {Post[]} props.allPosts - すべての投稿データの配列
  * @param {string} props.currentPostCategory - 現在表示している投稿のタイプ
  */
-export const CustomLink = ({
-  href,
-  children,
-  allPosts,
-  currentPostCategory,
-}: CustomLinkProps) => {
+export const CustomLink = ({ href, children, allPosts }: CustomLinkProps) => {
   const hrefStr = href || "";
   let linkedPost;
 
-  // パターン1: /type/slug または ../type/slug
-  const absoluteLinkMatch = hrefStr.match(/^(?:\.\.\/|\/)(\w+)\/([\w-]+)$/);
-  if (absoluteLinkMatch) {
-    const [, type, slug] = absoluteLinkMatch;
-    linkedPost = allPosts.find((p) => p.category === type && p.slug === slug);
-  }
-
-  // パターン2: ./slug
   const relativeLinkMatch = hrefStr.match(/^\.\/([\w-]+)$/);
   if (relativeLinkMatch && !linkedPost) {
     const [, slug] = relativeLinkMatch;
-    linkedPost = allPosts.find(
-      (p) => p.category === currentPostCategory && p.slug === slug
-    );
+    linkedPost = allPosts.find((p) => p.slug === slug);
   }
 
   // 内部リンクで記事が見つかった場合

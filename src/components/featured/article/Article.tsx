@@ -23,11 +23,7 @@ export interface ArticleContentProps {
   allPosts: PostMetadata[];
 }
 
-const ArticleContent = ({
-  content,
-  currentPostCategory,
-  allPosts,
-}: ArticleContentProps) => {
+const ArticleContent = ({ content, allPosts }: ArticleContentProps) => {
   const markdownComponents: Components = {
     h2: (props) =>
       createCustomHeading({ level: 2 })({
@@ -42,12 +38,7 @@ const ArticleContent = ({
         children: props.children,
       }),
     a: (props: React.ComponentProps<"a">) => (
-      <CustomLink
-        {...props}
-        href={props.href ?? ""}
-        allPosts={allPosts}
-        currentPostCategory={currentPostCategory}
-      >
+      <CustomLink {...props} href={props.href ?? ""} allPosts={allPosts}>
         {props.children}
       </CustomLink>
     ),

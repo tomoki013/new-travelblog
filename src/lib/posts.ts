@@ -82,6 +82,7 @@ export async function getPostBySlug(slug: string): Promise<Post> {
 export async function getPostData(slug: string) {
   const post = await getPostBySlug(slug);
   const allPosts = await getAllPosts(); // Get all posts for next/previous links
+  console.log(allPosts, "全記事");
 
   // --- Category-specific navigation ---
   let previousCategoryPost, nextCategoryPost;
@@ -138,9 +139,7 @@ export async function getPostData(slug: string) {
   if (post.location && post.location.length > 0) {
     const regionPosts = await getAllPosts({ region: post.location });
     // Exclude the current post itself
-    const filteredRegionPosts = regionPosts.filter(
-      (p) => p.slug !== post.slug
-    );
+    const filteredRegionPosts = regionPosts.filter((p) => p.slug !== post.slug);
 
     const query = [
       post.title,
@@ -158,12 +157,12 @@ export async function getPostData(slug: string) {
       category: 2,
     };
 
-    const scoredPosts = calculateScores(
-      filteredRegionPosts,
-      query,
-      weights,
-      ["title", "excerpt", "category", "tags"]
-    );
+    const scoredPosts = calculateScores(filteredRegionPosts, query, weights, [
+      "title",
+      "excerpt",
+      "category",
+      "tags",
+    ]);
 
     regionRelatedPosts = scoredPosts
       .sort((a, b) => b.score - a.score)
