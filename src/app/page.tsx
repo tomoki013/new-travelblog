@@ -7,6 +7,7 @@ import Request from "@/components/sections/Request";
 import { getAllPosts } from "@/lib/posts";
 import Destination from "@/components/sections/Destination";
 import PostsLength from "@/components/sections/PostsLength";
+import GalleryLength from "@/components/sections/GalleryLength";
 
 export default async function HomePage() {
   const allPosts = await getAllPosts();
@@ -20,6 +21,7 @@ export default async function HomePage() {
       <Gallery />
       <Request />
       <PostsLength posts={allPosts} />
+      <GalleryLength />
     </>
   );
 }
