@@ -9,6 +9,7 @@ import {
   modalOverlayVariants,
 } from "@/components/animation";
 import { Photo } from "@/types/types";
+import { getRegionBySlug } from "@/lib/regionUtil";
 
 interface PhotoModalProps {
   selectedPhoto: Photo | null;
@@ -29,6 +30,8 @@ const PhotoModal = ({
   onNext,
   onPrev,
 }: PhotoModalProps) => {
+  let location;
+  if (selectedPhoto) location = getRegionBySlug(selectedPhoto.location);
   return (
     <AnimatePresence>
       {selectedPhoto && (
@@ -60,7 +63,7 @@ const PhotoModal = ({
             {/* Image Display */}
             <div className="w-full md:w-2/3 h-64 md:h-auto flex items-center justify-center bg-black">
               <Image
-                src={selectedPhoto.image}
+                src={selectedPhoto.path}
                 alt={selectedPhoto.title}
                 width={1600}
                 height={1200}
@@ -70,13 +73,13 @@ const PhotoModal = ({
 
             {/* Details Section */}
             <div className="w-full md:w-1/3 p-6 flex flex-col">
-              <span className="text-muted-foreground mb-2 text-sm">
-                <MapPin className="inline-block mr-2 text-teal-600" />
-                {selectedPhoto.location}
-              </span>
-              <h2 className="text-2xl font-bold mb-2">
-                {selectedPhoto.title}
-              </h2>
+              {location && (
+                <span className="text-muted-foreground mb-2 text-sm">
+                  <MapPin className="inline-block mr-2 text-teal-600" />
+                  {location.name}
+                </span>
+              )}
+              <h2 className="text-2xl font-bold mb-2">{selectedPhoto.title}</h2>
 
               {/* Description with scroll */}
               <div className="flex-grow overflow-y-auto mb-4">

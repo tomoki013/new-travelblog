@@ -25,7 +25,7 @@ const PhotoGrid = ({ photos, onSelectPhoto }: PhotoGridProps) => {
             className="mb-4 break-inside-avoid-column cursor-pointer group"
           >
             <Image
-              src={photo.image}
+              src={photo.path}
               alt={photo.title}
               width={600}
               height={400}

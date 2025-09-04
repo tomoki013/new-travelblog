@@ -1,6 +1,7 @@
 import { getAllPosts } from "@/lib/posts";
 import Client from "./Client";
 import { Metadata } from "next";
+import { getPhotos } from "@/lib/photo";
 
 export const metadata: Metadata = {
   title: "写真ギャラリー– 写真で次の旅先を見つけよう",
@@ -29,7 +30,8 @@ export const metadata: Metadata = {
 
 const GalleryPage = async () => {
   const allPosts = await getAllPosts();
-  return <Client posts={allPosts} />;
+  const allPhotos = await getPhotos();
+  return <Client posts={allPosts} photos={allPhotos} />;
 };
 
 export default GalleryPage;

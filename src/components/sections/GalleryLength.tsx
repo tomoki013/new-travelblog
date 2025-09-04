@@ -3,10 +3,14 @@
 import { motion } from "framer-motion";
 import { staggerContainerVariants } from "@/components/animation";
 import Button from "../elements/Button";
-import { gallery } from "@/data/gallery";
+import { Photo } from "@/types/types";
 
-const GalleryLength = () => {
-  const allGallery = gallery;
+interface GalleryLengthProps {
+  photos: Photo[];
+}
+
+const GalleryLength = ({ photos }: GalleryLengthProps) => {
+  const allGallery = photos;
   const galleryLength = allGallery.length;
 
   return (
@@ -31,7 +35,7 @@ const GalleryLength = () => {
           </span>
         </p>
       </div>
-      <Button href={`/posts`}>ブログ一覧へ</Button>
+      <Button href={`/gallery`}>写真ギャラリーへ</Button>
     </motion.section>
   );
 };

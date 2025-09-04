@@ -5,8 +5,8 @@ date:
   - "2025-08-03"
 excerpt: >-
   時間はあるけどお金がない学生必見！世界10ヶ国20都市を旅した筆者が、体力と時間がある学生のうちに絶対行くべき海外都市をランキング形式で厳選。社会人になったら行けない？価値観を揺さぶる強烈な体験ができる旅先とは。次の休みの旅行先に迷っている方はぜひ参考にしてください。
-image: /images/
-location: "new-delhi, cappadocica, cairo, giza, varanasi"
+image: /images/Turkey/balloons-in-cappadocia.jpg
+location: "new-delhi, cappadocia, cairo, giza, varanasi"
 author: ともきち
 tags:
   - 海外旅行
@@ -32,6 +32,8 @@ tags:
 
 第3位は、**エジプト・カイロ**です
 
+![ギザの三大ピラミッド](/images/Egypt/the-three-great-pyramids-of-giza-with-sunset.jpg)
+
 「世界一ウザい国」と言われているエジプトの首都・カイロは、世界一ウザい都市です
 
 やけに日本語がうまい、たくさんの客引きが、謎の日本語で一生ついてきます
@@ -47,6 +49,8 @@ tags:
 ### 第2位
 
 続いて第2位は、**トルコ・カッパドキア**です
+
+![カッパドキアの気球](/images/Turkey/balloons-in-cappadocia.jpg)
 
 カッパドキアはなんといってもその景色
 
@@ -64,6 +68,8 @@ tags:
 
 今回ランキングには入りませんでしたが、学生のうちにしかできない体験、ということでぜひ行って欲しいのが、**インド・バラナシ**です
 
+![バラナシから見るガンジス川](/images/India/ganga.jpg)
+
 ガンジス川での沐浴体験は、最悪死にます
 
 死ななくても基本、2週間から1か月くらい、お腹を壊します
@@ -79,6 +85,8 @@ tags:
 ### 第1位
 
 さて気を取り直して、学生のうちに行っておきたい都市ランキング1位は、**インド・ニューデリー**です
+
+![インド門](/images/India/indian-gate-at-noon.jpg)
 
 先ほどのバラナシで述べたように、インド旅行は体力と帰国後の時間が必須です
 
