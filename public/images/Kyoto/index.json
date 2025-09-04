@@ -1,0 +1,44 @@
+{
+  "arashiyama-bamboo-forest.jpg": {
+    "title": "Arashiyama Bamboo Forest",
+    "description": "",
+    "location": "kyoto",
+    "categories": "自然・絶景"
+  },
+  "gion-festival.jpg": {
+    "title": "Gion Festival",
+    "description": "",
+    "location": "kyoto",
+    "categories": "祭り"
+  },
+  "ine-boathouse.jpg": {
+    "title": "Ine Boathouse",
+    "description": "",
+    "location": "kyoto",
+    "categories": "街歩き・観光"
+  },
+  "kiyomizu-temple-autumn-leaves-lightup.jpg": {
+    "title": "Kiyomizu Temple Autumn Leaves Lightup",
+    "description": "",
+    "location": "kyoto",
+    "categories": "寺院"
+  },
+  "ninenzaka.jpg": {
+    "title": "Ninenzaka",
+    "description": "",
+    "location": "kyoto",
+    "categories": "街歩き・観光"
+  },
+  "sannenzaka.jpg": {
+    "title": "Sannenzaka",
+    "description": "",
+    "location": "kyoto",
+    "categories": "街歩き・観光"
+  },
+  "togetsukyo-bridge-at-night.jpg": {
+    "title": "Togetsukyo Bridge at Night",
+    "description": "",
+    "location": "kyoto",
+    "categories": "街歩き・観光"
+  }
+}
