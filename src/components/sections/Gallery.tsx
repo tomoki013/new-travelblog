@@ -2,7 +2,6 @@
 
 import Image from "next/image";
 import { motion } from "framer-motion";
-import { gallery } from "@/data/gallery";
 
 // 変更点 1: Gridモジュールを削除し、Autoplayのみインポート
 import { Swiper, SwiperSlide } from "swiper/react";
@@ -12,10 +11,16 @@ import { Autoplay } from "swiper/modules";
 import "swiper/css";
 import Button from "../elements/Button";
 
-const Gallery = () => {
+import { Photo } from "@/types/types";
+
+interface GalleryProps {
+  photos: Photo[];
+}
+
+const Gallery = ({ photos }: GalleryProps) => {
   // 変更点 3: ギャラリーデータを上段用（偶数インデックス）と下段用（奇数インデックス）に分割
-  const topRowGallery = gallery.filter((_, index) => index % 2 === 0);
-  const bottomRowGallery = gallery.filter((_, index) => index % 2 !== 0);
+  const topRowGallery = photos.filter((_, index) => index % 2 === 0);
+  const bottomRowGallery = photos.filter((_, index) => index % 2 !== 0);
 
   return (
     <motion.section
@@ -72,14 +77,14 @@ const Gallery = () => {
           }}
         >
           {topRowGallery.map((item) => (
-            <SwiperSlide key={item.image}>
+            <SwiperSlide key={item.path}>
               <motion.div
                 className="overflow-hidden rounded-md h-full"
                 whileHover={{ scale: 1.03 }}
                 transition={{ duration: 0.3, ease: "easeOut" }}
               >
                 <Image
-                  src={item.image}
+                  src={item.path}
                   alt={item.title}
                   width={400}
                   height={300}
@@ -124,14 +129,14 @@ const Gallery = () => {
           }}
         >
           {bottomRowGallery.map((item) => (
-            <SwiperSlide key={item.image}>
+            <SwiperSlide key={item.path}>
               <motion.div
                 className="overflow-hidden rounded-md h-full"
                 whileHover={{ scale: 1.03 }}
                 transition={{ duration: 0.3, ease: "easeOut" }}
               >
                 <Image
-                  src={item.image}
+                  src={item.path}
                   alt={item.title}
                   width={400}
                   height={300}

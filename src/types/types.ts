@@ -21,11 +21,11 @@ export type PostMetadata = Omit<Post, "content">;
 
 export interface Photo {
   id: string;
+  path: string;
   title: string;
   description: string;
-  image: string;
   location: string;
-  category: string;
+  categories: string[];
   likes?: number;
 }
 

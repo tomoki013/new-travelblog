@@ -3,44 +3,31 @@
 import { useState, useMemo, useEffect } from "react";
 import { Photo, Post } from "@/types/types";
 type PostMetadata = Omit<Post, "content">;
-import { gallery } from "@/data/gallery";
-import { v4 as uuidv4 } from "uuid";
 import HeroSection from "@/components/sections/HeroSection";
 import PhotoFilter from "@/components/featured/gallery/PhotoFilter";
 import PhotoGrid from "@/components/featured/gallery/PhotoGrid";
 import PhotoModal from "@/components/featured/gallery/PhotoModal";
+import { categoryMappings } from "@/data/photoCategories";
 
-// 7分類フィルター
-const filterList = [
-  "すべて",
-  "自然",
-  "寺院・神社・城・王宮・慰霊碑",
-  "都市・街並み・祭り・市場・広場",
-  "タワー・美術館・聖堂・建築・闘牛場・教会",
-  "グルメ・スイーツ",
-  "空港・公共交通・商業施設",
-];
+const filterList: string[] = ["すべて", ...Object.keys(categoryMappings)];
 
-// カテゴリ→分類変換
+const categoryToFilterMap = new Map<string, string>();
+for (const filterName in categoryMappings) {
+  for (const category of categoryMappings[filterName]) {
+    categoryToFilterMap.set(category, filterName);
+  }
+}
+
 function getFilterCategory(category: string): string {
-  if (["自然"].includes(category)) return "自然";
-  if (["寺院", "神社", "城", "王宮", "慰霊碑"].includes(category))
-    return "寺院・神社・城・王宮・慰霊碑";
-  if (["街並み", "都市", "祭り", "市場", "広場"].includes(category))
-    return "都市・街並み・祭り・市場・広場";
-  if (["タワー", "美術館", "聖堂", "建築", "闘牛場", "教会"].includes(category))
-    return "タワー・美術館・聖堂・建築・闘牛場・教会";
-  if (["グルメ", "スイーツ"].includes(category)) return "グルメ・スイーツ";
-  if (["空港", "公共交通", "商業施設"].includes(category))
-    return "空港・公共交通・商業施設";
-  return "その他";
+  return categoryToFilterMap.get(category) || "その他";
 }
 
 interface ClientProps {
   posts: PostMetadata[];
+  photos: Photo[];
 }
 
-const Client = ({ posts }: ClientProps) => {
+const Client = ({ posts, photos }: ClientProps) => {
   const [activeFilter, setActiveFilter] = useState("すべて");
   const [selectedPhoto, setSelectedPhoto] = useState<Photo | null>(null);
   const [postSlug, setPostSlug] = useState<string | null>(null);
@@ -56,28 +43,21 @@ const Client = ({ posts }: ClientProps) => {
     };
   }, [selectedPhoto]);
 
-  const galleryWithId = useMemo(
-    (): Photo[] =>
-      gallery.map((photo) => ({
-        ...photo,
-        id: uuidv4(),
-      })),
-    []
-  );
-
   const filteredPhotos = useMemo(
     () =>
       activeFilter === "すべて"
-        ? galleryWithId
-        : galleryWithId.filter(
-            (p) => getFilterCategory(p.category) === activeFilter
+        ? photos
+        : photos.filter((p) =>
+            p.categories.some(
+              (category) => getFilterCategory(category) === activeFilter
+            )
           ),
-    [activeFilter, galleryWithId]
+    [activeFilter, photos]
   );
 
   const handleSelectPhoto = (photo: Photo) => {
     setSelectedPhoto(photo);
-    const foundPostByImage = posts.find((post) => post.image === photo.image);
+    const foundPostByImage = posts.find((post) => post.image === photo.path);
     const foundPostByTitle = posts.find((post) =>
       post.title.includes(photo.title)
     );
