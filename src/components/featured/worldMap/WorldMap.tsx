@@ -57,11 +57,14 @@ const WorldMap = forwardRef<WorldMapHandle, WorldMapProps>(
     const [currentZoom, setCurrentZoom] = useState(1);
     const router = useRouter();
     const [isTouchDevice, setIsTouchDevice] = useState(false);
+    const [isMounted, setIsMounted] = useState(false); // ★変更点: マウント状態の管理
 
+    // ★変更点: マウント時に一度だけ実行し、デバイスタイプを判定
     useEffect(() => {
       setIsTouchDevice(
         "ontouchstart" in window || navigator.maxTouchPoints > 0
       );
+      setIsMounted(true);
     }, []);
 
     useImperativeHandle(ref, () => ({
@@ -99,17 +102,15 @@ const WorldMap = forwardRef<WorldMapHandle, WorldMapProps>(
             setShowZoomHint(true);
             const timer = setTimeout(() => {
               setShowZoomHint(false);
-            }, 3000); // 3秒後に非表示
+            }, 3000);
 
-            // 一度表示したら監視をやめる
             if (currentRef) {
               observer.unobserve(currentRef);
             }
-            // クリーンアップ関数を返す
             return () => clearTimeout(timer);
           }
         },
-        { threshold: 0.1 } // 10%表示されたらトリガー
+        { threshold: 0.1 }
       );
 
       if (currentRef) {
@@ -124,6 +125,11 @@ const WorldMap = forwardRef<WorldMapHandle, WorldMapProps>(
     }, [isZoomable, isLoading]);
 
     useEffect(() => {
+      // ★変更点: マウントが完了するまで描画処理を待つ
+      if (!isMounted) {
+        return;
+      }
+
       const drawMap = async () => {
         if (!svgRef.current) {
           return;
@@ -136,7 +142,6 @@ const WorldMap = forwardRef<WorldMapHandle, WorldMapProps>(
           .attr("viewBox", `0 0 ${width} ${height}`)
           .attr("class", "w-full h-auto mx-auto");
 
-        // Clear previous SVG content
         svg.selectAll("*").remove();
         const g = svg.append("g");
 
@@ -148,13 +153,11 @@ const WorldMap = forwardRef<WorldMapHandle, WorldMapProps>(
 
         const pathGenerator = d3.geoPath().projection(projection);
 
-        // Tooltip setup
         const tooltip = d3
           .select("body")
           .append("div")
           .attr("class", "tooltip")
           .style("opacity", 0)
-          // ★重要: ツールチップ自体はイベントをブロックしないようにする
           .style("pointer-events", "none");
 
         try {
@@ -187,24 +190,18 @@ const WorldMap = forwardRef<WorldMapHandle, WorldMapProps>(
               return classes;
             });
 
-          // ▼▼▼▼▼▼▼▼▼▼ ここからが修正箇所 ▼▼▼▼▼▼▼▼▼▼
-
+          // イベント設定は前回同様、デバイスタイプで分岐
           if (isTouchDevice) {
-            // --- タッチデバイス向けのイベント処理 ---
             paths.each(function (d) {
               const path = d3.select(this);
               let touchTimer: NodeJS.Timeout;
               let isLongPress = false;
 
-              // タッチ開始
               path.on("touchstart", (event) => {
                 isLongPress = false;
-                // 500ms押し続けたら長押しと判定
                 touchTimer = setTimeout(() => {
                   isLongPress = true;
-                  event.preventDefault(); // ズームなどの他のイベントを抑制
-
-                  // 長押しでツールチップ表示
+                  event.preventDefault();
                   if (!isTooltip) return;
                   const countryName = d.properties?.name.toLowerCase();
                   const isHighlighted =
@@ -232,14 +229,10 @@ const WorldMap = forwardRef<WorldMapHandle, WorldMapProps>(
                 }, 500);
               });
 
-              // タッチ終了
               path.on("touchend", () => {
-                clearTimeout(touchTimer); // タイマー解除
-
+                clearTimeout(touchTimer);
                 if (!isLongPress) {
-                  // 長押しでなければ通常の「タップ」
                   tooltip.transition().duration(200).style("opacity", 0);
-
                   if (!isClickable) return;
                   const countryName = d.properties?.name.toLowerCase();
                   const isHighlighted =
@@ -250,14 +243,12 @@ const WorldMap = forwardRef<WorldMapHandle, WorldMapProps>(
                 }
               });
 
-              // 指が動いたら長押し判定をキャンセル
               path.on("touchmove", () => {
                 clearTimeout(touchTimer);
                 tooltip.transition().duration(200).style("opacity", 0);
               });
             });
           } else {
-            // --- デスクトップ（マウス）向けのイベント処理 ---
             paths
               .on("click", (event, d) => {
                 if (!isClickable) return;
@@ -303,9 +294,7 @@ const WorldMap = forwardRef<WorldMapHandle, WorldMapProps>(
               });
           }
 
-          // ▲▲▲▲▲▲▲▲▲▲ ここまでが修正箇所 ▲▲▲▲▲▲▲▲▲▲
-
-          // Zoom setup
+          // このブロックは分岐の外にあるので、必ず実行される
           if (isZoomable) {
             const zoom = d3
               .zoom<SVGSVGElement, unknown>()
@@ -327,23 +316,22 @@ const WorldMap = forwardRef<WorldMapHandle, WorldMapProps>(
 
       drawMap();
 
-      // Cleanup tooltip on component unmount
       return () => {
         d3.select(".tooltip").remove();
       };
     }, [
+      isMounted, // ★変更点: isMountedを依存配列に追加
+      isTouchDevice,
       highlightedRegions,
       isClickable,
       isTooltip,
       isZoomable,
       regionData,
       router,
-      isTouchDevice, // isTouchDeviceを依存配列に追加
     ]);
 
     return (
       <div ref={containerRef} className="relative w-full h-auto mx-auto">
-        {/* 1. ローディングアニメーション */}
         <div
           className={`
            absolute inset-0 flex items-center justify-center
@@ -353,17 +341,15 @@ const WorldMap = forwardRef<WorldMapHandle, WorldMapProps>(
         >
           <LoadingAnimation variant="mapRoute" />
         </div>
-        {/* 2. 世界地図SVG */}
         <svg
           ref={svgRef}
-          style={{ touchAction: "none" }} // モバイルでのズーム競合を防ぐため念の為追加
+          style={{ touchAction: "none" }}
           className={`
            w-full h-full
            transition-opacity duration-500 ease-in-out
            ${isLoading ? "opacity-0" : "opacity-100"}
          `}
         />
-        {/* 3. Zoom hint message */}
         {isZoomable && (
           <div
             className={`
@@ -376,7 +362,6 @@ const WorldMap = forwardRef<WorldMapHandle, WorldMapProps>(
             <p className="text-sm">スクロールやピンチで拡大できます</p>
           </div>
         )}
-        {/* 4. Zoom level indicator */}
         {isZoomable && !isLoading && (
           <div
             className="
