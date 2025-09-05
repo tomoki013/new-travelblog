@@ -69,6 +69,7 @@ export const metadata: Metadata = {
     images: ["favicon.ico"],
   },
   metadataBase: new URL("https://tomokichidiary.netlify.app"),
+  manifest: "/manifest.json",
 };
 
 export const viewport = {
