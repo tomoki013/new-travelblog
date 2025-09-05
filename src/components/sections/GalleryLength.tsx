@@ -3,16 +3,12 @@
 import { motion } from "framer-motion";
 import { sectionVariants } from "@/components/animation";
 import Button from "../elements/Button";
-import { Photo } from "@/types/types";
 
 interface GalleryLengthProps {
-  photos: Photo[];
+  galleryLength: number;
 }
 
-const GalleryLength = ({ photos }: GalleryLengthProps) => {
-  const allGallery = photos;
-  const galleryLength = allGallery.length;
-
+const GalleryLength = ({ galleryLength }: GalleryLengthProps) => {
   return (
     <motion.section
       initial="hidden"
