@@ -1,7 +1,7 @@
 ---
 category: series
 title: インド旅行記 第5回：寝台列車で行く聖地バラナシへの道
-date:
+dates:
   - "2024-09-28"
 excerpt: >-
   【インド旅行記

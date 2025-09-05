@@ -91,7 +91,7 @@ const PostHeader = ({ post }: PostHeaderProps) => {
       </h1>
       <div className="text-muted-foreground mb-6 flex justify-between items-center">
         <p>
-          {getDatePrefix(post.category)}: {post.date}
+          {getDatePrefix(post.category)}: {post.dates.join(" ~ ")}
         </p>
         <section className="flex flex-col md:flex-row md:items-center gap-2">
           {regionTags.map((r) => (

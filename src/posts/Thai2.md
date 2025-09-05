@@ -1,7 +1,7 @@
 ---
 category: series
 title: タイ旅行記 第2回：水上マーケットとワット・アルン、バンコクの魅力を満喫
-date:
+dates:
   - "2024-03-02"
 excerpt: >-
   【タイ旅行記

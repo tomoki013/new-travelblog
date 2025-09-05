@@ -1,7 +1,7 @@
 ---
 category: series
 title: ヨーロッパ旅行記 第7回：マドリードの魅力を発見！？
-date:
+dates:
   - "2025-02-21"
 excerpt: >-
   【ヨーロッパ旅行記 第7回】マドリード観光本格スタート。乃木坂46聖地巡礼でSanta Eulalíaとllao

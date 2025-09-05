@@ -1,7 +1,7 @@
 ---
 category: series
 title: インド旅行記 第8回：バラナシのお祭りと波乱の帰国
-date:
+dates:
   - "2024-09-30"
 excerpt: >-
   【インド旅行記

@@ -1,7 +1,7 @@
 ---
 category: series
 title: ヨーロッパ旅行記 第8回：マドリード市民と同化してみた
-date:
+dates:
   - "2025-02-23"
 excerpt: >-
   【ヨーロッパ旅行記

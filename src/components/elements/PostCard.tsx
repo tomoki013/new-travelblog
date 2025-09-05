@@ -73,7 +73,7 @@ const PostCard = ({
                   </div>
                   <div className="text-white text-sm mt-1 flex items-center">
                     <Calendar className="inline mr-1.5" size={16} />
-                    {post.date}
+                    {post.dates.join(" ~ ")}
                   </div>
                 </div>
               )}
@@ -131,7 +131,9 @@ const PostCard = ({
               <p className="font-semibold group-hover:text-secondary">
                 POST DATE
               </p>
-              <p className="group-hover:text-secondary">{post.date}</p>
+              <p className="group-hover:text-secondary">
+                {post.dates.join(" ~ ")}
+              </p>
             </div>
           </div>
 

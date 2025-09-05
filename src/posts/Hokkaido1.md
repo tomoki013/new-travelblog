@@ -1,7 +1,7 @@
 ---
 category: series
 title: 北海道旅行記 第1回：北の大地！北海道！
-date:
+dates:
   - "2024-02-27"
 excerpt: >-
   【北海道旅行記

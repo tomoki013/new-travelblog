@@ -1,7 +1,7 @@
 ---
 category: series
 title: インド旅行記 第4回：ピンクシティ・ジャイプルの魅力と寝台列車の旅
-date:
+dates:
   - "2024-09-27"
 excerpt: >-
   【インド旅行記

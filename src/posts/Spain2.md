@@ -1,7 +1,7 @@
 ---
 category: series
 title: ヨーロッパ旅行記 第5回：アントニ・ガウディの傑作と地中海の風
-date:
+dates:
   - "2025-02-19"
 excerpt: >-
   【ヨーロッパ旅行記

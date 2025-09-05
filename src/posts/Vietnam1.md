@@ -1,7 +1,7 @@
 ---
 category: series
 title: インド旅行記 第1回：思いがけないベトナム観光から始まる冒険
-date:
+dates:
   - "2024-09-24"
 excerpt: >-
   【インド旅行記

@@ -4,8 +4,14 @@ type PostMetadata = Omit<Post, "content">;
 
 export function sortByDate(posts: PostMetadata[]): PostMetadata[] {
   return [...posts].sort((a, b) => {
-    // bの日付からaの日付を引くことで、新しいものが先頭に来るようにする
-    return new Date(b.date).getTime() - new Date(a.date).getTime();
+    const dateA = new Date(a.dates[0]).getTime();
+    const dateB = new Date(b.dates[0]).getTime();
+
+    if (dateB !== dateA) {
+      return dateB - dateA;
+    }
+
+    return b.dates.length - a.dates.length;
   });
 }
 

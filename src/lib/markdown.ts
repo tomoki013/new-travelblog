@@ -22,7 +22,7 @@ export function getRawPostsData(): PostMetadata[] {
     return {
       slug,
       title: data.title,
-      date: data.date,
+      dates: ensureStringArray(data.dates),
       category: data.category,
       tags: ensureStringArray(data.tags),
       // Keep other metadata from frontmatter to avoid breaking other parts of the app immediately
