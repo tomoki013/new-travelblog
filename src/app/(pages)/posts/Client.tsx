@@ -4,10 +4,7 @@ import { useMemo, useEffect } from "react";
 import { motion } from "framer-motion";
 import { Post } from "@/types/types";
 import PostCard from "@/components/elements/PostCard";
-import {
-  staggerContainerVariants,
-  slideInUpVariants,
-} from "@/components/animation";
+import { sectionVariants, staggerContainer } from "@/components/animation";
 import { CustomSelect } from "@/components/elements/CustomSelect";
 import { useSearchParams, useRouter } from "next/navigation";
 import HeroSection from "@/components/sections/HeroSection";
@@ -145,21 +142,38 @@ const BlogClient = ({ posts, totalPages, currentPage }: BlogClientProps) => {
         {/* ==================== Article List ==================== */}
         {posts.length > 0 ? (
           <motion.section
-            key={currentPage} // ページが変わるたびにアニメーションを再トリガー
-            variants={staggerContainerVariants(0.1)}
-            initial="hidden"
-            animate="visible"
+            key={currentPage}
+            variants={staggerContainer()}
             className="flex flex-col gap-16 md:gap-20 mb-12"
           >
-            {posts.map((post, index) => (
-              <motion.div key={post.slug} variants={slideInUpVariants}>
-                <PostCard
-                  post={post}
-                  isReversed={index % 2 !== 0}
-                  showMetadata={true}
-                />
-              </motion.div>
-            ))}
+            {posts.map((post, index) => {
+              const motionProps =
+                index === 0
+                  ? {
+                      initial: { opacity: 0, y: 30 },
+                      animate: { opacity: 1, y: 0 },
+                      transition: { duration: 0.8 },
+                    }
+                  : {
+                      initial: "hidden",
+                      whileInView: "visible",
+                      viewport: { once: true, amount: 0.3 },
+                      transition: { duration: 0.8 },
+                    };
+              return (
+                <motion.div
+                  key={post.slug}
+                  {...motionProps}
+                  variants={sectionVariants}
+                >
+                  <PostCard
+                    post={post}
+                    isReversed={index % 2 !== 0}
+                    showMetadata={true}
+                  />
+                </motion.div>
+              );
+            })}
           </motion.section>
         ) : (
           // 検索結果がない場合の表示

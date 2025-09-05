@@ -4,10 +4,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import Image from "next/image";
 import Link from "next/link";
 import { X, ArrowLeft, ArrowRight, MapPin } from "lucide-react";
-import {
-  modalContentVariants,
-  modalOverlayVariants,
-} from "@/components/animation";
+import { modal } from "@/components/animation";
 import { Photo } from "@/types/types";
 import { getRegionBySlug } from "@/lib/regionUtil";
 
@@ -37,7 +34,7 @@ const PhotoModal = ({
       {selectedPhoto && (
         <motion.div
           key="modal-overlay"
-          variants={modalOverlayVariants}
+          variants={modal.overlay}
           initial="hidden"
           animate="visible"
           exit="exit"
@@ -53,7 +50,7 @@ const PhotoModal = ({
 
           <motion.div
             key="modal-content"
-            variants={modalContentVariants}
+            variants={modal.content}
             initial="hidden"
             animate="visible"
             exit="exit"

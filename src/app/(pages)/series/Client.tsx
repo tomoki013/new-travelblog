@@ -1,7 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { staggerContainerVariants } from "@/components/animation";
+import { staggerContainer } from "@/components/animation";
 import HeroSection from "@/components/sections/HeroSection";
 
 interface ClientProps {
@@ -21,9 +21,7 @@ const Client = ({ children }: ClientProps) => {
 
       {/* ==================== Series List ==================== */}
       <motion.section
-        variants={staggerContainerVariants(0.1)}
-        initial="hidden"
-        animate="visible"
+        variants={staggerContainer()}
         className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-16"
       >
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">{children}</div>

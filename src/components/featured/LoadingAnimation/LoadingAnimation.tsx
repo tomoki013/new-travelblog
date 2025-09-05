@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef } from "react";
 import { FaPlane, FaGlobeEurope, FaCamera } from "react-icons/fa";
 
 type LoadingVariant =

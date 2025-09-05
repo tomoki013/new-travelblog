@@ -5,7 +5,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { motion } from "framer-motion";
 import { toast } from "sonner";
-import { slideInUpVariants } from "@/components/animation";
+import { slideFadeIn } from "@/components/animation";
 import { Copy } from "lucide-react";
 import { members } from "@/data/member";
 import { Post } from "@/types/types";
@@ -77,9 +77,9 @@ const Client = ({
 
         <motion.div
           initial="hidden"
-          animate="visible"
-          variants={slideInUpVariants}
-          transition={{ duration: 0.8, delay: 0.2 }}
+          whileInView="visible"
+          viewport={{ once: true, amount: 0.1 }}
+          variants={slideFadeIn()}
           className="max-w-none mt-12"
         >
           <article>{children}</article>
@@ -90,7 +90,7 @@ const Client = ({
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true, amount: 0.1 }}
-          variants={slideInUpVariants}
+          variants={slideFadeIn()}
         >
           {/* --- Shared Components --- */}
           <div className="flex items-center justify-center gap-4 mb-10">

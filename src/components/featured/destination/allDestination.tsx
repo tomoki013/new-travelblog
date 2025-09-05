@@ -12,7 +12,12 @@ interface PageProps extends AllDestinationProps {
 
 const AllDestination = ({ regionData, className, countryStyle }: PageProps) => {
   return (
-    <motion.section variants={sectionVariants}>
+    <motion.section
+      initial="hidden"
+      whileInView="visible"
+      viewport={{ once: true, amount: 0.1 }}
+      variants={sectionVariants}
+    >
       <div className={`${className}`}>
         {regionData.map((continent) => (
           <ContinentSection

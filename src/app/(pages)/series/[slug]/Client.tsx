@@ -6,10 +6,7 @@ import { motion } from "framer-motion";
 import { Post, Series } from "@/types/types";
 type PostMetadata = Omit<Post, "content">;
 import PostCard from "@/components/elements/PostCard";
-import {
-  staggerContainerVariants,
-  slideInUpVariants,
-} from "@/components/animation";
+import { sectionVariants, staggerContainer } from "@/components/animation";
 import HeroSection from "@/components/sections/HeroSection";
 import Button from "@/components/elements/Button";
 
@@ -94,20 +91,37 @@ const Client = ({ allPosts, series }: SeriesPageProps) => {
         {/* ==================== Article List ==================== */}
         <motion.section
           key={currentPage}
-          variants={staggerContainerVariants(0.1)}
-          initial="hidden"
-          animate="visible"
+          variants={staggerContainer()}
           className="space-y-16"
         >
-          {paginatedPosts.map((post, index) => (
-            <motion.div key={post.slug} variants={slideInUpVariants}>
-              <PostCard
-                post={post}
-                isReversed={index % 2 !== 0}
-                showMetadata={true}
-              />
-            </motion.div>
-          ))}
+          {paginatedPosts.map((post, index) => {
+            const motionProps =
+              index === 0
+                ? {
+                    initial: { opacity: 0, y: 30 },
+                    animate: { opacity: 1, y: 0 },
+                    transition: { duration: 0.8 },
+                  }
+                : {
+                    initial: "hidden",
+                    whileInView: "visible",
+                    viewport: { once: true, amount: 0.3 },
+                    transition: { duration: 0.8 },
+                  };
+            return (
+              <motion.div
+                key={post.slug}
+                {...motionProps}
+                variants={sectionVariants}
+              >
+                <PostCard
+                  post={post}
+                  isReversed={index % 2 !== 0}
+                  showMetadata={true}
+                />
+              </motion.div>
+            );
+          })}
         </motion.section>
 
         {/* ==================== Pagination ==================== */}
