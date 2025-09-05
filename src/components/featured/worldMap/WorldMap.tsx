@@ -153,7 +153,9 @@ const WorldMap = forwardRef<WorldMapHandle, WorldMapProps>(
           .select("body")
           .append("div")
           .attr("class", "tooltip")
-          .style("opacity", 0);
+          .style("opacity", 0)
+          // ★重要: ツールチップ自体はイベントをブロックしないようにする
+          .style("pointer-events", "none");
 
         try {
           const world = (await d3.json(
@@ -164,7 +166,8 @@ const WorldMap = forwardRef<WorldMapHandle, WorldMapProps>(
             world.objects.countries
           ) as unknown as FeatureCollection<Geometry, GeoJsonProperties>;
 
-          g.selectAll("path")
+          const paths = g
+            .selectAll("path")
             .data(countries.features)
             .join("path")
             .attr("d", pathGenerator)
@@ -182,68 +185,125 @@ const WorldMap = forwardRef<WorldMapHandle, WorldMapProps>(
                 classes += "fill-muted";
               }
               return classes;
-            })
-            .on("click", (event, d) => {
-              if (!isClickable) return;
+            });
 
-              const countryName = d.properties?.name.toLowerCase();
-              const isHighlighted = highlightedRegions.includes(countryName);
+          // ▼▼▼▼▼▼▼▼▼▼ ここからが修正箇所 ▼▼▼▼▼▼▼▼▼▼
 
-              if (isHighlighted) {
-                router.push(`/destination/${countryName}`);
-              }
-            })
-            .on("mouseover", (event, d) => {
-              if (!isTooltip) return;
-              const countryName = d.properties?.name.toLowerCase();
-              const isHighlighted = highlightedRegions.includes(countryName);
+          if (isTouchDevice) {
+            // --- タッチデバイス向けのイベント処理 ---
+            paths.each(function (d) {
+              const path = d3.select(this);
+              let touchTimer: NodeJS.Timeout;
+              let isLongPress = false;
 
-              if (isHighlighted) {
-                const allCountries = regionData.flatMap(
-                  (continent) => continent.countries
-                );
-                const countryData = allCountries.find(
-                  (c) => c.slug === countryName
-                );
+              // タッチ開始
+              path.on("touchstart", (event) => {
+                isLongPress = false;
+                // 500ms押し続けたら長押しと判定
+                touchTimer = setTimeout(() => {
+                  isLongPress = true;
+                  event.preventDefault(); // ズームなどの他のイベントを抑制
 
-                if (countryData) {
-                  tooltip.transition().duration(200).style("opacity", 0.9);
-                  const tooltipSelection = tooltip
-                    .html(
-                      `<strong>${countryData.name}</strong><br/><img src="${countryData.imageURL}" alt="${countryData.name}" class="tooltip-image"/>`
-                    )
-                    .style("left", event.pageX + 15 + "px")
-                    .style("top", event.pageY - 28 + "px");
+                  // 長押しでツールチップ表示
+                  if (!isTooltip) return;
+                  const countryName = d.properties?.name.toLowerCase();
+                  const isHighlighted =
+                    highlightedRegions.includes(countryName);
 
-                  if (isTouchDevice) {
-                    tooltipSelection
-                      .style("cursor", "pointer")
-                      .style("pointer-events", "auto")
-                      .on("click", () => {
-                        if (isClickable) {
-                          router.push(`/destination/${countryName}`);
-                        }
-                      });
+                  if (isHighlighted) {
+                    const allCountries = regionData.flatMap(
+                      (continent) => continent.countries
+                    );
+                    const countryData = allCountries.find(
+                      (c) => c.slug === countryName
+                    );
+
+                    if (countryData) {
+                      const [x, y] = d3.pointer(event, document.body);
+                      tooltip.transition().duration(200).style("opacity", 0.9);
+                      tooltip
+                        .html(
+                          `<strong>${countryData.name}</strong><br/><img src="${countryData.imageURL}" alt="${countryData.name}" class="tooltip-image"/>`
+                        )
+                        .style("left", x + 15 + "px")
+                        .style("top", y - 28 + "px");
+                    }
+                  }
+                }, 500);
+              });
+
+              // タッチ終了
+              path.on("touchend", () => {
+                clearTimeout(touchTimer); // タイマー解除
+
+                if (!isLongPress) {
+                  // 長押しでなければ通常の「タップ」
+                  tooltip.transition().duration(200).style("opacity", 0);
+
+                  if (!isClickable) return;
+                  const countryName = d.properties?.name.toLowerCase();
+                  const isHighlighted =
+                    highlightedRegions.includes(countryName);
+                  if (isHighlighted) {
+                    router.push(`/destination/${countryName}`);
                   }
                 }
-              }
-            })
-            .on("mousemove", (event) => {
-              if (!isTooltip) return;
-              tooltip
-                .style("left", event.pageX + 15 + "px")
-                .style("top", event.pageY - 28 + "px");
-            })
-            .on("mouseout", () => {
-              if (!isTooltip) return;
-              tooltip.transition().duration(500).style("opacity", 0);
-              if (isTouchDevice) {
-                // ツールチップが消えるときに元に戻す
-                tooltip
-                  .style("cursor", "default")
-                  .style("pointer-events", "none");
-              }
+              });
+
+              // 指が動いたら長押し判定をキャンセル
+              path.on("touchmove", () => {
+                clearTimeout(touchTimer);
+                tooltip.transition().duration(200).style("opacity", 0);
+              });
             });
+          } else {
+            // --- デスクトップ（マウス）向けのイベント処理 ---
+            paths
+              .on("click", (event, d) => {
+                if (!isClickable) return;
+                const countryName = d.properties?.name.toLowerCase();
+                const isHighlighted = highlightedRegions.includes(countryName);
+                if (isHighlighted) {
+                  router.push(`/destination/${countryName}`);
+                }
+              })
+              .on("mouseover", (event, d) => {
+                if (!isTooltip) return;
+                const countryName = d.properties?.name.toLowerCase();
+                const isHighlighted = highlightedRegions.includes(countryName);
+
+                if (isHighlighted) {
+                  const allCountries = regionData.flatMap(
+                    (continent) => continent.countries
+                  );
+                  const countryData = allCountries.find(
+                    (c) => c.slug === countryName
+                  );
+
+                  if (countryData) {
+                    tooltip.transition().duration(200).style("opacity", 0.9);
+                    tooltip
+                      .html(
+                        `<strong>${countryData.name}</strong><br/><img src="${countryData.imageURL}" alt="${countryData.name}" class="tooltip-image"/>`
+                      )
+                      .style("left", event.pageX + 15 + "px")
+                      .style("top", event.pageY - 28 + "px");
+                  }
+                }
+              })
+              .on("mousemove", (event) => {
+                if (!isTooltip) return;
+                tooltip
+                  .style("left", event.pageX + 15 + "px")
+                  .style("top", event.pageY - 28 + "px");
+              })
+              .on("mouseout", () => {
+                if (!isTooltip) return;
+                tooltip.transition().duration(500).style("opacity", 0);
+              });
+          }
+
+          // ▲▲▲▲▲▲▲▲▲▲ ここまでが修正箇所 ▲▲▲▲▲▲▲▲▲▲
 
           // Zoom setup
           if (isZoomable) {
@@ -278,7 +338,7 @@ const WorldMap = forwardRef<WorldMapHandle, WorldMapProps>(
       isZoomable,
       regionData,
       router,
-      isTouchDevice,
+      isTouchDevice, // isTouchDeviceを依存配列に追加
     ]);
 
     return (
@@ -286,31 +346,32 @@ const WorldMap = forwardRef<WorldMapHandle, WorldMapProps>(
         {/* 1. ローディングアニメーション */}
         <div
           className={`
-          absolute inset-0 flex items-center justify-center
-          transition-opacity duration-500 ease-in-out
-          ${isLoading ? "opacity-100" : "opacity-0 pointer-events-none"}
-        `}
+           absolute inset-0 flex items-center justify-center
+           transition-opacity duration-500 ease-in-out
+           ${isLoading ? "opacity-100" : "opacity-0 pointer-events-none"}
+         `}
         >
           <LoadingAnimation variant="mapRoute" />
         </div>
         {/* 2. 世界地図SVG */}
         <svg
           ref={svgRef}
+          style={{ touchAction: "none" }} // モバイルでのズーム競合を防ぐため念の為追加
           className={`
-          w-full h-full
-          transition-opacity duration-500 ease-in-out
-          ${isLoading ? "opacity-0" : "opacity-100"}
-        `}
+           w-full h-full
+           transition-opacity duration-500 ease-in-out
+           ${isLoading ? "opacity-0" : "opacity-100"}
+         `}
         />
         {/* 3. Zoom hint message */}
         {isZoomable && (
           <div
             className={`
-            absolute top-4 left-1/2 -translate-x-1/2
-            bg-background/80 text-foreground py-2 px-4 rounded-md shadow-lg
-            transition-opacity duration-500 ease-in-out
-            ${showZoomHint ? "opacity-100" : "opacity-0 pointer-events-none"}
-          `}
+             absolute top-4 left-1/2 -translate-x-1/2
+             bg-background/80 text-foreground py-2 px-4 rounded-md shadow-lg
+             transition-opacity duration-500 ease-in-out
+             ${showZoomHint ? "opacity-100" : "opacity-0 pointer-events-none"}
+           `}
           >
             <p className="text-sm">スクロールやピンチで拡大できます</p>
           </div>
@@ -319,10 +380,10 @@ const WorldMap = forwardRef<WorldMapHandle, WorldMapProps>(
         {isZoomable && !isLoading && (
           <div
             className="
-            absolute bottom-4 left-4
-            bg-background/80 text-foreground py-1 px-3 rounded-md shadow-lg
-            pointer-events-none
-          "
+             absolute bottom-4 left-4
+             bg-background/80 text-foreground py-1 px-3 rounded-md shadow-lg
+             pointer-events-none
+           "
           >
             <p className="text-sm font-semibold">
               ×{currentZoom.toFixed(1)}/×8.0
