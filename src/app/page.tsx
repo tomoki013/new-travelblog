@@ -12,7 +12,7 @@ import { getPhotos } from "@/lib/photo";
 
 export default async function HomePage() {
   const allPosts = await getAllPosts();
-  const allPhotos = await getPhotos();
+  const allPhotos = (await getPhotos()).slice(0, 24);
   return (
     <>
       <Hero />
