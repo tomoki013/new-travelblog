@@ -7,7 +7,6 @@ import { Region, Post, AllDestinationProps } from "@/types/types";
 type PostMetadata = Omit<Post, "content">;
 import PostCard from "@/components/elements/PostCard";
 import {
-  fadeIn,
   sectionVariants,
   slideFadeIn,
   staggerContainer,
@@ -41,7 +40,8 @@ const Client = ({
     .flatMap((continent) => continent.countries)
     .find((c) => c.slug === region.slug);
 
-  const hasChildren = country && country.children && country.children.length > 0;
+  const hasChildren =
+    country && country.children && country.children.length > 0;
 
   return (
     <div>
@@ -77,13 +77,16 @@ const Client = ({
             </h2>
             <motion.div
               className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-8"
-              initial="hidden"
-              whileInView="visible"
-              viewport={{ once: true, amount: 0.1 }}
               variants={staggerContainer(0.1, 0.1)}
             >
               {country.children.map((child) => (
-                <motion.div key={child.slug} variants={fadeIn("up")}>
+                <motion.div
+                  key={child.slug}
+                  initial="hidden"
+                  whileInView="visible"
+                  viewport={{ once: true, amount: 0.1 }}
+                  variants={sectionVariants}
+                >
                   <Link
                     href={`/destination/${child.slug}`}
                     className="group block"
@@ -158,9 +161,6 @@ const Client = ({
                 </h2>
                 <motion.div
                   className="grid grid-cols-1 md:grid-cols-2 gap-8"
-                  initial="hidden"
-                  whileInView="visible"
-                  viewport={{ once: true, amount: 0.1 }}
                   variants={staggerContainer()}
                 >
                   {seriesPosts.map((post, index) => (
@@ -169,7 +169,7 @@ const Client = ({
                       initial="hidden"
                       whileInView="visible"
                       viewport={{ once: true, amount: 0.1 }}
-                      variants={fadeIn()}
+                      variants={sectionVariants}
                     >
                       <PostCard
                         post={post}
@@ -196,9 +196,6 @@ const Client = ({
                 </h2>
                 <motion.div
                   className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
-                  initial="hidden"
-                  whileInView="visible"
-                  viewport={{ once: true, amount: 0.1 }}
                   variants={staggerContainer()}
                 >
                   {tourismPosts.map((post, index) => (
@@ -207,7 +204,7 @@ const Client = ({
                       initial="hidden"
                       whileInView="visible"
                       viewport={{ once: true, amount: 0.1 }}
-                      variants={fadeIn()}
+                      variants={sectionVariants}
                     >
                       <PostCard
                         post={post}
@@ -234,9 +231,6 @@ const Client = ({
                 </h2>
                 <motion.div
                   className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
-                  initial="hidden"
-                  whileInView="visible"
-                  viewport={{ once: true, amount: 0.1 }}
                   variants={staggerContainer()}
                 >
                   {itineraryPosts.map((post, index) => (
@@ -245,7 +239,7 @@ const Client = ({
                       initial="hidden"
                       whileInView="visible"
                       viewport={{ once: true, amount: 0.1 }}
-                      variants={fadeIn()}
+                      variants={sectionVariants}
                     >
                       <PostCard
                         post={post}
@@ -272,9 +266,6 @@ const Client = ({
                 </h2>
                 <motion.div
                   className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
-                  initial="hidden"
-                  whileInView="visible"
-                  viewport={{ once: true, amount: 0.1 }}
                   variants={staggerContainer()}
                 >
                   {oneOffPosts.map((post, index) => (
@@ -283,7 +274,7 @@ const Client = ({
                       initial="hidden"
                       whileInView="visible"
                       viewport={{ once: true, amount: 0.1 }}
-                      variants={fadeIn()}
+                      variants={sectionVariants}
                     >
                       <PostCard
                         post={post}
