@@ -56,6 +56,13 @@ const WorldMap = forwardRef<WorldMapHandle, WorldMapProps>(
     const [showZoomHint, setShowZoomHint] = useState(false);
     const [currentZoom, setCurrentZoom] = useState(1);
     const router = useRouter();
+    const [isTouchDevice, setIsTouchDevice] = useState(false);
+
+    useEffect(() => {
+      setIsTouchDevice(
+        "ontouchstart" in window || navigator.maxTouchPoints > 0
+      );
+    }, []);
 
     useImperativeHandle(ref, () => ({
       resetZoom: () => {
@@ -201,12 +208,23 @@ const WorldMap = forwardRef<WorldMapHandle, WorldMapProps>(
 
                 if (countryData) {
                   tooltip.transition().duration(200).style("opacity", 0.9);
-                  tooltip
+                  const tooltipSelection = tooltip
                     .html(
                       `<strong>${countryData.name}</strong><br/><img src="${countryData.imageURL}" alt="${countryData.name}" class="tooltip-image"/>`
                     )
                     .style("left", event.pageX + 15 + "px")
                     .style("top", event.pageY - 28 + "px");
+
+                  if (isTouchDevice) {
+                    tooltipSelection
+                      .style("cursor", "pointer")
+                      .style("pointer-events", "auto")
+                      .on("click", () => {
+                        if (isClickable) {
+                          router.push(`/destination/${countryName}`);
+                        }
+                      });
+                  }
                 }
               }
             })
@@ -219,6 +237,12 @@ const WorldMap = forwardRef<WorldMapHandle, WorldMapProps>(
             .on("mouseout", () => {
               if (!isTooltip) return;
               tooltip.transition().duration(500).style("opacity", 0);
+              if (isTouchDevice) {
+                // ツールチップが消えるときに元に戻す
+                tooltip
+                  .style("cursor", "default")
+                  .style("pointer-events", "none");
+              }
             });
 
           // Zoom setup
@@ -254,6 +278,7 @@ const WorldMap = forwardRef<WorldMapHandle, WorldMapProps>(
       isZoomable,
       regionData,
       router,
+      isTouchDevice,
     ]);
 
     return (
