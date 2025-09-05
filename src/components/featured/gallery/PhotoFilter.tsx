@@ -1,4 +1,5 @@
 "use client";
+import { sectionVariants } from "@/components/animation";
 import { motion } from "framer-motion";
 
 interface PhotoFilterProps {
@@ -13,7 +14,10 @@ const PhotoFilter = ({
   setActiveFilter,
 }: PhotoFilterProps) => {
   return (
-    <motion.div className="flex justify-center flex-wrap gap-2 mb-12">
+    <motion.div
+      variants={sectionVariants}
+      className="flex justify-center flex-wrap gap-2 mb-12"
+    >
       {filterList.map((filter) => (
         <button
           key={filter}

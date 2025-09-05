@@ -20,7 +20,7 @@ const AboutMeSection = () => {
       className="py-20 md:py-28"
       initial="hidden"
       whileInView="visible"
-      viewport={{ once: true, amount: 0.2 }}
+      viewport={{ once: true, amount: 0.1 }}
       variants={sectionVariants}
     >
       <div className="max-w-5xl mx-auto px-6 text-foreground">

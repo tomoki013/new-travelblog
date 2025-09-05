@@ -3,7 +3,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { motion } from "framer-motion";
-import { slideInUpVariants } from "@/components/animation";
+import { sectionVariants } from "@/components/animation";
 import {
   Castle,
   Sunset,
@@ -34,7 +34,7 @@ const SeriesCard = ({ series, postsLength }: SeriesCardProps) => {
   return (
     <Link href={`/series/${series.slug}`} key={series.id} passHref>
       <motion.div
-        variants={slideInUpVariants}
+        variants={sectionVariants}
         whileHover={{ scale: 1.03, transition: { duration: 0.3 } }}
         className="relative aspect-[4/5] rounded-lg overflow-hidden shadow-xl text-white flex flex-col justify-end p-6 cursor-pointer group"
       >

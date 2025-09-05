@@ -4,11 +4,7 @@ import { featuredSeries } from "@/data/series";
 import SeriesCard from "../elements/SeriesCard";
 import { motion } from "framer-motion";
 import Button from "../elements/Button";
-import {
-  sectionVariants,
-  staggerContainerVariants,
-  slideInUpVariants,
-} from "@/components/animation";
+import { sectionVariants, staggerContainer } from "@/components/animation";
 
 const FeaturedSeries = () => {
   return (
@@ -30,10 +26,16 @@ const FeaturedSeries = () => {
       {/* カードグリッド */}
       <motion.div
         className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-12"
-        variants={staggerContainerVariants(0.1)}
+        variants={staggerContainer()}
       >
         {featuredSeries.slice(0, 6).map((series) => (
-          <motion.div key={series.id} variants={slideInUpVariants}>
+          <motion.div
+            key={series.id}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, amount: 0.1 }}
+            variants={sectionVariants}
+          >
             <SeriesCard series={series} />
           </motion.div>
         ))}

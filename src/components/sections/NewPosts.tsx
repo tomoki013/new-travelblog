@@ -3,10 +3,7 @@
 import PostCard from "@/components/elements/PostCard";
 import Button from "../elements/Button";
 import { motion } from "framer-motion";
-import {
-  staggerContainerVariants,
-  slideInUpVariants,
-} from "@/components/animation";
+import { sectionVariants, staggerContainer } from "@/components/animation";
 import { Post } from "@/types/types";
 type PostMetadata = Omit<Post, "content">;
 
@@ -20,7 +17,7 @@ const NewPosts = ({ posts }: NewPostsProps) => {
       initial="hidden"
       whileInView="visible"
       viewport={{ once: true, amount: 0.1 }}
-      variants={staggerContainerVariants(0.2)}
+      variants={sectionVariants}
       className="py-24 px-6 md:px-8 max-w-5xl mx-auto"
     >
       {/* セクションタイトル */}
@@ -33,9 +30,18 @@ const NewPosts = ({ posts }: NewPostsProps) => {
       </div>
 
       {/* 記事一覧 */}
-      <div className="flex flex-col gap-16 md:gap-20 mb-12">
+      <motion.div
+        variants={staggerContainer()}
+        className="flex flex-col gap-16 md:gap-20 mb-12"
+      >
         {posts.slice(0, 3).map((post, index) => (
-          <motion.div key={post.slug} variants={slideInUpVariants}>
+          <motion.div
+            key={post.slug}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, amount: 0.1 }}
+            variants={sectionVariants}
+          >
             <PostCard
               post={post}
               isReversed={index % 2 !== 0}
@@ -43,7 +49,7 @@ const NewPosts = ({ posts }: NewPostsProps) => {
             />
           </motion.div>
         ))}
-      </div>
+      </motion.div>
 
       {/* ボタン */}
       <Button href={`/posts`}>ブログ一覧を見る</Button>

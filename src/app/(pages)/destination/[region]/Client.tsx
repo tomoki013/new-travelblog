@@ -6,9 +6,10 @@ import { Region, Post, AllDestinationProps } from "@/types/types";
 type PostMetadata = Omit<Post, "content">;
 import PostCard from "@/components/elements/PostCard";
 import {
+  fadeIn,
   sectionVariants,
-  staggerContainerVariants,
-  slideInUpVariants,
+  slideFadeIn,
+  staggerContainer,
 } from "@/components/animation";
 import { Wind } from "lucide-react";
 import AllDestination from "@/components/featured/destination/allDestination";
@@ -58,8 +59,9 @@ const Client = ({
         {noPosts ? (
           <motion.div
             initial="hidden"
-            animate="visible"
-            variants={slideInUpVariants}
+            whileInView="visible"
+            viewport={{ once: true, amount: 0.1 }}
+            variants={slideFadeIn()}
             className="text-center bg-slate-50 border-2 border-dashed border-slate-300 rounded-xl p-8 md:p-12"
           >
             <div className="flex justify-center mb-4">
@@ -80,7 +82,7 @@ const Client = ({
             <motion.section
               initial="hidden"
               whileInView="visible"
-              viewport={{ once: true, amount: 0.2 }}
+              viewport={{ once: true, amount: 0.1 }}
               variants={sectionVariants}
             >
               <p className="text-lg text-center text-gray-700 leading-relaxed">
@@ -94,7 +96,7 @@ const Client = ({
               <motion.section
                 initial="hidden"
                 whileInView="visible"
-                viewport={{ once: true, amount: 0.2 }}
+                viewport={{ once: true, amount: 0.1 }}
                 variants={sectionVariants}
               >
                 <h2 className="text-3xl font-bold text-center mb-8">
@@ -102,10 +104,19 @@ const Client = ({
                 </h2>
                 <motion.div
                   className="grid grid-cols-1 md:grid-cols-2 gap-8"
-                  variants={staggerContainerVariants(0.1)}
+                  initial="hidden"
+                  whileInView="visible"
+                  viewport={{ once: true, amount: 0.1 }}
+                  variants={staggerContainer()}
                 >
                   {seriesPosts.map((post, index) => (
-                    <motion.div key={post.id} variants={slideInUpVariants}>
+                    <motion.div
+                      key={post.id}
+                      initial="hidden"
+                      whileInView="visible"
+                      viewport={{ once: true, amount: 0.1 }}
+                      variants={fadeIn()}
+                    >
                       <PostCard
                         post={post}
                         isReversed={index % 2 !== 0}
@@ -131,10 +142,19 @@ const Client = ({
                 </h2>
                 <motion.div
                   className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
-                  variants={staggerContainerVariants(0.1)}
+                  initial="hidden"
+                  whileInView="visible"
+                  viewport={{ once: true, amount: 0.1 }}
+                  variants={staggerContainer()}
                 >
                   {tourismPosts.map((post, index) => (
-                    <motion.div key={post.id} variants={slideInUpVariants}>
+                    <motion.div
+                      key={post.id}
+                      initial="hidden"
+                      whileInView="visible"
+                      viewport={{ once: true, amount: 0.1 }}
+                      variants={fadeIn()}
+                    >
                       <PostCard
                         post={post}
                         isReversed={index % 2 !== 0}
@@ -152,7 +172,7 @@ const Client = ({
               <motion.section
                 initial="hidden"
                 whileInView="visible"
-                viewport={{ once: true, amount: 0.2 }}
+                viewport={{ once: true, amount: 0.1 }}
                 variants={sectionVariants}
               >
                 <h2 className="text-3xl font-bold text-center mb-8">
@@ -160,10 +180,19 @@ const Client = ({
                 </h2>
                 <motion.div
                   className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
-                  variants={staggerContainerVariants(0.1)}
+                  initial="hidden"
+                  whileInView="visible"
+                  viewport={{ once: true, amount: 0.1 }}
+                  variants={staggerContainer()}
                 >
                   {itineraryPosts.map((post, index) => (
-                    <motion.div key={post.id} variants={slideInUpVariants}>
+                    <motion.div
+                      key={post.id}
+                      initial="hidden"
+                      whileInView="visible"
+                      viewport={{ once: true, amount: 0.1 }}
+                      variants={fadeIn()}
+                    >
                       <PostCard
                         post={post}
                         isReversed={index % 2 !== 0}
@@ -181,7 +210,7 @@ const Client = ({
               <motion.section
                 initial="hidden"
                 whileInView="visible"
-                viewport={{ once: true, amount: 0.2 }}
+                viewport={{ once: true, amount: 0.1 }}
                 variants={sectionVariants}
               >
                 <h2 className="text-3xl font-bold text-center mb-8">
@@ -189,10 +218,19 @@ const Client = ({
                 </h2>
                 <motion.div
                   className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
-                  variants={staggerContainerVariants(0.1)}
+                  initial="hidden"
+                  whileInView="visible"
+                  viewport={{ once: true, amount: 0.1 }}
+                  variants={staggerContainer()}
                 >
                   {oneOffPosts.map((post, index) => (
-                    <motion.div key={post.id} variants={slideInUpVariants}>
+                    <motion.div
+                      key={post.id}
+                      initial="hidden"
+                      whileInView="visible"
+                      viewport={{ once: true, amount: 0.1 }}
+                      variants={fadeIn()}
+                    >
                       <PostCard
                         post={post}
                         isReversed={index % 2 !== 0}

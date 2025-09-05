@@ -18,7 +18,7 @@ const sectionVariant: Variants = {
 
 export default function Client() {
   return (
-    <main>
+    <div>
       {/* ==================== Hero Section ==================== */}
       <section className="relative h-72 md:h-96 flex items-center justify-center text-foreground text-center">
         <div className="relative z-10 p-4">
@@ -36,10 +36,10 @@ export default function Client() {
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-16 space-y-20">
         {/* ==================== 挨拶・趣旨説明 ==================== */}
         <motion.section
-          variants={sectionVariant}
           initial="hidden"
           whileInView="visible"
-          viewport={{ once: true, amount: 0.3 }}
+          viewport={{ once: true, amount: 0.1 }}
+          variants={sectionVariant}
           className="text-center"
         >
           <h2 className="text-3xl font-bold mb-4">このページについて</h2>
@@ -54,10 +54,10 @@ export default function Client() {
 
         {/* ==================== 募集テーマの例 ==================== */}
         <motion.section
-          variants={sectionVariant}
           initial="hidden"
           whileInView="visible"
-          viewport={{ once: true, amount: 0.3 }}
+          viewport={{ once: true, amount: 0.1 }}
+          variants={sectionVariant}
         >
           <h2 className="text-3xl font-bold text-center mb-8">
             例えば、こんなテーマを募集しています
@@ -135,10 +135,10 @@ export default function Client() {
 
         {/* ==================== 投稿フォーム ==================== */}
         <motion.section
-          variants={sectionVariant}
           initial="hidden"
           whileInView="visible"
-          viewport={{ once: true, amount: 0.3 }}
+          viewport={{ once: true, amount: 0.1 }}
+          variants={sectionVariant}
         >
           <h2 className="text-3xl font-bold text-center mb-8">
             リクエストフォーム
@@ -164,10 +164,10 @@ export default function Client() {
 
         {/* ==================== 注意事項 ==================== */}
         <motion.section
-          variants={sectionVariant}
           initial="hidden"
           whileInView="visible"
-          viewport={{ once: true, amount: 0.3 }}
+          viewport={{ once: true, amount: 0.1 }}
+          variants={sectionVariant}
           className="text-sm text-gray-600 bg-gray-50 p-6 rounded-lg"
         >
           <h3 className="text-lg font-bold mb-4 text-center">注意事項</h3>
@@ -200,6 +200,6 @@ export default function Client() {
           </p>
         </motion.section>
       </div>
-    </main>
+    </div>
   );
 }

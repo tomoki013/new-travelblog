@@ -1,7 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { staggerContainerVariants } from "@/components/animation";
+import { sectionVariants } from "@/components/animation";
 import { PostMetadata } from "@/types/types";
 import Button from "../elements/Button";
 
@@ -16,7 +16,7 @@ const PostsLength = ({ posts }: PostsLengthProps) => {
       initial="hidden"
       whileInView="visible"
       viewport={{ once: true, amount: 0.1 }}
-      variants={staggerContainerVariants(0.2)}
+      variants={sectionVariants}
       className="py-24 px-6 md:px-8 max-w-5xl mx-auto"
     >
       <div className="text-center mb-16">

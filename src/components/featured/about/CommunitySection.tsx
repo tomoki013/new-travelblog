@@ -7,10 +7,10 @@ import { sectionVariants } from "@/components/animation";
 const CommunitySection = () => {
   return (
     <motion.section
-      className="py-20 md:py-28 bg-foreground text-background" // ベースカラーの黒を使用 [cite: 60]
+      className="py-20 md:py-28 bg-foreground text-background"
       initial="hidden"
       whileInView="visible"
-      viewport={{ once: true, amount: 0.3 }}
+      viewport={{ once: true, amount: 0.1 }}
       variants={sectionVariants}
     >
       <div className="max-w-4xl mx-auto px-6 text-center">
