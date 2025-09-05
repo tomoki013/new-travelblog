@@ -4,11 +4,18 @@ import { MenuIcon, XIcon } from "@/components/Icons";
 import { NAV_LINKS } from "@/constants/navigation";
 import { useMobileMenu } from "@/hooks/useMobileMenu";
 import { AnimatePresence, motion } from "framer-motion";
+import { SearchIcon } from "lucide-react";
 import Link from "next/link";
+import { useState } from "react";
 import ModeToggle from "../elements/mode-toggle";
+import SearchOverlay from "../featured/search/SearchOverlay";
 
 const Header = () => {
   const { isMenuOpen, toggleMenu, closeMenu } = useMobileMenu();
+  const [isSearchOpen, setIsSearchOpen] = useState(false);
+
+  const openSearch = () => setIsSearchOpen(true);
+  const closeSearch = () => setIsSearchOpen(false);
 
   return (
     <>
@@ -43,14 +50,23 @@ const Header = () => {
 
           {/* Desktop Icons */}
           <div className="hidden md:flex items-center gap-4">
-            {/* <button className="p-2 rounded-full hover:bg-accent hover:text-accent-foreground">
+            <button
+              onClick={openSearch}
+              className="p-2 rounded-full hover:bg-accent hover:text-accent-foreground"
+            >
               <SearchIcon className="h-5 w-5 text-muted-foreground" />
-            </button> */}
+            </button>
             <ModeToggle />
           </div>
 
           {/* Mobile Menu Button */}
-          <div className="md:hidden">
+          <div className="flex items-center md:hidden">
+            <button
+              onClick={openSearch}
+              className="p-2 rounded-full hover:bg-accent hover:text-accent-foreground"
+            >
+              <SearchIcon className="h-5 w-5 text-muted-foreground" />
+            </button>
             <button
               onClick={toggleMenu}
               className="p-2 rounded-md text-foreground"
@@ -78,16 +94,6 @@ const Header = () => {
             className="fixed inset-0 z-40 bg-background md:hidden"
           >
             <div className="container mx-auto mt-20 flex h-full flex-col items-center gap-8 px-4 sm:px-6 lg:px-8">
-              {/* Mobile Search Bar */}
-              {/* <div className="relative w-full max-w-sm">
-                <input
-                  type="text"
-                  placeholder="Search articles..."
-                  className="w-full rounded-full border border-input bg-transparent py-2 pl-10 pr-4 text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-ring"
-                />
-                <SearchIcon className="absolute left-3 top-1/2 h-5 w-5 -translate-y-1/2 text-muted-foreground" />
-              </div> */}
-
               {/* Mobile Navigation */}
               <nav className="flex flex-col items-center gap-6 text-lg font-medium">
                 {NAV_LINKS.map((link) => (
@@ -112,6 +118,7 @@ const Header = () => {
           </motion.div>
         )}
       </AnimatePresence>
+      <SearchOverlay isOpen={isSearchOpen} onClose={closeSearch} />
     </>
   );
 };
