@@ -5,11 +5,11 @@ import { getAllPosts } from "@/lib/posts";
 
 const Dashboard = async () => {
   const allPosts = await getAllPosts();
-  const allPhotos = await getPhotos();
+  const allPhotos = (await getPhotos()).length;
   return (
     <div>
       <PostsLength posts={allPosts} />
-      <GalleryLength photos={allPhotos} />
+      <GalleryLength galleryLength={allPhotos} />
     </div>
   );
 };
