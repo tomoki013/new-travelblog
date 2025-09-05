@@ -99,7 +99,7 @@ const Client = ({
                         objectFit="cover"
                         className="transform transition-transform duration-300 group-hover:scale-110"
                       />
-                      <div className="absolute inset-0 bg-black bg-opacity-20 group-hover:bg-opacity-40 transition-colors duration-300" />
+                      <div className="absolute inset-0 transition-colors duration-300" />
                     </div>
                     <h3 className="mt-4 text-lg font-semibold text-center text-slate-800 group-hover:text-primary transition-colors duration-300">
                       {child.name}
