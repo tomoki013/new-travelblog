@@ -1,6 +1,7 @@
 "use client";
 
 import Image from "next/image";
+import Link from "next/link";
 import { motion } from "framer-motion";
 import { Region, Post, AllDestinationProps } from "@/types/types";
 type PostMetadata = Omit<Post, "content">;
@@ -36,6 +37,12 @@ const Client = ({
     itineraryPosts.length === 0 &&
     oneOffPosts.length === 0;
 
+  const country = regionData
+    .flatMap((continent) => continent.countries)
+    .find((c) => c.slug === region.slug);
+
+  const hasChildren = country && country.children && country.children.length > 0;
+
   return (
     <div>
       {/* ==================== Hero Section ==================== */}
@@ -54,6 +61,53 @@ const Client = ({
           </h1>
         </div>
       </section>
+
+      {/* ==================== Child Regions Section ==================== */}
+      {hasChildren && country?.children && (
+        <motion.section
+          className="bg-slate-50"
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, amount: 0.1 }}
+          variants={sectionVariants}
+        >
+          <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+            <h2 className="text-3xl font-bold text-center mb-12">
+              この国のエリア
+            </h2>
+            <motion.div
+              className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-8"
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true, amount: 0.1 }}
+              variants={staggerContainer(0.1, 0.1)}
+            >
+              {country.children.map((child) => (
+                <motion.div key={child.slug} variants={fadeIn("up")}>
+                  <Link
+                    href={`/destination/${child.slug}`}
+                    className="group block"
+                  >
+                    <div className="relative aspect-video w-full overflow-hidden rounded-lg">
+                      <Image
+                        src={child.imageURL}
+                        alt={child.name}
+                        fill
+                        objectFit="cover"
+                        className="transform transition-transform duration-300 group-hover:scale-110"
+                      />
+                      <div className="absolute inset-0 bg-black bg-opacity-20 group-hover:bg-opacity-40 transition-colors duration-300" />
+                    </div>
+                    <h3 className="mt-4 text-lg font-semibold text-center text-slate-800 group-hover:text-primary transition-colors duration-300">
+                      {child.name}
+                    </h3>
+                  </Link>
+                </motion.div>
+              ))}
+            </motion.div>
+          </div>
+        </motion.section>
+      )}
 
       <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
         {noPosts ? (
