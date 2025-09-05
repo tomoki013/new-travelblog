@@ -1,7 +1,7 @@
 ---
 category: series
 title: ヨーロッパ旅行記 第4回：パリとの別れ、そしてバルセロナへ
-date:
+dates:
   - "2025-02-18"
 excerpt: >-
   【ヨーロッパ旅行記

@@ -1,7 +1,7 @@
 ---
 category: tourism
 title: 【2025年最新版】パリ旅行の新定番！交通系ICカード「Navigo Easy」を徹底解説
-date:
+dates:
   - "2025-02-14"
 excerpt: >-
   パリ旅行の新定番ICカード「Navigo

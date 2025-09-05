@@ -1,7 +1,7 @@
 ---
 category: series
 title: インド旅行記 第7回：バラナシ最終日、聖地の日常と非日常
-date:
+dates:
   - "2024-09-29"
 excerpt: >-
   【インド旅行記

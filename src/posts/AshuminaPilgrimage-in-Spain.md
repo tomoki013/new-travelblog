@@ -1,7 +1,7 @@
 ---
 category: tourism
 title: あしゅみな聖地巡礼旅！ in スペイン！
-date:
+dates:
   - "2025-02-27"
 excerpt: >-
   「AbemaTVの『乃木坂世界旅

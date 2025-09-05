@@ -1,7 +1,7 @@
 ---
 category: series
 title: インド旅行記 第6回：聖なるガンジス川、初めての沐浴体験
-date:
+dates:
   - "2024-09-28"
 excerpt: >-
   【インド旅行記

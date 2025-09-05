@@ -1,7 +1,7 @@
 ---
 category: series
 title: ヨーロッパ旅行記 第2回：芸術の都・パリの本気
-date:
+dates:
   - "2025-02-15"
 excerpt: >-
   【ヨーロッパ旅行記

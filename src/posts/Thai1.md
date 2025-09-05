@@ -1,7 +1,7 @@
 ---
 category: series
 title: 初めての海外旅行に挑戦！in Thailand
-date:
+dates:
   - "2024-03-01"
 excerpt: >-
   【タイ旅行記

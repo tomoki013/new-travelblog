@@ -65,7 +65,7 @@ export async function getPostBySlug(slug: string): Promise<Post> {
     slug,
     content,
     title: data.title,
-    date: data.date,
+    dates: ensureStringArray(data.dates),
     category: data.category,
     // Pass through other properties
     excerpt: data.excerpt,

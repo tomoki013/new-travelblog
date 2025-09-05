@@ -1,7 +1,7 @@
 ---
 category: series
 title: インド旅行記 第3回：世界遺産タージマハルの圧倒的な美しさに魅了された1日
-date:
+dates:
   - "2024-09-26"
 excerpt: >-
   【インド旅行記

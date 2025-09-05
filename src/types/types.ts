@@ -2,7 +2,7 @@ export type PostType = "tourism" | "itinerary" | "series" | "one-off";
 export interface Post {
   slug: string;
   title: string;
-  date: string;
+  dates: string[];
   content: string;
   category: string;
   id?: string;

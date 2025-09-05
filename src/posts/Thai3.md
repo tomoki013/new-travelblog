@@ -1,7 +1,7 @@
 ---
 category: series
 title: タイ旅行記 第3回：バンコク三大寺院巡りと市場散策で締めくくる最終日
-date:
+dates:
   - "2024-03-03"
 excerpt: >-
   【タイ旅行記

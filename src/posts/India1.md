@@ -1,7 +1,7 @@
 ---
 category: series
 title: インド旅行記 第2回：デリーの街角で出会った人情と絶景
-date:
+dates:
   - "2024-09-25"
 excerpt: >-
   【インド旅行記

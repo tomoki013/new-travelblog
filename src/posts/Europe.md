@@ -1,6 +1,6 @@
 ---
 title: ヨーロッパ13泊15日の旅程と総費用を大公開！
-date:
+dates:
   - "2025-02-13"
 excerpt: ヨーロッパ（フランス・スペイン）を巡る旅の旅程＆費用レポートを鋭意作成中です。しばらくお待ちください。
 image: /images/France/louvre-museum1.jpg

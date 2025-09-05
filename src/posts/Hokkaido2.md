@@ -1,7 +1,7 @@
 ---
 category: series
 title: 北海道旅行記 第2回：小樽の雪景色と極上グルメの旅
-date:
+dates:
   - "2024-02-28"
 excerpt: >-
   【北海道旅行記
