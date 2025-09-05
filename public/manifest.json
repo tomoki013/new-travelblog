@@ -1,16 +1,11 @@
 {
-  "name": "Geminiブログ",
-  "short_name": "Gemini",
+  "name": "ともきちの旅行日記",
+  "short_name": "とも日記",
   "icons": [
     {
-      "src": "/icons/icon-192x192.png",
-      "type": "image/png",
+      "src": "/src/app/favicon.ico",
+      "type": "image/ico",
       "sizes": "192x192"
-    },
-    {
-      "src": "/icons/icon-512x512.png",
-      "type": "image/png",
-      "sizes": "512x512"
     }
   ],
   "start_url": "/",
