@@ -13,6 +13,8 @@ import {
 } from "@/components/animation";
 import { Wind } from "lucide-react";
 import AllDestination from "@/components/featured/destination/allDestination";
+import Link from "next/link";
+import { Badge } from "@/components/ui/badge";
 
 interface ClientProps extends AllDestinationProps {
   region: Region;
@@ -56,6 +58,40 @@ const Client = ({
       </section>
 
       <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+        {/* ==================== View by Region Section ==================== */}
+        {region.children && region.children.length > 0 && (
+          <motion.section
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, amount: 0.1 }}
+            variants={sectionVariants}
+            className="mb-16"
+          >
+            <h2 className="text-3xl font-bold text-center mb-8">
+              地域ごとに見る
+            </h2>
+            <motion.div
+              className="flex flex-wrap justify-center gap-4"
+              variants={staggerContainer()}
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true, amount: 0.1 }}
+            >
+              {region.children.map((child) => (
+                <motion.div key={child.slug} variants={fadeIn()}>
+                  <Link href={`/destination/${child.slug}`} passHref>
+                    <Badge
+                      variant="outline"
+                      className="px-4 py-2 text-base transition-colors duration-200 ease-in-out hover:bg-slate-100 hover:text-slate-900 dark:hover:bg-slate-800 dark:hover:text-slate-50 cursor-pointer"
+                    >
+                      {child.name}
+                    </Badge>
+                  </Link>
+                </motion.div>
+              ))}
+            </motion.div>
+          </motion.section>
+        )}
         {noPosts ? (
           <motion.div
             initial="hidden"
