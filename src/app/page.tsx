@@ -10,9 +10,12 @@ import PostsLength from "@/components/sections/PostsLength";
 import GalleryLength from "@/components/sections/GalleryLength";
 import { getPhotos } from "@/lib/photo";
 
+export const allPhotos = await getPhotos();
+
 export default async function HomePage() {
   const allPosts = await getAllPosts();
-  const allPhotos = (await getPhotos()).slice(0, 24);
+  const photos = allPhotos.slice(0, 24);
+  const photoLength = allPhotos.length;
   return (
     <>
       <Hero />
@@ -20,10 +23,10 @@ export default async function HomePage() {
       <Destination />
       <FeaturedSeries />
       <PopularPosts posts={allPosts} />
-      <Gallery photos={allPhotos} />
+      <Gallery photos={photos} />
       <Request />
       <PostsLength posts={allPosts} />
-      <GalleryLength photos={allPhotos} />
+      <GalleryLength galleryLength={photoLength} />
     </>
   );
 }
