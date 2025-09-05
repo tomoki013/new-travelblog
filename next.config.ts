@@ -11,7 +11,7 @@ const nextConfig: NextConfig = {
 
 export default withSerwist({
   // Serwist の設定
-  swSrc: "app/sw.ts", // サービスワーカーのソースファイル
+  swSrc: "src/app/sw.ts", // サービスワーカーのソースファイル
   swDest: "public/sw.js", // 出力されるサービスワーカーファイル
   disable: process.env.NODE_ENV === "development", // 開発環境では無効にする
   // ...その他の設定はここに記述
