@@ -75,15 +75,9 @@ const Client = ({
 
         <Index />
 
-        <motion.div
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, amount: 0.1 }}
-          variants={slideFadeIn()}
-          className="max-w-none mt-12"
-        >
+        <div className="max-w-none mt-12">
           <article>{children}</article>
-        </motion.div>
+        </div>
 
         <motion.footer
           className="mt-16"
