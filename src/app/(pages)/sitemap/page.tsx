@@ -57,6 +57,7 @@ const mainList = [
   { pass: "/contact", name: "お問い合わせページ" },
   { pass: "/privacy", name: "プライバシーポリシー/免責事項" },
   { pass: "/terms", name: "利用規約/免責事項" },
+  { pass: "/affiliates", name: "アフィリエイトポリシー" },
 ];
 
 // --- Page Component ---

@@ -13,7 +13,7 @@ const AboutMeSection = () => {
   );
 
   const visitedCountriesCount = visitedCountryNames.length;
-  const totalCountries = 195;
+  const totalCountries = 196;
 
   return (
     <motion.section

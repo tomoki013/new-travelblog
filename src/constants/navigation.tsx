@@ -19,6 +19,7 @@ export const FOOTER_LINK_LIST = [
   { name: "サイトについて", pass: "/about" },
   { name: "プライバシーポリシー", pass: "/privacy" },
   { name: "利用規約", pass: "/terms" },
+  { name: "アフィリエイトポリシー", pass: "/affiliates" },
   { name: "サイトマップ", pass: "/sitemap" },
 ];
 

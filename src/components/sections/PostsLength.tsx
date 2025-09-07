@@ -21,7 +21,7 @@ const PostsLength = ({ posts }: PostsLengthProps) => {
     >
       <div className="text-center mb-16">
         <h2 className="font-heading text-4xl md:text-5xl font-bold text-foreground">
-          How many articles have I posted?
+          I have posts.
         </h2>
         {/* タイトル下のアクセントライン */}
         <div className="w-30 h-0.5 bg-secondary mx-auto mt-6" />
