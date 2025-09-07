@@ -5,11 +5,13 @@ import { MapPin } from "lucide-react"; // ▼ アイコンを変更
 import { cn } from "@/lib/utils";
 import Link from "next/link";
 
-type IndexProps = {
+type TableOfContentProps = {
   isScrollSyncEnabled?: boolean;
 };
 
-const Index = ({ isScrollSyncEnabled = false }: IndexProps) => {
+const TableOfContent = ({
+  isScrollSyncEnabled = false,
+}: TableOfContentProps) => {
   const [headings, setHeadings] = useState<
     { id: string; text: string; level: number }[]
   >([]);
@@ -87,10 +89,7 @@ const Index = ({ isScrollSyncEnabled = false }: IndexProps) => {
   }
 
   return (
-    <details
-      className="group bg-muted rounded-lg p-6 my-6 border-l-4 border-secondary"
-      open
-    >
+    <details className="group bg-muted rounded-lg p-6 my-6 border-l-4 border-secondary">
       <summary className="flex cursor-pointer items-center list-none transition-opacity hover:opacity-80">
         <div className="h-5 w-5 text-foreground transition-transform duration-300 group-open:rotate-90">
           <svg
@@ -157,4 +156,4 @@ const Index = ({ isScrollSyncEnabled = false }: IndexProps) => {
   );
 };
 
-export default Index;
+export default TableOfContent;
