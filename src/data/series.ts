@@ -11,6 +11,14 @@ export const featuredSeries: Series[] = [
   },
   {
     id: 2,
+    slug: "travel-diary",
+    title: "旅行日記",
+    description: "私が旅した各地の旅行記",
+    imageUrl: "/images/Introduce/introduce.jpg",
+    IconComponent: "Globe2",
+  },
+  {
+    id: 3,
     slug: "landscape",
     title: "世界の絶景・街並み編",
     description: "心に残る美しい街並みと風景の記録",
@@ -18,7 +26,7 @@ export const featuredSeries: Series[] = [
     IconComponent: "MountainSnow",
   },
   {
-    id: 3,
+    id: 4,
     slug: "sunset",
     title: "世界の夕陽から",
     description: "各地で出会った忘れられない夕陽の瞬間",
@@ -26,7 +34,7 @@ export const featuredSeries: Series[] = [
     IconComponent: "Sunset",
   },
   {
-    id: 4,
+    id: 5,
     slug: "architecture",
     title: "世界の絶景・建築編",
     description: "歴史と文化が刻まれた美しい建築物たち",
@@ -34,19 +42,11 @@ export const featuredSeries: Series[] = [
     IconComponent: "Landmark",
   },
   {
-    id: 5,
+    id: 6,
     slug: "kyoto",
     title: "京都の景色",
     description: "京都在住大学生が見つけた古都の隠れた美しさ",
     imageUrl: "/images/Kyoto/kiyomizu-temple-autumn-leaves-lightup.jpg",
     IconComponent: "Castle",
-  },
-  {
-    id: 6,
-    slug: "travel-diary",
-    title: "旅行日記",
-    description: "私が旅した各地の旅行記",
-    imageUrl: "/images/Introduce/introduce.jpg",
-    IconComponent: "Globe2",
   },
 ];

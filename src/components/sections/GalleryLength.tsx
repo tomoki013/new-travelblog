@@ -19,7 +19,7 @@ const GalleryLength = ({ galleryLength }: GalleryLengthProps) => {
     >
       <div className="text-center mb-16">
         <h2 className="font-heading text-4xl md:text-5xl font-bold text-foreground">
-          How many photos have I added?
+          I have photos.
         </h2>
         {/* タイトル下のアクセントライン */}
         <div className="w-30 h-0.5 bg-secondary mx-auto mt-6" />

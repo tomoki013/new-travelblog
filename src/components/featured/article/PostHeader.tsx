@@ -75,7 +75,7 @@ const PostHeader = ({ post }: PostHeaderProps) => {
             </Link>
           ))}
         {post.tags &&
-          post.tags.map((tag) => (
+          post.tags.slice(0, 3).map((tag) => (
             <Link
               key={tag}
               href={`/posts?search=${tag}`}
@@ -122,7 +122,16 @@ const PostHeader = ({ post }: PostHeaderProps) => {
       {/* Promotion */}
       {post.isPromotion && (
         <section className="flex justify-center items-center my-8 text-gray-800 italic bg-white/80 h-12 rounded-sm border border-secondary">
-          <p>※本記事はプロモーションを含みます。</p>
+          <p>
+            ※本記事はプロモーションを含みます。詳しくは
+            <Link
+              href={`/affiliates`}
+              className="text-secondary underline hover:text-primary"
+            >
+              アフィリエイトポリシー
+            </Link>
+            をご覧ください。
+          </p>
         </section>
       )}
     </motion.header>

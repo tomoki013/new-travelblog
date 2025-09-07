@@ -221,7 +221,16 @@ const PrivacyPage = () => {
           <p>
             第三者がコンテンツおよび宣伝を提供し、訪問者から直接情報を収集し、訪問者のブラウザにCookieを設定したりこれを認識したりする場合があります。
           </p>
-          {/* <p>詳細はアフィリエイトに関するサイトポリシーをご覧ください。</p> */}
+          <p>
+            詳しい運営方針は
+            <Link
+              href={`/affiliates`}
+              className="text-secondary underline hover:text-primary"
+            >
+              アフィリエイトポリシー
+            </Link>
+            をご覧ください。
+          </p>
 
           <Separator className="my-8" />
 
