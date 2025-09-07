@@ -11,12 +11,13 @@ import { members } from "@/data/member";
 import { Post } from "@/types/types";
 import { FaFacebook, FaTwitter } from "react-icons/fa";
 import RelatedPosts from "@/components/featured/article/RelatedPosts";
-import Index from "@/components/featured/article/Index";
+import TableOfContent from "@/components/featured/article/TableOfContent";
 import PostHeader from "@/components/featured/article/PostHeader";
 import PostNavigation from "@/components/featured/article/PostNavigation";
 import Button from "@/components/elements/Button";
 
 import React from "react";
+import CostBreakdown from "@/components/featured/article/CostBreakdown";
 
 interface ClientProps {
   children: React.ReactNode;
@@ -68,12 +69,16 @@ const Client = ({
     });
   };
 
+  console.log(post.costs);
+
   return (
     <div>
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         <PostHeader post={post} />
 
-        <Index />
+        {post.costs && <CostBreakdown costs={post.costs} />}
+
+        <TableOfContent />
 
         <div className="max-w-none mt-12">
           <article>{children}</article>
