@@ -9,6 +9,17 @@ import { calculateScores } from "@/lib/search";
 
 type PostMetadata = Omit<Post, "content">;
 
+let cachedPosts: PostMetadata[] | null = null;
+
+function fetchAllPosts(): PostMetadata[] {
+  if (cachedPosts) {
+    return cachedPosts;
+  }
+  const posts = getRawPostsData();
+  cachedPosts = postFilters.sortByDate(posts);
+  return cachedPosts;
+}
+
 type GetAllPostsOptions = {
   category?: string;
   series?: string;
@@ -23,7 +34,7 @@ type GetAllPostsOptions = {
 export async function getAllPosts(
   options: GetAllPostsOptions = {}
 ): Promise<PostMetadata[]> {
-  let posts = getRawPostsData();
+  let posts = fetchAllPosts();
 
   if (options.category) {
     posts = postFilters.filterByCategory(posts, options.category);
