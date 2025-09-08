@@ -1,13 +1,6 @@
 // 参加しているアフィリエイトプログラムのリスト
 // 新しいプログラムを追加する場合は、この配列に名前を追加するだけです。
-const affiliatePrograms = [
-  "Amazonアソシエイト・プログラム",
-  "楽天アフィリエイト",
-  "A8.net",
-  "もしもアフィリエイト",
-  "バリューコマース",
-  // 他のプログラムを追加する場合は、この下に追加してください
-];
+const affiliatePrograms: string[] = [];
 
 const Affiliates = () => {
   return (
