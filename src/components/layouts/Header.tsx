@@ -6,13 +6,24 @@ import { useMobileMenu } from "@/hooks/useMobileMenu";
 import { AnimatePresence, motion } from "framer-motion";
 import { SearchIcon } from "lucide-react";
 import Link from "next/link";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import ModeToggle from "../elements/mode-toggle";
 import SearchOverlay from "../featured/search/SearchOverlay";
 
 const Header = () => {
   const { isMenuOpen, toggleMenu, closeMenu } = useMobileMenu();
   const [isSearchOpen, setIsSearchOpen] = useState(false);
+
+  useEffect(() => {
+    if (isSearchOpen) {
+      document.body.style.overflowY = "hidden";
+    } else {
+      document.body.style.overflowY = "auto";
+    }
+    return () => {
+      document.body.style.overflowY = "auto";
+    };
+  }, [isSearchOpen]);
 
   const openSearch = () => setIsSearchOpen(true);
   const closeSearch = () => setIsSearchOpen(false);

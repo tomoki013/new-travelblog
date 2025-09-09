@@ -18,7 +18,8 @@ export const LinkCard = ({
   imageUrl,
   variant,
 }: LinkCardProps) => {
-  const domain = new URL(href, "https://tomokichidiary.netlify.app").hostname;
+  const domain = new URL(href, "https://tomokichidiary.netlify.app/posts/")
+    .hostname;
 
   // ===== スタンダード型 =====
   if (variant === "standard") {

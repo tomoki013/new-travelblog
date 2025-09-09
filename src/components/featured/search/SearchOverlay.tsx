@@ -36,7 +36,7 @@ interface SearchOverlayProps {
 // 定数を分離
 const SEARCH_CONFIG = {
   MIN_QUERY_LENGTH: 2,
-  DEBOUNCE_DELAY: 1000,
+  DEBOUNCE_DELAY: 500,
   MAX_SUGGESTIONS: 3,
 } as const;
 
@@ -242,7 +242,7 @@ const SearchSuggestions = ({
           {displayedSuggestions.map((post) => (
             <LinkCard
               key={post.slug}
-              href={post.slug}
+              href={`/posts/${post.slug}`}
               title={post.title}
               variant="minimal"
             />
@@ -292,7 +292,7 @@ const SearchOverlay = ({ isOpen, onClose }: SearchOverlayProps) => {
       {isOpen && (
         <motion.div
           {...ANIMATION_CONFIG.overlay}
-          className="fixed inset-0 z-50 bg-black/80 backdrop-blur-sm"
+          className="fixed inset-0 z-50 bg-black/80 backdrop-blur-sm overflow-y-auto"
           onClick={onClose}
         >
           <motion.div
