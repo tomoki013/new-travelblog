@@ -11,18 +11,13 @@ import { Input } from "@/components/ui/input";
 import { categories } from "@/data/categories";
 import { AnimatePresence, motion } from "framer-motion";
 import { SearchIcon, XIcon } from "lucide-react";
-import { useRouter } from "next/navigation";
-import {
-  KeyboardEventHandler,
-  useCallback,
-  useEffect,
-  useMemo,
-  useState,
-} from "react";
+import { useMemo } from "react";
 import { LoadingAnimation } from "../LoadingAnimation/LoadingAnimation";
 import { LinkCard } from "@/components/elements/LinkCard";
+import { useSearchOverlay } from "@/hooks/useSearchOverlay";
+import { SEARCH_CONFIG } from "@/constants/searchConfig";
 
-// 型定義を分離
+// 型定義
 type Suggestion = {
   title: string;
   slug: string;
@@ -33,13 +28,7 @@ interface SearchOverlayProps {
   onClose: () => void;
 }
 
-// 定数を分離
-const SEARCH_CONFIG = {
-  MIN_QUERY_LENGTH: 2,
-  DEBOUNCE_DELAY: 500,
-  MAX_SUGGESTIONS: 3,
-} as const;
-
+// アニメーション設定
 const ANIMATION_CONFIG = {
   overlay: {
     initial: { opacity: 0 },
@@ -55,120 +44,6 @@ const ANIMATION_CONFIG = {
 } as const;
 
 /**
- * デバウンス関数 - ユーティリティとして分離
- */
-function debounce<T extends unknown[]>(
-  func: (...args: T) => void,
-  delay: number
-): (...args: T) => void {
-  let timeoutId: ReturnType<typeof setTimeout> | null = null;
-
-  return (...args: T): void => {
-    if (timeoutId) {
-      clearTimeout(timeoutId);
-    }
-    timeoutId = setTimeout(() => func(...args), delay);
-  };
-}
-
-/**
- * 検索API呼び出しのカスタムフック
- */
-function useSearchSuggestions() {
-  const [suggestions, setSuggestions] = useState<Suggestion[]>([]);
-  const [isLoading, setIsLoading] = useState(false);
-
-  const fetchSuggestions = useCallback(async (query: string) => {
-    if (query.length < SEARCH_CONFIG.MIN_QUERY_LENGTH) {
-      setSuggestions([]);
-      return;
-    }
-
-    setIsLoading(true);
-    try {
-      const response = await fetch(
-        `/api/search?q=${encodeURIComponent(query)}`
-      );
-
-      if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
-      }
-
-      const data: Suggestion[] = await response.json();
-      setSuggestions(data);
-    } catch (error) {
-      console.error("検索候補の取得に失敗しました:", error);
-      setSuggestions([]);
-    } finally {
-      setIsLoading(false);
-    }
-  }, []);
-
-  const debouncedFetchSuggestions = useMemo(
-    () => debounce(fetchSuggestions, SEARCH_CONFIG.DEBOUNCE_DELAY),
-    [fetchSuggestions]
-  );
-
-  return {
-    suggestions,
-    isLoading,
-    fetchSuggestions: debouncedFetchSuggestions,
-    setSuggestions,
-  };
-}
-
-/**
- * 検索処理のカスタムフック
- */
-function useSearch(onClose: () => void) {
-  const router = useRouter();
-  const [searchTerm, setSearchTerm] = useState("");
-  const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
-
-  const executeSearch = useCallback(() => {
-    const trimmedSearchTerm = searchTerm.trim();
-
-    if (!trimmedSearchTerm && !selectedCategory) {
-      onClose();
-      return;
-    }
-
-    const searchParams = new URLSearchParams();
-    if (trimmedSearchTerm) {
-      searchParams.append("search", trimmedSearchTerm);
-    }
-    if (selectedCategory) {
-      searchParams.append("category", selectedCategory);
-    }
-
-    router.push(`/posts?${searchParams.toString()}`);
-    onClose();
-  }, [searchTerm, selectedCategory, router, onClose]);
-
-  const handleKeyDown: KeyboardEventHandler<HTMLInputElement> = useCallback(
-    (e) => {
-      if (e.key === "Enter") {
-        executeSearch();
-      }
-    },
-    [executeSearch]
-  );
-
-  const toggleCategory = useCallback((category: string) => {
-    setSelectedCategory((prev) => (prev === category ? null : category));
-  }, []);
-
-  return {
-    searchTerm,
-    setSearchTerm,
-    selectedCategory,
-    toggleCategory,
-    executeSearch,
-    handleKeyDown,
-  };
-}
-
-/**
  * カテゴリ選択コンポーネント
  */
 const CategorySelector = ({
@@ -180,7 +55,7 @@ const CategorySelector = ({
 }) => {
   const availableCategories = useMemo(
     () => categories.filter((c) => c.slug !== "all"),
-    []
+    [],
   );
 
   return (
@@ -228,7 +103,7 @@ const SearchSuggestions = ({
     searchTerm.length >= SEARCH_CONFIG.MIN_QUERY_LENGTH;
   const displayedSuggestions = suggestions.slice(
     0,
-    SEARCH_CONFIG.MAX_SUGGESTIONS
+    SEARCH_CONFIG.MAX_SUGGESTIONS,
   );
 
   if (!shouldShowSuggestions) return null;
@@ -263,29 +138,16 @@ const SearchSuggestions = ({
  * メインのSearchOverlayコンポーネント
  */
 const SearchOverlay = ({ isOpen, onClose }: SearchOverlayProps) => {
-  const { suggestions, isLoading, fetchSuggestions } = useSearchSuggestions();
   const {
     searchTerm,
     setSearchTerm,
     selectedCategory,
     toggleCategory,
+    suggestions,
+    isLoading,
     executeSearch,
     handleKeyDown,
-  } = useSearch(onClose);
-
-  // 検索クエリが変更された時の処理
-  useEffect(() => {
-    if (searchTerm) {
-      fetchSuggestions(searchTerm);
-    }
-  }, [searchTerm, fetchSuggestions]);
-
-  // カテゴリが選択された時の処理
-  useEffect(() => {
-    if (selectedCategory) {
-      fetchSuggestions(selectedCategory);
-    }
-  }, [selectedCategory, fetchSuggestions]);
+  } = useSearchOverlay({ onClose });
 
   return (
     <AnimatePresence>

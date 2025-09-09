@@ -37,9 +37,14 @@ export function filterByTag(
   return posts.filter((post) => post.tags && post.tags.includes(tag));
 }
 
+/**
+ * 指定された記事の次の記事を取得します。
+ * @param slug 現在の記事のスラッグ
+ * @param allPosts - **日付で降順にソート済みの**記事配列。
+ */
 export function getNextPost(
   slug: string,
-  allPosts: PostMetadata[]
+  allPosts: PostMetadata[],
 ): PostMetadata | null {
   const currentIndex = allPosts.findIndex((p) => p.slug === slug);
   if (currentIndex === -1 || currentIndex === 0) {
@@ -48,9 +53,14 @@ export function getNextPost(
   return allPosts[currentIndex - 1];
 }
 
+/**
+ * 指定された記事の前の記事を取得します。
+ * @param slug 現在の記事のスラッグ
+ * @param allPosts - **日付で降順にソート済みの**記事配列。
+ */
 export function getPreviousPost(
   slug: string,
-  allPosts: PostMetadata[]
+  allPosts: PostMetadata[],
 ): PostMetadata | null {
   const currentIndex = allPosts.findIndex((p) => p.slug === slug);
   if (currentIndex === -1 || currentIndex === allPosts.length - 1) {

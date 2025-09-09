@@ -2,39 +2,51 @@ import { Post } from "@/types/types";
 
 type PostMetadata = Omit<Post, "content">;
 
+/**
+ * 検索クエリを解析して、フレーズ、除外単語、ORグループに分割します。
+ * @param query - ユーザーが入力した検索クエリ文字列。
+ * @returns 解析されたクエリコンポーネントを含むオブジェクト。
+ */
+const parseQuery = (query: string) => {
+  let remainingQuery = query;
+
+  // フレーズ (例: "exact match")
+  const phrases = (remainingQuery.match(/"[^"]+"/g) || []).map((p) =>
+    p.slice(1, -1),
+  );
+  remainingQuery = remainingQuery.replace(/"[^"]+"/g, "").trim();
+
+  // 除外単語 (例: -exclude)
+  const notTerms =
+    (remainingQuery.match(/-\S+/g) || []).map((t) => t.slice(1)) || [];
+  remainingQuery = remainingQuery.replace(/-\S+/g, "").trim();
+
+  // OR グループ (AND条件で結合された単語のグループ)
+  const orGroups = remainingQuery
+    .split(/\s+OR\s+/i)
+    .map((group) => group.trim().split(/\s+/).filter(Boolean))
+    .filter((group) => group.length > 0);
+
+  const allTerms = orGroups.flat();
+
+  return { phrases, notTerms, orGroups, allTerms };
+};
+
+// Helper to escape regex special characters
+const escapeRegExp = (str: string) => {
+  return str.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+};
+
 // 検索ロジックを定義
 export const filterPostsBySearch = (
   posts: PostMetadata[],
-  query: string
+  query: string,
 ): PostMetadata[] => {
   if (!query) {
     return posts;
   }
 
-  // Helper to escape regex special characters
-  const escapeRegExp = (str: string) => {
-    return str.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
-  };
-
-  // 1. Parse query
-  let remainingQuery = query;
-
-  // Phrases
-  const phrases = (remainingQuery.match(/"[^"]+"/g) || []).map((p) =>
-    p.slice(1, -1)
-  );
-  remainingQuery = remainingQuery.replace(/"[^"]+"/g, "").trim();
-
-  // NOT terms
-  const notTerms =
-    (remainingQuery.match(/-\S+/g) || []).map((t) => t.slice(1)) || [];
-  remainingQuery = remainingQuery.replace(/-\S+/g, "").trim();
-
-  // OR groups (split by OR, then by space for AND terms)
-  const orGroups = remainingQuery
-    .split(/\s+OR\s+/i)
-    .map((group) => group.trim().split(/\s+/).filter(Boolean))
-    .filter((group) => group.length > 0);
+  const { phrases, notTerms, orGroups } = parseQuery(query);
 
   return posts.filter((post) => {
     const searchableFields = [
@@ -55,28 +67,21 @@ export const filterPostsBySearch = (
       if (lowerTerm.includes("*")) {
         const regex = new RegExp(
           escapeRegExp(lowerTerm).replace(/\\\*/g, ".*"),
-          "i"
+          "i",
         );
         return searchableFields.some((field) => regex.test(field));
       }
       return searchableFields.some((field) => field.includes(lowerTerm));
     };
 
-    // 2. Filter logic
-    // NOT condition: must not match any
+    // Filter logic
     if (notTerms.some(checkMatch)) {
       return false;
     }
-
-    // Phrase condition: must match all
     if (!phrases.every(checkMatch)) {
       return false;
     }
-
-    // AND/OR conditions
     if (orGroups.length > 0) {
-      // Must match at least one OR group
-      // Each OR group must match all its AND terms
       const match = orGroups.some((andTerms) => andTerms.every(checkMatch));
       if (!match) {
         return false;
@@ -92,11 +97,14 @@ export const calculateScores = (
   posts: PostMetadata[],
   query: string,
   weights?: Partial<Record<keyof PostMetadata, number>>,
-  searchableKeys?: (keyof PostMetadata)[]
+  searchableKeys?: (keyof PostMetadata)[],
 ): { post: PostMetadata; score: number }[] => {
   if (!query) {
     return posts.map((post) => ({ post, score: 0 }));
   }
+
+  // スコアリングでは、クエリ全体を小文字に変換して処理する
+  const { phrases, allTerms } = parseQuery(query.toLowerCase());
 
   const finalWeights = {
     title: 10,
@@ -119,38 +127,12 @@ export const calculateScores = (
     "tags",
   ];
 
-  // Helper to escape regex special characters
-  const escapeRegExp = (str: string) => {
-    return str.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
-  };
-
-  // 1. Parse query (same as filterPostsBySearch)
-  let remainingQuery = query.toLowerCase();
-
-  // Phrases
-  const phrases = (remainingQuery.match(/"[^"]+"/g) || []).map((p) =>
-    p.slice(1, -1)
-  );
-  remainingQuery = remainingQuery.replace(/"[^"]+"/g, "").trim();
-
-  // NOT terms are ignored for scoring as they are for filtering
-  remainingQuery = remainingQuery.replace(/-\S+/g, "").trim();
-
-  // OR groups
-  const orGroups = remainingQuery
-    .split(/\s+OR\s+/i)
-    .map((group) => group.trim().split(/\s+/).filter(Boolean))
-    .filter((group) => group.length > 0);
-
-  const allTerms = orGroups.flat();
-
   const calculateTermFrequency = (text: string, term: string): number => {
     if (!text || !term) return 0;
-    const lowerText = text.toLowerCase();
-    const lowerTerm = term.toLowerCase();
-    const escapedTerm = escapeRegExp(lowerTerm);
+    // text is pre-lowercased, term is from lowercased query
+    const escapedTerm = escapeRegExp(term);
     const regex = new RegExp(escapedTerm, "g");
-    return (lowerText.match(regex) || []).length;
+    return (text.match(regex) || []).length;
   };
 
   return posts.map((post) => {
@@ -160,9 +142,9 @@ export const calculateScores = (
     finalSearchableKeys.forEach((key) => {
       const value = post[key];
       if (Array.isArray(value)) {
-        searchableFields[key as string] = value.join(" ");
+        searchableFields[key as string] = value.join(" ").toLowerCase();
       } else if (typeof value === "string") {
-        searchableFields[key as string] = value;
+        searchableFields[key as string] = value.toLowerCase();
       }
     });
 
