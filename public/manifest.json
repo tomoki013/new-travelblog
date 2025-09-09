@@ -1,11 +1,11 @@
 {
   "name": "ともきちの旅行日記",
-  "short_name": "とも日記",
+  "short_name": "ともきち日記",
   "icons": [
     {
-      "src": "/src/app/favicon.ico",
-      "type": "image/ico",
-      "sizes": "192x192"
+      "src": "favicon.ico",
+      "type": "image/x-ico",
+      "sizes": "any"
     }
   ],
   "start_url": "/",
