@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { getAllPosts } from "@/lib/posts";
 import { filterPostsBySearch, calculateScores } from "@/lib/search";
+import { SEARCH_CONFIG } from "@/constants/searchConfig";
 
 export async function GET(request: Request) {
   const { searchParams } = new URL(request.url);
@@ -25,11 +26,13 @@ export async function GET(request: Request) {
       .sort((a, b) => b.score - a.score)
       .map((item) => item.post);
 
-    // 3. 上位5件を候補として返却
-    const suggestions = sortedPosts.slice(0, 5).map((post) => ({
-      title: post.title,
-      slug: post.slug,
-    }));
+    // 3. 上位件数を候補として返却
+    const suggestions = sortedPosts
+      .slice(0, SEARCH_CONFIG.API_MAX_RESULTS)
+      .map((post) => ({
+        title: post.title,
+        slug: post.slug,
+      }));
 
     return NextResponse.json(suggestions);
   } catch (error) {
