@@ -127,6 +127,11 @@ const BlogClient = ({ posts, totalPages, currentPage }: BlogClientProps) => {
             onSearch={handleSearch}
             onReset={handleResetSearch}
           />
+          <p className="text-xs text-muted-foreground px-2 mt-1">
+            ヒント:
+            「&quot;絶景&quot;」のように囲むとフレーズ検索、-除外したい単語
+            も使えます。
+          </p>
         </section>
 
         {/* ==================== Filters ==================== */}

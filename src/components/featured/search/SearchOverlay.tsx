@@ -55,7 +55,7 @@ const CategorySelector = ({
 }) => {
   const availableCategories = useMemo(
     () => categories.filter((c) => c.slug !== "all"),
-    [],
+    []
   );
 
   return (
@@ -103,7 +103,7 @@ const SearchSuggestions = ({
     searchTerm.length >= SEARCH_CONFIG.MIN_QUERY_LENGTH;
   const displayedSuggestions = suggestions.slice(
     0,
-    SEARCH_CONFIG.MAX_SUGGESTIONS,
+    SEARCH_CONFIG.MAX_SUGGESTIONS
   );
 
   if (!shouldShowSuggestions) return null;
@@ -191,6 +191,11 @@ const SearchOverlay = ({ isOpen, onClose }: SearchOverlayProps) => {
                   検索
                 </Button>
               </div>
+              <p className="text-xs text-muted-foreground px-2">
+                ヒント:
+                「&quot;絶景&quot;」のように囲むとフレーズ検索、-除外したい単語
+                も使えます。
+              </p>
 
               {/* カテゴリ検索 */}
               <CategorySelector
