@@ -1,16 +1,11 @@
 "use client";
 
-import {
-  Accordion,
-  AccordionContent,
-  AccordionItem,
-  AccordionTrigger,
-} from "@/components/ui/accordion";
+import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { categories } from "@/data/categories";
 import { AnimatePresence, motion } from "framer-motion";
-import { SearchIcon, XIcon } from "lucide-react";
+import { Loader2, SearchIcon, XIcon } from "lucide-react";
 import { useMemo } from "react";
 import { LoadingAnimation } from "../LoadingAnimation/LoadingAnimation";
 import { LinkCard } from "@/components/elements/LinkCard";
@@ -63,26 +58,18 @@ const CategorySelector = ({
       <h3 className="text-lg font-semibold mb-2 font-heading">
         カテゴリを絞り込む
       </h3>
-      <Accordion type="single" collapsible className="w-full">
-        <AccordionItem value="categories">
-          <AccordionTrigger>カテゴリーを選択</AccordionTrigger>
-          <AccordionContent>
-            <div className="grid grid-cols-2 sm:grid-cols-3 gap-2 mt-2">
-              {availableCategories.map((category) => (
-                <Button
-                  key={category.slug}
-                  variant={
-                    selectedCategory === category.slug ? "default" : "outline"
-                  }
-                  onClick={() => onCategoryToggle(category.slug)}
-                >
-                  {category.title}
-                </Button>
-              ))}
-            </div>
-          </AccordionContent>
-        </AccordionItem>
-      </Accordion>
+      <div className="flex flex-wrap gap-2 mt-2">
+        {availableCategories.map((category) => (
+          <Button
+            key={category.slug}
+            variant={selectedCategory === category.slug ? "default" : "outline"}
+            onClick={() => onCategoryToggle(category.slug)}
+            size="sm"
+          >
+            {category.title}
+          </Button>
+        ))}
+      </div>
     </div>
   );
 };
@@ -106,6 +93,21 @@ const SearchSuggestions = ({
     SEARCH_CONFIG.MAX_SUGGESTIONS,
   );
 
+  const listVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.05,
+      },
+    },
+  };
+
+  const itemVariants = {
+    hidden: { y: 20, opacity: 0 },
+    visible: { y: 0, opacity: 1 },
+  };
+
   if (!shouldShowSuggestions) return null;
 
   return (
@@ -113,21 +115,29 @@ const SearchSuggestions = ({
       {isLoading && <LoadingAnimation variant="luggageCarousel" />}
 
       {!isLoading && displayedSuggestions.length > 0 && (
-        <ul>
+        <motion.ul
+          variants={listVariants}
+          initial="hidden"
+          animate="visible"
+          exit="hidden"
+        >
           {displayedSuggestions.map((post) => (
-            <LinkCard
-              key={post.slug}
-              href={`/posts/${post.slug}`}
-              title={post.title}
-              variant="minimal"
-            />
+            <motion.li key={post.slug} variants={itemVariants}>
+              <LinkCard
+                href={`/posts/${post.slug}`}
+                title={post.title}
+                variant="minimal"
+              />
+            </motion.li>
           ))}
-        </ul>
+        </motion.ul>
       )}
 
       {!isLoading && suggestions.length === 0 && (
         <div className="p-4 text-muted-foreground">
           一致する記事は見つかりませんでした。
+          <br />
+          キーワードを変えて再度お試しください。
         </div>
       )}
     </div>
@@ -175,21 +185,45 @@ const SearchOverlay = ({ isOpen, onClose }: SearchOverlayProps) => {
               <h2 className="text-2xl font-bold font-heading">サイト内検索</h2>
 
               {/* キーワード検索 */}
-              <div className="flex gap-2">
-                <Input
-                  type="text"
-                  placeholder="キーワードを入力..."
-                  value={searchTerm}
-                  onChange={(e) => setSearchTerm(e.target.value)}
-                  onKeyDown={handleKeyDown}
-                  className="flex-grow"
-                  autoFocus
-                  aria-label="検索キーワード"
-                />
-                <Button onClick={executeSearch}>
-                  <SearchIcon className="h-5 w-5 mr-2" />
-                  検索
-                </Button>
+              <div className="flex flex-col gap-2">
+                <div className="flex gap-2">
+                  <Input
+                    type="text"
+                    placeholder="キーワードを入力..."
+                    value={searchTerm}
+                    onChange={(e) => setSearchTerm(e.target.value)}
+                    onKeyDown={handleKeyDown}
+                    className="flex-grow"
+                    autoFocus
+                    aria-label="検索キーワード"
+                  />
+                  <Button onClick={executeSearch} disabled={isLoading}>
+                    {isLoading ? (
+                      <Loader2 className="h-5 w-5 mr-2 animate-spin" />
+                    ) : (
+                      <SearchIcon className="h-5 w-5 mr-2" />
+                    )}
+                    {isLoading ? "検索中..." : "検索"}
+                  </Button>
+                </div>
+                {selectedCategory && (
+                  <div className="flex items-center gap-2 px-1 pt-1">
+                    <span className="text-sm font-semibold">カテゴリ:</span>
+                    <Badge
+                      variant="secondary"
+                      className="flex items-center gap-1.5"
+                    >
+                      {categories.find((c) => c.slug === selectedCategory)?.title}
+                      <button
+                        onClick={() => toggleCategory(selectedCategory)}
+                        className="text-muted-foreground hover:text-foreground"
+                        aria-label="カテゴリフィルターを解除"
+                      >
+                        <XIcon className="h-3 w-3" />
+                      </button>
+                    </Badge>
+                  </div>
+                )}
               </div>
 
               {/* カテゴリ検索 */}
