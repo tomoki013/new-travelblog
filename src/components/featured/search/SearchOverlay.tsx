@@ -1,6 +1,5 @@
 "use client";
 
-import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { categories } from "@/data/categories";
@@ -206,24 +205,6 @@ const SearchOverlay = ({ isOpen, onClose }: SearchOverlayProps) => {
                     {isLoading ? "検索中..." : "検索"}
                   </Button>
                 </div>
-                {selectedCategory && (
-                  <div className="flex items-center gap-2 px-1 pt-1">
-                    <span className="text-sm font-semibold">カテゴリ:</span>
-                    <Badge
-                      variant="secondary"
-                      className="flex items-center gap-1.5"
-                    >
-                      {categories.find((c) => c.slug === selectedCategory)?.title}
-                      <button
-                        onClick={() => toggleCategory(selectedCategory)}
-                        className="text-muted-foreground hover:text-foreground"
-                        aria-label="カテゴリフィルターを解除"
-                      >
-                        <XIcon className="h-3 w-3" />
-                      </button>
-                    </Badge>
-                  </div>
-                )}
               </div>
               <p className="text-xs text-muted-foreground px-2">
                 ヒント:
