@@ -35,10 +35,7 @@ export const SearchInput = ({
   };
 
   return (
-    <form
-      onSubmit={handleSubmit}
-      className="flex items-center gap-2"
-    >
+    <form onSubmit={handleSubmit} className="flex items-center gap-2">
       <div className="relative flex-grow">
         <Input
           ref={inputRef} // Add this line
