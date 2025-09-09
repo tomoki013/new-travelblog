@@ -24,43 +24,51 @@ export function useSearchOverlay({ onClose }: UseSearchOverlayProps) {
     SEARCH_CONFIG.DEBOUNCE_DELAY,
   );
 
-  const fetchSuggestions = useCallback(async (query: string) => {
-    if (query.length < SEARCH_CONFIG.MIN_QUERY_LENGTH) {
-      setSuggestions([]);
-      return;
-    }
-
-    setIsLoading(true);
-    try {
-      const response = await fetch(`/api/search?q=${encodeURIComponent(query)}`);
-      if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
+  const fetchSuggestions = useCallback(
+    async (query: string, category: string | null) => {
+      // 検索語が不十分で、かつカテゴリも未選択の場合は何もしない
+      if (query.length < SEARCH_CONFIG.MIN_QUERY_LENGTH && !category) {
+        setSuggestions([]);
+        return;
       }
-      const data: Suggestion[] = await response.json();
-      setSuggestions(data);
-    } catch (error) {
-      console.error("検索候補の取得に失敗しました:", error);
-      setSuggestions([]);
-    } finally {
-      setIsLoading(false);
-    }
-  }, []);
+
+      setIsLoading(true);
+      try {
+        const params = new URLSearchParams();
+        if (query) {
+          params.append("q", query);
+        }
+        if (category) {
+          params.append("category", category);
+        }
+
+        const response = await fetch(`/api/search?${params.toString()}`);
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        const data: Suggestion[] = await response.json();
+        setSuggestions(data);
+      } catch (error) {
+        console.error("検索候補の取得に失敗しました:", error);
+        setSuggestions([]);
+      } finally {
+        setIsLoading(false);
+      }
+    },
+    [],
+  );
 
   useEffect(() => {
-    // デバウンスされた検索語に基づいて候補をフェッチ
-    if (debouncedSearchTerm) {
-      fetchSuggestions(debouncedSearchTerm);
+    // 検索語かカテゴリが有効な場合に候補をフェッチ
+    if (
+      debouncedSearchTerm.length >= SEARCH_CONFIG.MIN_QUERY_LENGTH ||
+      selectedCategory
+    ) {
+      fetchSuggestions(debouncedSearchTerm, selectedCategory);
     } else {
       setSuggestions([]);
     }
-  }, [debouncedSearchTerm, fetchSuggestions]);
-
-  useEffect(() => {
-    // カテゴリが選択されたときに候補をフェッチ
-    if (selectedCategory) {
-      fetchSuggestions(selectedCategory);
-    }
-  }, [selectedCategory, fetchSuggestions]);
+  }, [debouncedSearchTerm, selectedCategory, fetchSuggestions]);
 
   const executeSearch = useCallback(() => {
     const trimmedSearchTerm = searchTerm.trim();
