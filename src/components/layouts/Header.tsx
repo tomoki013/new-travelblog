@@ -6,13 +6,14 @@ import { useMobileMenu } from "@/hooks/useMobileMenu";
 import { AnimatePresence, motion } from "framer-motion";
 import { SearchIcon } from "lucide-react";
 import Link from "next/link";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react"; // 変更点: useRef をインポート
 import ModeToggle from "../elements/mode-toggle";
 import SearchOverlay from "../featured/search/SearchOverlay";
 
 const Header = () => {
   const { isMenuOpen, toggleMenu, closeMenu } = useMobileMenu();
   const [isSearchOpen, setIsSearchOpen] = useState(false);
+  const menuRef = useRef<HTMLDivElement>(null); // 変更点: メニュー要素への参照を作成
 
   useEffect(() => {
     if (isSearchOpen) {
@@ -24,6 +25,29 @@ const Header = () => {
       document.body.style.overflowY = "auto";
     };
   }, [isSearchOpen]);
+
+  // 変更点: メニュー外のクリックを検知するuseEffectを追加
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      // メニューが開いていて、menuRefがcurrentを保持しており、
+      // かつクリックされた要素がメニュー要素の外側である場合
+      if (
+        isMenuOpen &&
+        menuRef.current &&
+        !menuRef.current.contains(event.target as Node)
+      ) {
+        closeMenu();
+      }
+    };
+
+    // イベントリスナーを追加
+    document.addEventListener("mousedown", handleClickOutside);
+
+    // クリーンアップ関数
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [isMenuOpen, closeMenu]); // isMenuOpenとcloseMenuを依存配列に追加
 
   const openSearch = () => setIsSearchOpen(true);
   const closeSearch = () => setIsSearchOpen(false);
@@ -97,6 +121,7 @@ const Header = () => {
       <AnimatePresence>
         {isMenuOpen && (
           <motion.div
+            ref={menuRef} // 変更点: 作成したrefをメニューのdivに設定
             key="mobile-menu"
             initial={{ x: "100%", opacity: 0 }}
             animate={{ x: 0, opacity: 1 }}
