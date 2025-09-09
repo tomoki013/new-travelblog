@@ -11,17 +11,96 @@ import { Autoplay } from "swiper/modules";
 import "swiper/css";
 import Button from "../elements/Button";
 
-import { Photo } from "@/types/types";
 import { sectionVariants } from "../animation";
+import { shuffleArray } from "@/lib/shuffleArray";
 
-interface GalleryProps {
-  photos: Photo[];
-}
+const photos = [
+  { path: "/images/Belgium/chez-leon-carbonade.jpg", title: "カルボナード" },
+  {
+    path: "/images/Belgium/galeries-royales-saint-hubert.jpg",
+    title: "ギャルリ・サン・テュベール",
+  },
+  { path: "/images/Egypt/abusimbel-temple.jpg", title: "アブシンベル神殿" },
+  {
+    path: "/images/Egypt/the-three-great-pyramids-of-giza-with-sunset.jpg",
+    title: "ギザの三大ピラミッドと夕陽",
+  },
+  {
+    path: "/images/France/arc-de-triomphe-etoile.jpg",
+    title: "エトワール凱旋門",
+  },
+  {
+    path: "/images/France/bonaparte-over-the-saint-bernard-pass.jpg",
+    title: "ナポレオンの絵",
+  },
+  {
+    path: "/images/France/carrette-macarons-and-chocolate-mousse.jpg",
+    title: "カフェ-カレット",
+  },
+  {
+    path: "/images/France/eiffel-tower-and-sunset.jpg",
+    title: "夕陽とエッフェル塔",
+  },
+  {
+    path: "/images/France/escargot-at-le-vieux-bistrot.jpg",
+    title: "エスカルゴ",
+  },
+  { path: "/images/France/louvre-museum1.jpg", title: "ルーブル美術館" },
+  { path: "/images/France/mona-lisa.jpg", title: "モナリザ" },
+  {
+    path: "/images/France/the-hall-of-mirrors.jpg",
+    title: "ヴェルサイユ宮殿・鏡の間",
+  },
+  { path: "/images/Greece/oia-castle-sunset-view.jpg", title: "イアの夕陽" },
+  { path: "/images/Greece/oia-castle-view.jpg", title: "イア城跡からの景色" },
+  { path: "/images/Greece/parthenon.jpg", title: "パルテノン神殿" },
+  { path: "/images/India/hawa-mahal.jpg", title: "ハワー・マハル" },
+  { path: "/images/India/indian-curry1.jpg", title: "インドカレー" },
+  { path: "/images/India/lotus-temple.jpg", title: "ロータス寺院" },
+  { path: "/images/India/tajmahal.jpg", title: "タージ・マハル" },
+  {
+    path: "/images/India/train-view1.jpg",
+    title: "インドの寝台列車からの景色",
+  },
+  {
+    path: "/images/Kyoto/kiyomizu-temple-autumn-leaves-lightup.jpg",
+    title: "清水寺の紅葉ライトアップ",
+  },
+  {
+    path: "/images/Spain/casa-lolea's-dry-cured-ham.jpg",
+    title: "パ・アンブ・トマケ",
+  },
+  {
+    path: "/images/Spain/la-pallaresa's-churos-con-chocolatte.jpg",
+    title: "チュロス・コン・チョコラテ",
+  },
+  { path: "/images/Spain/plaza-de-mayor.jpg", title: "マヨール広場" },
+  { path: "/images/Spain/sagrada-familia.jpg", title: "サグラダ・ファミリア" },
+  { path: "/images/Spain/toledo-view.jpg", title: "トレド旧市街の絶景" },
+  {
+    path: "/images/Thai/ceiling-at-wat-pak-nam.jpg",
+    title: "ワット・パクナムの仏塔",
+  },
+  { path: "/images/Thai/tom-yum-goong.jpg", title: "トムヤムクン" },
+  {
+    path: "/images/Thai/wat-arun-right-up.jpg",
+    title: "ライトアップされたワット・アルン",
+  },
+  {
+    path: "/images/Thai/wat-arun-with-sunset.jpg",
+    title: "夕陽とワット・アルン",
+  },
+  {
+    path: "/images/Turkey/balloons-in-cappadocia.jpg",
+    title: "balloons in cappadocia",
+  },
+];
 
-const Gallery = ({ photos }: GalleryProps) => {
+const Gallery = () => {
+  const shuffledPhoto = shuffleArray(photos);
   // 変更点 3: ギャラリーデータを上段用（偶数インデックス）と下段用（奇数インデックス）に分割
-  const topRowGallery = photos.filter((_, index) => index % 2 === 0);
-  const bottomRowGallery = photos.filter((_, index) => index % 2 !== 0);
+  const topRowGallery = shuffledPhoto.filter((_, index) => index % 2 === 0);
+  const bottomRowGallery = shuffledPhoto.filter((_, index) => index % 2 !== 0);
 
   return (
     <motion.section

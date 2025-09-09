@@ -13,7 +13,6 @@ import { getPhotos } from "@/lib/photo";
 export default async function HomePage() {
   const allPosts = await getAllPosts();
   const allPhotos = await getPhotos();
-  const photos = allPhotos.slice(0, 24);
   const photoLength = allPhotos.length;
   return (
     <>
@@ -22,7 +21,7 @@ export default async function HomePage() {
       <Destination />
       <FeaturedSeries />
       <PopularPosts posts={allPosts} />
-      <Gallery photos={photos} />
+      <Gallery />
       <Request />
       <PostsLength posts={allPosts} />
       <GalleryLength galleryLength={photoLength} />
