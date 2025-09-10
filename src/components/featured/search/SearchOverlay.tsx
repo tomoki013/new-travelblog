@@ -95,7 +95,7 @@ const SearchSuggestions = ({
 
   const displayedSuggestions = suggestions.slice(
     0,
-    SEARCH_CONFIG.MAX_SUGGESTIONS,
+    SEARCH_CONFIG.MAX_SUGGESTIONS
   );
 
   const showSeeAllButton = suggestions.length > SEARCH_CONFIG.MAX_SUGGESTIONS;
@@ -142,11 +142,7 @@ const SearchSuggestions = ({
 
       {!isLoading && showSeeAllButton && (
         <div className="p-2 border-t border-border">
-          <Button
-            variant="ghost"
-            className="w-full"
-            onClick={executeSearch}
-          >
+          <Button variant="ghost" className="w-full" onClick={executeSearch}>
             すべての結果を見る
             <ArrowRight className="w-4 h-4 ml-2" />
           </Button>
@@ -204,7 +200,7 @@ const SearchOverlay = ({ isOpen, onClose }: SearchOverlayProps) => {
             </button>
 
             <div className="flex flex-col gap-6">
-              <h2 className="text-2xl font-bold font-heading">サイト内検索</h2>
+              <h2 className="text-2xl font-bold font-heading">ブログ検索</h2>
 
               {/* キーワード検索 */}
               <div className="flex flex-col gap-2">
