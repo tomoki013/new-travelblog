@@ -67,11 +67,11 @@ const photos = [
     title: "清水寺の紅葉ライトアップ",
   },
   {
-    path: "/images/Spain/casa-lolea's-dry-cured-ham.jpg",
+    path: "/images/Spain/casa-loleas-dry-cured-ham.jpg",
     title: "パ・アンブ・トマケ",
   },
   {
-    path: "/images/Spain/la-pallaresa's-churos-con-chocolatte.jpg",
+    path: "/images/Spain/la-pallaresas-churos-con-chocolatte.jpg",
     title: "チュロス・コン・チョコラテ",
   },
   { path: "/images/Spain/plaza-de-mayor.jpg", title: "マヨール広場" },
@@ -96,8 +96,9 @@ const photos = [
   },
 ];
 
+const shuffledPhoto = shuffleArray(photos);
+
 const Gallery = () => {
-  const shuffledPhoto = shuffleArray(photos);
   // 変更点 3: ギャラリーデータを上段用（偶数インデックス）と下段用（奇数インデックス）に分割
   const topRowGallery = shuffledPhoto.filter((_, index) => index % 2 === 0);
   const bottomRowGallery = shuffledPhoto.filter((_, index) => index % 2 !== 0);
