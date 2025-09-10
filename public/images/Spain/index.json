@@ -1,110 +1,650 @@
 {
-  "almudena-cathedral.jpg": { "title": "Almudena Cathedral", "description": "", "location": "madrid", "categories": "聖堂" },
-  "barcelona-arc-de-triomphe.jpg": { "title": "Barcelona Arc de Triomphe", "description": "", "location": "barcelona", "categories": "建築" },
-  "building-in-front-of-atocha-station.jpg": { "title": "Building in front of Atocha Station", "description": "", "location": "madrid", "categories": "駅" },
-  "cantaro-item.jpg": { "title": "Cantaro Item", "description": "", "location": "madrid", "categories": "グルメ" },
-  "cantaro.jpg": { "title": "Cantaro", "description": "", "location": "madrid", "categories": "レストラン" },
-  "casa-batllo.jpg": { "title": "カサ・バトリョ", "description": "カサ・バトリョ（Casa Batlló）は、スペインのバルセロナに位置する芸術的建築物で、天才建築家アントニ・ガウディによって1904年から1906年にかけて改装されました。元々は1877年に建てられた一般的な建物でしたが、ガウディによる改装で幻想的な芸術作品へと生まれ変わりました。建物の外観は、色鮮やかなモザイクタイルと波打つような形状が特徴的です。ファサードには骨のような柱や、ドラゴンの背中を思わせる波打つ屋根など、有機的な形状が多用されています。特に屋根は龍の背中をイメージしており、色とりどりのセラミックタイルで覆われ、建物全体が聖ジョルディ（聖ゲオルギウス）と龍の伝説を表現していると言われています。窓やバルコニーも独特の形状をしており、しばしば仮面や頭蓋骨に例えられます。内部もまた、直線をほとんど使わないガウディらしい曲線的なデザインで統一され、階段、扉、窓枠にいたるまでユニークな形状が施されています。カサ・バトリョは現在、博物館として一般公開されており、訪問者は内部を見学することができます。最新技術を活用した没入型オーディオガイドが提供され、ガウディの天才的なデザインの世界を深く体験することができます。1984年にユネスコの世界遺産「アントニ・ガウディの作品群」の一部として登録され、毎年約100万人の観光客が訪れるバルセロナの主要観光スポットとなっています。建築愛好家だけでなく、芸術に興味を持つ多くの人々を魅了し続ける、モデルニスモ（カタルーニャ・モダニズム）を代表する傑作です。", "location": "barcelona", "categories": "建築" },
-  "casa-lolea's-dry-cured-ham.jpg": { "title": "パ・アンブ・トマケ", "description": "パ・アンブ・トマケ（Pa amb tomàquet）はカタルーニャ語で「トマトとパン」を意味し、スペイン北東部カタルーニャ地方を代表する伝統的な前菜です。その作り方はシンプルながら、素材の持ち味を最大限に引き出す知恵と工夫が詰まっています。この料理の基本は、スライスしたパンにニンニクをこすりつけ、熟したトマトの果肉をすりつけ、最後に上質なオリーブオイルと塩をかけるというものです。使用されるパンは「パ・デ・パジェス」と呼ばれる素朴なカタルーニャの田舎パンが伝統的で、少し固めの食感が特徴です。硬くなった古いパンを活用する知恵から生まれたとも言われています。パ・アンブ・トマケは単独で軽食として楽しまれることもありますが、多くの場合はハモン・セラーノやチーズ、アンチョビなどを添えて食べられます。また、バルセロナをはじめとするカタルーニャ地方のレストランやバルでは、グリルした肉料理やシーフード料理の付け合わせとしても提供されています。この料理はカタルーニャのアイデンティティを象徴する食べ物としても大切にされており、地域の食文化や歴史を語る上でも欠かせない存在です。20世紀初頭に広く普及したとされていますが、その起源は18世紀にまで遡るという説もあります。近年では世界中のスペイン料理レストランのメニューに登場するほど知名度が上がっていますが、バルセロナの地元のバルで食べる素朴なパ・アンブ・トマケには、カタルーニャの風土と人々の暮らしが凝縮された特別な味わいがあります。訪問者にとっては、地中海の食文化の本質を体験できる一皿となっています。", "location": "barcelona", "categories": "グルメ" },
-  "casa-lolea.jpg": { "title": "Casa Lolea", "description": "", "location": "barcelona", "categories": "レストラン" },
-  "casa-mira's-roof-top.jpg": { "title": "Casa Mira's Roof Top", "description": "", "location": "barcelona", "categories": "建築" },
-  "casa-mira's-room.jpg": { "title": "Casa Mira's Room", "description": "", "location": "barcelona", "categories": "建築" },
-  "casa-mira's-souvenir-shop.jpg": { "title": "Casa Mira's Souvenir Shop", "description": "", "location": "barcelona", "categories": "ショッピング" },
-  "casa-mira.jpg": { "title": "カサ・ミラ", "description": "カサ・ミラ（Casa Milà）は、スペインのバルセロナに位置する有名な建築物で、一般的に「ラ・ペドレラ（La Pedrera、石切り場）」という愛称でも知られています。バルセロナを代表する建築家アントニ・ガウディによって設計され、1906年から1912年にかけて建設されました。この建物はガウディの後期作品で、波打つような曲線的なファサードが特徴的です。外観は石灰岩で作られ、まるで海の波のように有機的な曲線を描いています。鉄骨構造を採用したことで、内部は柱が少なく、自由な間取りが可能になりました。屋上は特に印象的で、煙突や換気塔が兵士のようなシルエットを形作り、異世界的な雰囲気を醸し出しています。この独創的な造形は、しばしば「戦士の屋上」とも呼ばれています。当初はアパートメントとオフィスとして設計されましたが、現在は一部が博物館となっており、ガウディの建築の真髄を体験できる観光スポットとなっています。来訪者は、展示室、復元されたアパートメント、そして屋上テラスを見学することができます。1984年にはユネスコの世界遺産に「アントニ・ガウディの作品群」の一部として登録されました。カサ・ミラは、自然からインスピレーションを得たガウディの建築哲学と、伝統的な建築の枠を超えた革新性を象徴する傑作として、世界中から多くの建築愛好家や観光客を魅了し続けています。", "location": "barcelona", "categories": "建築" },
-  "casa-vicens.jpg": { "title": "Casa Vicens", "description": "", "location": "barcelona", "categories": "建築" },
-  "cerveceria-la-abadia-carcumsas.jpg": { "title": "カルカムサス", "description": "カルカムサス（Carcamusas）はスペイン中央部に位置する古都トレド（Toledo）の伝統的な料理で、この地方を代表する郷土料理の一つです。一見するとシチューのようなこの料理は、豚肉を中心とした具材をトマトベースのソースでじっくり煮込んだ温かい一品です。カルカムサスの基本的な材料は、角切りにした豚肉（主に肩ロースや豚バラ肉）、トマト、タマネギ、ニンニク、グリーンピース、そして赤ピーマンやパプリカなどが使われます。これらの食材をオリーブオイルで炒めた後、白ワインやスープを加え、香辛料（月桂樹の葉、タイム、オレガノなど）で風味付けしながらじっくりと煮込みます。トレドの伝統的なバルやレストランでは、カルカムサスが小皿料理（タパス）として提供されることが多く、地元の人々に親しまれています。通常は「バラ」と呼ばれる小さなパンと一緒に出され、パンでソースをすくって食べるのが一般的です。この料理の起源には諸説ありますが、20世紀初頭にトレドの「Bar Ludeña」というバルで生まれたという説が有力です。当初は労働者階級の手頃な食事として提供されていましたが、現在ではトレドを訪れる観光客にも人気の一品となっています。カルカムサスは、スペイン料理の特徴である素朴さと豊かな風味を併せ持つ料理であり、トレドの食文化を理解する上で欠かせない郷土料理の一つです。世界遺産の街並みを持つトレドを訪れた際には、地元の食文化を体験する意味でも、ぜひ味わっておきたい一品と言えるでしょう。", "location": "toledo", "categories": "グルメ" },
-  "cerveceria-la-abadia-tinto-de-verano-con-espuma-de-maracuya.jpg": { "title": "Cerveceria La Abadia Tinto de Verano con Espuma de Maracuya", "description": "", "location": "madrid", "categories": "アルコール" },
-  "cerveceria-la-abadia.jpg": { "title": "Cerveceria La Abadia", "description": "", "location": "madrid", "categories": "レストラン" },
-  "cibeles.jpg": { "title": "Cibeles", "description": "", "location": "madrid", "categories": "広場" },
-  "convent-of-san-juan-de-los-reyes.jpg": { "title": "Convent of San Juan de los Reyes", "description": "", "location": "toledo", "categories": "教会" },
-  "cured-ham-at-san-miguel-market.jpg": { "title": "サンミゲル市場の生ハム", "description": "マドリード中心部に位置するメルカド・デ・サンミゲル（Mercado de San Miguel）は、1916年に建設された歴史ある市場で、現在はグルメフードマーケットとして生まれ変わっています。この市場で最も人気があり、目を引く食材の一つが「ハモン」と呼ばれるスペインの伝統的な生ハムです。サンミゲル市場には複数のハモン専門店が軒を連ね、店頭には天井から吊るされた数多くの生ハムの脚が並ぶ光景が見られます。これらの専門店では主に二種類の生ハムが提供されています。一つは「ハモン・セラーノ」で、標高の高い地域で乾燥させた白豚の生ハムです。もう一つは高級品として知られる「ハモン・イベリコ・デ・ベジョータ」で、どんぐりを食べて育てられた黒豚から作られる特別な生ハムです。市場の生ハム店では、熟練の職人「コルタドール」が細心の注意を払って生ハムを薄くスライスする様子を見ることができます。ナイフの扱いは芸術的で、均一の薄さでハムを切り分ける技術は長年の経験によって磨かれています。訪問者は生ハムの試食や購入だけでなく、その場で「ラシオン」と呼ばれる小皿料理として生ハムを楽しむことができます。ワインやシェリー酒と一緒に提供されることも多く、スペイン料理の美食文化を体験できる貴重な機会となっています。サンミゲル市場の生ハムは、スペイン全土から厳選された最高品質のものが揃えられており、特にハモン・イベリコ・デ・ベジョータは36〜48ヶ月もの熟成期間を経て、複雑な風味と独特の旨味を持つ逸品として知られています。地元の人々だけでなく、世界中から訪れる観光客にとっても、本場スペインの食文化を堪能できる代表的な味覚となっています。", "location": "madrid", "categories": "グルメ" },
-  "cute-mural.jpg": { "title": "Cute Mural", "description": "", "location": "toledo", "categories": "芸術・建築" },
-  "cute-shop-in-toledo.jpg": { "title": "Cute Shop in Toledo", "description": "", "location": "toledo", "categories": "ショッピング" },
-  "delisko.jpg": { "title": "Delisko", "description": "", "location": "madrid", "categories": "レストラン" },
-  "dona-castiza-churros.jpg": { "title": "チュロス", "description": "マドリードの中心部に佇む「Doña Castiza（ドニャ・カスティーサ）」は、本場スペインのチュロス文化を今に伝える老舗チュロス専門店です。19世紀末に創業して以来、代々受け継がれてきた伝統的なレシピと製法を守り続け、地元マドリレーニョ（マドリード市民）から観光客まで、幅広い人々に愛されています。店舗は、マドリード旧市街のプエルタ・デル・ソル広場から徒歩数分の場所に位置し、クラシカルなアール・デコ調の外観が特徴的です。入り口のレトロな看板と深紅の日除けテントは、この界隈のランドマークとなっています。店内は、木製の長椅子とマーブルトップのテーブルが並ぶ昔ながらのスタイルを維持し、壁には創業以来の古い写真や、有名人が訪れた際のサイン入り写真が飾られています。「Doña Castiza」のチュロスは、厳選された小麦粉、水、塩、そして少量の油を使用した生地を星型の口金から絞り出し、高温のオリーブオイルでカリッと揚げる伝統的な製法で作られています。その結果、外はカリカリと香ばしく、中はふんわりとした理想的な食感のチュロスが完成します。店では常に新鮮なチュロスを提供するため、注文を受けてから揚げるスタイルを貫いています。メニューの中で最も人気があるのは、「チュロス・コン・チョコラーテ」で、揚げたてのチュロスを特製の濃厚なホットチョコレートに浸して食べる伝統的な楽しみ方です。このホットチョコレートは、最高級のカカオを使用し、コーンスターチで少しとろみをつけた独特の濃厚さが特徴です。また、季節限定で提供される「チュロス・レジェーノス」（クリーム入りチュロス）や、砂糖とシナモンをまぶした「チュロス・アスカラードス」も人気メニューです。「Doña Castiza」は早朝から営業しており、朝食としてチュロスを楽しむ地元のビジネスマンや、深夜の帰り道に立ち寄る若者たちなど、一日中様々な客層で賑わっています。特に週末の朝は行列ができることも珍しくなく、地元の家族連れでテーブルが埋まります。スペインの伝統的な祝祭日には特別メニューが登場することもあり、クリスマスシーズンには「チュロス・デ・ナビダード」と呼ばれる季節限定の特製チュロスが提供されます。「Doña Castiza」でのチュロス体験は、単なる食事以上の、マドリードの文化と歴史を味わう特別な時間です。スペインを代表する伝統的な軽食を、その発祥の地で本場の味わいと雰囲気と共に堪能できる、忘れられない思い出となるでしょう。", "location": "madrid", "categories": "スイーツ" },
-  "dona-castiza.jpg": { "title": "Dona Castiza", "description": "", "location": "madrid", "categories": "レストラン" },
-  "electronic-signboard-at-sants-station-in-barcelona.jpg": { "title": "Electronic Signboard at Sants Station in Barcelona", "description": "", "location": "barcelona", "categories": "駅" },
-  "exterior-view-of-cebada-market.jpg": { "title": "Exterior View of Cebada Market", "description": "", "location": "madrid", "categories": "市場" },
-  "florists-near-santa-eulalia.jpg": { "title": "花屋", "description": "マドリードの旧市街にある石畳の通りに面したこの花屋「La Real Flores y Jardines」は、チャーミングで趣のある外観が特徴的です。店頭には「Plantas」と「Flores」（植物と花）を示す看板が掲げられており、この店が植物と花の専門店であることを示しています。店舗の上部には、赤い花々や乾燥植物で作られた華やかなガーランド（花飾り）が飾られており、季節感とぬくもりを感じさせます。店頭には様々な種類の観葉植物、季節の花々、鉢植えが美しくディスプレイされ、通りに溢れるように並べられています。大小さまざまな植木鉢、木製の台や箱を使って、異なる高さでの展示が工夫されています。建物自体はスペインの伝統的な石造りの建築様式で、2階には典型的な鉄製のバルコニーが付いています。店の緑と花々は、建物の淡いベージュ色の外壁と絶妙なコントラストを形成しており、都会の中の小さな自然のオアシスのような佇まいです。スペインの伝統的な商店文化を体現するこの花屋は、地元の人々の日常生活に彩りを添えるとともに、観光客の目を楽しませる魅力的なスポットとなっています。赤いハート型のオーナメントも飾られており、温かみのある雰囲気を醸し出しています。石畳の通りと相まって、まるで絵画のような風情あるショップの景観が広がっています。", "location": "madrid", "categories": "街並み" },
-  "flower-stalls-in-madrid.jpg": { "title": "Flower Stalls in Madrid", "description": "", "location": "madrid", "categories": "ショッピング" },
-  "fly-toledo.jpg": { "title": "Fly Toledo", "description": "", "location": "toledo", "categories": "体験・アクティビティ" },
-  "fuencarral-street.jpg": { "title": "Fuencarral Street", "description": "", "location": "madrid", "categories": "街歩き・観光" },
-  "gates-of-alcala.jpg": { "title": "Gates of Alcala", "description": "", "location": "madrid", "categories": "建築" },
-  "gathering-doves.jpg": { "title": "Gathering Doves", "description": "", "location": "madrid", "categories": "広場" },
-  "goconut-choco-churros.jpg": { "title": "Goconut Choco Churros", "description": "", "location": "barcelona", "categories": "グルメ" },
-  "goconut.jpg": { "title": "Goconut", "description": "", "location": "barcelona", "categories": "レストラン" },
-  "inside-the-cebada-market.jpg": { "title": "Inside the Cebada Market", "description": "", "location": "madrid", "categories": "市場" },
-  "la-casa-del-abuelo's-ajilo.jpg": { "title": "アヒージョ", "description": "アヒージョ（Ajillo）はスペイン料理の代表的な調理法の一つで、食材をニンニクとオリーブオイルでじっくり煮込んだ料理です。「アホ」（ajo）はスペイン語でニンニクを意味し、「アヒージョ」はニンニクをふんだんに使った調理法を表しています。この料理は通常、小さな陶器の鍋「カスエラ」で調理され、そのまま熱々の状態でテーブルに運ばれてくるのが特徴です。最も有名なバリエーションは「ガンバス・アル・アヒージョ」（エビのアヒージョ）ですが、マッシュルーム（チャンピニョネス・アル・アヒージョ）や鶏肉（ポジョ・アル・アヒージョ）など、様々な食材でアレンジされています。基本の調理法は、オリーブオイルにスライスしたニンニク、唐辛子、そして主となる食材を加え、弱火でじっくりと煮込みます。時には白ワインやシェリー酒、ハーブなどを加えることもあります。料理が出来上がると、パンを添えて提供され、具材と一緒にオイルに浸したパンを楽しむのが一般的な食べ方です。アヒージョはスペイン全土のタパスバーやレストランで提供される定番メニューであり、特にアンダルシア地方やマドリードで人気があります。家庭料理としても広く親しまれており、シンプルながらも素材の風味を最大限に引き出す調理法として重宝されています。スペインを訪れる観光客にとっても、地元の人々と同じように小さなバルでワインを片手にアヒージョを楽しむひとときは、本場のスペイン食文化を体験する貴重な機会となっています。熱々のオイルでニンニクの香りが広がるアヒージョは、スペイン料理の奥深さと豊かさを象徴する一品と言えるでしょう。", "location": "madrid", "categories": "グルメ" },
-  "la-casa-del-abuelo.jpg": { "title": "La Casa del Abuelo", "description": "", "location": "madrid", "categories": "レストラン" },
-  "la-pallaresa's-churos-con-chocolatte.jpg": { "title": "チュロス・コン・チョコラテ", "description": "スペインでは「チュロス・コン・チョコラテ」（Churros con chocolate）と呼ばれる伝統的な食べ物が親しまれています。これは揚げたチュロスを濃厚なホットチョコレートにディップして食べるスタイルで、特に朝食やおやつとして愛されています。チュロスは小麦粉、水、塩を基本とした生地を星型の口金から絞り出し、熱い油でカリッと揚げたもので、表面はカリカリ、中はもっちりとした食感が特徴です。揚げた後に砂糖をまぶすことが多く、真っ直ぐな棒状や輪っか状など様々な形で提供されます。一方、スペイン式のホットチョコレートは日本で一般的な飲み物よりもずっと濃厚で、ほぼとろみのあるソースのような濃さです。チョコレートの風味が強く、飲むというよりもチュロスをディップするのに最適な濃度となっています。マドリードの「サン・ヒネス」（San Ginés）のような歴史あるチュロス専門店「チュレリア」では、何世代にもわたって受け継がれてきたレシピでチュロスとチョコレートを提供しています。特に冬の寒い朝や夜更けに、温かいチュロスとチョコレートを楽しむ人々で賑わいます。スペイン各地の祭りやイベントでもチュロスの屋台は欠かせず、地元の人々にとっては日常的な楽しみであると同時に、観光客にとっても本場の味を体験できる代表的なスペイン料理の一つとなっています。", "location": "barcelona", "categories": "グルメ" },
-  "la-pallaresa.jpg": { "title": "La Pallaresa", "description": "", "location": "barcelona", "categories": "レストラン" },
-  "las-ventas-bullring.jpg": { "title": "ラスベンタス闘牛場", "description": "ラス・ベンタス闘牛場（Plaza de Toros de Las Ventas）は、スペインの首都マドリードにある世界最大級の闘牛場です。1929年に建設が始まり、1931年に完成しました。設計はホセ・エスペリウスによるもので、ネオ・ムデハル様式の特徴的な赤煉瓦と陶器タイルの装飾が印象的です。収容人数は約23,800人で、円形の闘技場は直径60メートル、砂の部分は直径約43メートルあります。建物の外壁には、スペインの各県を象徴するタイル画が飾られています。ラス・ベンタスは単なる闘牛の会場だけでなく、スペインの文化と伝統の象徴的な存在です。特に毎年5月から10月にかけて開催される「サン・イシドロ祭」の期間中は、世界中から最高峰のマタドール（闘牛士）が集まります。闘牛ファンの間では、「マドリードでの成功は真の成功」と言われるほど、ここでの公演は闘牛士のキャリアにおいて最も重要とされています。闘牛場内には闘牛博物館も併設されており、歴史的な衣装や用具、ポスターなどが展示されています。闘牛が行われない日には、ガイド付きツアーも行われており、闘牛士の控室や闘牛場の裏側、さらには医務室なども見学できます。現代では闘牛に対する倫理的な議論もありますが、ラス・ベンタス闘牛場はスペインの文化遺産として、また建築学的にも重要な観光スポットとして多くの訪問者を集めています。", "location": "madrid", "categories": "闘牛場" },
-  "llaollao-ice.jpg": { "title": "llaollao", "description": "llaollao（ヤオヤオ）はスペイン発祥のフローズンヨーグルト専門チェーン店です。2009年にムルシア州で創業され、現在は世界中に展開しています。健康的なデザートをコンセプトにした店舗で、その特徴的な緑と白のブランドカラーが目印となっています。llaollaoの代表的な商品として「turt（タート）」があります。これはカップに入ったフローズンヨーグルトに様々なトッピングを自由に組み合わせて楽しむスタイルです。また「sanum（サヌム）」は、フローズンヨーグルトとフルーツ、グラノーラなどを交互に重ねた層になった贅沢なデザートとして人気があります。軽く食べたい時には小さめサイズの「petitllao（プティヤオ）」も選べます。llaollaoのフローズンヨーグルトは低脂肪で無脂肪の生乳から作られており、健康志向の人々にも支持されています。トッピングには新鮮なフルーツやナッツ、チョコレートソースなどが用意されており、特に「フスリ」と呼ばれる蜂蜜ベースの特製ソースが多くの顧客に愛されています。カスタマイズ性が高く、自分好みの組み合わせを楽しめることも魅力の一つです。地中海の食文化と健康志向を取り入れた商品展開で知られるllaollaoは、特に暑い夏の季節には多くの人で賑わいます。スペイン国内だけでなく、アジアを含む世界各国に店舗を展開し、国際的な人気を博しているフローズンヨーグルトチェーンです。", "location": "madrid", "categories": "スイーツ" },
-  "llaollao.jpg": { "title": "Llaollao", "description": "", "location": "madrid", "categories": "レストラン" },
-  "long-established-chocolate-shop-in-barcelona's-churos-con-chocolatte.jpg": { "title": "Long-established Chocolate Shop in Barcelona's Churos con Chocolatte", "description": "", "location": "barcelona", "categories": "グルメ" },
-  "long-established-chocolate-shop-in-barcelona.jpg": { "title": "Long-established Chocolate Shop in Barcelona", "description": "", "location": "barcelona", "categories": "レストラン" },
-  "loredo's-seafood-paella.jpg": { "title": "Loredo's Seafood Paella", "description": "", "location": "madrid", "categories": "グルメ" },
-  "loredo.jpg": { "title": "Loredo", "description": "", "location": "madrid", "categories": "レストラン" },
-  "los-timbales-morning-set.jpg": { "title": "Los Timbales Morning Set", "description": "", "location": "madrid", "categories": "グルメ" },
-  "los-timbales.jpg": { "title": "Los Timbales", "description": "", "location": "madrid", "categories": "レストラン" },
-  "l’arrosseria-xativa-sant-antoni's-paella.jpg": { "title": "シーフードパエリア", "description": "シーフードパエリア（Paella de Mariscos）はスペイン料理の代表格であり、特にスペイン東部のバレンシア地方を発祥とする伝統的な米料理です。大きな鉄製の浅い鍋「パエリェーラ」で調理される特徴的な見た目と、海の幸の豊かな風味が特徴です。シーフードパエリアの主な食材は短粒米とサフランで風味づけされたスープ、そして様々な海の幸です。エビ、イカ、ムール貝、アサリなどの魚介類が彩り豊かに盛り付けられ、見た目の美しさも料理の大きな魅力となっています。地中海の恵みを存分に活かした一品で、レモンを絞ってさっぱりと食べるのが一般的です。伝統的なパエリアの調理法では、オリーブオイルでニンニクや玉ねぎ、赤ピーマンなどの香味野菜を炒め、そこに米を加えてサフランやパプリカで色付けした出汁で炊き上げていきます。米が半分ほど炊けた段階で魚介類を上に並べ、最後は蓋をせずに弱火で蒸し上げます。鍋の底に形成される「ソカラット」と呼ばれる香ばしい焦げ目は、パエリアの醍醐味とされています。元々は農家の昼食として誕生したパエリアですが、現在ではスペイン全土で親しまれ、特に日曜日の家族の集まりや特別な行事の際に振る舞われる料理となっています。観光地のレストランでは大きなパエリェーラで調理される様子を見ることができ、多くの旅行者がスペイン訪問の際に必ず味わいたい料理のひとつとなっています。スペイン各地で様々なバリエーションが見られ、地域によって使用する材料や調理法に違いがありますが、新鮮な食材と米の旨みを引き立てる味付けが基本となっています。", "location": "barcelona", "categories": "グルメ" },
-  "madrid-sunset.jpg": { "title": "Madrid Sunset", "description": "", "location": "madrid", "categories": "自然・絶景" },
-  "mediterranean-coastal-towns.jpg": { "title": "Mediterranean Coastal Towns", "description": "", "location": "barcelona", "categories": "街歩き・観光" },
-  "mediterranean-sea.jpg": { "title": "Mediterranean Sea", "description": "", "location": "barcelona", "categories": "自然・絶景" },
-  "meson-del-champinon-mashroom.jpg": { "title": "マッシュルームタパス", "description": "スペインのバルでは、「champiñones al ajillo」（チャンピニョネス・アル・アヒージョ）と呼ばれるマッシュルームのタパスが人気メニューの一つです。これは、新鮮なマッシュルームをオリーブオイル、ニンニク、唐辛子、パセリで炒めたシンプルながら風味豊かな一品です。通常は小さな陶器の皿（cazuela）で熱々のまま提供され、そのまま食べたり、バゲットにのせて楽しむこともあります。料理酒として白ワインやシェリー酒を加えるバルもあり、地方によって少しずつレシピに違いがあります。特にアンダルシア地方やマドリッドのバルでは定番メニューとなっており、地元の人々も観光客も気軽に楽しめるタパスとして愛されています。スペインの食文化では、このようなタパスを数種類注文して友人と分け合いながら、カバやワイン、ビールと一緒にゆっくりと夜を過ごすのが一般的です。", "location": "madrid", "categories": "グルメ" },
-  "meson-del-champinon.jpg": { "title": "Meson del Champinon", "description": "", "location": "madrid", "categories": "レストラン" },
-  "mirador-del-valle.jpg": { "title": "Mirador del Valle", "description": "", "location": "toledo", "categories": "自然・絶景" },
-  "morning-set1.jpg": { "title": "Morning Set 1", "description": "", "location": "madrid", "categories": "グルメ" },
-  "morning-set2.jpg": { "title": "Morning Set 2", "description": "", "location": "madrid", "categories": "グルメ" },
-  "museo-del-jamon.jpg": { "title": "Museo del Jamon", "description": "", "location": "madrid", "categories": "レストラン" },
-  "nutella-crepe.jpg": { "title": "クレープ", "description": "バルセロナでは「クレプ」（Crep）または「クレペス」（Crepes）と呼ばれるクレープが、カタルーニャ料理の一部として親しまれています。フランスとの地理的近さもあり、バルセロナではフランス風のクレープが都市の食文化に溶け込み、独自の発展を遂げています。バルセロナ市内、特にゴシック地区やグラシア地区には、クレープ専門店やカフェが点在しています。これらの店舗では甘いデザートクレープから食事向けの塩味クレープまで幅広いバリエーションが提供されています。甘いクレープにはチョコレート、フルーツ、キャラメルなどが人気で、塩味クレープにはハモン・セラーノ、チーズ、地中海野菜などの具材が使われることが多いです。地元のクレープ店では、カタルーニャ地方の食材を取り入れたクレープも見られます。例えば、伝統的なカタルーニャソーセージ「ブティファラ」を具材に使ったり、地元のはちみつやオリーブオイルをトッピングに使ったりするなど、地域色豊かなアレンジが施されています。ランブラス通りやボケリア市場周辺では、観光客向けに提供される屋台風のクレープ店も多く見られます。これらの店ではクレープを手に持って歩きながら食べられるよう、コーン型に巻かれた形で提供されることが特徴です。また近年では、ヘルシー志向の高まりとともに、全粒粉やグルテンフリーの生地を使ったクレープや、オーガニック食材にこだわったクレープを提供する店も増えています。バルセロナの多文化都市としての側面を反映し、伝統的なフランス風クレープに地中海の食材や風味を融合させた独自のクレープ文化が形成されています。", "location": "barcelona", "categories": "スイーツ" },
-  "park-next-to-barcelona-sants-station.jpg": { "title": "Park next to Barcelona Sants Station", "description": "", "location": "barcelona", "categories": "公園" },
-  "plaza-de-la-armeria.jpg": { "title": "Plaza de la Armeria", "description": "", "location": "madrid", "categories": "広場" },
-  "plaza-de-mayor.jpg": { "title": "マヨール広場", "description": "マヨール広場（Plaza Mayor）は、スペインの多くの都市に見られる中心的な広場の名称です。特に有名なのはマドリードのマヨール広場で、スペインを代表する歴史的な公共空間です。マドリードのマヨール広場は、17世紀初頭にフェリペ3世の治世下で建設された長方形の広場です。四方を統一された様式の4階建ての建物に囲まれ、9つのアーチ型の入口があります。広場の中央にはフェリペ3世の騎馬像が置かれています。この広場は歴史的に様々な目的で使用されてきました。闘牛、市場、裁判、処刑、祝祭など、スペインの公共生活の中心地として機能していました。現在は主要な観光スポットとなり、周囲にはカフェやレストランのテラス席が並び、伝統的な店舗やバルが営業しています。広場の建物で特に目を引くのは「パン屋の家（Casa de la Panadería）」で、装飾的なフレスコ画が施された正面が印象的です。また、クリスマスシーズンにはマーケットが開かれ、季節ごとに様々な文化イベントが開催される活気ある場所です。サラマンカやトレド、セゴビアなど他のスペインの都市にも同様のマヨール広場があり、それぞれが地元の歴史と文化を反映した独自の特徴を持っています。", "location": "madrid", "categories": "広場" },
-  "plaza-de-mayor2.jpg": { "title": "Plaza de Mayor 2", "description": "", "location": "madrid", "categories": "広場" },
-  "pond-in-el-retiro-park.jpg": { "title": "Pond in El Retiro Park", "description": "", "location": "madrid", "categories": "公園" },
-  "prado-museum.jpg": { "title": "プラド美術館", "description": "プラド美術館（Museo Nacional del Prado）は、スペインの首都マドリードにある世界最大級の美術館で、ヨーロッパを代表する絵画コレクションを誇ります。1819年に国立美術館として設立され、当初はスペイン王室のコレクションを中心に展示していました。建物はフアン・デ・ビジャヌエバによって設計され、もともとは自然科学博物館として計画されたネオクラシック様式の壮麗な建築です。2007年には近代的な拡張部分が追加され、展示スペースと施設が拡大しました。約8,000点の絵画と約700点の彫刻を所蔵しており、一度の訪問では見切れないほどの規模です。年間約300万人が訪れる世界有数の美術館であり、マドリードの「美術館の黄金の三角地帯」（プラド美術館、ソフィア王妃芸術センター、ティッセン＝ボルネミッサ美術館）の中心的存在です。プラド美術館は単なる美術品の展示場ではなく、ヨーロッパの文化と歴史を物語る生きた証言であり、スペインが世界に誇る国家的宝物です。", "location": "madrid", "categories": "美術館" },
-  "puerto-rico-drink.jpg": { "title": "Puerto Rico Drink", "description": "", "location": "madrid", "categories": "アルコール" },
-  "puerto-rico-octopus-grill.jpg": { "title": "Puerto Rico Octopus Grill", "description": "", "location": "madrid", "categories": "グルメ" },
-  "puerto-rico-tortilla.jpg": { "title": "Puerto Rico Tortilla", "description": "", "location": "madrid", "categories": "グルメ" },
-  "puerto-rico-white-wine.jpg": { "title": "Puerto Rico White Wine", "description": "", "location": "madrid", "categories": "アルコール" },
-  "puerto-rico.jpg": { "title": "Puerto Rico", "description": "", "location": "madrid", "categories": "レストラン" },
-  "rocks-near-mirador-del-valle.jpg": { "title": "Rocks near Mirador del Valle", "description": "", "location": "toledo", "categories": "自然・絶景" },
-  "royal-botanical-gardens-of-madrid.jpg": { "title": "Royal Botanical Gardens of Madrid", "description": "", "location": "madrid", "categories": "公園" },
-  "royal-palace-in-the-daytime.jpg": { "title": "Royal Palace in the Daytime", "description": "", "location": "madrid", "categories": "王宮" },
-  "royal-place-seen-from-montagna-park.jpg": { "title": "Royal Place seen from Montagna Park", "description": "", "location": "madrid", "categories": "王宮" },
-  "sagrada-familia-seen-from-casa-mira.jpg": { "title": "Sagrada Familia seen from Casa Mira", "description": "", "location": "barcelona", "categories": "聖堂" },
-  "sagrada-familia-under-construction.jpg": { "title": "Sagrada Familia under Construction", "description": "", "location": "barcelona", "categories": "聖堂" },
-  "sagrada-familia.jpg": { "title": "サグラダファミリア", "description": "サグラダ・ファミリア（Sagrada Família）は、スペインのバルセロナにある未完成のローマ・カトリック教会で、カタルーニャを代表する建築家アントニ・ガウディの最高傑作として知られています。正式名称は「贖罪の聖家族教会」（Basílica i Temple Expiatori de la Sagrada Família）です。1882年に着工され、ガウディが1926年に亡くなった時点で建設はわずか25%程度しか完成していませんでした。その後も工事は続き、2010年にはローマ教皇ベネディクト16世によって聖堂として祝別されました。完成予定は2026年（ガウディ没後100周年）とされていましたが、COVID-19パンデミックの影響で遅延しています。建築的特徴として、ガウディ独自の有機的なデザイン、自然の形態から着想を得た構造、複雑な幾何学的形状が挙げられます。18本の塔が計画されており、そのうち12本は使徒を、4本は福音書記者を、1本は聖母マリアを、そして最も高い1本（172.5m）はイエス・キリストを表しています。ファサードは「生誕のファサード」「受難のファサード」「栄光のファサード」の3つがあり、それぞれに聖書の物語が彫刻で表現されています。内部は森のように見える列柱が特徴的で、ステンドグラスから差し込む色とりどりの光が神秘的な雰囲気を作り出しています。1984年にユネスコ世界遺産に登録され、現在は年間約450万人が訪れるバルセロナ最大の観光名所となっています。入場料は建設資金として使用され、寄付金と合わせて工事が継続されています。", "location": "barcelona", "categories": "教会" },
-  "san-francisco-el-grande.jpg": { "title": "San Francisco el Grande", "description": "", "location": "madrid", "categories": "聖堂" },
-  "san-miguel-market.jpg": { "title": "サンミゲル市場", "description": "サンミゲル市場（Mercado de San Miguel）は、マドリード中心部のマヨール広場近くに位置する歴史的な屋内市場です。1916年に建設された鉄とガラスのモダニスト様式の建物が特徴的で、2009年に大規模な改装を経て、現在はマドリードを代表するグルメスポットとなっています。この市場は従来の生鮮食品市場から、洗練されたグルメ市場へと変貌を遂げました。約30の専門店が軒を連ね、スペイン各地の伝統的な食材や料理を提供しています。市場内には立ち飲み・立ち食いスタイルのカウンターが多く、様々な店から少しずつ料理を買って楽しむことができます。朝から深夜まで営業しており、時間帯によって異なる雰囲気を楽しめるのも魅力です。観光客と地元の人々で常に賑わう活気ある雰囲気と、スペイン料理の多様性を一度に体験できる場所として、マドリード訪問の際には欠かせないスポットとなっています。", "location": "madrid", "categories": "市場" },
-  "santa-eulalia's-ham-and-tomato-jam-and-bread.jpg": { "title": "Santa Eulalia's Ham and Tomato Jam and Bread", "description": "", "location": "barcelona", "categories": "グルメ" },
-  "santa-eulalia.jpg": { "title": "Santa Eulalia", "description": "", "location": "barcelona", "categories": "レストラン" },
-  "santo-tome.jpg": { "title": "Santo Tome", "description": "", "location": "toledo", "categories": "ショッピング" },
-  "spain-last-morning.jpg": { "title": "Spain Last Morning", "description": "", "location": "madrid", "categories": "街歩き・観光" },
-  "streetscape-of-madrid.jpg": { "title": "Streetscape of Madrid", "description": "", "location": "madrid", "categories": "街歩き・観光" },
-  "streetscape-of-madrid2.jpg": { "title": "Streetscape of Madrid 2", "description": "", "location": "madrid", "categories": "街歩き・観光" },
-  "teleferic's-cava.jpg": { "title": "Teleferic's Cava", "description": "", "location": "barcelona", "categories": "アルコール" },
-  "teleferic's-iberico-ham-croquette.jpg": { "title": "Teleferic's Iberico Ham Croquette", "description": "", "location": "barcelona", "categories": "グルメ" },
-  "teleferic's-paella-with-squid-ink.jpg": { "title": "イカ墨パエリア", "description": "イカ墨パエリア（Arroz Negro/Paella Negra）は、スペインの伝統的な米料理で、特にバレンシア地方やカタルーニャ地方の沿岸部で親しまれています。その最大の特徴は、イカやカタツムリから採取した墨（セピア）を使用することで、真っ黒な色合いになることです。調理方法は伝統的なパエリアに似ていますが、米を炊く際にイカ墨を加えることで、独特の黒い色と海の香りが米全体に浸透します。味わいは濃厚で、海の塩味と墨の微かな甘みが特徴的です。見た目は非常にインパクトがあり、最初は驚くかもしれませんが、スペイン沿岸地域では日常的に楽しまれる人気料理です。通常はレモンを添えて供され、食べる前に絞ることで味のバランスが整います。イカ墨パエリアは、スペイン料理の中でも特に地中海の漁師文化を色濃く反映した一品と言えるでしょう。", "location": "barcelona", "categories": "グルメ" },
-  "teleferic.jpg": { "title": "Teleferic", "description": "", "location": "barcelona", "categories": "レストラン" },
-  "the-table-where-they-would-have-sat.jpg": { "title": "The Table Where They Would Have Sat", "description": "", "location": "madrid", "categories": "レストラン" },
-  "theatre-real.jpg": { "title": "Theatre Real", "description": "", "location": "madrid", "categories": "建築" },
-  "toledo-cathedral.jpg": { "title": "Toledo Cathedral", "description": "", "location": "toledo", "categories": "聖堂" },
-  "toledo-monument.jpg": { "title": "Toledo Monument", "description": "", "location": "toledo", "categories": "建築" },
-  "toledo-night-view.jpg": { "title": "トレド旧市街の夜景", "description": "ミラドール・デル・バイエ（Mirador del Valle）は、スペインの歴史都市トレドを一望できる最も有名な展望台です。街の南東に位置し、タホ川の対岸の丘の上にあります。夜になると、この展望台からのトレドの景色は魔法のような光景に変わります。中世の街並みが美しくライトアップされ、トレドの歴史的建造物のシルエットが夜空に浮かび上がります。タホ川に反射する街の灯りが水面できらめき、まるで絵画のような光景を作り出します。展望台から見る夜景は、かつてエル・グレコが描いたトレドの風景画を彷彿とさせます。特に月明かりの夜には、月光と人工の光が織りなす幻想的な雰囲気を楽しむことができます。「スペインの魂」とも呼ばれるトレドの歴史と神秘を、この展望台からの夜景は完璧に表現しています。多くの写真愛好家が日没後にこの場所を訪れ、三脚を立ててこの息をのむような夜景を撮影します。トレド観光の締めくくりに、このミラドール・デル・バイエからの夜景は忘れられない思い出となるでしょう。", "location": "toledo", "categories": "街並み" },
-  "toledo-station.jpg": { "title": "Toledo Station", "description": "", "location": "toledo", "categories": "駅" },
-  "toledo-streetscape.jpg": { "title": "Toledo Streetscape", "description": "", "location": "toledo", "categories": "街歩き・観光" },
-  "toledo-streetscape2.jpg": { "title": "トレドの街並み", "description": "トレド旧市街は、タホ川に囲まれた丘の上に位置する中世の街です。石畳の狭く曲がりくねった路地が特徴で、時には両側の建物がほぼ接するほど狭い「カジョン」や、アーチ状の屋根で覆われた「コベルティソ」と呼ばれる通路があります。黄土色の砂岩の建物には、木製バルコニーや鉄細工の格子窓が施され、宗教的なタイル祠や家紋で装飾されています。歩いていると、小さな広場（プラスエラ）が突然現れ、休憩できるカフェが点在しています。「三文化の都市」と呼ばれるように、キリスト教、イスラム教、ユダヤ教の建築様式が混在し、数歩歩くだけで異なる文化の影響を感じられます。路地には職人工房も多く、刀剣、ダマスキーノ（金細工）、陶器などの伝統工芸品が作られる様子を見学できます。地図を手放して迷うのも旧市街の楽しみ方の一つで、観光客のいない静かな通りで地元の生活を垣間見ることもあります。トレド旧市街は、中世スペインの姿をほぼ完全な形で今に伝える「生きた歴史博物館」です。", "location": "toledo", "categories": "街並み" },
-  "toledo-streetscape3.jpg": { "title": "Toledo Streetscape 3", "description": "", "location": "toledo", "categories": "街歩き・観光" },
-  "toledo-streetscape4.jpg": { "title": "Toledo Streetscape 4", "description": "", "location": "toledo", "categories": "街歩き・観光" },
-  "toledo-streetscape45jpg.jpg": { "title": "Toledo Streetscape 45jpg", "description": "", "location": "toledo", "categories": "街歩き・観光" },
-  "toledo-view-from-the-rocks.jpg": { "title": "Toledo View from the Rocks", "description": "", "location": "toledo", "categories": "自然・絶景" },
-  "toledo-view.jpg": { "title": "トレド旧市街の絶景", "description": "ミラドール・デル・バイエ（Mirador del Valle）からの昼間のトレドの景色は、息をのむ壮大なパノラマを提供します。タホ川対岸の小高い丘に位置するこの展望台は、中世の街全体を一望できる最高の視点場です。晴れた日には、黄金色の石造りの建物が太陽の光を受けて輝き、まるで時が止まったかのような中世の都市の全貌が広がります。タホ川がトレドの旧市街を半円形に取り囲むように流れる様子は、自然と人間の造形が見事に調和した絵画のような風景です。澄んだ青空を背景に、オレンジ色の屋根瓦と砂岩の建物が作り出す色彩のコントラストは圧巻です。街を取り囲む古代の城壁は、かつてキリスト教、イスラム教、ユダヤ教の文化が共存した「三文化の都市」としてのトレドの歴史を物語っています。周囲のカスティーリャ・ラ・マンチャの乾燥した平原との対比も印象的で、エル・グレコが何度も絵画に描いたこの風景の魅力を実感できます。季節によって変わる景色も魅力で、春には周辺の丘に野花が咲き、夏の強い日差しの下では砂岩の建物が黄金色に輝き、秋と冬には柔らかな光が街全体を優しく包み込みます。写真愛好家にとっては、この展望台は三脚を立てて時間をかけて撮影するのに最適な場所です。トレド観光の始まりに訪れれば、これから訪問する場所の全体像を把握することができます。", "location": "toledo", "categories": "街並み" },
-  "toledo-view2.jpg": { "title": "Toledo View 2", "description": "", "location": "toledo", "categories": "自然・絶景" },
-  "viandas-cured-ham-sandwich.jpg": { "title": "生ハムサンド", "description": "スペインでは「ボカディージョ・デ・ハモン」（Bocadillo de Jamón）と呼ばれる生ハムのサンドイッチが広く親しまれています。この伝統的な軽食は、シンプルながらも奥深い味わいで、バルやカフェテリアで日常的に楽しまれています。スペイン式生ハムサンドの主役は、言うまでもなくハモン・セラーノやハモン・イベリコといった熟成生ハムです。長期間熟成させることで生まれる複雑な旨味と芳醇な香りが特徴で、サンドイッチの中心となる風味を提供します。伝統的なボカディージョでは、バゲットのような細長いパン（バラ・デ・パン）を半分に切り、オリーブオイルを軽く塗り、そこに薄くスライスした生ハムを贅沢に挟みます。シンプルな組み合わせですが、パンの歯ごたえと生ハムの繊細な塩気と旨味のバランスが絶妙です。バルセロナなどカタルーニャ地方では「パ・アンブ・トマケ」（Pa amb tomàquet）と呼ばれる方法で、切ったパンにトマトをすりつけ、オリーブオイルと塩で味付けしてから生ハムを挟むことも一般的です。トマトの酸味が生ハムの旨味を引き立て、さらに深みのある味わいを生み出します。労働者の手軽な昼食や、旅行者の小腹を満たすスナックとして親しまれるこのサンドイッチは、スペイン各地でわずかな地域差はあるものの、どこでも変わらぬ人気を誇っています。特にマドリードの「ミュージアム・ハム」（Museo del Jamón）のような生ハム専門店では、上質な生ハムを使った本格的なボカディージョを味わうことができます。", "location": "madrid", "categories": "グルメ" },
-  "viandas.jpg": { "title": "Viandas", "description": "", "location": "madrid", "categories": "レストラン" },
-  "waffle-at-barcelona.jpg": { "title": "ワッフル", "description": "バルセロナで提供されているワッフルは、本来ベルギーの伝統菓子ですが、スペインの文化的要素を取り入れた形で楽しめます。バルセロナでは主に観光客向けのスイーツとしてワッフルが提供されており、地元のカフェやスイーツ専門店で見かけることができます。特にランブラス通り周辺やゴシック地区には、ワッフル専門店やクレープとワッフルを一緒に提供する店が点在しています。バルセロナスタイルのワッフルは、典型的なベルギーワッフル（リエージュ型やブリュッセル型）をベースにしながらも、地中海風のアレンジが特徴です。観光地ならではのフュージョン料理として、本場ベルギーとは一味違ったワッフル体験を楽しむことができるのがバルセロナのワッフルの魅力です。", "location": "barcelona", "categories": "スイーツ" },
-  "zings-cloth.jpg": { "title": "Zings Cloth", "description": "", "location": "madrid", "categories": "ショッピング" },
-  "zings.jpg": { "title": "Zings", "description": "", "location": "madrid", "categories": "ショッピング" }
+  "almudena-cathedral.jpg": {
+    "title": "Almudena Cathedral",
+    "description": "",
+    "location": "madrid",
+    "categories": "聖堂"
+  },
+  "barcelona-arc-de-triomphe.jpg": {
+    "title": "Barcelona Arc de Triomphe",
+    "description": "",
+    "location": "barcelona",
+    "categories": "建築"
+  },
+  "building-in-front-of-atocha-station.jpg": {
+    "title": "Building in front of Atocha Station",
+    "description": "",
+    "location": "madrid",
+    "categories": "駅"
+  },
+  "cantaro-item.jpg": {
+    "title": "Cantaro Item",
+    "description": "",
+    "location": "madrid",
+    "categories": "グルメ"
+  },
+  "cantaro.jpg": {
+    "title": "Cantaro",
+    "description": "",
+    "location": "madrid",
+    "categories": "レストラン"
+  },
+  "casa-batllo.jpg": {
+    "title": "カサ・バトリョ",
+    "description": "カサ・バトリョ（Casa Batlló）は、スペインのバルセロナに位置する芸術的建築物で、天才建築家アントニ・ガウディによって1904年から1906年にかけて改装されました。元々は1877年に建てられた一般的な建物でしたが、ガウディによる改装で幻想的な芸術作品へと生まれ変わりました。建物の外観は、色鮮やかなモザイクタイルと波打つような形状が特徴的です。ファサードには骨のような柱や、ドラゴンの背中を思わせる波打つ屋根など、有機的な形状が多用されています。特に屋根は龍の背中をイメージしており、色とりどりのセラミックタイルで覆われ、建物全体が聖ジョルディ（聖ゲオルギウス）と龍の伝説を表現していると言われています。窓やバルコニーも独特の形状をしており、しばしば仮面や頭蓋骨に例えられます。内部もまた、直線をほとんど使わないガウディらしい曲線的なデザインで統一され、階段、扉、窓枠にいたるまでユニークな形状が施されています。カサ・バトリョは現在、博物館として一般公開されており、訪問者は内部を見学することができます。最新技術を活用した没入型オーディオガイドが提供され、ガウディの天才的なデザインの世界を深く体験することができます。1984年にユネスコの世界遺産「アントニ・ガウディの作品群」の一部として登録され、毎年約100万人の観光客が訪れるバルセロナの主要観光スポットとなっています。建築愛好家だけでなく、芸術に興味を持つ多くの人々を魅了し続ける、モデルニスモ（カタルーニャ・モダニズム）を代表する傑作です。",
+    "location": "barcelona",
+    "categories": "建築"
+  },
+  "casa-loleas-dry-cured-ham.jpg": {
+    "title": "パ・アンブ・トマケ",
+    "description": "パ・アンブ・トマケ（Pa amb tomàquet）はカタルーニャ語で「トマトとパン」を意味し、スペイン北東部カタルーニャ地方を代表する伝統的な前菜です。その作り方はシンプルながら、素材の持ち味を最大限に引き出す知恵と工夫が詰まっています。この料理の基本は、スライスしたパンにニンニクをこすりつけ、熟したトマトの果肉をすりつけ、最後に上質なオリーブオイルと塩をかけるというものです。使用されるパンは「パ・デ・パジェス」と呼ばれる素朴なカタルーニャの田舎パンが伝統的で、少し固めの食感が特徴です。硬くなった古いパンを活用する知恵から生まれたとも言われています。パ・アンブ・トマケは単独で軽食として楽しまれることもありますが、多くの場合はハモン・セラーノやチーズ、アンチョビなどを添えて食べられます。また、バルセロナをはじめとするカタルーニャ地方のレストランやバルでは、グリルした肉料理やシーフード料理の付け合わせとしても提供されています。この料理はカタルーニャのアイデンティティを象徴する食べ物としても大切にされており、地域の食文化や歴史を語る上でも欠かせない存在です。20世紀初頭に広く普及したとされていますが、その起源は18世紀にまで遡るという説もあります。近年では世界中のスペイン料理レストランのメニューに登場するほど知名度が上がっていますが、バルセロナの地元のバルで食べる素朴なパ・アンブ・トマケには、カタルーニャの風土と人々の暮らしが凝縮された特別な味わいがあります。訪問者にとっては、地中海の食文化の本質を体験できる一皿となっています。",
+    "location": "barcelona",
+    "categories": "グルメ"
+  },
+  "casa-lolea.jpg": {
+    "title": "Casa Lolea",
+    "description": "",
+    "location": "barcelona",
+    "categories": "レストラン"
+  },
+  "casa-miras-roof-top.jpg": {
+    "title": "Casa Mira's Roof Top",
+    "description": "",
+    "location": "barcelona",
+    "categories": "建築"
+  },
+  "casa-miras-room.jpg": {
+    "title": "Casa Mira's Room",
+    "description": "",
+    "location": "barcelona",
+    "categories": "建築"
+  },
+  "casa-miras-souvenir-shop.jpg": {
+    "title": "Casa Mira's Souvenir Shop",
+    "description": "",
+    "location": "barcelona",
+    "categories": "ショッピング"
+  },
+  "casa-mira.jpg": {
+    "title": "カサ・ミラ",
+    "description": "カサ・ミラ（Casa Milà）は、スペインのバルセロナに位置する有名な建築物で、一般的に「ラ・ペドレラ（La Pedrera、石切り場）」という愛称でも知られています。バルセロナを代表する建築家アントニ・ガウディによって設計され、1906年から1912年にかけて建設されました。この建物はガウディの後期作品で、波打つような曲線的なファサードが特徴的です。外観は石灰岩で作られ、まるで海の波のように有機的な曲線を描いています。鉄骨構造を採用したことで、内部は柱が少なく、自由な間取りが可能になりました。屋上は特に印象的で、煙突や換気塔が兵士のようなシルエットを形作り、異世界的な雰囲気を醸し出しています。この独創的な造形は、しばしば「戦士の屋上」とも呼ばれています。当初はアパートメントとオフィスとして設計されましたが、現在は一部が博物館となっており、ガウディの建築の真髄を体験できる観光スポットとなっています。来訪者は、展示室、復元されたアパートメント、そして屋上テラスを見学することができます。1984年にはユネスコの世界遺産に「アントニ・ガウディの作品群」の一部として登録されました。カサ・ミラは、自然からインスピレーションを得たガウディの建築哲学と、伝統的な建築の枠を超えた革新性を象徴する傑作として、世界中から多くの建築愛好家や観光客を魅了し続けています。",
+    "location": "barcelona",
+    "categories": "建築"
+  },
+  "casa-vicens.jpg": {
+    "title": "Casa Vicens",
+    "description": "",
+    "location": "barcelona",
+    "categories": "建築"
+  },
+  "cerveceria-la-abadia-carcumsas.jpg": {
+    "title": "カルカムサス",
+    "description": "カルカムサス（Carcamusas）はスペイン中央部に位置する古都トレド（Toledo）の伝統的な料理で、この地方を代表する郷土料理の一つです。一見するとシチューのようなこの料理は、豚肉を中心とした具材をトマトベースのソースでじっくり煮込んだ温かい一品です。カルカムサスの基本的な材料は、角切りにした豚肉（主に肩ロースや豚バラ肉）、トマト、タマネギ、ニンニク、グリーンピース、そして赤ピーマンやパプリカなどが使われます。これらの食材をオリーブオイルで炒めた後、白ワインやスープを加え、香辛料（月桂樹の葉、タイム、オレガノなど）で風味付けしながらじっくりと煮込みます。トレドの伝統的なバルやレストランでは、カルカムサスが小皿料理（タパス）として提供されることが多く、地元の人々に親しまれています。通常は「バラ」と呼ばれる小さなパンと一緒に出され、パンでソースをすくって食べるのが一般的です。この料理の起源には諸説ありますが、20世紀初頭にトレドの「Bar Ludeña」というバルで生まれたという説が有力です。当初は労働者階級の手頃な食事として提供されていましたが、現在ではトレドを訪れる観光客にも人気の一品となっています。カルカムサスは、スペイン料理の特徴である素朴さと豊かな風味を併せ持つ料理であり、トレドの食文化を理解する上で欠かせない郷土料理の一つです。世界遺産の街並みを持つトレドを訪れた際には、地元の食文化を体験する意味でも、ぜひ味わっておきたい一品と言えるでしょう。",
+    "location": "toledo",
+    "categories": "グルメ"
+  },
+  "cerveceria-la-abadia-tinto-de-verano-con-espuma-de-maracuya.jpg": {
+    "title": "Cerveceria La Abadia Tinto de Verano con Espuma de Maracuya",
+    "description": "",
+    "location": "madrid",
+    "categories": "アルコール"
+  },
+  "cerveceria-la-abadia.jpg": {
+    "title": "Cerveceria La Abadia",
+    "description": "",
+    "location": "madrid",
+    "categories": "レストラン"
+  },
+  "cibeles.jpg": {
+    "title": "Cibeles",
+    "description": "",
+    "location": "madrid",
+    "categories": "広場"
+  },
+  "convent-of-san-juan-de-los-reyes.jpg": {
+    "title": "Convent of San Juan de los Reyes",
+    "description": "",
+    "location": "toledo",
+    "categories": "教会"
+  },
+  "cured-ham-at-san-miguel-market.jpg": {
+    "title": "サンミゲル市場の生ハム",
+    "description": "マドリード中心部に位置するメルカド・デ・サンミゲル（Mercado de San Miguel）は、1916年に建設された歴史ある市場で、現在はグルメフードマーケットとして生まれ変わっています。この市場で最も人気があり、目を引く食材の一つが「ハモン」と呼ばれるスペインの伝統的な生ハムです。サンミゲル市場には複数のハモン専門店が軒を連ね、店頭には天井から吊るされた数多くの生ハムの脚が並ぶ光景が見られます。これらの専門店では主に二種類の生ハムが提供されています。一つは「ハモン・セラーノ」で、標高の高い地域で乾燥させた白豚の生ハムです。もう一つは高級品として知られる「ハモン・イベリコ・デ・ベジョータ」で、どんぐりを食べて育てられた黒豚から作られる特別な生ハムです。市場の生ハム店では、熟練の職人「コルタドール」が細心の注意を払って生ハムを薄くスライスする様子を見ることができます。ナイフの扱いは芸術的で、均一の薄さでハムを切り分ける技術は長年の経験によって磨かれています。訪問者は生ハムの試食や購入だけでなく、その場で「ラシオン」と呼ばれる小皿料理として生ハムを楽しむことができます。ワインやシェリー酒と一緒に提供されることも多く、スペイン料理の美食文化を体験できる貴重な機会となっています。サンミゲル市場の生ハムは、スペイン全土から厳選された最高品質のものが揃えられており、特にハモン・イベリコ・デ・ベジョータは36〜48ヶ月もの熟成期間を経て、複雑な風味と独特の旨味を持つ逸品として知られています。地元の人々だけでなく、世界中から訪れる観光客にとっても、本場スペインの食文化を堪能できる代表的な味覚となっています。",
+    "location": "madrid",
+    "categories": "グルメ"
+  },
+  "cute-mural.jpg": {
+    "title": "Cute Mural",
+    "description": "",
+    "location": "toledo",
+    "categories": "芸術・建築"
+  },
+  "cute-shop-in-toledo.jpg": {
+    "title": "Cute Shop in Toledo",
+    "description": "",
+    "location": "toledo",
+    "categories": "ショッピング"
+  },
+  "delisko.jpg": {
+    "title": "Delisko",
+    "description": "",
+    "location": "madrid",
+    "categories": "レストラン"
+  },
+  "dona-castiza-churros.jpg": {
+    "title": "チュロス",
+    "description": "マドリードの中心部に佇む「Doña Castiza（ドニャ・カスティーサ）」は、本場スペインのチュロス文化を今に伝える老舗チュロス専門店です。19世紀末に創業して以来、代々受け継がれてきた伝統的なレシピと製法を守り続け、地元マドリレーニョ（マドリード市民）から観光客まで、幅広い人々に愛されています。店舗は、マドリード旧市街のプエルタ・デル・ソル広場から徒歩数分の場所に位置し、クラシカルなアール・デコ調の外観が特徴的です。入り口のレトロな看板と深紅の日除けテントは、この界隈のランドマークとなっています。店内は、木製の長椅子とマーブルトップのテーブルが並ぶ昔ながらのスタイルを維持し、壁には創業以来の古い写真や、有名人が訪れた際のサイン入り写真が飾られています。「Doña Castiza」のチュロスは、厳選された小麦粉、水、塩、そして少量の油を使用した生地を星型の口金から絞り出し、高温のオリーブオイルでカリッと揚げる伝統的な製法で作られています。その結果、外はカリカリと香ばしく、中はふんわりとした理想的な食感のチュロスが完成します。店では常に新鮮なチュロスを提供するため、注文を受けてから揚げるスタイルを貫いています。メニューの中で最も人気があるのは、「チュロス・コン・チョコラーテ」で、揚げたてのチュロスを特製の濃厚なホットチョコレートに浸して食べる伝統的な楽しみ方です。このホットチョコレートは、最高級のカカオを使用し、コーンスターチで少しとろみをつけた独特の濃厚さが特徴です。また、季節限定で提供される「チュロス・レジェーノス」（クリーム入りチュロス）や、砂糖とシナモンをまぶした「チュロス・アスカラードス」も人気メニューです。「Doña Castiza」は早朝から営業しており、朝食としてチュロスを楽しむ地元のビジネスマンや、深夜の帰り道に立ち寄る若者たちなど、一日中様々な客層で賑わっています。特に週末の朝は行列ができることも珍しくなく、地元の家族連れでテーブルが埋まります。スペインの伝統的な祝祭日には特別メニューが登場することもあり、クリスマスシーズンには「チュロス・デ・ナビダード」と呼ばれる季節限定の特製チュロスが提供されます。「Doña Castiza」でのチュロス体験は、単なる食事以上の、マドリードの文化と歴史を味わう特別な時間です。スペインを代表する伝統的な軽食を、その発祥の地で本場の味わいと雰囲気と共に堪能できる、忘れられない思い出となるでしょう。",
+    "location": "madrid",
+    "categories": "スイーツ"
+  },
+  "dona-castiza.jpg": {
+    "title": "Dona Castiza",
+    "description": "",
+    "location": "madrid",
+    "categories": "レストラン"
+  },
+  "electronic-signboard-at-sants-station-in-barcelona.jpg": {
+    "title": "Electronic Signboard at Sants Station in Barcelona",
+    "description": "",
+    "location": "barcelona",
+    "categories": "駅"
+  },
+  "exterior-view-of-cebada-market.jpg": {
+    "title": "Exterior View of Cebada Market",
+    "description": "",
+    "location": "madrid",
+    "categories": "市場"
+  },
+  "florists-near-santa-eulalia.jpg": {
+    "title": "花屋",
+    "description": "マドリードの旧市街にある石畳の通りに面したこの花屋「La Real Flores y Jardines」は、チャーミングで趣のある外観が特徴的です。店頭には「Plantas」と「Flores」（植物と花）を示す看板が掲げられており、この店が植物と花の専門店であることを示しています。店舗の上部には、赤い花々や乾燥植物で作られた華やかなガーランド（花飾り）が飾られており、季節感とぬくもりを感じさせます。店頭には様々な種類の観葉植物、季節の花々、鉢植えが美しくディスプレイされ、通りに溢れるように並べられています。大小さまざまな植木鉢、木製の台や箱を使って、異なる高さでの展示が工夫されています。建物自体はスペインの伝統的な石造りの建築様式で、2階には典型的な鉄製のバルコニーが付いています。店の緑と花々は、建物の淡いベージュ色の外壁と絶妙なコントラストを形成しており、都会の中の小さな自然のオアシスのような佇まいです。スペインの伝統的な商店文化を体現するこの花屋は、地元の人々の日常生活に彩りを添えるとともに、観光客の目を楽しませる魅力的なスポットとなっています。赤いハート型のオーナメントも飾られており、温かみのある雰囲気を醸し出しています。石畳の通りと相まって、まるで絵画のような風情あるショップの景観が広がっています。",
+    "location": "madrid",
+    "categories": "街並み"
+  },
+  "flower-stalls-in-madrid.jpg": {
+    "title": "Flower Stalls in Madrid",
+    "description": "",
+    "location": "madrid",
+    "categories": "ショッピング"
+  },
+  "fly-toledo.jpg": {
+    "title": "Fly Toledo",
+    "description": "",
+    "location": "toledo",
+    "categories": "体験・アクティビティ"
+  },
+  "fuencarral-street.jpg": {
+    "title": "Fuencarral Street",
+    "description": "",
+    "location": "madrid",
+    "categories": "街歩き・観光"
+  },
+  "gates-of-alcala.jpg": {
+    "title": "Gates of Alcala",
+    "description": "",
+    "location": "madrid",
+    "categories": "建築"
+  },
+  "gathering-doves.jpg": {
+    "title": "Gathering Doves",
+    "description": "",
+    "location": "madrid",
+    "categories": "広場"
+  },
+  "goconut-choco-churros.jpg": {
+    "title": "Goconut Choco Churros",
+    "description": "",
+    "location": "barcelona",
+    "categories": "グルメ"
+  },
+  "goconut.jpg": {
+    "title": "Goconut",
+    "description": "",
+    "location": "barcelona",
+    "categories": "レストラン"
+  },
+  "inside-the-cebada-market.jpg": {
+    "title": "Inside the Cebada Market",
+    "description": "",
+    "location": "madrid",
+    "categories": "市場"
+  },
+  "la-casa-del-abuelos-ajilo.jpg": {
+    "title": "アヒージョ",
+    "description": "アヒージョ（Ajillo）はスペイン料理の代表的な調理法の一つで、食材をニンニクとオリーブオイルでじっくり煮込んだ料理です。「アホ」（ajo）はスペイン語でニンニクを意味し、「アヒージョ」はニンニクをふんだんに使った調理法を表しています。この料理は通常、小さな陶器の鍋「カスエラ」で調理され、そのまま熱々の状態でテーブルに運ばれてくるのが特徴です。最も有名なバリエーションは「ガンバス・アル・アヒージョ」（エビのアヒージョ）ですが、マッシュルーム（チャンピニョネス・アル・アヒージョ）や鶏肉（ポジョ・アル・アヒージョ）など、様々な食材でアレンジされています。基本の調理法は、オリーブオイルにスライスしたニンニク、唐辛子、そして主となる食材を加え、弱火でじっくりと煮込みます。時には白ワインやシェリー酒、ハーブなどを加えることもあります。料理が出来上がると、パンを添えて提供され、具材と一緒にオイルに浸したパンを楽しむのが一般的な食べ方です。アヒージョはスペイン全土のタパスバーやレストランで提供される定番メニューであり、特にアンダルシア地方やマドリードで人気があります。家庭料理としても広く親しまれており、シンプルながらも素材の風味を最大限に引き出す調理法として重宝されています。スペインを訪れる観光客にとっても、地元の人々と同じように小さなバルでワインを片手にアヒージョを楽しむひとときは、本場のスペイン食文化を体験する貴重な機会となっています。熱々のオイルでニンニクの香りが広がるアヒージョは、スペイン料理の奥深さと豊かさを象徴する一品と言えるでしょう。",
+    "location": "madrid",
+    "categories": "グルメ"
+  },
+  "la-casa-del-abuelo.jpg": {
+    "title": "La Casa del Abuelo",
+    "description": "",
+    "location": "madrid",
+    "categories": "レストラン"
+  },
+  "la-pallaresas-churos-con-chocolatte.jpg": {
+    "title": "チュロス・コン・チョコラテ",
+    "description": "スペインでは「チュロス・コン・チョコラテ」（Churros con chocolate）と呼ばれる伝統的な食べ物が親しまれています。これは揚げたチュロスを濃厚なホットチョコレートにディップして食べるスタイルで、特に朝食やおやつとして愛されています。チュロスは小麦粉、水、塩を基本とした生地を星型の口金から絞り出し、熱い油でカリッと揚げたもので、表面はカリカリ、中はもっちりとした食感が特徴です。揚げた後に砂糖をまぶすことが多く、真っ直ぐな棒状や輪っか状など様々な形で提供されます。一方、スペイン式のホットチョコレートは日本で一般的な飲み物よりもずっと濃厚で、ほぼとろみのあるソースのような濃さです。チョコレートの風味が強く、飲むというよりもチュロスをディップするのに最適な濃度となっています。マドリードの「サン・ヒネス」（San Ginés）のような歴史あるチュロス専門店「チュレリア」では、何世代にもわたって受け継がれてきたレシピでチュロスとチョコレートを提供しています。特に冬の寒い朝や夜更けに、温かいチュロスとチョコレートを楽しむ人々で賑わいます。スペイン各地の祭りやイベントでもチュロスの屋台は欠かせず、地元の人々にとっては日常的な楽しみであると同時に、観光客にとっても本場の味を体験できる代表的なスペイン料理の一つとなっています。",
+    "location": "barcelona",
+    "categories": "グルメ"
+  },
+  "la-pallaresa.jpg": {
+    "title": "La Pallaresa",
+    "description": "",
+    "location": "barcelona",
+    "categories": "レストラン"
+  },
+  "las-ventas-bullring.jpg": {
+    "title": "ラスベンタス闘牛場",
+    "description": "ラス・ベンタス闘牛場（Plaza de Toros de Las Ventas）は、スペインの首都マドリードにある世界最大級の闘牛場です。1929年に建設が始まり、1931年に完成しました。設計はホセ・エスペリウスによるもので、ネオ・ムデハル様式の特徴的な赤煉瓦と陶器タイルの装飾が印象的です。収容人数は約23,800人で、円形の闘技場は直径60メートル、砂の部分は直径約43メートルあります。建物の外壁には、スペインの各県を象徴するタイル画が飾られています。ラス・ベンタスは単なる闘牛の会場だけでなく、スペインの文化と伝統の象徴的な存在です。特に毎年5月から10月にかけて開催される「サン・イシドロ祭」の期間中は、世界中から最高峰のマタドール（闘牛士）が集まります。闘牛ファンの間では、「マドリードでの成功は真の成功」と言われるほど、ここでの公演は闘牛士のキャリアにおいて最も重要とされています。闘牛場内には闘牛博物館も併設されており、歴史的な衣装や用具、ポスターなどが展示されています。闘牛が行われない日には、ガイド付きツアーも行われており、闘牛士の控室や闘牛場の裏側、さらには医務室なども見学できます。現代では闘牛に対する倫理的な議論もありますが、ラス・ベンタス闘牛場はスペインの文化遺産として、また建築学的にも重要な観光スポットとして多くの訪問者を集めています。",
+    "location": "madrid",
+    "categories": "闘牛場"
+  },
+  "llaollao-ice.jpg": {
+    "title": "llaollao",
+    "description": "llaollao（ヤオヤオ）はスペイン発祥のフローズンヨーグルト専門チェーン店です。2009年にムルシア州で創業され、現在は世界中に展開しています。健康的なデザートをコンセプトにした店舗で、その特徴的な緑と白のブランドカラーが目印となっています。llaollaoの代表的な商品として「turt（タート）」があります。これはカップに入ったフローズンヨーグルトに様々なトッピングを自由に組み合わせて楽しむスタイルです。また「sanum（サヌム）」は、フローズンヨーグルトとフルーツ、グラノーラなどを交互に重ねた層になった贅沢なデザートとして人気があります。軽く食べたい時には小さめサイズの「petitllao（プティヤオ）」も選べます。llaollaoのフローズンヨーグルトは低脂肪で無脂肪の生乳から作られており、健康志向の人々にも支持されています。トッピングには新鮮なフルーツやナッツ、チョコレートソースなどが用意されており、特に「フスリ」と呼ばれる蜂蜜ベースの特製ソースが多くの顧客に愛されています。カスタマイズ性が高く、自分好みの組み合わせを楽しめることも魅力の一つです。地中海の食文化と健康志向を取り入れた商品展開で知られるllaollaoは、特に暑い夏の季節には多くの人で賑わいます。スペイン国内だけでなく、アジアを含む世界各国に店舗を展開し、国際的な人気を博しているフローズンヨーグルトチェーンです。",
+    "location": "madrid",
+    "categories": "スイーツ"
+  },
+  "llaollao.jpg": {
+    "title": "Llaollao",
+    "description": "",
+    "location": "madrid",
+    "categories": "レストラン"
+  },
+  "long-established-chocolate-shop-in-barcelonas-churos-con-chocolatte.jpg": {
+    "title": "Long-established Chocolate Shop in Barcelona's Churos con Chocolatte",
+    "description": "",
+    "location": "barcelona",
+    "categories": "グルメ"
+  },
+  "long-established-chocolate-shop-in-barcelona.jpg": {
+    "title": "Long-established Chocolate Shop in Barcelona",
+    "description": "",
+    "location": "barcelona",
+    "categories": "レストラン"
+  },
+  "loredos-seafood-paella.jpg": {
+    "title": "Loredo's Seafood Paella",
+    "description": "",
+    "location": "madrid",
+    "categories": "グルメ"
+  },
+  "loredo.jpg": {
+    "title": "Loredo",
+    "description": "",
+    "location": "madrid",
+    "categories": "レストラン"
+  },
+  "los-timbales-morning-set.jpg": {
+    "title": "Los Timbales Morning Set",
+    "description": "",
+    "location": "madrid",
+    "categories": "グルメ"
+  },
+  "los-timbales.jpg": {
+    "title": "Los Timbales",
+    "description": "",
+    "location": "madrid",
+    "categories": "レストラン"
+  },
+  "larrosseria-xativa-sant-antonis-paella.jpg": {
+    "title": "シーフードパエリア",
+    "description": "シーフードパエリア（Paella de Mariscos）はスペイン料理の代表格であり、特にスペイン東部のバレンシア地方を発祥とする伝統的な米料理です。大きな鉄製の浅い鍋「パエリェーラ」で調理される特徴的な見た目と、海の幸の豊かな風味が特徴です。シーフードパエリアの主な食材は短粒米とサフランで風味づけされたスープ、そして様々な海の幸です。エビ、イカ、ムール貝、アサリなどの魚介類が彩り豊かに盛り付けられ、見た目の美しさも料理の大きな魅力となっています。地中海の恵みを存分に活かした一品で、レモンを絞ってさっぱりと食べるのが一般的です。伝統的なパエリアの調理法では、オリーブオイルでニンニクや玉ねぎ、赤ピーマンなどの香味野菜を炒め、そこに米を加えてサフランやパプリカで色付けした出汁で炊き上げていきます。米が半分ほど炊けた段階で魚介類を上に並べ、最後は蓋をせずに弱火で蒸し上げます。鍋の底に形成される「ソカラット」と呼ばれる香ばしい焦げ目は、パエリアの醍醐味とされています。元々は農家の昼食として誕生したパエリアですが、現在ではスペイン全土で親しまれ、特に日曜日の家族の集まりや特別な行事の際に振る舞われる料理となっています。観光地のレストランでは大きなパエリェーラで調理される様子を見ることができ、多くの旅行者がスペイン訪問の際に必ず味わいたい料理のひとつとなっています。スペイン各地で様々なバリエーションが見られ、地域によって使用する材料や調理法に違いがありますが、新鮮な食材と米の旨みを引き立てる味付けが基本となっています。",
+    "location": "barcelona",
+    "categories": "グルメ"
+  },
+  "madrid-sunset.jpg": {
+    "title": "Madrid Sunset",
+    "description": "",
+    "location": "madrid",
+    "categories": "自然・絶景"
+  },
+  "mediterranean-coastal-towns.jpg": {
+    "title": "Mediterranean Coastal Towns",
+    "description": "",
+    "location": "barcelona",
+    "categories": "街歩き・観光"
+  },
+  "mediterranean-sea.jpg": {
+    "title": "Mediterranean Sea",
+    "description": "",
+    "location": "barcelona",
+    "categories": "自然・絶景"
+  },
+  "meson-del-champinon-mashroom.jpg": {
+    "title": "マッシュルームタパス",
+    "description": "スペインのバルでは、「champiñones al ajillo」（チャンピニョネス・アル・アヒージョ）と呼ばれるマッシュルームのタパスが人気メニューの一つです。これは、新鮮なマッシュルームをオリーブオイル、ニンニク、唐辛子、パセリで炒めたシンプルながら風味豊かな一品です。通常は小さな陶器の皿（cazuela）で熱々のまま提供され、そのまま食べたり、バゲットにのせて楽しむこともあります。料理酒として白ワインやシェリー酒を加えるバルもあり、地方によって少しずつレシピに違いがあります。特にアンダルシア地方やマドリッドのバルでは定番メニューとなっており、地元の人々も観光客も気軽に楽しめるタパスとして愛されています。スペインの食文化では、このようなタパスを数種類注文して友人と分け合いながら、カバやワイン、ビールと一緒にゆっくりと夜を過ごすのが一般的です。",
+    "location": "madrid",
+    "categories": "グルメ"
+  },
+  "meson-del-champinon.jpg": {
+    "title": "Meson del Champinon",
+    "description": "",
+    "location": "madrid",
+    "categories": "レストラン"
+  },
+  "mirador-del-valle.jpg": {
+    "title": "Mirador del Valle",
+    "description": "",
+    "location": "toledo",
+    "categories": "自然・絶景"
+  },
+  "morning-set1.jpg": {
+    "title": "Morning Set 1",
+    "description": "",
+    "location": "madrid",
+    "categories": "グルメ"
+  },
+  "morning-set2.jpg": {
+    "title": "Morning Set 2",
+    "description": "",
+    "location": "madrid",
+    "categories": "グルメ"
+  },
+  "museo-del-jamon.jpg": {
+    "title": "Museo del Jamon",
+    "description": "",
+    "location": "madrid",
+    "categories": "レストラン"
+  },
+  "nutella-crepe.jpg": {
+    "title": "クレープ",
+    "description": "バルセロナでは「クレプ」（Crep）または「クレペス」（Crepes）と呼ばれるクレープが、カタルーニャ料理の一部として親しまれています。フランスとの地理的近さもあり、バルセロナではフランス風のクレープが都市の食文化に溶け込み、独自の発展を遂げています。バルセロナ市内、特にゴシック地区やグラシア地区には、クレープ専門店やカフェが点在しています。これらの店舗では甘いデザートクレープから食事向けの塩味クレープまで幅広いバリエーションが提供されています。甘いクレープにはチョコレート、フルーツ、キャラメルなどが人気で、塩味クレープにはハモン・セラーノ、チーズ、地中海野菜などの具材が使われることが多いです。地元のクレープ店では、カタルーニャ地方の食材を取り入れたクレープも見られます。例えば、伝統的なカタルーニャソーセージ「ブティファラ」を具材に使ったり、地元のはちみつやオリーブオイルをトッピングに使ったりするなど、地域色豊かなアレンジが施されています。ランブラス通りやボケリア市場周辺では、観光客向けに提供される屋台風のクレープ店も多く見られます。これらの店ではクレープを手に持って歩きながら食べられるよう、コーン型に巻かれた形で提供されることが特徴です。また近年では、ヘルシー志向の高まりとともに、全粒粉やグルテンフリーの生地を使ったクレープや、オーガニック食材にこだわったクレープを提供する店も増えています。バルセロナの多文化都市としての側面を反映し、伝統的なフランス風クレープに地中海の食材や風味を融合させた独自のクレープ文化が形成されています。",
+    "location": "barcelona",
+    "categories": "スイーツ"
+  },
+  "park-next-to-barcelona-sants-station.jpg": {
+    "title": "Park next to Barcelona Sants Station",
+    "description": "",
+    "location": "barcelona",
+    "categories": "公園"
+  },
+  "plaza-de-la-armeria.jpg": {
+    "title": "Plaza de la Armeria",
+    "description": "",
+    "location": "madrid",
+    "categories": "広場"
+  },
+  "plaza-de-mayor.jpg": {
+    "title": "マヨール広場",
+    "description": "マヨール広場（Plaza Mayor）は、スペインの多くの都市に見られる中心的な広場の名称です。特に有名なのはマドリードのマヨール広場で、スペインを代表する歴史的な公共空間です。マドリードのマヨール広場は、17世紀初頭にフェリペ3世の治世下で建設された長方形の広場です。四方を統一された様式の4階建ての建物に囲まれ、9つのアーチ型の入口があります。広場の中央にはフェリペ3世の騎馬像が置かれています。この広場は歴史的に様々な目的で使用されてきました。闘牛、市場、裁判、処刑、祝祭など、スペインの公共生活の中心地として機能していました。現在は主要な観光スポットとなり、周囲にはカフェやレストランのテラス席が並び、伝統的な店舗やバルが営業しています。広場の建物で特に目を引くのは「パン屋の家（Casa de la Panadería）」で、装飾的なフレスコ画が施された正面が印象的です。また、クリスマスシーズンにはマーケットが開かれ、季節ごとに様々な文化イベントが開催される活気ある場所です。サラマンカやトレド、セゴビアなど他のスペインの都市にも同様のマヨール広場があり、それぞれが地元の歴史と文化を反映した独自の特徴を持っています。",
+    "location": "madrid",
+    "categories": "広場"
+  },
+  "plaza-de-mayor2.jpg": {
+    "title": "Plaza de Mayor 2",
+    "description": "",
+    "location": "madrid",
+    "categories": "広場"
+  },
+  "pond-in-el-retiro-park.jpg": {
+    "title": "Pond in El Retiro Park",
+    "description": "",
+    "location": "madrid",
+    "categories": "公園"
+  },
+  "prado-museum.jpg": {
+    "title": "プラド美術館",
+    "description": "プラド美術館（Museo Nacional del Prado）は、スペインの首都マドリードにある世界最大級の美術館で、ヨーロッパを代表する絵画コレクションを誇ります。1819年に国立美術館として設立され、当初はスペイン王室のコレクションを中心に展示していました。建物はフアン・デ・ビジャヌエバによって設計され、もともとは自然科学博物館として計画されたネオクラシック様式の壮麗な建築です。2007年には近代的な拡張部分が追加され、展示スペースと施設が拡大しました。約8,000点の絵画と約700点の彫刻を所蔵しており、一度の訪問では見切れないほどの規模です。年間約300万人が訪れる世界有数の美術館であり、マドリードの「美術館の黄金の三角地帯」（プラド美術館、ソフィア王妃芸術センター、ティッセン＝ボルネミッサ美術館）の中心的存在です。プラド美術館は単なる美術品の展示場ではなく、ヨーロッパの文化と歴史を物語る生きた証言であり、スペインが世界に誇る国家的宝物です。",
+    "location": "madrid",
+    "categories": "美術館"
+  },
+  "puerto-rico-drink.jpg": {
+    "title": "Puerto Rico Drink",
+    "description": "",
+    "location": "madrid",
+    "categories": "アルコール"
+  },
+  "puerto-rico-octopus-grill.jpg": {
+    "title": "Puerto Rico Octopus Grill",
+    "description": "",
+    "location": "madrid",
+    "categories": "グルメ"
+  },
+  "puerto-rico-tortilla.jpg": {
+    "title": "Puerto Rico Tortilla",
+    "description": "",
+    "location": "madrid",
+    "categories": "グルメ"
+  },
+  "puerto-rico-white-wine.jpg": {
+    "title": "Puerto Rico White Wine",
+    "description": "",
+    "location": "madrid",
+    "categories": "アルコール"
+  },
+  "puerto-rico.jpg": {
+    "title": "Puerto Rico",
+    "description": "",
+    "location": "madrid",
+    "categories": "レストラン"
+  },
+  "rocks-near-mirador-del-valle.jpg": {
+    "title": "Rocks near Mirador del Valle",
+    "description": "",
+    "location": "toledo",
+    "categories": "自然・絶景"
+  },
+  "royal-botanical-gardens-of-madrid.jpg": {
+    "title": "Royal Botanical Gardens of Madrid",
+    "description": "",
+    "location": "madrid",
+    "categories": "公園"
+  },
+  "royal-palace-in-the-daytime.jpg": {
+    "title": "Royal Palace in the Daytime",
+    "description": "",
+    "location": "madrid",
+    "categories": "王宮"
+  },
+  "royal-place-seen-from-montagna-park.jpg": {
+    "title": "Royal Place seen from Montagna Park",
+    "description": "",
+    "location": "madrid",
+    "categories": "王宮"
+  },
+  "sagrada-familia-seen-from-casa-mira.jpg": {
+    "title": "Sagrada Familia seen from Casa Mira",
+    "description": "",
+    "location": "barcelona",
+    "categories": "聖堂"
+  },
+  "sagrada-familia-under-construction.jpg": {
+    "title": "Sagrada Familia under Construction",
+    "description": "",
+    "location": "barcelona",
+    "categories": "聖堂"
+  },
+  "sagrada-familia.jpg": {
+    "title": "サグラダファミリア",
+    "description": "サグラダ・ファミリア（Sagrada Família）は、スペインのバルセロナにある未完成のローマ・カトリック教会で、カタルーニャを代表する建築家アントニ・ガウディの最高傑作として知られています。正式名称は「贖罪の聖家族教会」（Basílica i Temple Expiatori de la Sagrada Família）です。1882年に着工され、ガウディが1926年に亡くなった時点で建設はわずか25%程度しか完成していませんでした。その後も工事は続き、2010年にはローマ教皇ベネディクト16世によって聖堂として祝別されました。完成予定は2026年（ガウディ没後100周年）とされていましたが、COVID-19パンデミックの影響で遅延しています。建築的特徴として、ガウディ独自の有機的なデザイン、自然の形態から着想を得た構造、複雑な幾何学的形状が挙げられます。18本の塔が計画されており、そのうち12本は使徒を、4本は福音書記者を、1本は聖母マリアを、そして最も高い1本（172.5m）はイエス・キリストを表しています。ファサードは「生誕のファサード」「受難のファサード」「栄光のファサード」の3つがあり、それぞれに聖書の物語が彫刻で表現されています。内部は森のように見える列柱が特徴的で、ステンドグラスから差し込む色とりどりの光が神秘的な雰囲気を作り出しています。1984年にユネスコ世界遺産に登録され、現在は年間約450万人が訪れるバルセロナ最大の観光名所となっています。入場料は建設資金として使用され、寄付金と合わせて工事が継続されています。",
+    "location": "barcelona",
+    "categories": "教会"
+  },
+  "san-francisco-el-grande.jpg": {
+    "title": "San Francisco el Grande",
+    "description": "",
+    "location": "madrid",
+    "categories": "聖堂"
+  },
+  "san-miguel-market.jpg": {
+    "title": "サンミゲル市場",
+    "description": "サンミゲル市場（Mercado de San Miguel）は、マドリード中心部のマヨール広場近くに位置する歴史的な屋内市場です。1916年に建設された鉄とガラスのモダニスト様式の建物が特徴的で、2009年に大規模な改装を経て、現在はマドリードを代表するグルメスポットとなっています。この市場は従来の生鮮食品市場から、洗練されたグルメ市場へと変貌を遂げました。約30の専門店が軒を連ね、スペイン各地の伝統的な食材や料理を提供しています。市場内には立ち飲み・立ち食いスタイルのカウンターが多く、様々な店から少しずつ料理を買って楽しむことができます。朝から深夜まで営業しており、時間帯によって異なる雰囲気を楽しめるのも魅力です。観光客と地元の人々で常に賑わう活気ある雰囲気と、スペイン料理の多様性を一度に体験できる場所として、マドリード訪問の際には欠かせないスポットとなっています。",
+    "location": "madrid",
+    "categories": "市場"
+  },
+  "santa-eulalias-ham-and-tomato-jam-and-bread.jpg": {
+    "title": "Santa Eulalia's Ham and Tomato Jam and Bread",
+    "description": "",
+    "location": "barcelona",
+    "categories": "グルメ"
+  },
+  "santa-eulalia.jpg": {
+    "title": "Santa Eulalia",
+    "description": "",
+    "location": "barcelona",
+    "categories": "レストラン"
+  },
+  "santo-tome.jpg": {
+    "title": "Santo Tome",
+    "description": "",
+    "location": "toledo",
+    "categories": "ショッピング"
+  },
+  "spain-last-morning.jpg": {
+    "title": "Spain Last Morning",
+    "description": "",
+    "location": "madrid",
+    "categories": "街歩き・観光"
+  },
+  "streetscape-of-madrid.jpg": {
+    "title": "Streetscape of Madrid",
+    "description": "",
+    "location": "madrid",
+    "categories": "街歩き・観光"
+  },
+  "streetscape-of-madrid2.jpg": {
+    "title": "Streetscape of Madrid 2",
+    "description": "",
+    "location": "madrid",
+    "categories": "街歩き・観光"
+  },
+  "teleferics-cava.jpg": {
+    "title": "Teleferic's Cava",
+    "description": "",
+    "location": "barcelona",
+    "categories": "アルコール"
+  },
+  "teleferics-iberico-ham-croquette.jpg": {
+    "title": "Teleferic's Iberico Ham Croquette",
+    "description": "",
+    "location": "barcelona",
+    "categories": "グルメ"
+  },
+  "teleferics-paella-with-squid-ink.jpg": {
+    "title": "イカ墨パエリア",
+    "description": "イカ墨パエリア（Arroz Negro/Paella Negra）は、スペインの伝統的な米料理で、特にバレンシア地方やカタルーニャ地方の沿岸部で親しまれています。その最大の特徴は、イカやカタツムリから採取した墨（セピア）を使用することで、真っ黒な色合いになることです。調理方法は伝統的なパエリアに似ていますが、米を炊く際にイカ墨を加えることで、独特の黒い色と海の香りが米全体に浸透します。味わいは濃厚で、海の塩味と墨の微かな甘みが特徴的です。見た目は非常にインパクトがあり、最初は驚くかもしれませんが、スペイン沿岸地域では日常的に楽しまれる人気料理です。通常はレモンを添えて供され、食べる前に絞ることで味のバランスが整います。イカ墨パエリアは、スペイン料理の中でも特に地中海の漁師文化を色濃く反映した一品と言えるでしょう。",
+    "location": "barcelona",
+    "categories": "グルメ"
+  },
+  "teleferic.jpg": {
+    "title": "Teleferic",
+    "description": "",
+    "location": "barcelona",
+    "categories": "レストラン"
+  },
+  "the-table-where-they-would-have-sat.jpg": {
+    "title": "The Table Where They Would Have Sat",
+    "description": "",
+    "location": "madrid",
+    "categories": "レストラン"
+  },
+  "theatre-real.jpg": {
+    "title": "Theatre Real",
+    "description": "",
+    "location": "madrid",
+    "categories": "建築"
+  },
+  "toledo-cathedral.jpg": {
+    "title": "Toledo Cathedral",
+    "description": "",
+    "location": "toledo",
+    "categories": "聖堂"
+  },
+  "toledo-monument.jpg": {
+    "title": "Toledo Monument",
+    "description": "",
+    "location": "toledo",
+    "categories": "建築"
+  },
+  "toledo-night-view.jpg": {
+    "title": "トレド旧市街の夜景",
+    "description": "ミラドール・デル・バイエ（Mirador del Valle）は、スペインの歴史都市トレドを一望できる最も有名な展望台です。街の南東に位置し、タホ川の対岸の丘の上にあります。夜になると、この展望台からのトレドの景色は魔法のような光景に変わります。中世の街並みが美しくライトアップされ、トレドの歴史的建造物のシルエットが夜空に浮かび上がります。タホ川に反射する街の灯りが水面できらめき、まるで絵画のような光景を作り出します。展望台から見る夜景は、かつてエル・グレコが描いたトレドの風景画を彷彿とさせます。特に月明かりの夜には、月光と人工の光が織りなす幻想的な雰囲気を楽しむことができます。「スペインの魂」とも呼ばれるトレドの歴史と神秘を、この展望台からの夜景は完璧に表現しています。多くの写真愛好家が日没後にこの場所を訪れ、三脚を立ててこの息をのむような夜景を撮影します。トレド観光の締めくくりに、このミラドール・デル・バイエからの夜景は忘れられない思い出となるでしょう。",
+    "location": "toledo",
+    "categories": "街並み"
+  },
+  "toledo-station.jpg": {
+    "title": "Toledo Station",
+    "description": "",
+    "location": "toledo",
+    "categories": "駅"
+  },
+  "toledo-streetscape.jpg": {
+    "title": "Toledo Streetscape",
+    "description": "",
+    "location": "toledo",
+    "categories": "街歩き・観光"
+  },
+  "toledo-streetscape2.jpg": {
+    "title": "トレドの街並み",
+    "description": "トレド旧市街は、タホ川に囲まれた丘の上に位置する中世の街です。石畳の狭く曲がりくねった路地が特徴で、時には両側の建物がほぼ接するほど狭い「カジョン」や、アーチ状の屋根で覆われた「コベルティソ」と呼ばれる通路があります。黄土色の砂岩の建物には、木製バルコニーや鉄細工の格子窓が施され、宗教的なタイル祠や家紋で装飾されています。歩いていると、小さな広場（プラスエラ）が突然現れ、休憩できるカフェが点在しています。「三文化の都市」と呼ばれるように、キリスト教、イスラム教、ユダヤ教の建築様式が混在し、数歩歩くだけで異なる文化の影響を感じられます。路地には職人工房も多く、刀剣、ダマスキーノ（金細工）、陶器などの伝統工芸品が作られる様子を見学できます。地図を手放して迷うのも旧市街の楽しみ方の一つで、観光客のいない静かな通りで地元の生活を垣間見ることもあります。トレド旧市街は、中世スペインの姿をほぼ完全な形で今に伝える「生きた歴史博物館」です。",
+    "location": "toledo",
+    "categories": "街並み"
+  },
+  "toledo-streetscape3.jpg": {
+    "title": "Toledo Streetscape 3",
+    "description": "",
+    "location": "toledo",
+    "categories": "街歩き・観光"
+  },
+  "toledo-streetscape4.jpg": {
+    "title": "Toledo Streetscape 4",
+    "description": "",
+    "location": "toledo",
+    "categories": "街歩き・観光"
+  },
+  "toledo-streetscape45jpg.jpg": {
+    "title": "Toledo Streetscape 45jpg",
+    "description": "",
+    "location": "toledo",
+    "categories": "街歩き・観光"
+  },
+  "toledo-view-from-the-rocks.jpg": {
+    "title": "Toledo View from the Rocks",
+    "description": "",
+    "location": "toledo",
+    "categories": "自然・絶景"
+  },
+  "toledo-view.jpg": {
+    "title": "トレド旧市街の絶景",
+    "description": "ミラドール・デル・バイエ（Mirador del Valle）からの昼間のトレドの景色は、息をのむ壮大なパノラマを提供します。タホ川対岸の小高い丘に位置するこの展望台は、中世の街全体を一望できる最高の視点場です。晴れた日には、黄金色の石造りの建物が太陽の光を受けて輝き、まるで時が止まったかのような中世の都市の全貌が広がります。タホ川がトレドの旧市街を半円形に取り囲むように流れる様子は、自然と人間の造形が見事に調和した絵画のような風景です。澄んだ青空を背景に、オレンジ色の屋根瓦と砂岩の建物が作り出す色彩のコントラストは圧巻です。街を取り囲む古代の城壁は、かつてキリスト教、イスラム教、ユダヤ教の文化が共存した「三文化の都市」としてのトレドの歴史を物語っています。周囲のカスティーリャ・ラ・マンチャの乾燥した平原との対比も印象的で、エル・グレコが何度も絵画に描いたこの風景の魅力を実感できます。季節によって変わる景色も魅力で、春には周辺の丘に野花が咲き、夏の強い日差しの下では砂岩の建物が黄金色に輝き、秋と冬には柔らかな光が街全体を優しく包み込みます。写真愛好家にとっては、この展望台は三脚を立てて時間をかけて撮影するのに最適な場所です。トレド観光の始まりに訪れれば、これから訪問する場所の全体像を把握することができます。",
+    "location": "toledo",
+    "categories": "街並み"
+  },
+  "toledo-view2.jpg": {
+    "title": "Toledo View 2",
+    "description": "",
+    "location": "toledo",
+    "categories": "自然・絶景"
+  },
+  "viandas-cured-ham-sandwich.jpg": {
+    "title": "生ハムサンド",
+    "description": "スペインでは「ボカディージョ・デ・ハモン」（Bocadillo de Jamón）と呼ばれる生ハムのサンドイッチが広く親しまれています。この伝統的な軽食は、シンプルながらも奥深い味わいで、バルやカフェテリアで日常的に楽しまれています。スペイン式生ハムサンドの主役は、言うまでもなくハモン・セラーノやハモン・イベリコといった熟成生ハムです。長期間熟成させることで生まれる複雑な旨味と芳醇な香りが特徴で、サンドイッチの中心となる風味を提供します。伝統的なボカディージョでは、バゲットのような細長いパン（バラ・デ・パン）を半分に切り、オリーブオイルを軽く塗り、そこに薄くスライスした生ハムを贅沢に挟みます。シンプルな組み合わせですが、パンの歯ごたえと生ハムの繊細な塩気と旨味のバランスが絶妙です。バルセロナなどカタルーニャ地方では「パ・アンブ・トマケ」（Pa amb tomàquet）と呼ばれる方法で、切ったパンにトマトをすりつけ、オリーブオイルと塩で味付けしてから生ハムを挟むことも一般的です。トマトの酸味が生ハムの旨味を引き立て、さらに深みのある味わいを生み出します。労働者の手軽な昼食や、旅行者の小腹を満たすスナックとして親しまれるこのサンドイッチは、スペイン各地でわずかな地域差はあるものの、どこでも変わらぬ人気を誇っています。特にマドリードの「ミュージアム・ハム」（Museo del Jamón）のような生ハム専門店では、上質な生ハムを使った本格的なボカディージョを味わうことができます。",
+    "location": "madrid",
+    "categories": "グルメ"
+  },
+  "viandas.jpg": {
+    "title": "Viandas",
+    "description": "",
+    "location": "madrid",
+    "categories": "レストラン"
+  },
+  "waffle-at-barcelona.jpg": {
+    "title": "ワッフル",
+    "description": "バルセロナで提供されているワッフルは、本来ベルギーの伝統菓子ですが、スペインの文化的要素を取り入れた形で楽しめます。バルセロナでは主に観光客向けのスイーツとしてワッフルが提供されており、地元のカフェやスイーツ専門店で見かけることができます。特にランブラス通り周辺やゴシック地区には、ワッフル専門店やクレープとワッフルを一緒に提供する店が点在しています。バルセロナスタイルのワッフルは、典型的なベルギーワッフル（リエージュ型やブリュッセル型）をベースにしながらも、地中海風のアレンジが特徴です。観光地ならではのフュージョン料理として、本場ベルギーとは一味違ったワッフル体験を楽しむことができるのがバルセロナのワッフルの魅力です。",
+    "location": "barcelona",
+    "categories": "スイーツ"
+  },
+  "zings-cloth.jpg": {
+    "title": "Zings Cloth",
+    "description": "",
+    "location": "madrid",
+    "categories": "ショッピング"
+  },
+  "zings.jpg": {
+    "title": "Zings",
+    "description": "",
+    "location": "madrid",
+    "categories": "ショッピング"
+  }
 }
