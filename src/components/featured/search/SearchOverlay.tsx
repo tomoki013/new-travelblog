@@ -10,7 +10,6 @@ import { LoadingAnimation } from "../LoadingAnimation/LoadingAnimation";
 import { LinkCard } from "@/components/elements/LinkCard";
 import { useSearchOverlay } from "@/hooks/useSearchOverlay";
 import { SEARCH_CONFIG } from "@/constants/searchConfig";
-import Link from "next/link";
 
 // 型定義
 type Suggestion = {
@@ -82,11 +81,13 @@ const SearchSuggestions = ({
   suggestions,
   isLoading,
   selectedCategory,
+  executeSearch,
 }: {
   searchTerm: string;
   suggestions: Suggestion[];
   isLoading: boolean;
   selectedCategory: string | null;
+  executeSearch: () => void;
 }) => {
   // カテゴリ選択時もサジェストを表示するため、selectedCategoryも条件に含める
   const canShowComponent =
@@ -98,18 +99,6 @@ const SearchSuggestions = ({
   );
 
   const showSeeAllButton = suggestions.length > SEARCH_CONFIG.MAX_SUGGESTIONS;
-
-  // 「すべて見る」ボタン用のリンクを生成
-  const seeAllHref = useMemo(() => {
-    const params = new URLSearchParams();
-    if (searchTerm) {
-      params.set("search", searchTerm);
-    }
-    if (selectedCategory) {
-      params.set("category", selectedCategory);
-    }
-    return `/posts?${params.toString()}`;
-  }, [searchTerm, selectedCategory]);
 
   const listVariants = {
     hidden: { opacity: 0 },
@@ -153,11 +142,13 @@ const SearchSuggestions = ({
 
       {!isLoading && showSeeAllButton && (
         <div className="p-2 border-t border-border">
-          <Button asChild variant="ghost" className="w-full">
-            <Link href={seeAllHref}>
-              すべての結果を見る
-              <ArrowRight className="w-4 h-4 ml-2" />
-            </Link>
+          <Button
+            variant="ghost"
+            className="w-full"
+            onClick={executeSearch}
+          >
+            すべての結果を見る
+            <ArrowRight className="w-4 h-4 ml-2" />
           </Button>
         </div>
       )}
@@ -257,6 +248,7 @@ const SearchOverlay = ({ isOpen, onClose }: SearchOverlayProps) => {
               suggestions={suggestions}
               isLoading={isLoading}
               selectedCategory={selectedCategory}
+              executeSearch={executeSearch}
             />
           </motion.div>
         </motion.div>
