@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { categories } from "@/data/categories";
 import { AnimatePresence, motion } from "framer-motion";
-import { Loader2, SearchIcon, XIcon } from "lucide-react";
+import { ArrowRight, Loader2, SearchIcon, XIcon } from "lucide-react";
 import { useMemo } from "react";
 import { LoadingAnimation } from "../LoadingAnimation/LoadingAnimation";
 import { LinkCard } from "@/components/elements/LinkCard";
@@ -80,17 +80,25 @@ const SearchSuggestions = ({
   searchTerm,
   suggestions,
   isLoading,
+  selectedCategory,
+  executeSearch,
 }: {
   searchTerm: string;
   suggestions: Suggestion[];
   isLoading: boolean;
+  selectedCategory: string | null;
+  executeSearch: () => void;
 }) => {
-  const shouldShowSuggestions =
-    searchTerm.length >= SEARCH_CONFIG.MIN_QUERY_LENGTH;
+  // カテゴリ選択時もサジェストを表示するため、selectedCategoryも条件に含める
+  const canShowComponent =
+    searchTerm.length >= SEARCH_CONFIG.MIN_QUERY_LENGTH || selectedCategory;
+
   const displayedSuggestions = suggestions.slice(
     0,
-    SEARCH_CONFIG.MAX_SUGGESTIONS
+    SEARCH_CONFIG.MAX_SUGGESTIONS,
   );
+
+  const showSeeAllButton = suggestions.length > SEARCH_CONFIG.MAX_SUGGESTIONS;
 
   const listVariants = {
     hidden: { opacity: 0 },
@@ -107,7 +115,7 @@ const SearchSuggestions = ({
     visible: { y: 0, opacity: 1 },
   };
 
-  if (!shouldShowSuggestions) return null;
+  if (!canShowComponent) return null;
 
   return (
     <div className="mt-4 bg-background border border-border rounded-lg shadow-lg">
@@ -132,13 +140,28 @@ const SearchSuggestions = ({
         </motion.ul>
       )}
 
-      {!isLoading && suggestions.length === 0 && (
-        <div className="p-4 text-muted-foreground">
-          一致する記事は見つかりませんでした。
-          <br />
-          キーワードを変えて再度お試しください。
+      {!isLoading && showSeeAllButton && (
+        <div className="p-2 border-t border-border">
+          <Button
+            variant="ghost"
+            className="w-full"
+            onClick={executeSearch}
+          >
+            すべての結果を見る
+            <ArrowRight className="w-4 h-4 ml-2" />
+          </Button>
         </div>
       )}
+
+      {!isLoading &&
+        suggestions.length === 0 &&
+        (searchTerm || selectedCategory) && (
+          <div className="p-4 text-muted-foreground">
+            一致する記事は見つかりませんでした。
+            <br />
+            キーワードを変えて再度お試しください。
+          </div>
+        )}
     </div>
   );
 };
@@ -224,6 +247,8 @@ const SearchOverlay = ({ isOpen, onClose }: SearchOverlayProps) => {
               searchTerm={searchTerm}
               suggestions={suggestions}
               isLoading={isLoading}
+              selectedCategory={selectedCategory}
+              executeSearch={executeSearch}
             />
           </motion.div>
         </motion.div>
