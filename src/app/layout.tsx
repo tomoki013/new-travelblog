@@ -94,6 +94,12 @@ export default function RootLayout({
         {/* Google Adsense */}
         <meta name="google-adsense-account" content="ca-pub-8687520805381056" />
 
+        {/* impact */}
+        <meta
+          name="impact-site-verification"
+          content="6961c957-6c21-44ec-90ac-fbe728936d15"
+        />
+
         {/* 自動広告 */}
         <Script
           async
