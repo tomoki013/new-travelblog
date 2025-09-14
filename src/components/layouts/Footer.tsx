@@ -123,7 +123,7 @@ const Footer = () => {
             <Link href="/privacy" className="hover:text-secondary">
               プライバシーポリシー
             </Link>
-            <span className="hidden md:block">｜</span>
+            g<span className="hidden md:block">｜</span>
             <Link href="/terms" className="hover:text-secondary">
               利用規約
             </Link>
