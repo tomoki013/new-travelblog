@@ -25,6 +25,31 @@ export interface ArticleContentProps {
 
 const ArticleContent = ({ content, allPosts }: ArticleContentProps) => {
   const markdownComponents: Components = {
+    p: (props) => {
+      const { node } = props;
+
+      // nodeプロパティと、その中のchildren配列が存在するかを安全にチェック
+      if (!node?.children) {
+        return <p>{props.children}</p>;
+      }
+
+      const children = node.children;
+
+      // 子要素が1つだけであることを確認
+      if (children.length === 1) {
+        const firstChild = children[0];
+
+        // 【重要】最初の子要素が'element'型であるかをチェック（型ガード）
+        // これにより、TypeScriptは以降の行でfirstChildがtagNameプロパティを持つと認識してくれる
+        if (firstChild.type === "element" && firstChild.tagName === "a") {
+          // 条件に一致すればpタグを省略
+          return <>{props.children}</>;
+        }
+      }
+
+      // 上記の条件に当てはまらない場合は、通常のpタグを返す
+      return <p>{props.children}</p>;
+    },
     h2: (props) =>
       createCustomHeading({ level: 2 })({
         ...props,
@@ -52,7 +77,6 @@ const ArticleContent = ({ content, allPosts }: ArticleContentProps) => {
         />
       );
     },
-    // ▼ 2. テーブル関連のコンポーネントをマッピングに追加
     table: (props) => <CustomTable {...props} />,
     thead: (props) => <Thead {...props} />,
     tbody: (props) => <Tbody {...props} />,
