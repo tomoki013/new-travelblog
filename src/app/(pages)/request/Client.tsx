@@ -1,20 +1,8 @@
 "use client"; // アニメーションのためClient Componentとします
 
-import { motion, Variants } from "framer-motion";
+import { sectionVariants } from "@/components/animation";
+import { motion } from "framer-motion";
 import { Lightbulb, CheckCircle, FileText } from "lucide-react";
-
-// Client Componentではmetadataオブジェクトを直接exportできないため、
-// Headタグや、上位のレイアウトファイルで設定することを想定します。
-
-// アニメーションのバリアント設定
-const sectionVariant: Variants = {
-  hidden: { opacity: 0, y: 50 },
-  visible: {
-    opacity: 1,
-    y: 0,
-    transition: { duration: 0.8, ease: "easeOut" },
-  },
-};
 
 export default function Client() {
   return (
@@ -25,7 +13,7 @@ export default function Client() {
           <h1 className="text-4xl md:text-6xl font-bold tracking-tight">
             記事テーマ リクエストボックス
           </h1>
-          <p className="text-md md:text-lg mt-4 max-w-2xl">
+          <p className="text-md md:text-lg mt-4 max-w-2xl mx-auto">
             あなたの「知りたい！」「見てみたい」を教えてください。
             <br />
             次の冒険のテーマになるかもしれません。
@@ -39,11 +27,11 @@ export default function Client() {
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true, amount: 0.1 }}
-          variants={sectionVariant}
+          variants={sectionVariants}
           className="text-center"
         >
           <h2 className="text-3xl font-bold mb-4">このページについて</h2>
-          <p className="text-lg text-gray-700 leading-relaxed">
+          <p className="text-lg text-foreground leading-relaxed">
             いつもブログを読んでくださりありがとうございます！
             <br />
             このブログを、もっと皆さんの役に立つ場所にしたいと思い、記事のテーマを募集するページを作りました。
@@ -57,7 +45,7 @@ export default function Client() {
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true, amount: 0.1 }}
-          variants={sectionVariant}
+          variants={sectionVariants}
         >
           <h2 className="text-3xl font-bold text-center mb-8">
             例えば、こんなテーマを募集しています
@@ -98,7 +86,7 @@ export default function Client() {
 
         {/* ==================== 過去に採用した記事 ==================== */}
         {/* <motion.section
-          variants={sectionVariant}
+          variants={sectionVariants}
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true, amount: 0.3 }}
@@ -138,7 +126,7 @@ export default function Client() {
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true, amount: 0.1 }}
-          variants={sectionVariant}
+          variants={sectionVariants}
         >
           <h2 className="text-3xl font-bold text-center mb-8">
             リクエストフォーム
@@ -167,7 +155,7 @@ export default function Client() {
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true, amount: 0.1 }}
-          variants={sectionVariant}
+          variants={sectionVariants}
           className="text-sm text-gray-600 bg-gray-50 p-6 rounded-lg"
         >
           <h3 className="text-lg font-bold mb-4 text-center">注意事項</h3>
@@ -187,13 +175,13 @@ export default function Client() {
 
         {/* ==================== 締めのメッセージ ==================== */}
         <motion.section
-          variants={sectionVariant}
+          variants={sectionVariants}
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true, amount: 0.3 }}
           className="text-center"
         >
-          <p className="text-xl font-semibold text-gray-800">
+          <p className="text-xl font-semibold text-foreground">
             あなたの声が、このブログの未来を作ります。
             <br />
             お気軽に投稿いただけると嬉しいです！

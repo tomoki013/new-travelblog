@@ -46,7 +46,7 @@ const Client = ({
   return (
     <div>
       {/* ==================== Hero Section ==================== */}
-      <section className="relative h-80 md:h-96 flex items-center justify-center text-white text-center">
+      <section className="relative h-80 md:h-96 flex items-center justify-center text-white/80 text-center">
         <Image
           src={region.imageURL}
           alt={region.name}
@@ -65,7 +65,7 @@ const Client = ({
       {/* ==================== Child Regions Section ==================== */}
       {hasChildren && country?.children && (
         <motion.section
-          className="bg-slate-50"
+          className="bg-background"
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true, amount: 0.1 }}
@@ -101,7 +101,7 @@ const Client = ({
                       />
                       <div className="absolute inset-0 transition-colors duration-300" />
                     </div>
-                    <h3 className="mt-4 text-lg font-semibold text-center text-slate-800 group-hover:text-primary transition-colors duration-300">
+                    <h3 className="mt-4 text-lg font-semibold text-center text-foreground group-hover:text-primary transition-colors duration-300">
                       {child.name}
                     </h3>
                   </Link>
@@ -119,15 +119,15 @@ const Client = ({
             whileInView="visible"
             viewport={{ once: true, amount: 0.1 }}
             variants={slideFadeIn()}
-            className="text-center bg-slate-50 border-2 border-dashed border-slate-300 rounded-xl p-8 md:p-12"
+            className="text-center bg-background border-2 border-dashed border-slate-300 rounded-xl p-8 md:p-12"
           >
             <div className="flex justify-center mb-4">
               <Wind className="w-16 h-16 text-slate-400" strokeWidth={1} />
             </div>
-            <h3 className="text-2xl font-bold text-slate-700">
+            <h3 className="text-2xl font-bold text-foreground">
               まだ何もない場所
             </h3>
-            <p className="mt-2 text-slate-500 max-w-md mx-auto">
+            <p className="mt-2 text-foreground max-w-md mx-auto">
               この地域に関する記事は現在準備中です。
               <br />
               新しい冒険の記録が追加されるのをお楽しみに！
@@ -142,7 +142,7 @@ const Client = ({
               viewport={{ once: true, amount: 0.1 }}
               variants={sectionVariants}
             >
-              <p className="text-lg text-center text-gray-700 leading-relaxed">
+              <p className="text-lg text-center text-foreground leading-relaxed">
                 {region.name}
                 の旅で役立つ情報や、旅の記録をまとめました。あなたの次の冒険の参考にしてください。
               </p>

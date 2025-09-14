@@ -1,8 +1,8 @@
 "use client";
 
-import Link from "next/link";
 import { motion } from "framer-motion";
 import { sectionVariants } from "../animation";
+import Button from "../elements/Button";
 
 const Request = () => {
   return (
@@ -21,15 +21,7 @@ const Request = () => {
           記事のテーマを募集するリクエストページができました。
           あなたの声が、次の記事になるかもしれません。
         </p>
-        <Link href="/request" passHref>
-          <motion.div
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
-            className="inline-block py-3 px-8 bg-secondary border-2 border-secondary text-background font-bold rounded-full transition-colors duration-300 hover:bg-background hover:text-secondary"
-          >
-            リクエストページへ
-          </motion.div>
-        </Link>
+        <Button href={`/request`}>リクエストページへ</Button>
       </div>
     </motion.section>
   );

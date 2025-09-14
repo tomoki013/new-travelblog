@@ -119,7 +119,7 @@ const Footer = () => {
             &copy; 2024-{new Date().getFullYear()} ともきちの旅行日記. All
             rights reserved.
           </p>
-          <div className="flex flex-col md:flex-row justify-center md:justify-baseline md:items-center gap-2 text-sm text-muted-foreground">
+          <div className="hidden sm:flex flex-col md:flex-row justify-center md:justify-baseline md:items-center gap-2 text-sm text-muted-foreground">
             <Link href="/privacy" className="hover:text-secondary">
               プライバシーポリシー
             </Link>
