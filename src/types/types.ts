@@ -77,3 +77,15 @@ export interface Series {
 export interface AllDestinationProps {
   regionData: ContinentData[];
 }
+
+// アフィリエイトプログラムの型定義
+export interface AffiliatesProps {
+  name: string;
+  affiliateUrl: string;
+  homeUrl: string;
+  image?: string;
+  type: string;
+  icon?: React.ReactNode;
+  description: string;
+  status: string;
+}
