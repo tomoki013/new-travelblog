@@ -3,7 +3,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { motion } from "framer-motion";
-import { ChevronRight, MapPin } from "lucide-react";
+import { AlertCircle, ChevronRight, MapPin } from "lucide-react";
 import { getDatePrefix } from "@/lib/dateFormat";
 import { Post } from "@/types/types";
 import { featuredSeries } from "@/data/series";
@@ -118,6 +118,15 @@ const PostHeader = ({ post }: PostHeaderProps) => {
           priority
         />
       )}
+
+      {/* Attention Box */}
+      <section className="my-8 flex items-center gap-x-3 rounded-md border border-l-4 border-l-yellow-400 bg-yellow-50 p-4 text-yellow-800">
+        <AlertCircle className="h-5 w-5 text-yellow-400" aria-hidden="true" />
+        <p className="text-sm">
+          この記事は{post.dates[0]}
+          に作成されたものです。最新の情報に注意をして旅行をしてください。
+        </p>
+      </section>
 
       {/* Promotion */}
       {post.isPromotion && (
