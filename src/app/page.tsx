@@ -23,10 +23,10 @@ export default async function HomePage() {
       <FeaturedSeries />
       <PopularPosts posts={allPosts} />
       <Gallery />
+      <Affiliates />
       <Request />
       <PostsLength posts={allPosts} />
       <GalleryLength galleryLength={photoLength} />
-      <Affiliates />
     </>
   );
 }

@@ -1,6 +1,27 @@
 // 参加しているアフィリエイトプログラムのリスト
+
+import Link from "next/link";
+
+interface affiliateProgramsProps {
+  name: string;
+  path: string;
+}
+
 // 新しいプログラムを追加する場合は、この配列に名前を追加するだけです。
-const affiliatePrograms: string[] = [];
+const affiliatePrograms: affiliateProgramsProps[] = [
+  {
+    name: "Trip.comアフィリエイトプログラム",
+    path: "https://jp.trip.com/partners/index",
+  },
+  {
+    name: "Travel Affiliate Program",
+    path: "https://partner.getyourguide.com/",
+  },
+  {
+    name: "Klookアフィリエイト",
+    path: "https://affiliate.klook.com/ja/",
+  },
+];
 
 const Affiliates = () => {
   return (
@@ -45,7 +66,16 @@ const Affiliates = () => {
           </p>
           <ul>
             {affiliatePrograms.map((program) => (
-              <li key={program}>{program}</li>
+              <li key={program.path}>
+                <Link
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  href={program.path}
+                  className="text-muted-foreground hover:text-primary"
+                >
+                  {program.name}
+                </Link>
+              </li>
             ))}
           </ul>
         </div>

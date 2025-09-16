@@ -44,31 +44,22 @@ const affiliates = [
     status: "pending",
   },
   {
-    name: "Agoda",
-    url: "YOUR_AFFILIATE_LINK_HERE",
-    type: "card",
-    image: "/images/apps/agoda-logo.png", // ロゴ画像のパス
-    icon: <BedDouble className="w-10 h-10 text-primary" />,
-    description: "アジア圏のホテルに強み。掘り出し物の宿が見つかるかも。",
-    status: "pending", // 将来追加する際に'ready'に変更
-  },
-  {
     name: "Klook",
-    url: "YOUR_AFFILIATE_LINK_HERE",
+    url: "https://affiliate.klook.com/redirect?aid=99371&aff_adid=1126092&k_site=https%3A%2F%2Fwww.klook.com%2F",
     type: "card",
-    image: "/images/apps/klook-logo.png", // ロゴ画像のパス
+    // image: "/images/apps/klook-logo.png", // ロゴ画像のパス
     icon: <Ticket className="w-10 h-10 text-primary" />,
     description: "遊びの予約に特化。テーマパークや現地ツアーをお得に予約。",
-    status: "pending",
+    status: "ready",
   },
   {
     name: "GetYourGuide",
-    url: "YOUR_AFFILIATE_LINK_HERE",
+    url: "https://www.getyourguide.com?partner_id=GTNOM0E&utm_medium=online_publisher",
     type: "card",
-    image: "/images/apps/getyourguide-logo.png", // ロゴ画像のパス
+    // image: "/images/apps/getyourguide-logo.png", // ロゴ画像のパス
     icon: <Ticket className="w-10 h-10 text-primary" />,
     description: "世界中のユニークな体験ツアーが見つかる。旅の思い出作りに。",
-    status: "pending",
+    status: "ready",
   },
   {
     name: "Omio",

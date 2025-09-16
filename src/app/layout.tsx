@@ -123,6 +123,14 @@ export default function RootLayout({
 						gtag('config', 'G-XYSW6RY98H');
 					`}
         </Script>
+
+        {/* GetYourGuide Analytics */}
+        <Script
+          async
+          defer
+          src="https://widget.getyourguide.com/dist/pa.umd.production.min.js"
+          data-gyg-partner-id="GTNOM0E"
+        ></Script>
       </head>
       <body
         className={`${montserrat.variable} ${playfairDisplay.variable} ${caveat.variable} ${notoSansJP.variable} antialiased`}
