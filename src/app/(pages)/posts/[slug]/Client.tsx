@@ -1,20 +1,17 @@
 "use client";
 
-import { useState, useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { motion } from "framer-motion";
-import { toast } from "sonner";
 import { slideFadeIn } from "@/components/animation";
-import { Copy } from "lucide-react";
 import { members } from "@/data/member";
 import { Post } from "@/types/types";
-import { FaFacebook, FaTwitter } from "react-icons/fa";
 import RelatedPosts from "@/components/featured/article/RelatedPosts";
 import TableOfContent from "@/components/featured/article/TableOfContent";
 import PostHeader from "@/components/featured/article/PostHeader";
 import PostNavigation from "@/components/featured/article/PostNavigation";
 import Button from "@/components/elements/Button";
+import ShareButtons from "@/components/featured/article/ShareButtons";
 
 import React from "react";
 import CostBreakdown from "@/components/featured/article/CostBreakdown";
@@ -42,32 +39,7 @@ const Client = ({
   previousSeriesPost,
   nextSeriesPost,
 }: ClientProps) => {
-  const [currentUrl, setCurrentUrl] = useState("");
-
-  useEffect(() => {
-    if (typeof window !== "undefined") {
-      setCurrentUrl(window.location.href);
-    }
-  }, []);
-
   const author = members.find((m) => m.name === post.author);
-
-  const shareOnTwitter = () => {
-    const text = encodeURIComponent(`${post.title} | ともきちの旅行日記`);
-    const url = encodeURIComponent(currentUrl);
-    window.open(`https://twitter.com/intent/tweet?text=${text}&url=${url}`);
-  };
-
-  const shareOnFacebook = () => {
-    const url = encodeURIComponent(currentUrl);
-    window.open(`https://www.facebook.com/sharer/sharer.php?u=${url}`);
-  };
-
-  const copyUrlToClipboard = () => {
-    navigator.clipboard.writeText(currentUrl).then(() => {
-      toast.success("クリップボードにコピーしました");
-    });
-  };
 
   return (
     <div>
@@ -90,30 +62,7 @@ const Client = ({
           variants={slideFadeIn()}
         >
           {/* --- Shared Components --- */}
-          <div className="flex items-center justify-center gap-4 mb-10">
-            <span className="font-semibold">Share:</span>
-            <button
-              onClick={shareOnTwitter}
-              className="p-3 rounded-full text-foreground bg-primary-foreground hover:bg-gray-200 transition-colors"
-              aria-label="Share on Twitter"
-            >
-              <FaTwitter size={20} />
-            </button>
-            <button
-              onClick={shareOnFacebook}
-              className="p-3 rounded-full text-foreground bg-primary-foreground hover:bg-gray-200 transition-colors"
-              aria-label="Share on Facebook"
-            >
-              <FaFacebook size={20} />
-            </button>
-            <button
-              onClick={copyUrlToClipboard}
-              className="p-3 rounded-full text-foreground bg-primary-foreground hover:bg-gray-200 transition-colors relative"
-              aria-label="Copy link"
-            >
-              <Copy size={20} />
-            </button>
-          </div>
+          <ShareButtons post={post} />
 
           {/* --- PC Layout --- */}
           <div className="hidden md:block space-y-12">
