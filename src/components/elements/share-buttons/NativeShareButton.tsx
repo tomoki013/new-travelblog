@@ -13,7 +13,7 @@ const NativeShareButton = ({ url, title, text }: Props) => {
   const [isSupported, setIsSupported] = useState(false);
 
   useEffect(() => {
-    if (navigator.share) {
+    if (typeof navigator !== "undefined" && "share" in navigator) {
       setIsSupported(true);
     }
   }, []);
