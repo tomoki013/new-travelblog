@@ -82,12 +82,14 @@ const SearchSuggestions = ({
   isLoading,
   selectedCategory,
   executeSearch,
+  onClose,
 }: {
   searchTerm: string;
   suggestions: Suggestion[];
   isLoading: boolean;
   selectedCategory: string | null;
   executeSearch: () => void;
+  onClose: () => void;
 }) => {
   // カテゴリ選択時もサジェストを表示するため、selectedCategoryも条件に含める
   const canShowComponent =
@@ -129,7 +131,7 @@ const SearchSuggestions = ({
           exit="hidden"
         >
           {displayedSuggestions.map((post) => (
-            <motion.li key={post.slug} variants={itemVariants}>
+            <motion.li key={post.slug} variants={itemVariants} onTap={onClose}>
               <LinkCard
                 href={`/posts/${post.slug}`}
                 title={post.title}
@@ -245,6 +247,7 @@ const SearchOverlay = ({ isOpen, onClose }: SearchOverlayProps) => {
               isLoading={isLoading}
               selectedCategory={selectedCategory}
               executeSearch={executeSearch}
+              onClose={onClose}
             />
           </motion.div>
         </motion.div>
