@@ -100,6 +100,9 @@ export default function RootLayout({
           content="6961c957-6c21-44ec-90ac-fbe728936d15"
         />
 
+        {/* Agoda */}
+        <meta name="agd-partner-manual-verification" />
+
         {/* 自動広告 */}
         <Script
           async
