@@ -17,12 +17,12 @@ export const affiliates: AffiliatesProps[] = [
     affiliateUrl:
       "https://jp.trip.com/?Allianceid=7063246&SID=258431426&trip_sub1=",
     homeUrl: "https://jp.trip.com/partners/index",
-    type: "card",
+    type: "banner",
     icon: <BedDouble className="w-10 h-10 text-primary" />,
     description:
       "航空券・ホテル・列車まで、旅の予約がこれ一つで完結！セールも豊富でお得に旅しよう。",
     status: "ready",
-    bannerHtml: `<a href="https://jp.trip.com/?Allianceid=7063246&SID=258431426&trip_sub1=" target="_blank" rel="noopener noreferrer"><img src="/images/Hokkaido/air-plane.jpg" alt="Trip.com Banner"/></a>`,
+    bannerHtml: `<iframe border="0" src="https://jp.trip.com/partners/ad/DB5494015?Allianceid=7063246&SID=258431426&trip_sub1=" style="width:728px;height:90px" frameborder="0" scrolling="no" style="border:none" id="DB5494015"></iframe>`,
   },
   {
     name: "Booking.com",
