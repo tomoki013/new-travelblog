@@ -20,4 +20,6 @@ costs:
 tags:
   - 海外旅行
 isPromotion: true
+promotionPG:
+  - Trip.com
 ---

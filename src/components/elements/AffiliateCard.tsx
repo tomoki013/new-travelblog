@@ -54,15 +54,10 @@ const AffiliateCard = ({ affiliate, type = "link" }: AffiliateCardProps) => {
       case "banner":
         if (!bannerHtml) return null;
         return (
-          <div className="bg-card rounded-lg shadow-md hover:shadow-lg transition-all duration-300 ease-in-out transform hover:-translate-y-1 overflow-hidden">
-            <div
-              className="w-full"
-              dangerouslySetInnerHTML={{ __html: bannerHtml }}
-            />
-            <div className="p-4">
-              <p className="text-muted-foreground">{description}</p>
-            </div>
-          </div>
+          <div
+            className="w-full"
+            dangerouslySetInnerHTML={{ __html: bannerHtml }}
+          />
         );
       default:
         return null;
