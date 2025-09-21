@@ -15,6 +15,7 @@ export interface Post {
   costs?: Record<string, number>;
   series?: string;
   isPromotion?: boolean;
+  promotionPG?: string[];
 }
 
 export type PostMetadata = Omit<Post, "content">;
