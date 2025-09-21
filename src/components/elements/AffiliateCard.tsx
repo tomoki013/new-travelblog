@@ -32,7 +32,7 @@ const AffiliateCard = ({ affiliate, type = "link" }: AffiliateCardProps) => {
             href={affiliateUrl}
             target="_blank"
             rel="noopener noreferrer"
-            className="block group bg-card p-6 rounded-lg shadow-md hover:shadow-lg transition-all duration-300 ease-in-out transform hover:-translate-y-1 h-full flex flex-col items-center text-center"
+            className="group bg-card p-6 rounded-lg shadow-md hover:shadow-lg transition-all duration-300 ease-in-out transform hover:-translate-y-1 h-full flex flex-col items-center text-center"
           >
             <div className="mb-4 h-12 w-12 flex items-center justify-center">
               {image ? (

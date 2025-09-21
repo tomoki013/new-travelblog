@@ -34,6 +34,7 @@ export function getRawPostsData(): PostMetadata[] {
       costs: data.costs,
       series: data.series,
       isPromotion: data.isPromotion,
+      promotionPG: data.promotionPG,
     } as PostMetadata;
   });
   return allPostsData;

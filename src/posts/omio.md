@@ -14,6 +14,8 @@ tags:
   - スペイン高速鉄道
   - Omio
 isPromotion: true
+promotionPG:
+  - Omio
 ---
 
 情熱の国、スペイン
