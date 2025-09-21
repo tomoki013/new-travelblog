@@ -84,8 +84,9 @@ export interface AffiliatesProps {
   affiliateUrl: string;
   homeUrl: string;
   image?: string;
-  type: string;
+  type: "link" | "card" | "banner";
   icon?: React.ReactNode;
   description: string;
   status: string;
+  bannerHtml?: string;
 }
