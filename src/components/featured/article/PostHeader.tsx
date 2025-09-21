@@ -31,6 +31,22 @@ const PostHeader = ({ post }: PostHeaderProps) => {
       animate={{ opacity: 1 }}
       transition={{ duration: 0.8 }}
     >
+      {/* Promotion */}
+      {post.isPromotion && (
+        <section className="flex justify-center items-center my-8 text-gray-800 italic bg-white/80 h-12 rounded-sm border border-secondary">
+          <p>
+            ※本記事はプロモーションを含みます。詳しくは
+            <Link
+              href={`/affiliates`}
+              className="text-secondary underline hover:text-primary"
+            >
+              アフィリエイトポリシー
+            </Link>
+            をご覧ください。
+          </p>
+        </section>
+      )}
+
       {/* Breadcrumbs */}
       <nav
         className="flex flex-col md:flex-row md:items-center text-sm text-gray-500 mb-4"
@@ -127,22 +143,6 @@ const PostHeader = ({ post }: PostHeaderProps) => {
           に作成されたものです。最新の情報に注意をして旅行をしてください。
         </p>
       </section>
-
-      {/* Promotion */}
-      {post.isPromotion && (
-        <section className="flex justify-center items-center my-8 text-gray-800 italic bg-white/80 h-12 rounded-sm border border-secondary">
-          <p>
-            ※本記事はプロモーションを含みます。詳しくは
-            <Link
-              href={`/affiliates`}
-              className="text-secondary underline hover:text-primary"
-            >
-              アフィリエイトポリシー
-            </Link>
-            をご覧ください。
-          </p>
-        </section>
-      )}
     </motion.header>
   );
 };

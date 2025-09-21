@@ -67,13 +67,13 @@ export const affiliates: AffiliatesProps[] = [
   },
   {
     name: "Omio",
-    affiliateUrl: "YOUR_AFFILIATE_LINK_HERE",
-    homeUrl: "YOUR_AFFILIATE_LINK_HERE",
+    affiliateUrl: "https://omio.sjv.io/MAqKX2",
+    homeUrl: "https://www.omio.jp/affiliate",
     type: "card",
     // image: "/images/apps/omio-logo.png",
     icon: <Train className="w-10 h-10 text-primary" />,
     description: "ヨーロッパの鉄道やバスをまとめて検索・予約。周遊旅行に便利。",
-    status: "pending",
+    status: "ready",
   },
   {
     name: "SkyScanner",

@@ -37,7 +37,7 @@ const Hero = () => {
           flapBG=""
         />
       </div>
-      <WorldMap highlightedRegions={allCountryNames} isClickable />
+      <WorldMap highlightedRegions={allCountryNames} isClickable={false} />
     </section>
   );
 };

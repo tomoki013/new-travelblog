@@ -25,7 +25,7 @@ const PhotoFilter = ({
           className={`px-4 py-2 text-sm font-semibold rounded-full transition-colors duration-200 relative ${
             activeFilter === filter
               ? "text-white"
-              : "text-gray-700 hover:text-black"
+              : "text-muted-foreground hover:text-foreground"
           }`}
         >
           {activeFilter === filter && (
