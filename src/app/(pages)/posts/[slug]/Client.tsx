@@ -12,7 +12,8 @@ import PostHeader from "@/components/featured/article/PostHeader";
 import PostNavigation from "@/components/featured/article/PostNavigation";
 import Button from "@/components/elements/Button";
 import ShareButtons from "@/components/featured/article/ShareButtons";
-
+import AffiliateCard from "@/components/elements/AffiliateCard";
+import { affiliates } from "@/constants/affiliates";
 import React from "react";
 import CostBreakdown from "@/components/featured/article/CostBreakdown";
 
@@ -53,6 +54,29 @@ const Client = ({
         <div className="max-w-none mt-12">
           <article>{children}</article>
         </div>
+
+        {post.isPromotion && post.promotionPG && (
+          <div className="my-12">
+            <h2 className="text-2xl font-bold mb-6 text-center">
+              この記事で紹介したサービス
+            </h2>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+              {affiliates
+                .filter(
+                  (affiliate) =>
+                    post.promotionPG?.includes(affiliate.name) &&
+                    affiliate.status === "ready"
+                )
+                .map((affiliate) => (
+                  <AffiliateCard
+                    key={affiliate.name}
+                    affiliate={affiliate}
+                    type={affiliate.type}
+                  />
+                ))}
+            </div>
+          </div>
+        )}
 
         <motion.footer
           className="mt-16"

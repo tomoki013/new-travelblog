@@ -17,7 +17,7 @@ export const affiliates: AffiliatesProps[] = [
     affiliateUrl:
       "https://jp.trip.com/?Allianceid=7063246&SID=258431426&trip_sub1=",
     homeUrl: "https://jp.trip.com/partners/index",
-    type: "banner",
+    type: "card",
     icon: <BedDouble className="w-10 h-10 text-primary" />,
     description:
       "航空券・ホテル・列車まで、旅の予約がこれ一つで完結！セールも豊富でお得に旅しよう。",
