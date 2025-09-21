@@ -1,7 +1,7 @@
 ---
 category: category
 title: title
-date:
+dates:
   - "2025-06-22"
 excerpt: >-
   description
