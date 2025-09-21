@@ -88,6 +88,7 @@ export async function getPostBySlug(slug: string): Promise<Post> {
     costs: data.costs,
     series: data.series,
     isPromotion: data.isPromotion,
+    promotionPG: data.promotionPG,
   } as Post;
 }
 
