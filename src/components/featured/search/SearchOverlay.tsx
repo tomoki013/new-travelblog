@@ -83,13 +83,15 @@ const SearchSuggestions = ({
   selectedCategory,
   executeSearch,
   onClose,
+  totalResults,
 }: {
-  searchTerm: string;
+  searchTerm:string;
   suggestions: Suggestion[];
   isLoading: boolean;
   selectedCategory: string | null;
   executeSearch: () => void;
   onClose: () => void;
+  totalResults: number | null;
 }) => {
   // カテゴリ選択時もサジェストを表示するため、selectedCategoryも条件に含める
   const canShowComponent =
@@ -97,7 +99,7 @@ const SearchSuggestions = ({
 
   const displayedSuggestions = suggestions.slice(
     0,
-    SEARCH_CONFIG.MAX_SUGGESTIONS
+    SEARCH_CONFIG.MAX_SUGGESTIONS,
   );
 
   const showSeeAllButton = suggestions.length > SEARCH_CONFIG.MAX_SUGGESTIONS;
@@ -122,6 +124,12 @@ const SearchSuggestions = ({
   return (
     <div className="mt-4 bg-background border border-border rounded-lg shadow-lg">
       {isLoading && <LoadingAnimation variant="luggageCarousel" />}
+
+      {!isLoading && totalResults !== null && (
+        <div className="p-3 text-sm text-muted-foreground border-b border-border">
+          検索結果: {totalResults}件
+        </div>
+      )}
 
       {!isLoading && displayedSuggestions.length > 0 && (
         <motion.ul
@@ -153,7 +161,8 @@ const SearchSuggestions = ({
 
       {!isLoading &&
         suggestions.length === 0 &&
-        (searchTerm || selectedCategory) && (
+        (searchTerm || selectedCategory) &&
+        totalResults === 0 && (
           <div className="p-4 text-muted-foreground">
             一致する記事は見つかりませんでした。
             <br />
@@ -174,6 +183,7 @@ const SearchOverlay = ({ isOpen, onClose }: SearchOverlayProps) => {
     selectedCategory,
     toggleCategory,
     suggestions,
+    totalResults,
     isLoading,
     executeSearch,
     handleKeyDown,
@@ -248,6 +258,7 @@ const SearchOverlay = ({ isOpen, onClose }: SearchOverlayProps) => {
               selectedCategory={selectedCategory}
               executeSearch={executeSearch}
               onClose={onClose}
+              totalResults={totalResults}
             />
           </motion.div>
         </motion.div>

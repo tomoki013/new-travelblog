@@ -17,12 +17,18 @@ type PostMetadata = Omit<Post, "content">;
 
 // Propsの型を定義
 interface BlogClientProps {
-  posts: PostMetadata[]; // 表示するページ分割済みの記事
-  totalPages: number; // 総ページ数
-  currentPage: number; // 現在のページ番号
+  posts: PostMetadata[];
+  totalPages: number;
+  currentPage: number;
+  totalPosts: number | null;
 }
 
-const BlogClient = ({ posts, totalPages, currentPage }: BlogClientProps) => {
+const BlogClient = ({
+  posts,
+  totalPages,
+  currentPage,
+  totalPosts,
+}: BlogClientProps) => {
   const router = useRouter();
   const searchParams = useSearchParams();
 
@@ -133,6 +139,15 @@ const BlogClient = ({ posts, totalPages, currentPage }: BlogClientProps) => {
             も使えます。
           </p>
         </section>
+
+        {/* ==================== Total Results ==================== */}
+        {totalPosts !== null && (
+          <section className="mb-4 text-center">
+            <p className="text-lg font-medium text-foreground">
+              検索結果: <span className="font-bold">{totalPosts}</span>件
+            </p>
+          </section>
+        )}
 
         {/* ==================== Filters ==================== */}
         <section className="mb-12">

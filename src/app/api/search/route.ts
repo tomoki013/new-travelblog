@@ -39,7 +39,8 @@ export async function GET(request: Request) {
         .map((item) => item.post);
     }
 
-    // 3. 上位件数を候補として返却
+    // 3. 結果を整形して返却
+    const total = finalPosts.length;
     const suggestions = finalPosts
       .slice(0, SEARCH_CONFIG.API_MAX_RESULTS)
       .map((post) => ({
@@ -47,7 +48,10 @@ export async function GET(request: Request) {
         slug: post.slug,
       }));
 
-    return NextResponse.json(suggestions);
+    return NextResponse.json({
+      suggestions,
+      total,
+    });
   } catch (error) {
     console.error("Search API error:", error);
     return NextResponse.json(
