@@ -3,6 +3,8 @@ import { getAllPosts } from "@/lib/posts";
 import { filterPostsBySearch, calculateScores } from "@/lib/search";
 import { SEARCH_CONFIG } from "@/constants/searchConfig";
 
+export const revalidate = 3600; // 1 hour
+
 export async function GET(request: Request) {
   const { searchParams } = new URL(request.url);
   const query = searchParams.get("q");
