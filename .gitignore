@@ -44,3 +44,6 @@ next-env.d.ts
 # sitemap
 public/sitemap.xml
 public/sitemap-*.xml
+
+# Image index files
+/public/images/**/index.json

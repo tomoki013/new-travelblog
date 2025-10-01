@@ -24,8 +24,8 @@ tags:
 カサ・ミラは直線が一切なく、全て曲線になっています。その不思議な構造は、中に入ってみるとより不思議さを感じました。
 その独特の外観の中ももちろん、いたるところが曲線で構成されており、ガウディの独特の感性とセンスを感じられます。
 
-![カサ・ミラの内部の部屋](/images/Spain/casa-mira's-room.jpg)
-![カサ・ミラの屋上](/images/Spain/casa-mira's-roof-top.jpg)
+![カサ・ミラの内部の部屋](/images/Spain/casa-miras-room.jpg)
+![カサ・ミラの屋上](/images/Spain/casa-miras-roof-top.jpg)
 
 ちなみにカサ・ミラは今も一部が実際にアパートとして使われており、住んでいる人もいるようです。
 カサ・ミラの屋上からの景色もとてもよく、高い建物が少ないバルセロナを遠くまで見渡すことが出来ます。
@@ -43,7 +43,7 @@ tags:
 これが非常に美味しく、この後に続くチュロスブームの先駆けとなりました。
 
 ![la-pallaresa](/images/Spain/la-pallaresa.jpg)
-![la-pallaresaのチュロス・コン・チョコラテ](/images/Spain/la-pallaresa's-churos-con-chocolatte.jpg)
+![la-pallaresaのチュロス・コン・チョコラテ](/images/Spain/la-pallaresas-churos-con-chocolatte.jpg)
 
 ## 未完の大建築、サグラダ・ファミリア
 
@@ -70,7 +70,7 @@ tags:
 朝食が遅かったためあまりお腹は空いていませんでしたが、ペロリと平らげました。
 
 ![Casa Lolea](/images/Spain/casa-lolea.jpg)
-![Casa Loleaの生ハム](/images/Spain/casa-lolea's-dry-cured-ham.jpg)
+![Casa Loleaの生ハム](/images/Spain/casa-loleas-dry-cured-ham.jpg)
 
 ## 海岸で感じる地中海の風
 
@@ -93,7 +93,7 @@ tags:
 お店によっていろいろなチュロスがありとてもいいですね。
 
 ![バルセロナ老舗のチョコレート屋さん](/images/Spain/long-established-chocolate-shop-in-barcelona.jpg)
-![バルセロナ老舗のチョコレート屋さんのチュロス・コン・チョコラテ](/images/Spain/long-established-chocolate-shop-in-barcelona's-churos-con-chocolatte.jpg)
+![バルセロナ老舗のチョコレート屋さんのチュロス・コン・チョコラテ](/images/Spain/long-established-chocolate-shop-in-barcelonas-churos-con-chocolatte.jpg)
 
 その後、知人と合流する事になったので、合流場所のカタルーニャ広場に向かいます。
 ここでプチハプニング。ベンチに座って待っていたら隣にパンを持ったおじさんがやってきます。
@@ -118,9 +118,9 @@ tags:
 ここではイベリコハムのコロッケとイカ墨パエリア、サングリアを注文。さすがおすすめだけあってとても美味しかったです。
 ただイカ墨パエリアはとても濃厚で、全て食べ切るのは少ししんどかったです。
 
-![telefericのウェルカムドリンク、Cava](/images/Spain/teleferic's-cava.jpg)
-![telefericのイベリコハムのコロッケ](/images/Spain/teleferic's-iberico-ham-croquette.jpg)
-![telefericのイカ墨パエリア](/images/Spain/teleferic's-paella-with-squid-ink.jpg)
+![telefericのウェルカムドリンク、Cava](/images/Spain/teleferics-cava.jpg)
+![telefericのイベリコハムのコロッケ](/images/Spain/teleferics-iberico-ham-croquette.jpg)
+![telefericのイカ墨パエリア](/images/Spain/teleferics-paella-with-squid-ink.jpg)
 
 食後はホテルに戻り、この日の観光を終えました。
 バルセロナの美食と芸術に満ちた1日でした。

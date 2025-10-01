@@ -1,68 +1,79 @@
-{
-  "banh-mi-pho.jpg": {
+[
+  {
+    "fileName": "banh-mi-pho.jpg",
     "title": "Banh Mi Pho",
     "description": "",
     "location": "hanoi",
     "categories": "グルメ"
   },
-  "banh-mi.jpg": {
+  {
+    "fileName": "banh-mi.jpg",
     "title": "Banh Mi",
     "description": "",
     "location": "hanoi",
     "categories": "グルメ"
   },
-  "dong-kinh-nghia-thuc-square.jpg": {
+  {
+    "fileName": "dong-kinh-nghia-thuc-square.jpg",
     "title": "ドンキンギアントゥック広場",
     "description": "ドンキンギアントゥック広場は、ベトナムの旧首都フエ市の中心部に位置する歴史的な広場です。この広場はベトナムの最後の王朝であるグエン王朝時代（1802年-1945年）に造られ、かつての王宮に隣接しています。広場の名前「ドンキンギアントゥック」は、「文学と武術の広場」という意味を持ち、ベトナムの伝統的な価値観を象徴しています。グエン王朝時代には、この広場で王朝の重要な儀式や国家的な行事が行われていました。特に科挙試験（古代中国から伝わった官僚登用試験制度）の会場としても使用され、知識人たちの登竜門となっていました。長方形の形状をした広場は、周囲を美しい庭園や歴史的建造物に囲まれています。広場の中央には、かつてグエン王朝の皇帝たちが儀式を行った際に使用した旗台が残されています。この旗台からは王宮全体を見渡すことができ、戦略的にも重要な位置にありました。広場の周囲には色鮮やかな花々や樹木が植えられ、フエ特有の優雅な雰囲気を醸し出しています。また、広場に隣接して建つ伝統的な建築物には、精巧な彫刻や装飾が施されており、ベトナム建築の美しさを堪能することができます。現在のドンキンギアントゥック広場は、フエ市民や観光客にとって重要な憩いの場となっています。早朝には地元の人々が太極拳や体操を楽しみ、夕方になると涼をとる家族連れで賑わいます。また、テト（旧正月）などのベトナムの伝統的な祝祭日には、この広場で文化イベントや伝統舞踊のパフォーマンスが行われることもあります。ユネスコ世界遺産に登録されているフエの歴史的建造物群の一部として、ドンキンギアントゥック広場はベトナムの豊かな文化遺産を今に伝える貴重な場所です。フエの他の観光スポット、特にグエン王朝の王宮や王墓へのアクセスも良く、ベトナムの歴史と文化を体験したい訪問者にとって必見の場所となっています。",
     "location": "hanoi",
     "categories": "街並み"
   },
-  "ho-hoan-kiem-lake.jpg": {
+  {
+    "fileName": "ho-hoan-kiem-lake.jpg",
     "title": "Ho Hoan Kiem Lake",
     "description": "",
     "location": "hanoi",
     "categories": "湖"
   },
-  "lemon-tea.jpg": {
+  {
+    "fileName": "lemon-tea.jpg",
     "title": "Lemon Tea",
     "description": "",
     "location": "hanoi",
     "categories": "グルメ"
   },
-  "vietnam-bus.jpg": {
+  {
+    "fileName": "vietnam-bus.jpg",
     "title": "Vietnam Bus",
     "description": "",
     "location": "hanoi",
     "categories": "公共交通"
   },
-  "vietnam-coffee.jpg": {
+  {
+    "fileName": "vietnam-coffee.jpg",
     "title": "Vietnam Coffee",
     "description": "",
     "location": "hanoi",
     "categories": "グルメ"
   },
-  "vietnam-general-store.jpg": {
+  {
+    "fileName": "vietnam-general-store.jpg",
     "title": "Vietnam General Store",
     "description": "",
     "location": "hanoi",
     "categories": "商業施設"
   },
-  "vietnam-old-town.jpg": {
+  {
+    "fileName": "vietnam-old-town.jpg",
     "title": "Vietnam Old Town",
     "description": "",
     "location": "hanoi",
     "categories": "旧市街"
   },
-  "vietnam-old-town2.jpg": {
+  {
+    "fileName": "vietnam-old-town2.jpg",
     "title": "ハノイ旧市街",
     "description": "ハノイ旧市街は、ベトナムの首都ハノイの中心部に位置する歴史的地区で、「36通り地区」とも呼ばれています。この名称は15世紀頃から形成された36の専門職人通りに由来し、かつてはそれぞれの通りで特定の商品や職人技が扱われていました。現在でも多くの通りは昔の名残を示す名前を持っています。例えば、ハンバック通り（銀細工師通り）、ハンノン通り（籠職人通り）、ハンガイ通り（絹織物通り）などがあります。旧市街の特徴的な景観は、細く曲がりくねった路地と「チューブハウス」と呼ばれる独特の建築様式の家屋です。これらの家屋は間口が非常に狭く（2〜4メートル程度）、奥行きが長い（20〜60メートル）形状をしており、かつての税制（間口の幅に応じて税金が課された）に対応して発展した建築様式です。多くの建物は2〜3階建てで、フランス植民地時代の影響を受けたデザインと伝統的なベトナム様式が融合しています。旧市街の中心にはホアンキエム湖（還剣湖）があり、湖上に浮かぶ玉山祠（ゴックソン寺）や伝説の亀の塔など、象徴的な建造物も見どころです。湖周辺は地元の人々や観光客の憩いの場となっており、特に早朝は太極拳や体操をする人々で賑わいます。この地区は常に活気に満ち溢れており、狭い路地には無数の小さな店舗、屋台、カフェ、レストランが軒を連ねています。伝統的な手工芸品、衣類、食料品、電化製品など様々な商品が販売され、絶え間ない商いの声とバイクのクラクションが混じり合った独特の騒がしさが特徴です。食文化もハノイ旧市街の大きな魅力の一つで、フォー（米麺のスープ麺）、ブンチャー（焼き豚の麺料理）、バインミー（フランスパンのサンドイッチ）といったベトナム料理の名物を楽しむことができます。特に路上の小さなプラスチック椅子に座ってのストリートフードの食事体験は、旧市街を訪れる多くの旅行者にとって忘れがたい思い出となります。週末になるとハノイ旧市街の一部は歩行者天国となり、屋外パフォーマンスや伝統音楽の演奏が行われ、さらに多くの人で賑わいます。千年以上の歴史を持つハノイの文化的・商業的中心として、旧市街はベトナムの伝統と近代化が共存する独特の空間を提供し続けています。",
     "location": "hanoi",
     "categories": "街並み"
   },
-  "vietnam-vender.jpg": {
+  {
+    "fileName": "vietnam-vender.jpg",
     "title": "Vietnam Vender",
     "description": "",
     "location": "hanoi",
     "categories": "街歩き・観光"
   }
-}
+]

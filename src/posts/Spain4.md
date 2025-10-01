@@ -44,7 +44,7 @@ tags:
 
 ここではハムとパンとトマトジャムを注文。
 
-![サンタ・エウラリアのハムとパンとトマトジャム](/images/Spain/santa-eulalia's-ham-and-tomato-jam-and-bread.jpg)
+![サンタ・エウラリアのハムとパンとトマトジャム](/images/Spain/santa-eulalias-ham-and-tomato-jam-and-bread.jpg)
 
 自分的には生ハムを注文したつもりだったのですが他言語は難しいですね。
 しかもこの組み合わせで注文する人はいないのか店員さんがすごく不思議そうな顔をしていました。
@@ -161,7 +161,7 @@ Google Mapを頼りに到着しましたがまだ空いていなかったため�
 パエリアに添えられたレモンを途中で絞ることで、味の変化も楽しめるという粋な演出も。
 もちろん飲み物はサングリア。
 
-![Restaurante Loredoのシーフードパエリア](/images/Spain/loredo's-seafood-paella.jpg)
+![Restaurante Loredoのシーフードパエリア](/images/Spain/loredos-seafood-paella.jpg)
 
 スペインの夜を彩る甘酸っぱい果実酒は、パエリアと見事にマッチしていました。
 この食事でこの日を締めて、明日に備えて睡眠をとります。

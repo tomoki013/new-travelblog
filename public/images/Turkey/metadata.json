@@ -1,14 +1,16 @@
-{
-  "balloons-in-cappadocia.jpg": {
+[
+  {
+    "fileName": "balloons-in-cappadocia.jpg",
     "title": "Balloons in Cappadocia",
     "description": "",
     "location": "cappadocia",
     "categories": "自然・絶景"
   },
-  "meidens-tower.jpg": {
+  {
+    "fileName": "meidens-tower.jpg",
     "title": "Meiden's Tower",
     "description": "",
     "location": "cappadocia",
     "categories": "タワー"
   }
-}
+]
