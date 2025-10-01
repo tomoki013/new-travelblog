@@ -41,11 +41,15 @@ const PostsPage = async (props: {
     );
   }
 
-  const totalPages = Math.ceil(processedPosts.length / POSTS_PER_PAGE);
+  const totalPosts = processedPosts.length;
+  const totalPages = Math.ceil(totalPosts / POSTS_PER_PAGE);
   const paginatedPosts = processedPosts.slice(
     (page - 1) * POSTS_PER_PAGE,
-    page * POSTS_PER_PAGE
+    page * POSTS_PER_PAGE,
   );
+
+  // 検索またはカテゴリ絞り込みがある場合のみ、総件数を渡す
+  const displayTotalPosts = searchQuery || category !== "all" ? totalPosts : null;
 
   return (
     <Suspense fallback={<LoadingAnimation variant="mapRoute" />}>
@@ -53,6 +57,7 @@ const PostsPage = async (props: {
         posts={paginatedPosts}
         totalPages={totalPages}
         currentPage={page}
+        totalPosts={displayTotalPosts}
       />
     </Suspense>
   );

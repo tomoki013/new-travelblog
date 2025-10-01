@@ -8,6 +8,12 @@ type Suggestion = {
   slug: string;
 };
 
+// APIレスポンスの型を定義
+type SearchApiResponse = {
+  suggestions: Suggestion[];
+  total: number;
+};
+
 interface UseSearchOverlayProps {
   onClose: () => void;
 }
@@ -17,6 +23,7 @@ export function useSearchOverlay({ onClose }: UseSearchOverlayProps) {
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
   const [suggestions, setSuggestions] = useState<Suggestion[]>([]);
+  const [totalResults, setTotalResults] = useState<number | null>(null); // 総件数を保持するstate
   const [isLoading, setIsLoading] = useState(false);
 
   const debouncedSearchTerm = useDebounce(
@@ -26,13 +33,16 @@ export function useSearchOverlay({ onClose }: UseSearchOverlayProps) {
 
   const fetchSuggestions = useCallback(
     async (query: string, category: string | null) => {
-      // 検索語が不十分で、かつカテゴリも未選択の場合は何もしない
+      // 検索語が不十分で、かつカテゴリも未選択の場合はリセット
       if (query.length < SEARCH_CONFIG.MIN_QUERY_LENGTH && !category) {
         setSuggestions([]);
+        setTotalResults(null);
         return;
       }
 
       setIsLoading(true);
+      setTotalResults(null); // 検索開始時にリセット
+
       try {
         const params = new URLSearchParams();
         if (query) {
@@ -46,11 +56,13 @@ export function useSearchOverlay({ onClose }: UseSearchOverlayProps) {
         if (!response.ok) {
           throw new Error(`HTTP error! status: ${response.status}`);
         }
-        const data: Suggestion[] = await response.json();
-        setSuggestions(data);
+        const data: SearchApiResponse = await response.json();
+        setSuggestions(data.suggestions);
+        setTotalResults(data.total);
       } catch (error) {
         console.error("検索候補の取得に失敗しました:", error);
         setSuggestions([]);
+        setTotalResults(0); // エラー時は0件とする
       } finally {
         setIsLoading(false);
       }
@@ -67,6 +79,7 @@ export function useSearchOverlay({ onClose }: UseSearchOverlayProps) {
       fetchSuggestions(debouncedSearchTerm, selectedCategory);
     } else {
       setSuggestions([]);
+      setTotalResults(null);
     }
   }, [debouncedSearchTerm, selectedCategory, fetchSuggestions]);
 
@@ -108,6 +121,7 @@ export function useSearchOverlay({ onClose }: UseSearchOverlayProps) {
     selectedCategory,
     toggleCategory,
     suggestions,
+    totalResults,
     isLoading,
     executeSearch,
     handleKeyDown,
