@@ -1,3 +1,4 @@
+import { cache } from "react";
 import fs from "fs";
 import path from "path";
 import matter from "gray-matter";
@@ -11,14 +12,14 @@ type PostMetadata = Omit<Post, "content">;
 
 let cachedPosts: PostMetadata[] | null = null;
 
-function fetchAllPosts(): PostMetadata[] {
+const fetchAllPosts = cache((): PostMetadata[] => {
   if (cachedPosts) {
     return cachedPosts;
   }
   const posts = getRawPostsData();
   cachedPosts = postFilters.sortByDate(posts);
   return cachedPosts;
-}
+});
 
 type GetAllPostsOptions = {
   category?: string;
@@ -31,36 +32,36 @@ type GetAllPostsOptions = {
 /**
  * Gets all post metadata and processes it based on options.
  */
-export async function getAllPosts(
-  options: GetAllPostsOptions = {}
-): Promise<PostMetadata[]> {
-  let posts = fetchAllPosts();
+export const getAllPosts = cache(
+  async (options: GetAllPostsOptions = {}): Promise<PostMetadata[]> => {
+    let posts = fetchAllPosts();
 
-  if (options.category) {
-    posts = postFilters.filterByCategory(posts, options.category);
-  }
-  if (options.series) {
-    posts = postFilters.filterBySeries(posts, options.series);
-  }
-  if (options.tag) {
-    posts = postFilters.filterByTag(posts, options.tag);
-  }
-  if (options.region) {
-    posts = postFilters.getRegionPosts(posts, options.region);
-  }
+    if (options.category) {
+      posts = postFilters.filterByCategory(posts, options.category);
+    }
+    if (options.series) {
+      posts = postFilters.filterBySeries(posts, options.series);
+    }
+    if (options.tag) {
+      posts = postFilters.filterByTag(posts, options.tag);
+    }
+    if (options.region) {
+      posts = postFilters.getRegionPosts(posts, options.region);
+    }
 
-  let sortedPosts = postFilters.sortByDate(posts);
-  if (options.limit) {
-    sortedPosts = sortedPosts.slice(0, options.limit);
-  }
+    let sortedPosts = postFilters.sortByDate(posts);
+    if (options.limit) {
+      sortedPosts = sortedPosts.slice(0, options.limit);
+    }
 
-  return sortedPosts;
-}
+    return sortedPosts;
+  },
+);
 
 /**
  * Gets a single post data (including raw Markdown content) based on the slug.
  */
-export async function getPostBySlug(slug: string): Promise<Post> {
+export const getPostBySlug = cache(async (slug: string): Promise<Post> => {
   const postsDirectory = path.join(process.cwd(), "src/posts");
   const fullPath = path.join(postsDirectory, `${slug}.md`);
 
@@ -90,12 +91,12 @@ export async function getPostBySlug(slug: string): Promise<Post> {
     isPromotion: data.isPromotion,
     promotionPG: data.promotionPG,
   } as Post;
-}
+});
 
 /**
  * Gets all the necessary data for a single post page.
  */
-export async function getPostData(slug: string) {
+export const getPostData = cache(async (slug: string) => {
   const post = await getPostBySlug(slug);
   const allPosts = await getAllPosts();
 
@@ -109,7 +110,7 @@ export async function getPostData(slug: string) {
     const categoryPosts = postFilters.filterByCategory(allPosts, post.category);
     const previousCategoryPostData = postFilters.getPreviousPost(
       slug,
-      categoryPosts
+      categoryPosts,
     );
     const nextCategoryPostData = postFilters.getNextPost(slug, categoryPosts);
 
@@ -133,7 +134,7 @@ export async function getPostData(slug: string) {
     const seriesPosts = allPosts.filter((p) => p.series === post.series);
     const previousSeriesPostData = postFilters.getPreviousPost(
       slug,
-      seriesPosts
+      seriesPosts,
     );
     const nextSeriesPostData = postFilters.getNextPost(slug, seriesPosts);
 
@@ -215,4 +216,4 @@ export async function getPostData(slug: string) {
     previousSeriesPost,
     nextSeriesPost,
   };
-}
+});

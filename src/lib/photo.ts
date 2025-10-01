@@ -1,3 +1,4 @@
+import { cache } from "react";
 import { Photo } from "@/types/types";
 import fs from "fs";
 import path from "path";
@@ -10,7 +11,7 @@ type PhotoDescriptions = {
 
 const imageDirectory = path.join(process.cwd(), "public/images");
 
-export async function getPhotos() {
+export const getPhotos = cache(async () => {
   const countryDirectories = fs
     .readdirSync(imageDirectory, { withFileTypes: true })
     .filter((dirent) => dirent.isDirectory())
@@ -50,4 +51,4 @@ export async function getPhotos() {
     }
   }
   return allPhotos;
-}
+});
