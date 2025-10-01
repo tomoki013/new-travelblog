@@ -3,10 +3,10 @@
   publish = ".next"
 
 [[redirects]]
-  from = "https://tomokichidiary.netlify.app/*"
-  to = "https://www.tomokichidiary.com/:splat"
-  status = 301
-  force = true
+  from = "https://tomokichidiary.netlify.app/*"
+  to = "https://www.tomokichidiary.com/:splat"
+  status = 301
+  force = true
 
 [[redirects]]
   from = "/diary/*"
