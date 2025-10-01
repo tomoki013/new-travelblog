@@ -1,320 +1,373 @@
-{
-  "airport-metro-station.jpg": {
+[
+  {
+    "fileName": "airport-metro-station.jpg",
     "title": "シャルル・ド・ゴール国際空港のメトロ駅",
     "description": "シャルル・ド・ゴール国際空港（パリ北東約25km）には、厳密には「メトロ」の駅ではなく、RER（Réseau Express Régional：地域高速鉄道網）のB線の駅があります。この駅は正式には「Aéroport Charles de Gaulle 1」と「Aéroport Charles de Gaulle 2-TGV」の2つの駅から構成されています。RER B線は、空港と市内を結ぶ重要な交通手段で、パリ中心部のシャトレ・レ・アル駅やサン・ミシェル・ノートルダム駅などの主要駅に直接アクセスできます。運行時間は約5:00から24:00頃までで、日中は平均して15分間隔で運行しています。「Aéroport Charles de Gaulle 2-TGV」駅は、空港の第2ターミナル内に位置し、TGV（高速鉄道）の駅も併設されているため、フランス国内の主要都市やベルギー、オランダなどの国際路線への乗り継ぎも可能です。駅の特徴としては、近代的な設計の広々とした構造で、旅行者向けの案内表示が複数言語で表示されています。エスカレーターやエレベーターも完備されており、大きな荷物を持った旅行者にも配慮されています。空港から市内中心部（シャトレ・レ・アル駅）までの所要時間は約30分から40分程度です。チケットはパリ公共交通機関の標準チケット（Ticket T+）ではなく、特別料金（2024年現在、片道約11ユーロ程度）が設定されています。パリ市内の「メトロ」と呼ばれる地下鉄システムは空港まで直接延びておらず、市内と空港を結ぶ交通手段としてはRER B線が主要な役割を果たしています。",
     "location": "paris",
     "categories": "公共交通"
   },
-  "airport-ticket-window.jpg": {
+  {
+    "fileName": "airport-ticket-window.jpg",
     "title": "Airport Ticket Window",
     "description": "",
     "location": "paris",
     "categories": "交通・施設"
   },
-  "arc-de-triomphe-etoile.jpg": {
+  {
+    "fileName": "arc-de-triomphe-etoile.jpg",
     "title": "エトワール凱旋門",
     "description": "エトワール凱旋門（Arc de Triomphe de l'Étoile）は、フランスのパリ、シャンゼリゼ通りの西端にあるシャルル・ド・ゴール広場（かつてのエトワール広場）の中央に位置する記念建造物です。この壮大な凱旋門は、1806年にナポレオン・ボナパルトによって発案され、アウステルリッツの戦いでの勝利を記念して建設が始まりました。しかし完成したのは1836年と、ナポレオンの死後15年以上経った後でした。建築家ジャン・フランソワ・シャルグランによって設計されました。高さ50メートル、幅45メートル、奥行き22メートルの巨大な建造物で、内部には小さな博物館があります。外壁には、フランス革命とナポレオン戦争に関する大規模な彫刻が施されています。特に有名なのは、フランソワ・リュードによる「ラ・マルセイエーズ（出陣）」の彫刻です。凱旋門の内側の壁には、ナポレオン時代の主要な戦勝地と将軍たちの名前が刻まれています。また、第一次世界大戦後の1921年に、無名戦士の墓が凱旋門の下に設置され、毎日夕方には「永遠の炎」の再点火式が行われています。エトワール凱旋門は、12本の放射状に伸びる大通りの交差点に位置し、パリの都市計画の見事な例としても知られています。凱旋門の屋上からは、パリの美しいパノラマ景色を楽しむことができ、エッフェル塔やラ・デファンス地区など、パリの主要なランドマークを一望できます。フランスの国家的な式典や祝賀行事、特に7月14日の革命記念日（Bastille Day）の軍事パレードでは、重要な役割を果たす場所となっています。また、ツール・ド・フランスのゴール地点としても有名です。",
     "location": "paris",
     "categories": "慰霊碑"
   },
-  "bonaparte-over-the-saint-bernard-pass.jpg": {
+  {
+    "fileName": "bonaparte-over-the-saint-bernard-pass.jpg",
     "title": "Bonaparte Over The Saint Bernard Pass",
     "description": "",
     "location": "paris",
     "categories": "芸術・建築"
   },
-  "breakfast-at-a-cafe-in-the-palace-of-versailles.jpg": {
+  {
+    "fileName": "breakfast-at-a-cafe-in-the-palace-of-versailles.jpg",
     "title": "Breakfast at a Cafe in the Palace of Versailles",
     "description": "",
     "location": "paris",
     "categories": "グルメ"
   },
-  "carette.jpg": {
+  {
+    "fileName": "carette.jpg",
     "title": "Carette",
     "description": "",
     "location": "paris",
     "categories": "グルメ"
   },
-  "carrette-macarons-and-chocolate-mousse.jpg": {
+  {
+    "fileName": "carrette-macarons-and-chocolate-mousse.jpg",
     "title": "カフェ-カレット",
     "description": "フランスの人気カフェ「カレット」は、その洗練された雰囲気と優れたパティスリーで知られています。特に評判なのが、カレットのマカロンとチョコレートムースです。カレットのマカロンは、フランスの伝統的な菓子であるマカロンの最高峰とも言われています。二枚のアーモンド生地でできたクッキーの間に、風味豊かなフィリングをサンドしたこのお菓子は、カレットでは特別な配慮で作られています。外側のシェルは触れるとわずかに硬いものの、口に入れるとすぐに溶けるような繊細な食感が特徴です。カレットのマカロンは従来の味わいを大切にしながらも、季節限定のフレーバーや革新的な組み合わせも提供しており、古典的なピスタチオやラズベリーから、エキゾチックなユズやキャラメルソルトまで、多彩な味が楽しめます。一つ一つ手作りで、見た目の美しさも際立っており、色鮮やかなシェルは目を楽しませ、パッケージもエレガントでギフトとしても人気です。カレットのチョコレートムースは、シンプルながらもフランス料理の真髄を体現した一品です。極上の高カカオチョコレートを使用し、しっとりとなめらかな口当たりは、まさに職人技の結晶といえます。このムースの特徴は、その軽やかさと同時に深い風味を併せ持つ絶妙なバランスにあります。カレットでは、チョコレートムースにはしばしば独自のひねりが加えられており、時には芳醇なリキュールやプラリネの層を忍ばせたり、表面にはカカオニブや金箔を散りばめて視覚的な楽しみも提供しています。一口食べれば、舌の上でゆっくりと溶けていくその食感と、複雑ながらも調和のとれた味わいに、多くの人々が魅了されます。カレットカフェでは、これらの逸品をエレガントな空間でゆっくりと味わうことができます。パリのシャンゼリゼ通りに面したフラッグシップストアをはじめ、リヨンやニースなどフランス各地に店舗を構え、観光客だけでなく地元の人々からも愛されています。マカロンとチョコレートムースを中心としたデザートメニューに、香り高いフレンチコーヒーやシャンパンを合わせれば、真のフランス式カフェ体験が楽しめるでしょう。",
     "location": "paris",
     "categories": "グルメ"
   },
-  "carrousel-de-louvre.jpg": {
+  {
+    "fileName": "carrousel-de-louvre.jpg",
     "title": "Carrousel de Louvre",
     "description": "",
     "location": "paris",
     "categories": "美術館"
   },
-  "champagne-flash-of-the-eiffel-tower-from-arc-de-triomphe-etoile.jpg": {
+  {
+    "fileName": "champagne-flash-of-the-eiffel-tower-from-arc-de-triomphe-etoile.jpg",
     "title": "Champagne Flash of the Eiffel Tower from Arc de Triomphe Etoile",
     "description": "",
     "location": "paris",
     "categories": "タワー"
   },
-  "champagne-flash-of-the-eiffel-tower.JPG": {
+  {
+    "fileName": "champagne-flash-of-the-eiffel-tower.JPG",
     "title": "Champagne Flash of the Eiffel Tower",
     "description": "",
     "location": "paris",
     "categories": "タワー"
   },
-  "chateau-de-versailles.jpg": {
+  {
+    "fileName": "chateau-de-versailles.jpg",
     "title": "ヴェルサイユ宮殿",
     "description": "ヴェルサイユ宮殿（フランス語：Château de Versailles）は、フランス・パリ南西約20kmに位置する壮大な王宮で、世界最大級の宮殿建築として知られています。元々は1624年、ルイ13世が狩猟用の小さなロッジとして建てたものでしたが、息子のルイ14世（太陽王）によって17世紀後半から大規模な拡張が行われました。この宮殿は絶対王政の象徴として建設され、1682年から1789年のフランス革命まで、フランス王家の公式な住居となりました。建築家ルイ・ル・ヴォー、ジュール・アルドゥアン＝マンサール、アンドレ・ル・ノートルらの才能が結集した芸術作品です。宮殿の内部は700以上の部屋からなり、総面積63,154平方メートルに及びます。特に有名な「鏡の間」は、長さ73メートル、17面の大きな鏡が窓と対面する形で配置されており、当時としては前例のない贅沢な空間でした。宮殿を取り囲む庭園と公園は約800ヘクタールに及び、幾何学的に配置された花壇、噴水、彫刻、運河などが特徴です。マリー・アントワネットの離宮プティ・トリアノンや、彼女が田園生活を楽しむために作らせた「王妃の村」も敷地内にあります。歴史的には、1871年のドイツ帝国成立や、1919年のヴェルサイユ条約の調印など、重要な歴史的事件の舞台ともなりました。1979年にユネスコの世界文化遺産に登録され、現在は美術館及び国立文化財として一般公開されています。年間約800万人が訪れる世界有数の観光名所であり、フランスの歴史と文化を象徴する場所となっています。",
     "location": "paris",
     "categories": "王宮"
   },
-  "concorde-square.jpg": {
+  {
+    "fileName": "concorde-square.jpg",
     "title": "Concorde Square",
     "description": "",
     "location": "paris",
     "categories": "広場"
   },
-  "coup-de-torchons-dessert.jpg": {
+  {
+    "fileName": "coup-de-torchons-dessert.jpg",
     "title": "Coup de Torchon's Dessert",
     "description": "",
     "location": "paris",
     "categories": "グルメ"
   },
-  "coup-de-torchons-main.jpg": {
+  {
+    "fileName": "coup-de-torchons-main.jpg",
     "title": "Coup de Torchon's Main",
     "description": "",
     "location": "paris",
     "categories": "グルメ"
   },
-  "coup-de-torchon.jpg": {
+  {
+    "fileName": "coup-de-torchon.jpg",
     "title": "Coup de Torchon",
     "description": "",
     "location": "paris",
     "categories": "レストラン"
   },
-  "croissant.jpg": {
+  {
+    "fileName": "croissant.jpg",
     "title": "Croissant",
     "description": "",
     "location": "paris",
     "categories": "グルメ"
   },
-  "dessert-at-le-vieux-bistrot.jpg": {
+  {
+    "fileName": "dessert-at-le-vieux-bistrot.jpg",
     "title": "Dessert at Le Vieux Bistrot",
     "description": "",
     "location": "paris",
     "categories": "グルメ"
   },
-  "dinner-with-eiffel-tower.jpg": {
+  {
+    "fileName": "dinner-with-eiffel-tower.jpg",
     "title": "Le Camp de Marsのディナー",
     "description": "エッフェル塔の麓、シャン・ド・マルス公園に隣接する「Le Camp de Mars」は、パリ7区の中心に位置する洗練されたビストロです。クラシックなパリジャンスタイルの外観を持ち、温かみのある木製インテリアと柔らかな照明が特徴的な、居心地の良い雰囲気が漂う空間です。店内の窓からはエッフェル塔の壮大なシルエットを眺めることができ、特に夕暮れ時には鉄塔のライトアップが始まる瞬間を目撃できる特等席となります。ディナータイムのメニューは、伝統的なフランス料理に現代的な解釈を加えた創造的な一品が揃っています。前菜では、フォアグラのテリーヌにブリオッシュトーストとイチジクのコンフィチュールを添えた一皿や、新鮮な海の幸を贅沢に使ったシーフードプラッターが人気です。また、季節のきのことトリュフのリゾットは、店の看板メニューとなっています。メインディッシュでは、ブルゴーニュ地方の伝統的な調理法で仕上げたビーフブルギニョンや、ブルターニュ産の新鮮な魚を使ったポワソンアラプランシャ（鮮魚のグリル）が絶品です。特に、シェフ特製のコック・オ・ヴァン（赤ワイン煮込み鶏）は、長時間かけて煮込まれた鶏肉の柔らかさと深い味わいのソースで、多くの常連客を魅了しています。デザートには、パリジャンらしい洗練されたスイーツが並びます。クレーム・ブリュレやタルト・タタン、そしてムース・オ・ショコラなどのフランスの伝統的なデザートが、現代的な盛り付けで提供されます。季節によっては、マロンのパルフェやフレッシュベリーのミルフィーユなど、旬の食材を活かした特別デザートも登場します。ワインリストは充実しており、ボルドー、ブルゴーニュ、ロワール渓谷など、フランス各地の銘醸ワインが取り揃えられています。ソムリエは料理に合わせた最適なペアリングを提案してくれるため、食事とワインのマリアージュを存分に楽しむことができます。価格帯は中～高価格帯で、ディナーコースは一人あたり60～90ユーロほどです。予約は特に週末や観光シーズンには必須となり、エッフェル塔が見えるテラス席や窓際の席は早めに埋まってしまいます。「Le Camp de Mars」でのディナーは、単なる食事以上の体験です。パリの象徴を眺めながら本格的なフランス料理を堪能できる、特別な夜を過ごすのにふさわしい場所となっています。食事の後は、すぐ近くのシャン・ド・マルス公園を散策しながら、ライトアップされたエッフェル塔の美しい夜景を楽しむこともできるでしょう。",
     "location": "paris",
     "categories": "グルメ"
   },
-  "diptyque.jpg": {
+  {
+    "fileName": "diptyque.jpg",
     "title": "Diptyque",
     "description": "",
     "location": "paris",
     "categories": "ショッピング"
   },
-  "eiffel-tower-and-sunset.jpg": {
+  {
+    "fileName": "eiffel-tower-and-sunset.jpg",
     "title": "夕陽とエッフェル塔",
     "description": "パリのセーヌ川に架かる橋の上から眺める夕陽とエッフェル塔の景色は、世界で最も美しい都市風景の一つです。特にポン・デ・ザール（芸術橋）やポン・アレクサンドル3世などの橋からの眺めは格別です。夕暮れ時、西の空が金色からオレンジ、そして赤紫へと移り変わる光景の中、エッフェル塔のシルエットが浮かび上がります。沈みゆく太陽の光が塔の鉄骨構造に反射し、その姿をより一層際立たせます。セーヌ川の水面に映る夕陽の輝きは、川面をキラキラと輝かせ、まるで金色の道が川を横切るかのような光景を生み出します。この水面の揺らめきとエッフェル塔の堂々とした姿のコントラストは、多くの芸術家たちにインスピレーションを与えてきました。日が沈むにつれて空の色が深まり、エッフェル塔のライトが徐々に存在感を増していきます。日没後20分から30分の間に現れる「ブルーアワー」と呼ばれる時間帯は、深い青色の空と輝き始めたエッフェル塔の光が織りなす幻想的な風景が楽しめます。橋の上には、この素晴らしい光景を写真に収めようとするカメラマンたちや、ただ静かに夕暮れの美しさを楽しむパリジャン、そして人生の特別な瞬間を共有するカップルたちの姿が見られます。彼らと共に過ごす時間は、パリの魅力をより深く感じさせてくれます。この景色は季節によって様々な表情を見せますが、どの季節でも変わらない魅力を持ち、一度見たら決して忘れることのできない、パリを象徴する光景となっています。",
     "location": "paris",
     "categories": "タワー"
   },
-  "eiffel-tower.jpg": {
+  {
+    "fileName": "eiffel-tower.jpg",
     "title": "Eiffel Tower",
     "description": "",
     "location": "paris",
     "categories": "タワー"
   },
-  "eiffel-tower2.jpg": {
+  {
+    "fileName": "eiffel-tower2.jpg",
     "title": "Eiffel Tower",
     "description": "",
     "location": "paris",
     "categories": "タワー"
   },
-  "entrance-to-carrousel-de-louvre.jpg": {
+  {
+    "fileName": "entrance-to-carrousel-de-louvre.jpg",
     "title": "Entrance to Carrousel de Louvre",
     "description": "",
     "location": "paris",
     "categories": "美術館"
   },
-  "escargot-at-le-vieux-bistrot.jpg": {
+  {
+    "fileName": "escargot-at-le-vieux-bistrot.jpg",
     "title": "エスカルゴ",
     "description": "エスカルゴはフランス料理として世界的に知られている陸生巻き貝（カタツムリ）の料理です。フランス語で「エスカルゴ」とはカタツムリそのものを意味し、主にブルゴーニュ種のカタツムリが食用として使われます。この伝統的なフランス料理は、古代ローマ時代から食べられており、現在ではフランス料理の象徴的な一品となっています。カタツムリは収穫後、数日間断食させて体内を浄化し、調理前に丁寧に下処理されます。典型的な調理法である「エスカルゴ・ド・ブルゴーニュ」では、殻から取り出したカタツムリをブイヨンで煮込み、その後殻に戻してガーリックバターを詰め、オーブンで焼き上げます。このガーリックバターには通常、パセリやシャロット、時にはアニスやナッツメグなどのハーブやスパイスが加えられ、豊かな風味を作り出します。エスカルゴは専用の器具で食べるのが一般的で、特殊なトングで殻を固定し、細長いフォークで中身をすくい取ります。食感はややコリコリとしていて、味わいはガーリックバターの香りに包まれた独特の風味があります。フランスの高級レストランやビストロでは前菜として提供されることが多く、しばしばバゲットと一緒に供されて、パンにガーリックバターをつけて味わうのも楽しみの一つです。フランス以外でもベルギーやポルトガルなどヨーロッパ各地でも食べられており、現代では冷凍や缶詰のエスカルゴも市販されています。美食家たちに愛されるこの料理は、フランス料理の洗練さと独創性を象徴する一品として、今も多くの人々を魅了し続けています。",
     "location": "paris",
     "categories": "グルメ"
   },
-  "gardens-of-versailles-palace.jpg": {
+  {
+    "fileName": "gardens-of-versailles-palace.jpg",
     "title": "Gardens of Versailles Palace",
     "description": "",
     "location": "paris",
     "categories": "城"
   },
-  "grand-palais.jpg": {
+  {
+    "fileName": "grand-palais.jpg",
     "title": "グラン・パレ",
     "description": "グラン・パレ（Grand Palais）は、フランスのパリ、シャンゼリゼ通り近くに位置する巨大な展示施設です。1900年のパリ万国博覧会のために建設され、ベル・エポック時代を代表する建築物として知られています。この建物は、鋼鉄とガラスで作られた壮大なドームが特徴で、高さ45メートル、全長240メートルにおよぶ印象的な外観を持っています。ファサードには華麗な石造りの装飾が施され、アールヌーヴォー様式の要素も取り入れられています。グラン・パレの最も目を引く特徴は、13,500平方メートルに及ぶガラス屋根で、当時の最先端技術を用いて作られました。この巨大なガラスドームは、自然光を最大限に取り入れるよう設計されています。歴史的には、美術展、自動車ショー、乗馬競技会など、様々な大規模イベントの会場として利用されてきました。特に有名なのは、毎年開催される現代アートの見本市「FIAC」や「パリ・フォト」などです。2021年から大規模な改修工事が行われ、2025年のパリオリンピックに合わせた再開が予定されています。改修後は文化施設としての機能がさらに強化され、新たなギャラリースペースや公共エリアが設けられる計画です。グラン・パレの向かいには「プティ・パレ」（小宮殿）があり、こちらは市立美術館として運営されています。二つの建物は、パリの芸術と文化の重要な拠点として、今日も多くの訪問者を魅了し続けています。",
     "location": "paris",
     "categories": "美術館"
   },
-  "grand-trianon-palais.jpg": {
+  {
+    "fileName": "grand-trianon-palais.jpg",
     "title": "Grand Trianon Palais",
     "description": "",
     "location": "paris",
     "categories": "城"
   },
-  "hermes.jpg": {
+  {
+    "fileName": "hermes.jpg",
     "title": "Hermes",
     "description": "",
     "location": "paris",
     "categories": "ショッピング"
   },
-  "illuminated-eiffel-tower.jpg": {
+  {
+    "fileName": "illuminated-eiffel-tower.jpg",
     "title": "ライトアップされたエッフェル塔",
     "description": "エッフェル塔は日没後、華麗な光の演出によって夜のパリの風景を彩ります。1985年に始まった新しい照明システムにより、塔全体が黄金色の光に包まれ、パリの「光の都」としての名声をさらに高めています。毎時間、最初の5分間は25,000個の小さなLEDライトが塔全体でキラキラと明滅する特別なスパークリングショーが行われます。このきらめく光の饗宴は、特にセーヌ川から眺めると幻想的な美しさを放ちます。エッフェル塔のライトアップには、エネルギー効率の高いLED技術が使用されており、以前の照明システムと比較して消費電力を約40%削減しています。環境に配慮しながらも、その美しさを損なわないよう慎重に設計されています。特別なイベントや祝日には、通常のゴールドに代わって、フランス国旗の青・白・赤の三色や、様々なテーマカラーでライトアップされることもあります。例えば、乳がん啓発月間にはピンク色に、環境保護キャンペーンでは緑色に輝くことがあります。夜間のエッフェル塔は単なる観光名所を超え、芸術作品としての側面を持ちます。多くの写真家やアーティストに創作のインスピレーションを与え続け、無数の絵画や写真、映画のシーンに登場しています。最終登塔時間（通常23時頃）以降も、深夜1時まで（夏季は2時まで）ライトアップは続き、パリの夜景を彩り続けます。遠くからでも目を引くその輝きは、パリを訪れる人々に忘れられない思い出を提供します。",
     "location": "paris",
     "categories": "タワー"
   },
-  "la-creperies-breakfast-galette.jpg": {
+  {
+    "fileName": "la-creperies-breakfast-galette.jpg",
     "title": "ガレット",
     "description": "フランスの朝食は「プティ・デジュネ」と呼ばれ、非常にシンプルで優雅な食事です。典型的なフランスの朝食は焼きたてのバゲットやクロワッサンなどのパンにバターとジャムを添えて、コーヒーやホットチョコレートと一緒に楽しみます。特に子供たちはホットチョコレートを好む傾向があります。時には朝食にヨーグルトやフルーツが加わることもあります。フランス人にとって朝食は一日の中で最も軽い食事とされ、多くの場合短時間で済ませることが一般的です。ガレットについては、これはフランスのブルターニュ地方の伝統的な料理で、そば粉で作られた大きなクレープのようなものです。一般的にはハム、チーズ、卵などの塩味の具材を載せて折りたたみ、メインディッシュとして食べられます。ガレットは朝食というよりも、昼食や夕食として楽しまれることが多いです。クリスピーな生地と豊かな風味が特徴で、ブルターニュ地方を訪れる際には必ず味わうべき郷土料理の一つとされています。ガレットには通常、サイドルというリンゴのお酒が伴うことが多いです。",
     "location": "paris",
     "categories": "グルメ"
   },
-  "la-creperie.jpg": {
+  {
+    "fileName": "la-creperie.jpg",
     "title": "La Creperie",
     "description": "",
     "location": "paris",
     "categories": "レストラン"
   },
-  "le-vieux-bistrot.jpg": {
+  {
+    "fileName": "le-vieux-bistrot.jpg",
     "title": "Le Vieux Bistrot",
     "description": "",
     "location": "paris",
     "categories": "レストラン"
   },
-  "louvre-museum1.jpg": {
+  {
+    "fileName": "louvre-museum1.jpg",
     "title": "ルーブル美術館",
     "description": "ルーブル美術館（Musée du Louvre）は、フランスのパリ中心部に位置する世界最大級の美術館です。元々は12世紀に要塞として建設され、その後フランス王の宮殿として使用されていましたが、フランス革命後の1793年に美術館として一般公開されました。美術館の建物自体が歴史的な芸術作品であり、1989年に完成したガラスのピラミッド（設計：I.M.ペイ）が現代的な入口として世界的に有名となっています。総展示面積は約72,735平方メートルにおよび、約38,000点の作品が展示されています（所蔵品は約380,000点以上）。8つの部門（エジプト美術、オリエント美術、ギリシャ・エトルリア・ローマ美術、イスラム美術、絵画、彫刻、工芸品、版画・素描）に分かれています。ルーブル美術館は年間約1,000万人の来館者を迎える世界最も訪問者数の多い美術館の一つです。美術愛好家だけでなく、世界中の観光客にとって、パリ訪問の際の必見スポットとなっています。美術館内部は非常に広大で、全ての作品を一日で鑑賞することは不可能と言われています。また、定期的に特別展も開催され、世界中の美術ファンを魅了し続けています。",
     "location": "paris",
     "categories": "美術館"
   },
-  "marie-antoinettes-bedroom.jpg": {
+  {
+    "fileName": "marie-antoinettes-bedroom.jpg",
     "title": "Marie Antoinette's Bedroom",
     "description": "",
     "location": "paris",
     "categories": "城"
   },
-  "mona-lisa.jpg": {
+  {
+    "fileName": "mona-lisa.jpg",
     "title": "モナリザ",
     "description": "モナリザ（イタリア語：La Gioconda、フランス語：La Joconde）は、15世紀から16世紀にかけて活躍したイタリアの芸術家レオナルド・ダ・ヴィンチによって描かれた肖像画です。1503年頃から1517年頃にかけて制作されたと考えられています。この作品は、ポプラの木の板に油彩で描かれており、サイズは77cm×53cmと比較的小さいものです。モデルは商人フランチェスコ・デル・ジョコンドの妻、リザ・ゲラルディーニと広く考えられています。モナリザの最も特徴的な要素は、その神秘的な微笑み（スフマート技法による柔らかい表現）と、見る角度によって表情が変化して見える効果です。また、背景の風景と人物の調和、完璧な遠近法の使用など、レオナルドの優れた芸術技術が結集した作品となっています。現在、モナリザはパリのルーヴル美術館に所蔵されており、防弾ガラスケース内に展示されています。1911年に盗難される事件があり、これによって作品の知名度はさらに高まりました。世界で最も有名な芸術作品の一つとして、毎年何百万人もの観光客がこの絵を一目見ようとルーヴル美術館を訪れます。その価値は保険評価額では約1億ドル（約110億円）とされていますが、実質的には価格をつけられないほど貴重な文化財産とされています。モナリザは芸術史上最も分析され、研究され、パロディ化された作品の一つであり、現代のポップカルチャーにおいても頻繁に引用されています。",
     "location": "paris",
     "categories": "美術館"
   },
-  "navigo-easy.jpg": {
+  {
+    "fileName": "navigo-easy.jpg",
     "title": "Navigo Easy",
     "description": "",
     "location": "paris",
     "categories": "交通・施設"
   },
-  "night-view-of-paris-from-arc-de-triomphe-etoile.jpg": {
+  {
+    "fileName": "night-view-of-paris-from-arc-de-triomphe-etoile.jpg",
     "title": "Night View of Paris from Arc de Triomphe Etoile",
     "description": "",
     "location": "paris",
     "categories": "街歩き・観光"
   },
-  "nike-of-samothrace.jpg": {
+  {
+    "fileName": "nike-of-samothrace.jpg",
     "title": "サモトラケのニケ",
     "description": "サモトラケのニケ（ニケー）は、古代ギリシャの彫刻の最高傑作の一つとされる大理石像です。紀元前200年から紀元前190年頃、ヘレニズム期に制作されました。この像は勝利の女神ニケを表現しており、翼を広げ、船の舳先に立つ姿で表現されています。体の前方に傾斜した姿勢と風になびく衣服の表現は、強い風に立ち向かう躍動感あふれる印象を与えています。元々はエーゲ海に浮かぶサモトラケ島の神殿に奉納されていた彫刻で、マケドニア王国の海戦勝利を記念して制作されたと考えられています。この彫像の最も特徴的な点は、頭部と両腕が欠損しているにもかかわらず、圧倒的な存在感と優美さを放っていることです。風に翻る衣服の襞の表現は、古代ギリシャ彫刻の技術の高さを示しています。1863年にフランスの考古学者シャルル・シャンポワゾーによって発見され、現在はパリのルーヴル美術館に展示されています。高さ約2.4メートルの大理石像で、美術館の目玉展示の一つとなっています。サモトラケのニケは、西洋美術史において最も影響力のある古代彫刻の一つとして、多くの芸術家や美術愛好家に感銘を与え続けています。",
     "location": "paris",
     "categories": "美術館"
   },
-  "notre-dame-cathedral1.jpg": {
+  {
+    "fileName": "notre-dame-cathedral1.jpg",
     "title": "Notre Dame Cathedral",
     "description": "",
     "location": "paris",
     "categories": "聖堂"
   },
-  "notre-dame-cathedral2.jpg": {
+  {
+    "fileName": "notre-dame-cathedral2.jpg",
     "title": "ノートルダム大聖堂",
     "description": "ノートルダム大聖堂（ノートルダム・ド・パリ）はフランスのパリ、シテ島にある中世ゴシック建築の傑作です。1163年に建設が始まり、約200年かけて完成しました。この壮大な聖堂は、高さ69メートルの双塔、美しいステンドグラス、緻密な彫刻で知られています。特に有名なのは、屋根を支える飛梁やグロテスクな彫像のガーゴイルです。ノートルダム大聖堂はフランス革命期に大きな被害を受けましたが、19世紀にウジェーヌ・ヴィオレ・ル・デュクの指揮のもと大規模な修復が行われました。2019年4月15日には大規模な火災が発生し、尖塔と屋根の大部分が崩壊するという悲劇に見舞われました。その後、修復作業が進められ、2024年12月に再開堂が予定されています。何世紀にもわたり、この大聖堂はパリのシンボルとなり、文学作品や芸術作品に大きな影響を与えてきました。特にヴィクトル・ユゴーの小説『ノートルダム・ド・パリ』（邦題：「ノートルダムの鐘つき男」）は有名です。現在もカトリック教会の重要な宗教施設であると同時に、世界中から年間約1300万人の観光客が訪れる文化的シンボルとなっています。",
     "location": "paris",
     "categories": "聖堂"
   },
-  "opera-house.jpg": {
+  {
+    "fileName": "opera-house.jpg",
     "title": "Opera House",
     "description": "",
     "location": "paris",
     "categories": "建築"
   },
-  "paris-sunrise.jpg": {
+  {
+    "fileName": "paris-sunrise.jpg",
     "title": "Paris Sunrise",
     "description": "",
     "location": "paris",
     "categories": "自然・絶景"
   },
-  "petit-palais.jpg": {
+  {
+    "fileName": "petit-palais.jpg",
     "title": "Petit Palais",
     "description": "",
     "location": "paris",
     "categories": "建築"
   },
-  "rer-B.jpg": {
+  {
+    "fileName": "rer-B.jpg",
     "title": "RER B",
     "description": "",
     "location": "paris",
     "categories": "交通・施設"
   },
-  "statue-of-napoleon-in-front-of-the-palace-of-versailles.jpg": {
+  {
+    "fileName": "statue-of-napoleon-in-front-of-the-palace-of-versailles.jpg",
     "title": "Statue of Napoleon in front of the Palace of Versailles",
     "description": "",
     "location": "paris",
     "categories": "城"
   },
-  "steak-at-le-vieux-bistrot.jpg": {
+  {
+    "fileName": "steak-at-le-vieux-bistrot.jpg",
     "title": "Steak at Le Vieux Bistrot",
     "description": "",
     "location": "paris",
     "categories": "グルメ"
   },
-  "streetscape-of-paris.jpg": {
+  {
+    "fileName": "streetscape-of-paris.jpg",
     "title": "Streetscape of Paris",
     "description": "",
     "location": "paris",
     "categories": "街歩き・観光"
   },
-  "super-market.jpg": {
+  {
+    "fileName": "super-market.jpg",
     "title": "Super Market",
     "description": "",
     "location": "paris",
     "categories": "商業施設"
   },
-  "t-plus-plus.jpg": {
+  {
+    "fileName": "t-plus-plus.jpg",
     "title": "T++",
     "description": "",
     "location": "paris",
     "categories": "交通・施設"
   },
-  "the-hall-of-mirrors.jpg": {
+  {
+    "fileName": "the-hall-of-mirrors.jpg",
     "title": "ヴェルサイユ宮殿・鏡の間",
     "description": "鏡の間（フランス語：La Galerie des Glaces）は、フランスのベルサイユ宮殿の中でも最も著名で壮麗な部屋です。1678年から1684年にかけて、ルイ14世の命により建設されました。この部屋は全長73メートル、幅10.5メートルの広大な空間で、17の大きなアーチ型窓と対面する17面の巨大な鏡が特徴です。当時、鏡は非常に高価な贅沢品であり、これほどの規模で使用されたことは、フランスの富と権力の象徴でした。天井には、宮廷画家シャルル・ル・ブランによって描かれた、ルイ14世の軍事的・政治的功績を讃える30の豪華な絵画が飾られています。また、室内は金箔や大理石、彫刻で装飾され、豪華なシャンデリアが空間を照らしています。鏡の間は単なる装飾的な空間ではなく、重要な歴史的舞台となりました。ルイ14世はここで公式な儀式や外国使節の謁見を行い、1871年にはプロイセン王ヴィルヘルム1世がドイツ帝国の皇帝として即位しました。また、1919年には第一次世界大戦を終結させるヴェルサイユ条約の調印式がここで行われました。この部屋の設計は、建築家ジュール・アルドゥアン＝マンサールによるもので、室内装飾はシャルル・ル・ブランが担当しました。窓からは美しく整備された庭園が見渡せるよう設計されています。現在、鏡の間はベルサイユ宮殿の中でも最も人気のある見学スポットの一つとなっており、世界中から訪れる観光客を魅了し続けています。2007年には、3年間にわたる大規模な修復工事が完了し、18世紀当時の壮麗な姿を取り戻しました。",
     "location": "paris",
     "categories": "王宮"
   },
-  "the-outskirts-of-versailles.jpg": {
+  {
+    "fileName": "the-outskirts-of-versailles.jpg",
     "title": "The Outskirts of Versailles",
     "description": "",
     "location": "paris",
     "categories": "街歩き・観光"
   },
-  "venus-de-milo.jpg": {
+  {
+    "fileName": "venus-de-milo.jpg",
     "title": "ミロのヴィーナス",
     "description": "ミロのヴィーナスは、古代ギリシャの彫刻で、正式名称は「メロスのアフロディテ」と言います。紀元前130年から100年頃に作られたと考えられており、大理石で制作された高さ約202cmの女神像です。この彫刻は1820年にエーゲ海のミロス島（メロス島）で農民によって発見され、その後フランスに運ばれました。現在はパリのルーヴル美術館に展示されており、世界で最も有名な古代彫刻の一つとして知られています。最大の特徴は両腕が失われていることで、発見時にはすでに腕がなかったとされています。この「不完全さ」が逆に神秘性を高め、芸術的価値を高めているという見方もあります。腕がどのような姿勢だったのかについては、様々な説があり、りんごを持っていた、鏡を持っていたなど諸説あります。ミロのヴィーナスはヘレニズム期の作品で、古典的な美の表現と自然主義的な表現が融合しています。S字を描くような優美な姿勢（コントラポスト）、滑らかな肌の表現、調和のとれたプロポーションが特徴で、西洋美術における女性美の理想として長く影響を与えてきました。また芸術史上においても大きな影響力を持ち、特に19世紀以降の芸術家たちに多大なインスピレーションを与えました。現代においても美の象徴として世界中で認知され、多くの複製や模倣作品が作られています。",
     "location": "paris",
     "categories": "美術館"
   },
-  "view-from-the-eiffel-tower.jpg": {
+  {
+    "fileName": "view-from-the-eiffel-tower.jpg",
     "title": "View from the Eiffel Tower",
     "description": "",
     "location": "paris",
     "categories": "タワー"
   }
-}
+]

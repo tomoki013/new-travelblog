@@ -27,7 +27,7 @@ tags:
 これぞまさにフランスの朝食という感じで、最後に体験できて良かったです。
 
 ![朝食のお店 La CREPERIE](/images/France/la-creperie.jpg)
-![La CREPERIEのガレット](/images/France/la-creperie's-breakfast-galette.jpg)
+![La CREPERIEのガレット](/images/France/la-creperies-breakfast-galette.jpg)
 
 その後は香水を買うためにディップティックの本店に行きます。
 私が訪れたときは日本人の店員さんがいて。
@@ -62,8 +62,8 @@ tags:
 また、店主さんもとても気さくで親切な方で、パリ最後の食事はとてもいい思い出になりました。
 
 ![Coup de Torchon](/images/France/coup-de-torchon.jpg)
-![Coup de Torchonのメイン](/images/France/coup-de-torchon's-main.jpg)
-![Coup de Torchonのデザート](/images/France/coup-de-torchon's-dessert.jpg)
+![Coup de Torchonのメイン](/images/France/coup-de-torchons-main.jpg)
+![Coup de Torchonのデザート](/images/France/coup-de-torchons-dessert.jpg)
 
 その後、デザートはチーズだったため、甘いものが食べたくなり近くのマカロンのお店でマカロンを購入します。
 そしていつも利用していたスーパーに寄り、コーラとチョコレートを買うと、4日連続で買い続けたからか、コーラをおまけしてくれました。
@@ -107,7 +107,7 @@ tags:
 こちらもチケットはとっていないので外観だけ見学します。
 下にあるお土産屋さんでカサ・ミラの雰囲気を感じました。
 
-![カサ・ミラのお土産屋さん](/images/Spain/casa-mira's-souvenir-shop.jpg)
+![カサ・ミラのお土産屋さん](/images/Spain/casa-miras-souvenir-shop.jpg)
 
 その後、もともとは夜ご飯を食べに行く予定でしたが、全員がお腹いっぱいだったので少し歩くため、カサ・ビセンスに行くことにします。
 こちらはそれまでの二つの建築とはまた様子が違い、とても面白かったです。
@@ -120,7 +120,7 @@ tags:
 カサ・ビセンスまで歩いたため少し空腹も出てき、ついに初スペイン料理を食べに行くことにします。
 初のスペイン料理は、パエリアとサングリアを頂きました。
 
-![l’Arrosseria Xativa Sant Antoniのパエリア](/images/Spain/l’arrosseria-xativa-sant-antoni's-paella.jpg)
+![l’Arrosseria Xativa Sant Antoniのパエリア](/images/Spain/larrosseria-xativa-sant-antonis-paella.jpg)
 
 初めてのスペイン料理はとても美味しく、これからどれだけのスペイン料理を食べれるかととても楽しみになりました。
 その日はそのままホテルに戻り休みました。

@@ -48,7 +48,7 @@ tags:
 教科書でよく見るあの絵や、マリー・アントワネットの寝室もありました。
 
 ![サン＝ベルナール峠を越えるボナパルト](/images/France/bonaparte-over-the-saint-bernard-pass.jpg)
-![マリーアントワネットの寝室](/images/France/marie-antoinette's-bedroom.jpg)
+![マリーアントワネットの寝室](/images/France/marie-antoinettes-bedroom.jpg)
 
 ただどの展示も知識がない自分からするとほとんど同じで飽きていたところにかの有名な「鏡の間」が来ます。
 ここは想像以上に美しかったです。数々の映画やドキュメンタリーで見た歴史的な場所を実際に目にすると、感慨深いものがあります。

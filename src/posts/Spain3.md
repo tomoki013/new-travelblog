@@ -78,7 +78,7 @@ Google Mapで見つけたアヒージョの有名なお店、「La Casa del Abue
 スペイン人の陽気な国民性を肌で感じる瞬間でした。
 ここで注文したのはアヒージョとサングリア。
 
-![La Casa del Abueloのアヒージョ](/images/Spain/la-casa-del-abuelo's-ajilo.jpg)
+![La Casa del Abueloのアヒージョ](/images/Spain/la-casa-del-abuelos-ajilo.jpg)
 
 アヒージョは店内にあるカウンターでガラス越しに作ってくれるので見て楽しむこともできました。
 油がとても濃厚で途中胃もたれしそうでしたが、とても美味しかったのでパンを使ってすべて完食しました。
