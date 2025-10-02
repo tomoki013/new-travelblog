@@ -49,3 +49,6 @@ public/sitemap-*.xml
 
 # Draft posts
 /draft_posts
+
+# Service worker
+/public/sw.js
