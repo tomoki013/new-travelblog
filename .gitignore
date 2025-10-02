@@ -50,5 +50,9 @@ public/sitemap-*.xml
 # Draft posts
 /draft_posts
 
+# Cache files
+.posts.cache.json
+
 # Service worker
 /public/sw.js
+
