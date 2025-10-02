@@ -2,7 +2,6 @@ import type { Metadata } from "next";
 import {
   Caveat,
   Montserrat,
-  Noto_Sans_JP,
   Playfair_Display,
 } from "next/font/google";
 import "./globals.css";
@@ -31,11 +30,6 @@ const caveat = Caveat({
   variable: "--font-caveat",
 });
 
-const notoSansJP = Noto_Sans_JP({
-  subsets: ["latin"],
-  weight: ["400", "500", "700"],
-  variable: "--font-noto-sans-jp",
-});
 
 export const metadata: Metadata = {
   title: {
@@ -136,7 +130,7 @@ export default function RootLayout({
         ></Script>
       </head>
       <body
-        className={`${montserrat.variable} ${playfairDisplay.variable} ${caveat.variable} ${notoSansJP.variable} antialiased`}
+        className={`${montserrat.variable} ${playfairDisplay.variable} ${caveat.variable} antialiased`}
       >
         <ThemeProvider
           attribute={`class`}
