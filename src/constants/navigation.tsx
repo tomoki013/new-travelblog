@@ -1,20 +1,36 @@
 import { FaGithub, FaTiktok, FaYoutube } from "react-icons/fa";
 
-export const NAV_LINKS = [
+export interface NavLink {
+  href: string;
+  label: string;
+  isNew?: boolean;
+}
+
+export interface FooterContent {
+  name: string;
+  pass: string;
+  isNew?: boolean;
+}
+
+export const NAV_LINKS: NavLink[] = [
+  {
+    href: "/ai-planner",
+    label: "AI Travel Planner",
+    isNew: true,
+  },
   { href: "/destination", label: "Destination" },
   { href: "/series", label: "Series" },
   { href: "/posts", label: "Blog" },
   { href: "/gallery", label: "Gallery" },
   { href: "/about", label: "About" },
-  { href: "/ai-planner", label: "AI Travel Planner" },
 ];
 
-export const FOOTER_CONTENTS_LIST = [
+export const FOOTER_CONTENTS_LIST: FooterContent[] = [
+  { name: "AI旅行プランナー", pass: "/ai-planner", isNew: true },
   { name: "地域別一覧", pass: "/destination" },
   { name: "シリーズ一覧", pass: "/series" },
   { name: "ブログ一覧", pass: "/posts" },
   { name: "写真ギャラリー", pass: "/gallery" },
-  { name: "AI旅行プランナー", pass: "/ai-planner" },
 ];
 
 export const FOOTER_LINK_LIST = [

@@ -76,9 +76,14 @@ const Header = () => {
               <Link
                 key={link.label}
                 href={link.href}
-                className="relative pb-[5px] font-medium text-muted-foreground transition-colors hover:text-secondary after:content-[''] after:absolute after:bottom-0 after:left-0 after:h-[1px] after:w-0 after:bg-secondary after:transition-all after:duration-300 hover:after:w-full"
+                className="relative flex items-center pb-[5px] font-medium text-muted-foreground transition-colors hover:text-secondary after:content-[''] after:absolute after:bottom-0 after:left-0 after:h-[1px] after:w-0 after:bg-secondary after:transition-all after:duration-300 hover:after:w-full"
               >
                 {link.label}
+                {link.isNew && (
+                  <span className="ml-2 rounded-md bg-primary px-1.5 py-0.5 text-xs font-semibold leading-none text-primary-foreground">
+                    NEW
+                  </span>
+                )}
               </Link>
             ))}
           </nav>
@@ -136,10 +141,15 @@ const Header = () => {
                   <Link
                     key={link.label}
                     href={link.href}
-                    className="relative pb-[5px] font-medium text-muted-foreground transition-colors hover:text-secondary after:content-[''] after:absolute after:bottom-0 after:left-0 after:h-[1px] after:w-0 after:bg-secondary after:transition-all after:duration-300 hover:after:w-full"
+                    className="relative flex items-center pb-[5px] font-medium text-muted-foreground transition-colors hover:text-secondary after:content-[''] after:absolute after:bottom-0 after:left-0 after:h-[1px] after:w-0 after:bg-secondary after:transition-all after:duration-300 hover:after:w-full"
                     onClick={closeMenu}
                   >
                     {link.label}
+                    {link.isNew && (
+                      <span className="ml-2 rounded-md bg-primary px-1.5 py-0.5 text-xs font-semibold leading-none text-primary-foreground">
+                        NEW
+                      </span>
+                    )}
                   </Link>
                 ))}
               </nav>
