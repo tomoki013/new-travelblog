@@ -61,9 +61,14 @@ const Footer = () => {
                 <li key={content.name}>
                   <Link
                     href={content.pass}
-                    className="text-muted-foreground hover:text-secondary"
+                    className="flex items-center text-muted-foreground hover:text-secondary"
                   >
                     {content.name}
+                    {content.isNew && (
+                      <span className="ml-2 rounded-md bg-primary px-1.5 py-0.5 text-xs font-semibold leading-none text-primary-foreground">
+                        NEW
+                      </span>
+                    )}
                   </Link>
                 </li>
               ))}
