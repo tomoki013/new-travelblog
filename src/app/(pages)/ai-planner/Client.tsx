@@ -21,6 +21,7 @@ import FeedbackModal from "@/components/elements/FeedbackModal";
 interface Message {
   role: "user" | "ai";
   content: string;
+  isError?: boolean;
 }
 
 const destinationPresets = [
@@ -65,7 +66,6 @@ export default function AiPlannerClient({
 
   const [messages, setMessages] = useState<Message[]>([]);
   const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState("");
   const [loadingMessage, setLoadingMessage] = useState("");
   const [currentStep, setCurrentStep] = useState(1);
   const [isFeedbackModalOpen, setIsFeedbackModalOpen] = useState(false);
@@ -152,14 +152,18 @@ export default function AiPlannerClient({
 
   const handleGenerate = async () => {
     if (filteredPosts.length === 0) {
-      setError(
-        "選択された国に関連する記事が見つかりません。別の国を選択してください。"
-      );
+      setMessages([
+        {
+          role: "ai",
+          content:
+            "選択された国に関連する記事が見つかりません。別の国を選択してください。",
+          isError: true,
+        },
+      ]);
       return;
     }
 
     setIsLoading(true);
-    setError("");
 
     let countryName = "";
     for (const continent of continents) {
@@ -199,6 +203,10 @@ export default function AiPlannerClient({
       });
 
       if (!response.ok) {
+        // Netlifyのタイムアウト（504 Gateway Timeout）を判定
+        if (response.status === 504) {
+          throw new Error("504: Gateway Timeout");
+        }
         const errorData = await response.json().catch(() => ({
           error: `サーバーから予期せぬ応答がありました (HTTP ${response.status})`,
         }));
@@ -225,12 +233,25 @@ export default function AiPlannerClient({
         hasShownFeedbackModal.current = true;
       }
     } catch (err) {
-      const errorMessage =
+      const rawErrorMessage =
         err instanceof Error ? err.message : "予期せぬエラーが発生しました。";
-      setError(errorMessage);
-      setMessages((prev) =>
-        prev.filter((msg) => msg.role !== "ai" || msg.content !== "")
-      );
+
+      // エラーメッセージを判定して、ユーザーフレンドリーなメッセージに変換
+      const displayErrorMessage =
+        rawErrorMessage.includes("504") ||
+        rawErrorMessage.toLowerCase().includes("timed out")
+          ? "サーバーがタイムアウトしました。しばらくしてからもう一度お試しください。ご迷惑をおかけします。"
+          : `エラーが発生しました: ${rawErrorMessage}`;
+
+      setMessages((prev) => {
+        const updated = [...prev];
+        const lastMessage = updated[updated.length - 1];
+        if (lastMessage && lastMessage.role === "ai") {
+          lastMessage.content = displayErrorMessage;
+          lastMessage.isError = true;
+        }
+        return updated;
+      });
     } finally {
       setIsLoading(false);
     }
@@ -243,7 +264,6 @@ export default function AiPlannerClient({
     setDuration("");
     setInterests("");
     setCurrentStep(1);
-    setError("");
   };
 
   return (
@@ -380,15 +400,6 @@ export default function AiPlannerClient({
             </>
           )}
         </>
-      )}
-
-      {error && (
-        <div className="mt-4 p-4 border rounded-md bg-red-50 border-red-200 dark:bg-red-950 dark:border-red-800">
-          <h3 className="font-bold text-red-800 dark:text-red-200">
-            エラーが発生しました
-          </h3>
-          <p className="text-red-700 dark:text-red-300 mt-1">{error}</p>
-        </div>
       )}
 
       <div className="mt-6">

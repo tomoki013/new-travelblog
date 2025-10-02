@@ -1,5 +1,6 @@
 "use client";
 
+import { Loader2 } from "lucide-react";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
@@ -7,6 +8,7 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 interface Message {
   role: "user" | "ai";
   content: string;
+  isError?: boolean;
 }
 
 interface MessageComponentProps {
@@ -44,12 +46,15 @@ export default function MessageComponent({
             className={`rounded-lg p-3 max-w-[85%] ${
               message.role === "user"
                 ? "bg-blue-100 text-blue-900 dark:bg-blue-900 dark:text-blue-100"
-                : "bg-muted"
+                : message.isError
+                  ? "bg-red-100 text-red-900 dark:bg-red-900 dark:text-red-100"
+                  : "bg-muted"
             }`}
           >
             {/* For AI messages, render the loading state if content is empty */}
             {message.role === "ai" && isLoading && !message.content ? (
-               <div className="flex items-center justify-center p-8 text-muted-foreground">
+              <div className="flex items-center gap-2 p-4 text-muted-foreground">
+                <Loader2 className="w-5 h-5 animate-spin" />
                 <p>{loadingMessage}</p>
               </div>
             ) : (
