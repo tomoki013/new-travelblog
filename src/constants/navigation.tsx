@@ -13,6 +13,7 @@ export const FOOTER_CONTENTS_LIST = [
   { name: "シリーズ一覧", pass: "/series" },
   { name: "ブログ一覧", pass: "/posts" },
   { name: "写真ギャラリー", pass: "/gallery" },
+  { name: "AIプランナー", pass: "/ai-planner" },
 ];
 
 export const FOOTER_LINK_LIST = [
