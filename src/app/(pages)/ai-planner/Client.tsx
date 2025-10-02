@@ -296,7 +296,6 @@ export default function AiPlannerClient({
 
       {(aiResponse || isLoading) && (
         <div className="mt-6 p-4 border rounded-md bg-gray-50 dark:bg-gray-800 min-h-[10rem]">
-          <h2 className="text-xl font-semibold mb-2">AIからの提案プラン:</h2>
           {isLoading && !aiResponse && (
             <div className="flex items-center justify-center p-8 text-muted-foreground">
               {" "}
