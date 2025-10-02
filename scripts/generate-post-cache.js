@@ -16,7 +16,7 @@ async function generatePostsCache() {
         continue;
       }
 
-      const slug = fileName.replace(/\.md$/, '');
+      const slug = fileName.replace(/\.md$/, '').toLowerCase();
       const fullPath = path.join(postsDirectory, fileName);
       const fileContents = await fs.readFile(fullPath, 'utf8');
 
