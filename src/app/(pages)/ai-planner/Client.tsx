@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -16,6 +16,7 @@ import {
 } from "@/components/ui/select";
 // PostMetadata と ContinentData を types/types.ts からインポートします
 import { PostMetadata, ContinentData } from "@/types/types";
+import FeedbackModal from "@/components/elements/FeedbackModal";
 
 interface Message {
   role: "user" | "ai";
@@ -55,7 +56,7 @@ export default function AiPlannerClient({
   continents,
 }: AiPlannerClientProps) {
   // 国の識別に使うのは name ではなく id/slug です
-  const [selectedCountryId, setSelectedCountryId] = useState<string>("spain");
+  const [selectedCountryId, setSelectedCountryId] = useState<string>("");
   const [filteredPosts, setFilteredPosts] = useState<PostMetadata[]>([]);
 
   const [destination, setDestination] = useState("");
@@ -66,6 +67,9 @@ export default function AiPlannerClient({
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState("");
   const [loadingMessage, setLoadingMessage] = useState("");
+  const [currentStep, setCurrentStep] = useState(1);
+  const [isFeedbackModalOpen, setIsFeedbackModalOpen] = useState(false);
+  const hasShownFeedbackModal = useRef(false);
 
   useEffect(() => {
     if (selectedCountryId) {
@@ -103,7 +107,12 @@ export default function AiPlannerClient({
         return locations.some((l) => allowedSlugs.includes(l));
       });
       setFilteredPosts(postsInCountry);
+      setCurrentStep(2);
+    } else {
+      setFilteredPosts([]);
+      setCurrentStep(1);
     }
+    // Reset subsequent fields whenever country changes
     setDestination("");
     setInterests("");
   }, [selectedCountryId, allPosts, continents]);
@@ -124,6 +133,22 @@ export default function AiPlannerClient({
       if (interval) clearInterval(interval);
     };
   }, [isLoading]);
+
+  const handleDestinationSubmit = (value: string) => {
+    if (value.trim()) {
+      setDestination(value.trim());
+      setCurrentStep(3);
+    }
+  };
+
+  const handleDurationChange = (value: string) => {
+    setDuration(value);
+    setCurrentStep(4);
+  };
+
+  const handleInterestPresetClick = (preset: string) => {
+    setInterests((prev) => (prev ? `${prev}, ${preset}` : preset));
+  };
 
   const handleGenerate = async () => {
     if (filteredPosts.length === 0) {
@@ -195,6 +220,10 @@ export default function AiPlannerClient({
           return updatedMessages;
         });
       }
+      if (!hasShownFeedbackModal.current) {
+        setIsFeedbackModalOpen(true);
+        hasShownFeedbackModal.current = true;
+      }
     } catch (err) {
       const errorMessage =
         err instanceof Error ? err.message : "予期せぬエラーが発生しました。";
@@ -205,6 +234,16 @@ export default function AiPlannerClient({
     } finally {
       setIsLoading(false);
     }
+  };
+
+  const handleReset = () => {
+    setMessages([]);
+    setSelectedCountryId("");
+    setDestination("");
+    setDuration("3日間");
+    setInterests("");
+    setCurrentStep(1);
+    setError("");
   };
 
   return (
@@ -231,83 +270,115 @@ export default function AiPlannerClient({
                 )}
               </SelectContent>
             </Select>
-            <p className="text-sm text-muted-foreground mt-2">
-              {filteredPosts.length > 0
-                ? `${filteredPosts.length}件の記事を参考にします。`
-                : "この国に関する記事はまだありません。"}
-            </p>
-          </div>
-
-          <div>
-            <Label htmlFor="destination">Step 2: 行き先</Label>
-            <div className="flex flex-wrap gap-2 mt-2 mb-3">
-              {destinationPresets.map((preset) => (
-                <Button
-                  key={preset}
-                  variant="outline"
-                  size="sm"
-                  onClick={() => setDestination(preset)}
-                >
-                  {preset}
-                </Button>
-              ))}
-            </div>
-            <Input
-              id="destination"
-              value={destination}
-              onChange={(e) => setDestination(e.target.value)}
-              placeholder="例: パリ、バンコク"
-              disabled={isLoading}
-            />
-          </div>
-          <div>
-            <Label htmlFor="duration">Step 3: 期間</Label>
-            <Input
-              id="duration"
-              value={duration}
-              onChange={(e) => setDuration(e.target.value)}
-              placeholder="例: 3日間"
-              className="mt-2"
-              disabled={isLoading}
-            />
-          </div>
-          <div>
-            <Label htmlFor="interests">Step 4: 興味・関心</Label>
-            <div className="flex flex-wrap gap-2 mt-2 mb-3">
-              {interestPresets.map((preset) => (
-                <Button
-                  key={preset}
-                  variant="outline"
-                  size="sm"
-                  onClick={() => setInterests(preset)}
-                >
-                  {preset}
-                </Button>
-              ))}
-            </div>
-            <Textarea
-              id="interests"
-              value={interests}
-              onChange={(e) => setInterests(e.target.value)}
-              placeholder="例: 寺院巡りがしたい"
-              disabled={isLoading}
-            />
-          </div>
-
-          <Button
-            onClick={handleGenerate}
-            disabled={isLoading || filteredPosts.length === 0}
-            size="lg"
-            className="w-full"
-          >
-            {isLoading ? (
-              <span className="flex items-center gap-2">
-                <Loader2 className="animate-spin" /> プランを生成中...
-              </span>
-            ) : (
-              "旅行プランを生成する"
+            {selectedCountryId && (
+              <p className="text-sm text-muted-foreground mt-2">
+                {filteredPosts.length > 0
+                  ? `${filteredPosts.length}件の記事を参考にします。`
+                  : "この国に関する記事はまだありません。"}
+              </p>
             )}
-          </Button>
+          </div>
+
+          {currentStep >= 2 && (
+            <div>
+              <Label htmlFor="destination">Step 2: 行き先</Label>
+              <div className="flex flex-wrap gap-2 mt-2 mb-3">
+                {destinationPresets.map((preset) => (
+                  <Button
+                    key={preset}
+                    variant="outline"
+                    size="sm"
+                    onClick={() => handleDestinationSubmit(preset)}
+                  >
+                    {preset}
+                  </Button>
+                ))}
+              </div>
+              <Input
+                id="destination"
+                value={destination}
+                onChange={(e) => setDestination(e.target.value)}
+                onKeyDown={(e) => {
+                  if (e.key === "Enter") {
+                    handleDestinationSubmit(destination);
+                  }
+                }}
+                placeholder="例: パリ、バンコク"
+                disabled={isLoading}
+              />
+            </div>
+          )}
+
+          {currentStep >= 3 && (
+            <div>
+              <Label htmlFor="duration">Step 3: 期間</Label>
+              <Select
+                value={duration}
+                onValueChange={handleDurationChange}
+                disabled={isLoading}
+              >
+                <SelectTrigger id="duration" className="mt-2">
+                  <SelectValue placeholder="旅行の期間を選んでください" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="半日間">半日間</SelectItem>
+                  <SelectItem value="日帰り">日帰り</SelectItem>
+                  {Array.from({ length: 9 }, (_, i) => i + 2).map((days) => (
+                    <SelectItem key={days} value={`${days}日間`}>
+                      {`${days}日間`}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+            </div>
+          )}
+
+          {currentStep >= 4 && (
+            <>
+              <div>
+                <Label htmlFor="interests">Step 4: 興味・関心</Label>
+                <div className="flex flex-wrap gap-2 mt-2 mb-3">
+                  {interestPresets.map((preset) => (
+                    <Button
+                      key={preset}
+                      variant="outline"
+                      size="sm"
+                      onClick={() => handleInterestPresetClick(preset)}
+                    >
+                      {preset}
+                    </Button>
+                  ))}
+                </div>
+                <Textarea
+                  id="interests"
+                  value={interests}
+                  onChange={(e) => setInterests(e.target.value)}
+                  placeholder="例: 寺院巡りがしたい"
+                  disabled={isLoading}
+                />
+              </div>
+
+              <Button
+                onClick={handleGenerate}
+                disabled={
+                  isLoading ||
+                  filteredPosts.length === 0 ||
+                  !destination ||
+                  !interests
+                }
+                size="lg"
+                className="w-full"
+              >
+                {isLoading ? (
+                  <span className="flex items-center gap-2">
+                    <Loader2 className="animate-spin" /> プランを生成中...
+                  </span>
+                ) : (
+                  "旅行プランを生成する"
+                )}
+              </Button>
+            </>
+          )}
         </>
       )}
 
@@ -332,18 +403,17 @@ export default function AiPlannerClient({
         messages.length > 0 &&
         messages[messages.length - 1].role === "ai" &&
         messages[messages.length - 1].content && (
-          <div className="mt-6 text-center text-sm text-muted-foreground">
-            <p>
-              この旅行プランはお役に立ちましたか？
-              <br />
-              今後の改善のため、ぜひ
-              <a href="/contact" className="underline">
-                フィードバック
-              </a>
-              をお寄せください。
-            </p>
+          <div className="mt-8 flex flex-col items-center gap-4">
+            <Button onClick={handleReset} size="lg">
+              別のプランを生成する
+            </Button>
           </div>
         )}
+
+      <FeedbackModal
+        isOpen={isFeedbackModalOpen}
+        onClose={() => setIsFeedbackModalOpen(false)}
+      />
     </div>
   );
 }

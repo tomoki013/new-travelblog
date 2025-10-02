@@ -43,7 +43,7 @@ export default function MessageComponent({
           <div
             className={`rounded-lg p-3 max-w-[85%] ${
               message.role === "user"
-                ? "bg-primary text-primary-foreground"
+                ? "bg-blue-100 text-blue-900 dark:bg-blue-900 dark:text-blue-100"
                 : "bg-muted"
             }`}
           >
