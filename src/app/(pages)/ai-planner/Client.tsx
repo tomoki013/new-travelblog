@@ -190,17 +190,22 @@ export default function AiPlannerClient({
     setMessages(newMessages);
 
     try {
+      const requestBody = {
+        messages: newMessages,
+        articleSlugs: filteredPosts.map((p) => p.slug),
+        countryName: countryName,
+        destination,
+        duration,
+        interests,
+      };
+
+      // AIに送信する直前のリクエスト内容をコンソールに出力
+      console.log("Request to /api/chat:", requestBody);
+
       const response = await fetch("/api/chat", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          messages: newMessages,
-          articleSlugs: filteredPosts.map((p) => p.slug),
-          countryName: countryName,
-          destination,
-          duration,
-          interests,
-        }),
+        body: JSON.stringify(requestBody),
       });
 
       if (!response.ok) {
