@@ -11,6 +11,7 @@ import Footer from "@/components/layouts/Footer";
 import Script from "next/script";
 import { Toaster } from "@/components/ui/sonner";
 import CookieBanner from "@/components/elements/CookieBanner";
+import FloatingAIPlannerButton from "@/components/common/FloatingAIPlannerButton";
 
 const montserrat = Montserrat({
   subsets: ["latin"],
@@ -145,6 +146,7 @@ export default function RootLayout({
           </div>
           <CookieBanner />
           <Toaster />
+          <FloatingAIPlannerButton />
         </ThemeProvider>
       </body>
     </html>
