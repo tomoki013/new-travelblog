@@ -10,7 +10,7 @@ export default async function AiPlannerPage() {
   return (
     <div className="container mx-auto p-4">
       <div className="max-w-2xl mx-auto">
-        <h1 className="text-2xl font-bold mb-4">AI Travel Planner (Beta)</h1>
+        <h1 className="text-2xl font-bold mb-4">AI旅行プランナー（ベータ版）</h1>
         <p className="mb-6 text-muted-foreground">
           あなたの希望を入力してください。ブログの旅行記を参考に、AIがあなただけの特別な旅行プランを作成します。
           <br />

@@ -6,6 +6,7 @@ export const NAV_LINKS = [
   { href: "/posts", label: "Blog" },
   { href: "/gallery", label: "Gallery" },
   { href: "/about", label: "About" },
+  { href: "/ai-planner", label: "AI Travel Planner" },
 ];
 
 export const FOOTER_CONTENTS_LIST = [
@@ -13,7 +14,7 @@ export const FOOTER_CONTENTS_LIST = [
   { name: "シリーズ一覧", pass: "/series" },
   { name: "ブログ一覧", pass: "/posts" },
   { name: "写真ギャラリー", pass: "/gallery" },
-  { name: "AIプランナー", pass: "/ai-planner" },
+  { name: "AI旅行プランナー", pass: "/ai-planner" },
 ];
 
 export const FOOTER_LINK_LIST = [
