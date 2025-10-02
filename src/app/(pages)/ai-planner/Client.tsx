@@ -5,9 +5,8 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
-import ReactMarkdown from "react-markdown";
-import remarkGfm from "remark-gfm";
 import { Loader2 } from "lucide-react";
+import MessageComponent from "./MessageComponent";
 import {
   Select,
   SelectContent,
@@ -17,6 +16,11 @@ import {
 } from "@/components/ui/select";
 // PostMetadata と ContinentData を types/types.ts からインポートします
 import { PostMetadata, ContinentData } from "@/types/types";
+
+interface Message {
+  role: "user" | "ai";
+  content: string;
+}
 
 const destinationPresets = [
   "マドリード",
@@ -58,7 +62,7 @@ export default function AiPlannerClient({
   const [duration, setDuration] = useState("3日間");
   const [interests, setInterests] = useState("");
 
-  const [aiResponse, setAiResponse] = useState("");
+  const [messages, setMessages] = useState<Message[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState("");
   const [loadingMessage, setLoadingMessage] = useState("");
@@ -131,11 +135,9 @@ export default function AiPlannerClient({
 
     setIsLoading(true);
     setError("");
-    setAiResponse("");
 
     let countryName = "";
     for (const continent of continents) {
-      // 比較対象を country.slug に統一します
       const country = continent.countries.find(
         (c) => c.slug === selectedCountryId
       );
@@ -144,6 +146,19 @@ export default function AiPlannerClient({
         break;
       }
     }
+
+    const userMessageContent = `
+- **国:** ${countryName}
+- **行き先:** ${destination}
+- **期間:** ${duration}
+- **興味・関心:** ${interests}
+`;
+
+    const newMessages: Message[] = [
+      { role: "user", content: userMessageContent },
+      { role: "ai", content: "" }, // AIの応答をストリーミングでここに追記
+    ];
+    setMessages(newMessages);
 
     try {
       const response = await fetch("/api/generate", {
@@ -174,11 +189,19 @@ export default function AiPlannerClient({
         const { done, value } = await reader.read();
         if (done) break;
         const chunk = decoder.decode(value);
-        setAiResponse((prev) => prev + chunk);
+        setMessages((prevMessages) => {
+          const updatedMessages = [...prevMessages];
+          updatedMessages[updatedMessages.length - 1].content += chunk;
+          return updatedMessages;
+        });
       }
     } catch (err) {
-      if (err instanceof Error) setError(err.message);
-      else setError("予期せぬエラーが発生しました。");
+      const errorMessage =
+        err instanceof Error ? err.message : "予期せぬエラーが発生しました。";
+      setError(errorMessage);
+      setMessages((prev) =>
+        prev.filter((msg) => msg.role !== "ai" || msg.content !== "")
+      );
     } finally {
       setIsLoading(false);
     }
@@ -186,104 +209,107 @@ export default function AiPlannerClient({
 
   return (
     <div className="space-y-6">
-      <div>
-        <Label htmlFor="country">0. 国を選択</Label>
-        <Select
-          value={selectedCountryId}
-          onValueChange={(value) => setSelectedCountryId(value)}
-          disabled={isLoading}
-        >
-          <SelectTrigger id="country" className="mt-2">
-            <SelectValue placeholder="プランを作成したい国を選んでください" />
-          </SelectTrigger>
-          <SelectContent>
-            {continents.map((continent) =>
-              continent.countries.map((country) => (
-                // value には国を識別するための slug (id) を設定します
-                <SelectItem key={country.slug} value={country.slug}>
-                  {country.name}
-                </SelectItem>
-              ))
+      {messages.length === 0 && (
+        <>
+          <div>
+            <Label htmlFor="country">Step 1: 国を選択</Label>
+            <Select
+              value={selectedCountryId}
+              onValueChange={(value) => setSelectedCountryId(value)}
+              disabled={isLoading}
+            >
+              <SelectTrigger id="country" className="mt-2">
+                <SelectValue placeholder="プランを作成したい国を選んでください" />
+              </SelectTrigger>
+              <SelectContent>
+                {continents.map((continent) =>
+                  continent.countries.map((country) => (
+                    <SelectItem key={country.slug} value={country.slug}>
+                      {country.name}
+                    </SelectItem>
+                  ))
+                )}
+              </SelectContent>
+            </Select>
+            <p className="text-sm text-muted-foreground mt-2">
+              {filteredPosts.length > 0
+                ? `${filteredPosts.length}件の記事を参考にします。`
+                : "この国に関する記事はまだありません。"}
+            </p>
+          </div>
+
+          <div>
+            <Label htmlFor="destination">Step 2: 行き先</Label>
+            <div className="flex flex-wrap gap-2 mt-2 mb-3">
+              {destinationPresets.map((preset) => (
+                <Button
+                  key={preset}
+                  variant="outline"
+                  size="sm"
+                  onClick={() => setDestination(preset)}
+                >
+                  {preset}
+                </Button>
+              ))}
+            </div>
+            <Input
+              id="destination"
+              value={destination}
+              onChange={(e) => setDestination(e.target.value)}
+              placeholder="例: パリ、バンコク"
+              disabled={isLoading}
+            />
+          </div>
+          <div>
+            <Label htmlFor="duration">Step 3: 期間</Label>
+            <Input
+              id="duration"
+              value={duration}
+              onChange={(e) => setDuration(e.target.value)}
+              placeholder="例: 3日間"
+              className="mt-2"
+              disabled={isLoading}
+            />
+          </div>
+          <div>
+            <Label htmlFor="interests">Step 4: 興味・関心</Label>
+            <div className="flex flex-wrap gap-2 mt-2 mb-3">
+              {interestPresets.map((preset) => (
+                <Button
+                  key={preset}
+                  variant="outline"
+                  size="sm"
+                  onClick={() => setInterests(preset)}
+                >
+                  {preset}
+                </Button>
+              ))}
+            </div>
+            <Textarea
+              id="interests"
+              value={interests}
+              onChange={(e) => setInterests(e.target.value)}
+              placeholder="例: 寺院巡りがしたい"
+              disabled={isLoading}
+            />
+          </div>
+
+          <Button
+            onClick={handleGenerate}
+            disabled={isLoading || filteredPosts.length === 0}
+            size="lg"
+            className="w-full"
+          >
+            {isLoading ? (
+              <span className="flex items-center gap-2">
+                <Loader2 className="animate-spin" /> プランを生成中...
+              </span>
+            ) : (
+              "旅行プランを生成する"
             )}
-          </SelectContent>
-        </Select>
-        <p className="text-sm text-muted-foreground mt-2">
-          {filteredPosts.length > 0
-            ? `${filteredPosts.length}件の記事を参考にします。`
-            : "この国に関する記事はまだありません。"}
-        </p>
-      </div>
-
-      <div>
-        <Label htmlFor="destination">1. 行き先</Label>
-        <div className="flex flex-wrap gap-2 mt-2 mb-3">
-          {destinationPresets.map((preset) => (
-            <Button
-              key={preset}
-              variant="outline"
-              size="sm"
-              onClick={() => setDestination(preset)}
-            >
-              {preset}
-            </Button>
-          ))}
-        </div>
-        <Input
-          id="destination"
-          value={destination}
-          onChange={(e) => setDestination(e.target.value)}
-          placeholder="例: パリ、バンコク"
-          disabled={isLoading}
-        />
-      </div>
-      <div>
-        <Label htmlFor="duration">2. 期間</Label>
-        <Input
-          id="duration"
-          value={duration}
-          onChange={(e) => setDuration(e.target.value)}
-          placeholder="例: 3日間"
-          className="mt-2"
-          disabled={isLoading}
-        />
-      </div>
-      <div>
-        <Label htmlFor="interests">3. 興味・関心</Label>
-        <div className="flex flex-wrap gap-2 mt-2 mb-3">
-          {interestPresets.map((preset) => (
-            <Button
-              key={preset}
-              variant="outline"
-              size="sm"
-              onClick={() => setInterests(preset)}
-            >
-              {preset}
-            </Button>
-          ))}
-        </div>
-        <Textarea
-          id="interests"
-          value={interests}
-          onChange={(e) => setInterests(e.target.value)}
-          placeholder="例: 寺院巡りがしたい"
-          disabled={isLoading}
-        />
-      </div>
-
-      <Button
-        onClick={handleGenerate}
-        disabled={isLoading || filteredPosts.length === 0}
-        size="lg"
-        className="w-full"
-      >
-        {isLoading ? (
-          <span className="flex items-center gap-2">
-            <Loader2 className="animate-spin" /> プランを生成中...
-          </span>
-        ) : (
-          "旅行プランを生成する"
-        )}
-      </Button>
+          </Button>
+        </>
+      )}
 
       {error && (
         <div className="mt-4 p-4 border rounded-md bg-red-50 border-red-200 dark:bg-red-950 dark:border-red-800">
@@ -294,21 +320,30 @@ export default function AiPlannerClient({
         </div>
       )}
 
-      {(aiResponse || isLoading) && (
-        <div className="mt-6 p-4 border rounded-md bg-gray-50 dark:bg-gray-800 min-h-[10rem]">
-          {isLoading && !aiResponse && (
-            <div className="flex items-center justify-center p-8 text-muted-foreground">
-              {" "}
-              <p>{loadingMessage}</p>{" "}
-            </div>
-          )}
-          <div className="prose dark:prose-invert max-w-none">
-            <ReactMarkdown remarkPlugins={[remarkGfm]}>
-              {aiResponse}
-            </ReactMarkdown>
+      <div className="mt-6">
+        <MessageComponent
+          messages={messages}
+          isLoading={isLoading}
+          loadingMessage={loadingMessage}
+        />
+      </div>
+
+      {!isLoading &&
+        messages.length > 0 &&
+        messages[messages.length - 1].role === "ai" &&
+        messages[messages.length - 1].content && (
+          <div className="mt-6 text-center text-sm text-muted-foreground">
+            <p>
+              この旅行プランはお役に立ちましたか？
+              <br />
+              今後の改善のため、ぜひ
+              <a href="/contact" className="underline">
+                フィードバック
+              </a>
+              をお寄せください。
+            </p>
           </div>
-        </div>
-      )}
+        )}
     </div>
   );
 }
