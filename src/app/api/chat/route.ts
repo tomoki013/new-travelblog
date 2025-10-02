@@ -3,6 +3,7 @@ import { google } from "@ai-sdk/google";
 import { NextRequest } from "next/server";
 import fs from "fs/promises";
 import path from "path";
+import matter from "gray-matter";
 
 export const dynamic = "force-dynamic";
 
@@ -94,11 +95,12 @@ export async function POST(req: NextRequest) {
           const mdFiles = files.filter((f) => f.endsWith(".md"));
           const built: Record<string, string> = {};
           for (const file of mdFiles) {
-            const slug = file.replace(/\.md$/i, "");
-            const content = await fs.readFile(
+            const slug = file.replace(/\.md$/, "").toLowerCase();
+            const fileContents = await fs.readFile(
               path.join(postsDir, file),
-              "utf8"
+              "utf8",
             );
+            const { content } = matter(fileContents);
             built[slug] = content;
           }
           if (Object.keys(built).length > 0) {
