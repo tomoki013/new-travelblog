@@ -194,6 +194,7 @@ export default function AiPlannerClient({
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
+          messages: newMessages,
           articleSlugs: filteredPosts.map((p) => p.slug),
           countryName: countryName,
           destination,
