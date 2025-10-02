@@ -15,7 +15,7 @@ export default function FeedbackModal({ isOpen, onClose }: FeedbackModalProps) {
   }
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50 backdrop-blur-sm">
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 backdrop-blur-sm">
       <div className="relative w-full max-w-lg p-6 mx-4 bg-background rounded-lg shadow-lg">
         <Button
           variant="ghost"

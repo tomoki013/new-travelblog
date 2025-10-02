@@ -60,7 +60,7 @@ export default function AiPlannerClient({
   const [filteredPosts, setFilteredPosts] = useState<PostMetadata[]>([]);
 
   const [destination, setDestination] = useState("");
-  const [duration, setDuration] = useState("3日間");
+  const [duration, setDuration] = useState("");
   const [interests, setInterests] = useState("");
 
   const [messages, setMessages] = useState<Message[]>([]);
@@ -240,7 +240,7 @@ export default function AiPlannerClient({
     setMessages([]);
     setSelectedCountryId("");
     setDestination("");
-    setDuration("3日間");
+    setDuration("");
     setInterests("");
     setCurrentStep(1);
     setError("");
@@ -318,7 +318,7 @@ export default function AiPlannerClient({
                 disabled={isLoading}
               >
                 <SelectTrigger id="duration" className="mt-2">
-                  <SelectValue placeholder="旅行の期間を選んでください" />
+                  <SelectValue placeholder="-" />
                 </SelectTrigger>
                 <SelectContent>
                   <SelectItem value="半日間">半日間</SelectItem>
