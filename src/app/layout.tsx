@@ -3,6 +3,7 @@ import {
   Caveat,
   Montserrat,
   Playfair_Display,
+  Noto_Sans_JP,
 } from "next/font/google";
 import "./globals.css";
 import { ThemeProvider } from "@/components/providers/theme-provider";
@@ -29,6 +30,12 @@ const caveat = Caveat({
   subsets: ["latin"],
   weight: "700",
   variable: "--font-caveat",
+});
+
+const notoSansJp = Noto_Sans_JP({
+  subsets: ["latin"],
+  weight: ["400", "500", "700"],
+  variable: "--font-noto-sans-jp",
 });
 
 
@@ -131,7 +138,7 @@ export default function RootLayout({
         ></Script>
       </head>
       <body
-        className={`${montserrat.variable} ${playfairDisplay.variable} ${caveat.variable} antialiased`}
+        className={`${montserrat.variable} ${playfairDisplay.variable} ${caveat.variable} ${notoSansJp.variable} antialiased`}
       >
         <ThemeProvider
           attribute={`class`}

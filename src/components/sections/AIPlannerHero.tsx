@@ -8,7 +8,7 @@ import Image from "next/image";
 
 const AIPlannerHero = () => {
   return (
-    <section className="relative h-[85vh] flex items-center justify-center text-center text-white overflow-hidden">
+    <section className="relative h-[50vh] flex items-center justify-center text-center text-white overflow-hidden">
       {/* Background Image */}
       <Image
         src="/images/Greece/oia-castle-sunset-view.jpg"

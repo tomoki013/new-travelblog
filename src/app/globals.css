@@ -164,12 +164,8 @@ html {
 }
 
 body {
-  font-family: var(--font-montserrat), sans-serif;
+  font-family: var(--font-noto-sans-jp), var(--font-montserrat), sans-serif;
   background-color: var(--background);
-}
-
-article {
-  font-family: var(--font-noto-sans-jp), sans-serif;
 }
 
 /* app/globals.css */
