@@ -1,3 +1,4 @@
+import AIPlannerHero from "@/components/sections/AIPlannerHero";
 import Hero from "@/components/sections/Hero";
 import NewPosts from "@/components/sections/NewPosts";
 import FeaturedSeries from "@/components/sections/FeaturedSeries";
@@ -18,6 +19,7 @@ export default async function HomePage() {
   return (
     <>
       <Hero />
+      <AIPlannerHero />
       <NewPosts posts={allPosts} />
       <Destination />
       <FeaturedSeries />
