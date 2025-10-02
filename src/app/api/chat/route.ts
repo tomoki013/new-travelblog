@@ -1,39 +1,42 @@
-import { GoogleGenerativeAI } from "@google/generative-ai";
+import { streamText, CoreMessage } from "ai";
+import { google } from "@ai-sdk/google";
 import { NextRequest } from "next/server";
 import fs from "fs/promises";
 import path from "path";
 
-type StreamPart = {
-  text: () => string;
-};
+export const dynamic = "force-dynamic";
 
-function iteratorToStream(iterator: AsyncGenerator<StreamPart>) {
-  return new ReadableStream({
-    async pull(controller) {
-      const { value, done } = await iterator.next();
-      if (done) {
-        controller.close();
-      } else {
-        controller.enqueue(new TextEncoder().encode(value.text()));
-      }
-    },
-  });
+// Pre-load the cache when the server starts
+const postsCachePath = path.join(process.cwd(), '.posts.cache.json');
+let postsCache: Record<string, string> | null = null;
+
+async function loadCache() {
+  try {
+    const data = await fs.readFile(postsCachePath, 'utf8');
+    postsCache = JSON.parse(data);
+    console.log('✅ Posts cache loaded successfully.');
+  } catch (error) {
+    console.error('❌ Failed to load posts cache. The build process might not have run correctly.', error);
+  }
 }
 
-export async function POST(req: NextRequest) {
-  const genAI = new GoogleGenerativeAI(process.env.GOOGLE_API_KEY || "");
-  const modelName = process.env.GEMINI_MODEL_NAME || "gemini-pro";
-  const model = genAI.getGenerativeModel({ model: modelName });
+loadCache();
 
+export async function POST(req: NextRequest) {
   try {
-    // --- 変更: countryNameを受け取る ---
-    const { articleSlugs, countryName, destination, duration, interests } =
+    const {
+      messages,
+      data,
+    }: { messages: CoreMessage[]; data: { [key: string]: string } } =
       await req.json();
 
+    const { articleSlugs, countryName, destination, duration, interests } = data;
+
     if (
+      !messages ||
+      !Array.isArray(messages) ||
+      messages.length === 0 ||
       !articleSlugs ||
-      !Array.isArray(articleSlugs) ||
-      articleSlugs.length === 0 ||
       !countryName ||
       !destination ||
       !duration ||
@@ -48,24 +51,27 @@ export async function POST(req: NextRequest) {
       );
     }
 
-    const postsDirectory = path.join(process.cwd(), "src", "posts");
+    if (!postsCache) {
+      await loadCache(); // Attempt to reload cache if it wasn't ready
+      if (!postsCache) {
+         return new Response(
+          JSON.stringify({
+            error: "サーバーの準備ができていません。キャッシュを読み込めませんでした。",
+          }),
+          {
+            status: 500,
+            headers: { "Content-Type": "application/json" },
+          }
+        );
+      }
+    }
 
-    const articleContents = await Promise.all(
-      articleSlugs.map(async (slug: string) => {
-        try {
-          const fullPath = path.join(postsDirectory, `${slug}.md`);
-          return await fs.readFile(fullPath, "utf8");
-        } catch {
-          console.warn(`記事の読み込みに失敗: ${slug}.md`);
-          return "";
-        }
-      })
-    );
+    const articleContents = (articleSlugs as unknown as string[]).map(slug => {
+      return postsCache![slug] || "";
+    }).filter(Boolean);
 
-    const knowledgeBase = articleContents.filter(Boolean).join("\n\n---\n\n");
-
-    if (!knowledgeBase) {
-      return new Response(
+    if (articleContents.length === 0) {
+        return new Response(
         JSON.stringify({
           error: "参考にできるブログ記事を読み込めませんでした。",
         }),
@@ -76,8 +82,9 @@ export async function POST(req: NextRequest) {
       );
     }
 
-    const prompt = `
-あなたはプロの旅行プランナーです。
+    const knowledgeBase = articleContents.join("\n\n---\n\n");
+
+    const systemPrompt = `あなたはプロの旅行プランナーです。
 以下の「ブログ記事からの参考情報」をインスピレーション源として活用し、ユーザーからの「旅行の希望条件」を満たす、魅力的で実行可能な**${countryName}**の旅行プランを提案してください。
 
 重要：
@@ -91,28 +98,18 @@ export async function POST(req: NextRequest) {
 ### ブログ記事からの参考情報
 ${knowledgeBase}
 ---
-### 旅行の希望条件
-- **国:** ${countryName}
-- **行き先:** ${destination}
-- **期間:** ${duration}
-- **興味・関心:** ${interests}
----
-
-それでは、上記を踏まえて、最高の旅行プランを提案してください。
 `;
 
-    const result = await model.generateContentStream(prompt);
-
-    const stream = iteratorToStream(result.stream);
-
-    return new Response(stream, {
-      headers: {
-        "Content-Type": "text/plain; charset=utf-8",
-      },
+    const result = await streamText({
+      model: google(process.env.GEMINI_MODEL_NAME || "gemini-pro"),
+      system: systemPrompt,
+      messages: messages,
     });
+
+    return result.toTextStreamResponse();
   } catch (error) {
     console.error(
-      "❌ /api/generate: 処理中に致命的なエラーが発生しました。",
+      "❌ /api/chat: 処理中に致命的なエラーが発生しました。",
       error
     );
     let errorMessage = "AIの応答生成中にサーバーで不明なエラーが発生しました。";
