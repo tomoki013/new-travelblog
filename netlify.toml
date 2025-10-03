@@ -2,6 +2,9 @@
   command = "npm run build"
   publish = ".next"
 
+[functions]
+  included_files = [".posts.cache.json"]
+
 [[redirects]]
   from = "https://tomokichidiary.netlify.app/*"
   to = "https://www.tomokichidiary.com/:splat"
