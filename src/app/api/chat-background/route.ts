@@ -1,10 +1,13 @@
-import type { BackgroundHandler } from "@netlify/functions";
+import { NextRequest, NextResponse } from "next/server";
 import { getStore } from "@netlify/blobs";
 import { generateText, CoreMessage } from "ai";
 import { google } from "@ai-sdk/google";
 import fs from "fs/promises";
 import path from "path";
 import matter from "gray-matter";
+
+// Next.jsのAPIルートとして正しく認識させるため、ランタイムを指定します
+export const dynamic = "force-dynamic";
 
 // Define the structure of the data stored in the blob
 interface JobData {
@@ -30,7 +33,7 @@ async function loadCache() {
     const data = await fs.readFile(postsCachePath, "utf8");
     postsCache = JSON.parse(data);
     console.log("✅ BG: Posts cache loaded successfully.");
-  } catch (error) {
+  } catch {
     console.warn(
       "BG: Failed to load posts cache from file. Will try to build from source."
     );
@@ -51,17 +54,13 @@ async function buildCacheFromSource() {
     const built: Record<string, string> = {};
     for (const file of mdFiles) {
       const slug = file.replace(/\.md$/, "").toLowerCase();
-      const fileContents = await fs.readFile(
-        path.join(postsDir, file),
-        "utf8"
-      );
+      const fileContents = await fs.readFile(path.join(postsDir, file), "utf8");
       const { content } = matter(fileContents);
       built[slug] = content;
     }
     if (Object.keys(built).length > 0) {
       postsCache = built;
       console.log("✅ BG: Built posts cache from src/posts fallback.");
-      // No need to write back to file in a serverless function context
     }
   } catch (e) {
     const msg = e instanceof Error ? e.message : String(e);
@@ -98,12 +97,17 @@ ${kb}
 `;
 }
 
-// --- Netlify Background Function Handler ---
-export const handler: BackgroundHandler = async (event) => {
-  const { jobId } = JSON.parse(event.body || "{}");
+// --- Next.js API Route Handler (for Background Function) ---
+// ★ 修正点: `handler`から`POST`関数に変更
+export async function POST(req: NextRequest) {
+  // Netlifyがリクエストを受け付けた後、この中の処理がバックグラウンドで実行されます。
+
+  // ★ 修正点: リクエストボディからjobIdを取得
+  const { jobId } = (await req.json()) as { jobId: string };
   if (!jobId) {
-    console.error("❌ BG: No jobId provided in the event body.");
-    return;
+    console.error("❌ BG: No jobId provided in the request body.");
+    // バックグラウンドではこのレスポンスは意味を持ちませんが、早期リターンします
+    return NextResponse.json({ error: "No jobId provided" }, { status: 400 });
   }
 
   const store = getStore("ai-planner-jobs");
@@ -111,8 +115,7 @@ export const handler: BackgroundHandler = async (event) => {
   try {
     const jobData = (await store.get(jobId, { type: "json" })) as JobData;
     if (!jobData) {
-      console.error(`❌ BG: Job data not found for jobId: ${jobId}`);
-      return;
+      throw new Error(`Job data not found for jobId: ${jobId}`);
     }
 
     // Mark job as processing
@@ -126,7 +129,6 @@ export const handler: BackgroundHandler = async (event) => {
       );
     }
 
-    // Create a new cache object with all keys in lowercase for case-insensitive matching
     const lowerCasePostsCache: Record<string, string> = {};
     for (const key in cache) {
       lowerCasePostsCache[key.toLowerCase()] = cache[key];
@@ -143,8 +145,6 @@ export const handler: BackgroundHandler = async (event) => {
     const knowledgeBase = articleContents.join("\n\n---\n\n");
     const systemPrompt = buildSystemPrompt(jobData.countryName, knowledgeBase);
 
-    // To solve the type issue, we will only pass the user's messages to the AI.
-    // The 'ai' message is just a placeholder for the UI and not needed for the prompt.
     const userMessages = jobData.messages.filter(
       (message) => message.role === "user"
     );
@@ -167,10 +167,12 @@ export const handler: BackgroundHandler = async (event) => {
     const errorMessage =
       error instanceof Error ? error.message : "An unknown error occurred.";
 
-    // Update blob with error status
     await store.setJSON(jobId, {
       status: "failed",
       error: errorMessage,
     });
   }
-};
+
+  // このレスポンスはクライアントには直接届きませんが、APIルートとして返す必要があります。
+  return NextResponse.json({ message: "Background process acknowledged." });
+}
