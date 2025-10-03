@@ -2,7 +2,11 @@
   command = "npm run build"
   publish = ".next"
 
+[dev]
+  command = "next dev"
+
 [functions]
+  directory = "netlify/functions"
   included_files = [".posts.cache.json"]
 
 [[redirects]]

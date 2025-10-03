@@ -54,9 +54,9 @@ export async function POST(req: NextRequest) {
       createdAt: new Date().toISOString(),
     });
 
-    // 新しいエンドポイント（src/app/api/chat-background/route.ts）に合わせてAPIを呼び出す
+    // Netlifyのバックグラウンド関数をトリガーする
     const url = new URL(req.url);
-    const triggerUrl = `${url.protocol}//${url.host}/api/chat-background`;
+    const triggerUrl = `${url.protocol}//${url.host}/.netlify/functions/ai-planner-background`;
 
     // レスポンスは待たずにトリガーだけ行う
     fetch(triggerUrl, {
