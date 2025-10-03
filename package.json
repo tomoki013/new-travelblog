@@ -27,6 +27,7 @@
     "@serwist/webpack-plugin": "^9.2.1",
     "@serwist/window": "^9.2.1",
     "@netlify/blobs": "^10.0.11",
+    "@netlify/functions": "^2.8.1",
     "@types/image-size": "^0.7.0",
     "@types/uuid": "^10.0.0",
     "ai": "^5.0.59",
