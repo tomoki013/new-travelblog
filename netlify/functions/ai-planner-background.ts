@@ -116,7 +116,11 @@ const handler: Handler = async (event: HandlerEvent, context: HandlerContext) =>
     };
   }
 
-  const store = getStore("ai-planner-jobs");
+  const store = getStore({
+    name: "ai-planner-jobs",
+    siteID: process.env.SITE_ID,
+    token: process.env.NETLIFY_API_TOKEN,
+  });
 
   try {
     const jobData = (await store.get(jobId, { type: "json" })) as JobData;
