@@ -3,11 +3,7 @@
   publish = ".next"
 
 [functions]
-  directory = "netlify/functions"
   included_files = [".posts.cache.json"]
-
-[functions."chat-background"]
-  background = true
 
 [[redirects]]
   from = "https://tomokichidiary.netlify.app/*"
