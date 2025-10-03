@@ -56,7 +56,7 @@ export async function POST(req: NextRequest) {
 
     // Netlifyのバックグラウンド関数をトリガーする
     const url = new URL(req.url);
-    const triggerUrl = `${url.protocol}//${url.host}/.netlify/functions/ai-planner-background`;
+    const triggerUrl = `${url.protocol}//${url.host}/.netlify/functions/ai-planner`;
 
     // レスポンスは待たずにトリガーだけ行う
     fetch(triggerUrl, {
