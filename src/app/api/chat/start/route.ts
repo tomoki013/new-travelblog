@@ -54,11 +54,11 @@ export async function POST(req: NextRequest) {
       createdAt: new Date().toISOString(),
     });
 
-    // Invoke the background function by sending a POST request.
+    // 新しいエンドポイント（src/app/api/chat-background/route.ts）に合わせてAPIを呼び出す
     const url = new URL(req.url);
-    const triggerUrl = `${url.protocol}//${url.host}/.netlify/functions/chat-background`;
+    const triggerUrl = `${url.protocol}//${url.host}/api/chat-background`;
 
-    // We don't wait for the response, just trigger it.
+    // レスポンスは待たずにトリガーだけ行う
     fetch(triggerUrl, {
       method: "POST",
       headers: {
@@ -66,7 +66,7 @@ export async function POST(req: NextRequest) {
       },
       body: JSON.stringify({ jobId }),
     }).catch((err) => {
-      // Log errors but don't block the response to the client
+      // エラーはログに出すがクライアントへのレスポンスは妨げない
       console.error("Error invoking background function:", err);
     });
 
