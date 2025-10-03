@@ -56,7 +56,6 @@ export default function AiPlannerClient({
   allPosts,
   continents,
 }: AiPlannerClientProps) {
-  // 国の識別に使うのは name ではなく id/slug です
   const [selectedCountryId, setSelectedCountryId] = useState<string>("");
   const [filteredPosts, setFilteredPosts] = useState<PostMetadata[]>([]);
 
