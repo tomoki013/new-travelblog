@@ -55,3 +55,6 @@ public/sitemap-*.xml
 
 # Service worker
 /public/sw.js
+
+# Local Netlify folder
+.netlify
