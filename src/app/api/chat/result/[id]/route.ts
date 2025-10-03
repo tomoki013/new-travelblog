@@ -11,9 +11,9 @@ interface Job {
 
 export async function GET(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  context: { params: { id: string } }
 ) {
-  const jobId = params.id;
+  const jobId = context.params.id;
   if (!jobId) {
     return NextResponse.json({ error: "Job ID is required" }, { status: 400 });
   }
