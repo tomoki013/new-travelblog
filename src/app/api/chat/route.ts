@@ -24,7 +24,7 @@ async function loadCache() {
   }
 }
 
-loadCache();
+// loadCache(); // This is handled by the fallback logic now
 
 export async function POST(req: NextRequest) {
   try {
@@ -98,7 +98,7 @@ export async function POST(req: NextRequest) {
             const slug = file.replace(/\.md$/, "").toLowerCase();
             const fileContents = await fs.readFile(
               path.join(postsDir, file),
-              "utf8",
+              "utf8"
             );
             const { content } = matter(fileContents);
             built[slug] = content;
@@ -138,9 +138,16 @@ export async function POST(req: NextRequest) {
       }
     }
 
+    // Create a new cache object with all keys in lowercase for case-insensitive matching
+    const lowerCasePostsCache: Record<string, string> = {};
+    for (const key in postsCache) {
+      lowerCasePostsCache[key.toLowerCase()] = postsCache[key];
+    }
+
     const articleContents = (articleSlugs as unknown as string[])
       .map((slug) => {
-        return postsCache![slug] || "";
+        // Use the lowercase cache for lookup
+        return lowerCasePostsCache[slug.toLowerCase()] || "";
       })
       .filter(Boolean);
 
@@ -174,10 +181,18 @@ ${knowledgeBase}
 ---
 `;
 
+    // 'ai' roleを 'assistant' に変換してAI SDKの要件に合わせる
+    const correctedMessages = messages.map((message) => {
+      if ((message.role as string) === "ai") {
+        return { ...message, role: "assistant" as const };
+      }
+      return message;
+    });
+
     const result = await streamText({
-      model: google(process.env.GEMINI_MODEL_NAME || "gemini-pro"),
+      model: google(process.env.GEMINI_MODEL_NAME || "gemini-2.5-flash"),
       system: systemPrompt,
-      messages: messages,
+      messages: correctedMessages as CoreMessage[],
     });
 
     return result.toTextStreamResponse();
@@ -186,9 +201,24 @@ ${knowledgeBase}
       "❌ /api/chat: 処理中に致命的なエラーが発生しました。",
       error
     );
+
+    // More detailed error logging
+    if (error && typeof error === "object") {
+      for (const key in error as Record<string, unknown>) {
+        console.error(
+          `Error property [${key}]:`,
+          (error as Record<string, unknown>)[key]
+        );
+      }
+    } else {
+      console.error("Error details:", error);
+    }
+
     let errorMessage = "AIの応答生成中にサーバーで不明なエラーが発生しました。";
     if (error instanceof Error) {
       errorMessage = error.message;
+    } else if (typeof error === "string") {
+      errorMessage = error;
     }
     return new Response(JSON.stringify({ error: errorMessage }), {
       status: 500,
