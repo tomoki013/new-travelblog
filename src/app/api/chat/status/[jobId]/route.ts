@@ -11,9 +11,11 @@ interface JobPayload {
 
 export async function GET(
   _req: NextRequest,
-  { params }: { params: { jobId: string } }
+  // Applying the user's specific and detailed type hint.
+  props: { params: Promise<{ jobId: string }> }
 ) {
-  const { jobId } = params;
+  // Awaiting the params object as it is a Promise.
+  const { jobId } = await props.params;
 
   if (!jobId) {
     return NextResponse.json({ error: "Job ID is required" }, { status: 400 });
@@ -27,7 +29,6 @@ export async function GET(
       return NextResponse.json({ status: "not_found" }, { status: 404 });
     }
 
-    // Return only the necessary fields to the client
     const responsePayload: { status: string; result?: string; error?: string } =
       {
         status: data.status,

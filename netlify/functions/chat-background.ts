@@ -143,16 +143,16 @@ export const handler: BackgroundHandler = async (event) => {
     const knowledgeBase = articleContents.join("\n\n---\n\n");
     const systemPrompt = buildSystemPrompt(jobData.countryName, knowledgeBase);
 
-    const correctedMessages = jobData.messages.map((message) =>
-      (message.role as string) === "ai"
-        ? { ...message, role: "assistant" as const }
-        : message
+    // To solve the type issue, we will only pass the user's messages to the AI.
+    // The 'ai' message is just a placeholder for the UI and not needed for the prompt.
+    const userMessages = jobData.messages.filter(
+      (message) => message.role === "user"
     );
 
     const { text } = await generateText({
       model: google(process.env.GEMINI_MODEL_NAME || "gemini-1.5-flash"),
       system: systemPrompt,
-      messages: correctedMessages,
+      messages: userMessages,
     });
 
     // --- Job Completion ---

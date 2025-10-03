@@ -1,7 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { getStore } from "@netlify/blobs";
 import { v4 as uuidv4 } from "uuid";
-import { invoke } from "@netlify/functions";
 import { CoreMessage } from "ai";
 
 export const dynamic = "force-dynamic";
@@ -55,13 +54,23 @@ export async function POST(req: NextRequest) {
       createdAt: new Date().toISOString(),
     });
 
-    // Invoke the background function asynchronously.
-    // The function name 'chat-background' must match what's in netlify.toml
-    await invoke("chat-background", {
+    // Invoke the background function by sending a POST request.
+    const url = new URL(req.url);
+    const triggerUrl = `${url.protocol}//${url.host}/.netlify/functions/chat-background`;
+
+    // We don't wait for the response, just trigger it.
+    fetch(triggerUrl, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
       body: JSON.stringify({ jobId }),
+    }).catch((err) => {
+      // Log errors but don't block the response to the client
+      console.error("Error invoking background function:", err);
     });
 
-    // Return the jobId to the client
+    // Return the jobId to the client immediately
     return NextResponse.json({ jobId });
   } catch (error) {
     console.error("❌ /api/chat/start: Error starting job.", error);
