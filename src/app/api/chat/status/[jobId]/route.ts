@@ -11,9 +11,9 @@ interface JobPayload {
 
 export async function GET(
   _req: NextRequest,
-  { params }: { params: { jobId: string } }
+  context: { params: { jobId: string } }
 ) {
-  const { jobId } = params;
+  const { jobId } = context.params;
 
   if (!jobId) {
     return NextResponse.json({ error: "Job ID is required" }, { status: 400 });
