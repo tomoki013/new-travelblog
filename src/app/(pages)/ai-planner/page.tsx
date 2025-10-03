@@ -5,7 +5,7 @@ import AiPlannerClient from "./Client";
 
 export const metadata: Metadata = {
   title: "AI旅行プランナー（ベータ版）",
-  description: "AIがあなたの希望に基づいて旅行プランを作成します。",
+  description: "「ともきちの旅行日記」のAI旅行プランナー（ベータ版）が新登場！行きたい国を入力するだけで、豊富な旅行記をもとにAIがあなただけのオリジナル旅行プランを自動作成します。観光ルートやお店も提案し、旅行の準備がぐっと楽に。ぜひこの便利な新機能をお試しください！フィードバックも募集中です。",
 };
 
 export default async function AiPlannerPage() {
