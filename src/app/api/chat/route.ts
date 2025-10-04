@@ -74,8 +74,6 @@ ${kb}
 `;
 }
 
-export const runtime = "edge";
-
 export async function POST(req: Request) {
   try {
     const { messages, data } = await req.json();
