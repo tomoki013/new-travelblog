@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState, useRef } from "react";
+import { useChat } from "@ai-sdk/react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -17,12 +18,6 @@ import {
 // PostMetadata と ContinentData を types/types.ts からインポートします
 import { PostMetadata, ContinentData } from "@/types/types";
 import FeedbackModal from "@/components/elements/FeedbackModal";
-
-interface Message {
-  role: "user" | "ai";
-  content: string;
-  isError?: boolean;
-}
 
 const destinationPresets = [
   "マドリード",
@@ -64,9 +59,7 @@ export default function AiPlannerClient({
   const [duration, setDuration] = useState("");
   const [interests, setInterests] = useState("");
 
-  const [messages, setMessages] = useState<Message[]>([]);
-  const [isLoading, setIsLoading] = useState(false);
-  const [loadingMessage, setLoadingMessage] = useState("");
+  const [loadingMessage, setLoadingMessage] = useState(loadingMessages[0]);
   const [currentStep, setCurrentStep] = useState(1);
   const [isFeedbackModalOpen, setIsFeedbackModalOpen] = useState(false);
   const hasShownFeedbackModal = useRef(false);
@@ -117,6 +110,22 @@ export default function AiPlannerClient({
     setInterests("");
   }, [selectedCountryId, allPosts, continents]);
 
+  const { messages, append, setMessages, isLoading, error } = useChat({
+    api: "/api/chat",
+    onFinish: () => {
+      if (!hasShownFeedbackModal.current) {
+        setIsFeedbackModalOpen(true);
+        hasShownFeedbackModal.current = true;
+      }
+    },
+  });
+
+  // Adapt Vercel AI SDK message format to what MessageComponent expects
+  const adaptedMessages = messages.map((msg) => ({
+    role: msg.role === "user" ? "user" : "ai",
+    content: msg.content,
+  }));
+
   useEffect(() => {
     let interval: NodeJS.Timeout | null = null;
     if (isLoading) {
@@ -153,17 +162,16 @@ export default function AiPlannerClient({
   const handleGenerate = async () => {
     if (filteredPosts.length === 0) {
       setMessages([
+        ...messages,
         {
-          role: "ai",
+          id: "error-no-posts",
+          role: "assistant",
           content:
             "選択された国に関連する記事が見つかりません。別の国を選択してください。",
-          isError: true,
         },
       ]);
       return;
     }
-
-    setIsLoading(true);
 
     let countryName = "";
     for (const continent of continents) {
@@ -183,63 +191,15 @@ export default function AiPlannerClient({
 - **興味・関心:** ${interests}
 `;
 
-    const currentMessages: Message[] = [
+    await append(
       { role: "user", content: userMessageContent },
-      { role: "ai", content: "" }, // Placeholder for AI response
-    ];
-    setMessages(currentMessages);
-
-    try {
-      const requestBody = {
-        messages: currentMessages,
-        articleSlugs: filteredPosts.map((p) => p.slug),
-        countryName: countryName,
-      };
-
-      const response = await fetch("/api/chat", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(requestBody),
-      });
-
-      if (!response.ok) {
-        const errorData = await response.json().catch(() => ({
-          error: `サーバーから予期せぬ応答がありました (HTTP ${response.status})`,
-        }));
-        throw new Error(errorData.error || "不明なエラーが発生しました。");
+      {
+        data: {
+          articleSlugs: filteredPosts.map((p) => p.slug),
+          countryName: countryName,
+        },
       }
-
-      const { response: aiResponse } = await response.json();
-
-      setMessages((prev) => {
-        const updated = [...prev];
-        const lastMessage = updated[updated.length - 1];
-        if (lastMessage && lastMessage.role === "ai") {
-          lastMessage.content = aiResponse;
-          lastMessage.isError = false;
-        }
-        return updated;
-      });
-
-      if (!hasShownFeedbackModal.current) {
-        setIsFeedbackModalOpen(true);
-        hasShownFeedbackModal.current = true;
-      }
-    } catch (err) {
-      const errorMessage =
-        err instanceof Error ? err.message : "予期せぬエラーが発生しました。";
-      setMessages((prev) => {
-        const updated = [...prev];
-        const lastMessage = updated[updated.length - 1];
-        if (lastMessage && lastMessage.role === "ai") {
-          lastMessage.content = `エラー: ${errorMessage}`;
-          lastMessage.isError = true;
-        }
-        return updated;
-      });
-    } finally {
-      setIsLoading(false);
-    }
+    );
   };
 
   const handleReset = () => {
@@ -249,7 +209,6 @@ export default function AiPlannerClient({
     setDuration("");
     setInterests("");
     setCurrentStep(1);
-    setIsLoading(false);
   };
 
   return (
@@ -390,15 +349,22 @@ export default function AiPlannerClient({
 
       <div className="mt-6">
         <MessageComponent
-          messages={messages}
+          messages={adaptedMessages}
           isLoading={isLoading}
           loadingMessage={loadingMessage}
         />
+        {error && (
+          <div className="mt-4 p-4 bg-red-100 text-red-700 border border-red-400 rounded">
+            <p className="font-bold">エラーが発生しました</p>
+            <p>{error.message}</p>
+          </div>
+        )}
       </div>
 
       {!isLoading &&
         messages.length > 0 &&
-        messages[messages.length - 1].role === "ai" &&
+        !error &&
+        messages[messages.length - 1].role === "assistant" &&
         messages[messages.length - 1].content && (
           <div className="mt-8 flex flex-col items-center gap-4">
             <Button onClick={handleReset} size="lg">

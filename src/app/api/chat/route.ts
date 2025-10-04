@@ -1,5 +1,4 @@
-import { NextRequest, NextResponse } from "next/server";
-import { generateText, CoreMessage } from "ai";
+import { StreamingTextResponse, streamText, CoreMessage } from "ai";
 import { google } from "@ai-sdk/google";
 import fs from "fs/promises";
 import path from "path";
@@ -75,23 +74,20 @@ ${kb}
 `;
 }
 
-interface ChatRequestBody {
-    messages: CoreMessage[];
-    articleSlugs: string[];
-    countryName: string;
-}
+export const runtime = "edge";
 
-export async function POST(req: NextRequest) {
+export async function POST(req: Request) {
   try {
-    const { messages, articleSlugs, countryName } = (await req.json()) as ChatRequestBody;
+    const { messages, data } = await req.json();
+    const { articleSlugs, countryName } = data;
 
     if (!messages || !articleSlugs || !countryName) {
-      return NextResponse.json({ error: "Request body is missing required fields." }, { status: 400 });
+      return new Response("Request body is missing required fields.", { status: 400 });
     }
 
     const cache = await getPostsCache();
     if (!cache) {
-      return NextResponse.json({ error: "Server not ready: Could not load post cache." }, { status: 503 });
+      return new Response("Server not ready: Could not load post cache.", { status: 503 });
     }
 
     const lowerCasePostsCache: Record<string, string> = {};
@@ -100,32 +96,32 @@ export async function POST(req: NextRequest) {
     }
 
     const articleContents = articleSlugs
-      .map((slug) => lowerCasePostsCache[slug.toLowerCase()] || "")
+      .map((slug: string) => lowerCasePostsCache[slug.toLowerCase()] || "")
       .filter(Boolean);
 
     if (articleContents.length === 0) {
-        return NextResponse.json({ error: "Could not load reference blog posts." }, { status: 400 });
+      return new Response("Could not load reference blog posts.", { status: 400 });
     }
 
     const knowledgeBase = articleContents.join("\n\n---\n\n");
     const systemPrompt = buildSystemPrompt(countryName, knowledgeBase);
 
-    const userMessages = messages.filter(
+    const userMessages = (messages as CoreMessage[]).filter(
       (message) => message.role === "user"
     );
 
-    const { text } = await generateText({
+    const result = await streamText({
       model: google(process.env.GEMINI_MODEL_NAME || "gemini-1.5-flash"),
       system: systemPrompt,
       messages: userMessages,
     });
 
-    return NextResponse.json({ response: text });
+    return new StreamingTextResponse(result.toAIStream());
 
   } catch (error) {
     console.error("❌ /api/chat: Error generating AI plan.", error);
     const errorMessage =
       error instanceof Error ? error.message : "Internal Server Error";
-    return NextResponse.json({ error: errorMessage }, { status: 500 });
+    return new Response(`Error: ${errorMessage}`, { status: 500 });
   }
 }
