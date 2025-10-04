@@ -66,7 +66,6 @@ export default function AiPlannerClient({
 
   const [messages, setMessages] = useState<Message[]>([]);
   const [isLoading, setIsLoading] = useState(false);
-  const [jobId, setJobId] = useState<string | null>(null);
   const [loadingMessage, setLoadingMessage] = useState("");
   const [currentStep, setCurrentStep] = useState(1);
   const [isFeedbackModalOpen, setIsFeedbackModalOpen] = useState(false);
@@ -135,84 +134,6 @@ export default function AiPlannerClient({
     };
   }, [isLoading]);
 
-  useEffect(() => {
-    if (!jobId || !isLoading) {
-      return;
-    }
-
-    const pollInterval = setInterval(async () => {
-      try {
-        const response = await fetch(`/api/chat/status/${jobId}`);
-
-        if (response.status === 404) {
-          console.warn(`Job ${jobId} not found. Retrying...`);
-          return;
-        }
-
-        if (!response.ok) {
-          throw new Error(`Polling failed with status: ${response.status}`);
-        }
-
-        const data = await response.json();
-
-        if (data.status === "completed") {
-          clearInterval(pollInterval);
-          setMessages((prev) => {
-            const updated = [...prev];
-            const lastMessage = updated[updated.length - 1];
-            if (lastMessage && lastMessage.role === "ai") {
-              lastMessage.content = data.result;
-              lastMessage.isError = false;
-            }
-            return updated;
-          });
-          setIsLoading(false);
-          setJobId(null);
-          if (!hasShownFeedbackModal.current) {
-            setIsFeedbackModalOpen(true);
-            hasShownFeedbackModal.current = true;
-          }
-        } else if (data.status === "failed") {
-          clearInterval(pollInterval);
-          const errorMessage = `エラーが発生しました: ${
-            data.error || "不明なエラーが発生しました。"
-          }`;
-          setMessages((prev) => {
-            const updated = [...prev];
-            const lastMessage = updated[updated.length - 1];
-            if (lastMessage && lastMessage.role === "ai") {
-              lastMessage.content = errorMessage;
-              lastMessage.isError = true;
-            }
-            return updated;
-          });
-          setIsLoading(false);
-          setJobId(null);
-        }
-      } catch (err) {
-        console.error("Error during polling:", err);
-        clearInterval(pollInterval);
-        const errorMessage =
-          err instanceof Error
-            ? err.message
-            : "ポーリング中にエラーが発生しました。";
-        setMessages((prev) => {
-          const updated = [...prev];
-          const lastMessage = updated[updated.length - 1];
-          if (lastMessage && lastMessage.role === "ai") {
-            lastMessage.content = errorMessage;
-            lastMessage.isError = true;
-          }
-          return updated;
-        });
-        setIsLoading(false);
-        setJobId(null);
-      }
-    }, 3000);
-
-    return () => clearInterval(pollInterval);
-  }, [jobId, isLoading]);
-
   const handleDestinationSubmit = (value: string) => {
     if (value.trim()) {
       setDestination(value.trim());
@@ -243,7 +164,6 @@ export default function AiPlannerClient({
     }
 
     setIsLoading(true);
-    setJobId(null);
 
     let countryName = "";
     for (const continent of continents) {
@@ -263,25 +183,20 @@ export default function AiPlannerClient({
 - **興味・関心:** ${interests}
 `;
 
-    const initialMessages: Message[] = [
+    const currentMessages: Message[] = [
       { role: "user", content: userMessageContent },
       { role: "ai", content: "" }, // Placeholder for AI response
     ];
-    setMessages(initialMessages);
+    setMessages(currentMessages);
 
     try {
       const requestBody = {
-        messages: initialMessages,
+        messages: currentMessages,
         articleSlugs: filteredPosts.map((p) => p.slug),
         countryName: countryName,
-        destination,
-        duration,
-        interests,
       };
 
-      console.log("Request to /api/chat/start:", requestBody);
-
-      const response = await fetch("/api/chat/start", {
+      const response = await fetch("/api/chat", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(requestBody),
@@ -291,14 +206,25 @@ export default function AiPlannerClient({
         const errorData = await response.json().catch(() => ({
           error: `サーバーから予期せぬ応答がありました (HTTP ${response.status})`,
         }));
-        throw new Error(errorData.error);
+        throw new Error(errorData.error || "不明なエラーが発生しました。");
       }
 
-      const { jobId: newJobId } = await response.json();
-      if (!newJobId) {
-        throw new Error("Job IDの取得に失敗しました。");
+      const { response: aiResponse } = await response.json();
+
+      setMessages((prev) => {
+        const updated = [...prev];
+        const lastMessage = updated[updated.length - 1];
+        if (lastMessage && lastMessage.role === "ai") {
+          lastMessage.content = aiResponse;
+          lastMessage.isError = false;
+        }
+        return updated;
+      });
+
+      if (!hasShownFeedbackModal.current) {
+        setIsFeedbackModalOpen(true);
+        hasShownFeedbackModal.current = true;
       }
-      setJobId(newJobId);
     } catch (err) {
       const errorMessage =
         err instanceof Error ? err.message : "予期せぬエラーが発生しました。";
@@ -311,6 +237,7 @@ export default function AiPlannerClient({
         }
         return updated;
       });
+    } finally {
       setIsLoading(false);
     }
   };
@@ -323,7 +250,6 @@ export default function AiPlannerClient({
     setInterests("");
     setCurrentStep(1);
     setIsLoading(false);
-    setJobId(null);
   };
 
   return (
