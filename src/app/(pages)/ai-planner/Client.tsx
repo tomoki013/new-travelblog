@@ -110,7 +110,7 @@ export default function AiPlannerClient({
     setInterests("");
   }, [selectedCountryId, allPosts, continents]);
 
-  const { messages, append, setMessages, isLoading, error } = useChat({
+  const { messages, handleSubmit, setMessages, isLoading, error, input, setInput } = useChat({
     api: "/api/chat",
     onFinish: () => {
       if (!hasShownFeedbackModal.current) {
@@ -159,7 +159,8 @@ export default function AiPlannerClient({
     setInterests((prev) => (prev ? `${prev}, ${preset}` : preset));
   };
 
-  const handleGenerate = async () => {
+  const handleGenerate = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
     if (filteredPosts.length === 0) {
       setMessages([
         ...messages,
@@ -190,16 +191,16 @@ export default function AiPlannerClient({
 - **期間:** ${duration}
 - **興味・関心:** ${interests}
 `;
+    // Set the input to the user message content before submitting
+    setInput(userMessageContent);
 
-    await append(
-      { role: "user", content: userMessageContent },
-      {
-        data: {
-          articleSlugs: filteredPosts.map((p) => p.slug),
-          countryName: countryName,
-        },
-      }
-    );
+    // Call handleSubmit with the additional data
+    handleSubmit(e, {
+      data: {
+        articleSlugs: filteredPosts.map((p) => p.slug),
+        countryName: countryName,
+      },
+    });
   };
 
   const handleReset = () => {
@@ -214,7 +215,7 @@ export default function AiPlannerClient({
   return (
     <div className="space-y-6">
       {messages.length === 0 && (
-        <>
+        <form onSubmit={handleGenerate} className="space-y-6">
           <div>
             <Label htmlFor="country">Step 1: 国を選択</Label>
             <Select
@@ -324,7 +325,7 @@ export default function AiPlannerClient({
               </div>
 
               <Button
-                onClick={handleGenerate}
+                type="submit"
                 disabled={
                   isLoading ||
                   filteredPosts.length === 0 ||
@@ -344,7 +345,7 @@ export default function AiPlannerClient({
               </Button>
             </>
           )}
-        </>
+        </form>
       )}
 
       <div className="mt-6">
