@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "netlify dev",
+    "dev": "next dev",
     "prebuild": "node scripts/generate-image-index.js && node scripts/generate-post-cache.js",
     "build": "next build",
     "postbuild": "next-sitemap --config next-sitemap.config.js",
