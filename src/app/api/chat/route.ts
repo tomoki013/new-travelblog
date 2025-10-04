@@ -1,27 +1,11 @@
-import { Handler, HandlerEvent, HandlerContext } from "@netlify/functions";
-import { getStore } from "@netlify/blobs";
+import { NextRequest, NextResponse } from "next/server";
 import { generateText, CoreMessage } from "ai";
 import { google } from "@ai-sdk/google";
 import fs from "fs/promises";
 import path from "path";
 import matter from "gray-matter";
 
-// Define the structure of the data stored in the blob
-interface JobData {
-  status: "pending" | "processing" | "completed" | "failed";
-  messages: CoreMessage[];
-  articleSlugs: string[];
-  countryName: string;
-  destination: string;
-  duration: string;
-  interests: string;
-  createdAt: string;
-  result?: string;
-  error?: string;
-}
-
 // --- Post Cache Logic ---
-// process.cwd() is the root of the project where `netlify dev` is run
 const postsCachePath = path.join(process.cwd(), ".posts.cache.json");
 let postsCache: Record<string, string> | null = null;
 
@@ -30,10 +14,10 @@ async function loadCache() {
   try {
     const data = await fs.readFile(postsCachePath, "utf8");
     postsCache = JSON.parse(data);
-    console.log("✅ BG Func: Posts cache loaded successfully.");
+    console.log("✅ API Route: Posts cache loaded successfully.");
   } catch {
     console.warn(
-      "BG Func: Failed to load posts cache. Will build from source."
+      "API Route: Failed to load posts cache. Will build from source."
     );
     postsCache = null;
   }
@@ -44,7 +28,7 @@ async function buildCacheFromSource() {
     const postsDir = path.join(process.cwd(), "src/posts");
     const stat = await fs.stat(postsDir).catch(() => null);
     if (!stat || !stat.isDirectory()) {
-      console.warn(`BG Func: Posts directory not found at ${postsDir}`);
+      console.warn(`API Route: Posts directory not found at ${postsDir}`);
       return;
     }
     const files = await fs.readdir(postsDir);
@@ -58,11 +42,11 @@ async function buildCacheFromSource() {
     }
     if (Object.keys(built).length > 0) {
       postsCache = built;
-      console.log("✅ BG Func: Built posts cache from src/posts fallback.");
+      console.log("✅ API Route: Built posts cache from src/posts fallback.");
     }
   } catch (e) {
     const msg = e instanceof Error ? e.message : String(e);
-    console.error("❌ BG Func: Failed to build posts cache:", msg);
+    console.error("❌ API Route: Failed to build posts cache:", msg);
   }
 }
 
@@ -91,48 +75,23 @@ ${kb}
 `;
 }
 
-// --- Netlify Background Function Handler ---
-const handler: Handler = async (event: HandlerEvent, context: HandlerContext) => {
-  if (event.httpMethod !== "POST") {
-    return {
-      statusCode: 405,
-      body: "Method Not Allowed",
-    };
-  }
+interface ChatRequestBody {
+    messages: CoreMessage[];
+    articleSlugs: string[];
+    countryName: string;
+}
 
-  if (!event.body) {
-    return {
-      statusCode: 400,
-      body: "Bad Request: No body provided",
-    };
-  }
-
-  const { jobId } = JSON.parse(event.body) as { jobId: string };
-  if (!jobId) {
-    console.error("❌ BG Func: No jobId provided in the request body.");
-    return {
-      statusCode: 400,
-      body: "Bad Request: No jobId provided",
-    };
-  }
-
-  const store = getStore({
-    name: "ai-planner-jobs",
-    siteID: process.env.SITE_ID,
-    token: process.env.NETLIFY_API_TOKEN,
-  });
-
+export async function POST(req: NextRequest) {
   try {
-    const jobData = (await store.get(jobId, { type: "json" })) as JobData;
-    if (!jobData) {
-      throw new Error(`Job data not found for jobId: ${jobId}`);
-    }
+    const { messages, articleSlugs, countryName } = (await req.json()) as ChatRequestBody;
 
-    await store.setJSON(jobId, { ...jobData, status: "processing" });
+    if (!messages || !articleSlugs || !countryName) {
+      return NextResponse.json({ error: "Request body is missing required fields." }, { status: 400 });
+    }
 
     const cache = await getPostsCache();
     if (!cache) {
-      throw new Error("Server not ready: Could not load post cache.");
+      return NextResponse.json({ error: "Server not ready: Could not load post cache." }, { status: 503 });
     }
 
     const lowerCasePostsCache: Record<string, string> = {};
@@ -140,18 +99,18 @@ const handler: Handler = async (event: HandlerEvent, context: HandlerContext) =>
       lowerCasePostsCache[key.toLowerCase()] = cache[key];
     }
 
-    const articleContents = jobData.articleSlugs
+    const articleContents = articleSlugs
       .map((slug) => lowerCasePostsCache[slug.toLowerCase()] || "")
       .filter(Boolean);
 
     if (articleContents.length === 0) {
-      throw new Error("Could not load reference blog posts.");
+        return NextResponse.json({ error: "Could not load reference blog posts." }, { status: 400 });
     }
 
     const knowledgeBase = articleContents.join("\n\n---\n\n");
-    const systemPrompt = buildSystemPrompt(jobData.countryName, knowledgeBase);
+    const systemPrompt = buildSystemPrompt(countryName, knowledgeBase);
 
-    const userMessages = jobData.messages.filter(
+    const userMessages = messages.filter(
       (message) => message.role === "user"
     );
 
@@ -161,28 +120,12 @@ const handler: Handler = async (event: HandlerEvent, context: HandlerContext) =>
       messages: userMessages,
     });
 
-    await store.setJSON(jobId, {
-      ...jobData,
-      status: "completed",
-      result: text,
-    });
-    console.log(`✅ BG Func: Job ${jobId} completed successfully.`);
+    return NextResponse.json({ response: text });
 
   } catch (error) {
-    console.error(`❌ BG Func: Error processing job ${jobId}:`, error);
+    console.error("❌ /api/chat: Error generating AI plan.", error);
     const errorMessage =
-      error instanceof Error ? error.message : "An unknown error occurred.";
-
-    await store.setJSON(jobId, {
-      status: "failed",
-      error: errorMessage,
-    });
+      error instanceof Error ? error.message : "Internal Server Error";
+    return NextResponse.json({ error: errorMessage }, { status: 500 });
   }
-
-  return {
-    statusCode: 202, // Accepted
-    body: JSON.stringify({ message: "Background process started." }),
-  };
-};
-
-export { handler };
+}
