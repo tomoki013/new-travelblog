@@ -175,7 +175,7 @@ export async function POST(req: NextRequest) {
           messages: [], // We are putting all context in the system prompt for these steps
         });
 
-        return result.toAIStreamResponse();
+        return result.toTextStreamResponse();
       }
 
       default: {
