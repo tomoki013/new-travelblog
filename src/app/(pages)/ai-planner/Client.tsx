@@ -217,6 +217,10 @@ export default function AiPlannerClient({
       }
       const outlineText = await processStream(outlineResponse.body.getReader());
 
+      if (!outlineText || outlineText.trim() === "") {
+        throw new Error("AIがプランの骨子を生成できませんでした。条件を変えて再度お試しください。");
+      }
+
       // Step 3: Flesh out the plan
       setLoadingMessage("詳細情報を追加中...");
       const finalPlanResponse = await fetch("/api/chat", {
