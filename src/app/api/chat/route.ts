@@ -172,7 +172,9 @@ export async function POST(req: NextRequest) {
         const result = await streamText({
           model: google(process.env.GEMINI_MODEL_NAME || "gemini-1.5-flash"),
           system: systemPrompt,
-          messages: [], // We are putting all context in the system prompt for these steps
+          // Add a dummy message to satisfy the SDK's non-empty requirement.
+          // The actual content is passed via the system prompt for this step.
+          messages: [{ role: 'user', content: 'Continue.' }],
         });
 
         return result.toTextStreamResponse();
