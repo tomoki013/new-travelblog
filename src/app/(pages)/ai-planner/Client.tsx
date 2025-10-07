@@ -148,11 +148,13 @@ export default function AiPlannerClient({
     setMessages([initialUserMessage, aiResponsePlaceholder]);
 
     const handleError = (errorMsg: string) => {
+      console.error("[CLIENT LOG] handleError called with:", errorMsg);
       setMessages((prev) => {
         const updated = [...prev];
         const lastMessage = updated[updated.length - 1];
         if (lastMessage && lastMessage.role === "ai") {
-          lastMessage.content = `エラー: ${errorMsg}`;
+          // Append error message instead of replacing content, preserving the outline
+          lastMessage.content += `\n\n---\n**エラー:** ${errorMsg}`;
           lastMessage.isError = true;
         }
         return updated;
