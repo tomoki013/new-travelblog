@@ -94,13 +94,11 @@ ${kb}
 function buildFleshOutPlanPrompt(outline: string, country: string, kb: string) {
   return `あなたはプロの旅行プランナーです。以下の「プランの骨子」と「ブログ記事からの参考情報」に基づき、**${country}**への詳細な旅行プランを**Markdown形式**で完成させてください。
 
-### 絶対的なルール:
-- **詳細化:** 骨子で示された各アクティビティに、具体的な説明、移動手段、おすすめのレストラン情報などを追加する。
-- **独自性:** ブログ記事のコピーは厳禁。あなた自身の言葉でプランを作成する。
-- **時系列:** 各日のプランには具体的な時間（例: 午前, 13:00）を入れる。
-- **理由と引用:** なぜその場所を推奨するのか、ブログの感想（例: 「感動した」）を引用しつつ、あなたの言葉で説明を加える。
-- **情報の補完:** プランをより良くするため、ブログにない情報も必要に応じて補う。
-- **出力形式:** Markdown形式（見出し、リストなど）を必ず使用する。
+### ルール:
+- **詳細なプラン:** 骨子の各項目に、具体的な説明、移動手段、食事の提案を追加してください。
+- **あなたの言葉で:** ブログ記事を参考にしつつも、あなた自身の表現で記述してください。コピー＆ペーストはしないでください。
+- **時間と具体性:** 各日のアクティビティには、時間（例: 午前, 13:00）を入れ、推奨する理由を簡潔に述べてください。
+- **形式:** 全てMarkdown形式で出力してください。
 
 ---
 ### プランの骨子
@@ -172,7 +170,9 @@ export async function POST(req: NextRequest) {
         const result = await streamText({
           model: google(process.env.GEMINI_MODEL_NAME || "gemini-1.5-flash"),
           system: systemPrompt,
-          messages: [], // We are putting all context in the system prompt for these steps
+          // Add a dummy message to satisfy the SDK's non-empty requirement.
+          // The actual content is passed via the system prompt for this step.
+          messages: [{ role: 'user', content: 'Continue.' }],
         });
 
         return result.toTextStreamResponse();
