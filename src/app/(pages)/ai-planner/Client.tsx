@@ -39,13 +39,6 @@ const interestPresets = [
   "寺院巡り",
 ];
 
-const loadingMessages = [
-  "あなたの好みを分析しています...",
-  "旅の思い出をAIが読み込んでいます...",
-  "最高のプランを組み立てています...",
-  "もうすぐプランが完成します！",
-];
-
 interface AiPlannerClientProps {
   // 親から受け取る型を PostMetadata[] に修正します
   allPosts: PostMetadata[];
@@ -117,23 +110,6 @@ export default function AiPlannerClient({
     setInterests("");
   }, [selectedCountryId, allPosts, continents]);
 
-  useEffect(() => {
-    let interval: NodeJS.Timeout | null = null;
-    if (isLoading) {
-      let messageIndex = 0;
-      setLoadingMessage(loadingMessages[messageIndex]);
-      interval = setInterval(() => {
-        messageIndex = (messageIndex + 1) % loadingMessages.length;
-        setLoadingMessage(loadingMessages[messageIndex]);
-      }, 5000);
-    } else {
-      setLoadingMessage("");
-    }
-    return () => {
-      if (interval) clearInterval(interval);
-    };
-  }, [isLoading]);
-
   const handleDestinationSubmit = (value: string) => {
     if (value.trim()) {
       setDestination(value.trim());
@@ -150,95 +126,126 @@ export default function AiPlannerClient({
     setInterests((prev) => (prev ? `${prev}, ${preset}` : preset));
   };
 
-  const handleGenerate = async () => {
+  const handleGeneratePlan = async () => {
     if (filteredPosts.length === 0) {
-      setMessages([
-        {
-          role: "ai",
-          content:
-            "選択された国に関連する記事が見つかりません。別の国を選択してください。",
-          isError: true,
-        },
-      ]);
+      setMessages([{ role: "ai", content: "選択された国に関連する記事が見つかりません。別の国を選択してください。", isError: true }]);
       return;
     }
 
     setIsLoading(true);
-
     let countryName = "";
     for (const continent of continents) {
-      const country = continent.countries.find(
-        (c) => c.slug === selectedCountryId
-      );
+      const country = continent.countries.find((c) => c.slug === selectedCountryId);
       if (country) {
         countryName = country.name;
         break;
       }
     }
 
-    const userMessageContent = `
-- **国:** ${countryName}
-- **行き先:** ${destination}
-- **期間:** ${duration}
-- **興味・関心:** ${interests}
-`;
+    const userMessageContent = `- **国:** ${countryName}\n- **行き先:** ${destination}\n- **期間:** ${duration}\n- **興味・関心:** ${interests}`;
+    const initialUserMessage: Message = { role: "user", content: userMessageContent };
+    const aiResponsePlaceholder: Message = { role: "ai", content: "" };
+    setMessages([initialUserMessage, aiResponsePlaceholder]);
 
-    const currentMessages: Message[] = [
-      { role: "user", content: userMessageContent },
-      { role: "ai", content: "" }, // Placeholder for AI response
-    ];
-    setMessages(currentMessages);
-
-    try {
-      const requestBody = {
-        messages: currentMessages,
-        articleSlugs: filteredPosts.map((p) => p.slug),
-        countryName: countryName,
-      };
-
-      const response = await fetch("/api/chat", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(requestBody),
-      });
-
-      if (!response.ok) {
-        const errorData = await response.json().catch(() => ({
-          error: `サーバーから予期せぬ応答がありました (HTTP ${response.status})`,
-        }));
-        throw new Error(errorData.error || "不明なエラーが発生しました。");
-      }
-
-      const { response: aiResponse } = await response.json();
-
+    const handleError = (errorMsg: string) => {
       setMessages((prev) => {
         const updated = [...prev];
         const lastMessage = updated[updated.length - 1];
         if (lastMessage && lastMessage.role === "ai") {
-          lastMessage.content = aiResponse;
-          lastMessage.isError = false;
+          lastMessage.content = `エラー: ${errorMsg}`;
+          lastMessage.isError = true;
         }
         return updated;
       });
+    };
+
+    const processStream = async (reader: ReadableStreamDefaultReader<Uint8Array>, initialContent: string = "") => {
+      const decoder = new TextDecoder();
+      let fullResponse = initialContent;
+      while (true) {
+        const { done, value } = await reader.read();
+        if (done) break;
+        fullResponse += decoder.decode(value, { stream: true });
+        setMessages((prev) => {
+          const updated = [...prev];
+          const lastMessage = updated[updated.length - 1];
+          if (lastMessage && lastMessage.role === "ai") {
+            lastMessage.content = fullResponse;
+            lastMessage.isError = false;
+          }
+          return updated;
+        });
+      }
+      return fullResponse;
+    };
+
+    try {
+      // Step 1: Extract Requirements
+      setLoadingMessage("旅行のテーマを整理中...");
+      const extractResponse = await fetch("/api/chat", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          messages: [initialUserMessage],
+          articleSlugs: filteredPosts.map((p) => p.slug),
+          countryName,
+          step: 'extract_requirements',
+        }),
+      });
+      if (!extractResponse.ok) {
+        const errorData = await extractResponse.json().catch(() => ({ error: "要件の抽出中にサーバーエラーが発生しました。" }));
+        throw new Error(errorData.error);
+      }
+      const { response: requirementsJson } = await extractResponse.json();
+
+      // Step 2: Create Outline
+      setLoadingMessage("プランの骨子を作成中...");
+      const outlineResponse = await fetch("/api/chat", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          messages: [],
+          articleSlugs: filteredPosts.map((p) => p.slug),
+          countryName,
+          step: 'create_outline',
+          previous_data: requirementsJson,
+        }),
+      });
+      if (!outlineResponse.ok || !outlineResponse.body) {
+        const errorData = await outlineResponse.json().catch(() => ({ error: "骨子の作成中にサーバーエラーが発生しました。" }));
+        throw new Error(errorData.error);
+      }
+      const outlineText = await processStream(outlineResponse.body.getReader());
+
+      // Step 3: Flesh out the plan
+      setLoadingMessage("詳細情報を追加中...");
+      const finalPlanResponse = await fetch("/api/chat", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          messages: [],
+          articleSlugs: filteredPosts.map((p) => p.slug),
+          countryName,
+          step: 'flesh_out_plan',
+          previous_data: outlineText,
+        }),
+      });
+      if (!finalPlanResponse.ok || !finalPlanResponse.body) {
+        const errorData = await finalPlanResponse.json().catch(() => ({ error: "詳細プランの作成中にサーバーエラーが発生しました。" }));
+        throw new Error(errorData.error);
+      }
+      await processStream(finalPlanResponse.body.getReader(), outlineText);
 
       if (!hasShownFeedbackModal.current) {
         setIsFeedbackModalOpen(true);
         hasShownFeedbackModal.current = true;
       }
     } catch (err) {
-      const errorMessage =
-        err instanceof Error ? err.message : "予期せぬエラーが発生しました。";
-      setMessages((prev) => {
-        const updated = [...prev];
-        const lastMessage = updated[updated.length - 1];
-        if (lastMessage && lastMessage.role === "ai") {
-          lastMessage.content = `エラー: ${errorMessage}`;
-          lastMessage.isError = true;
-        }
-        return updated;
-      });
+      const errorMessage = err instanceof Error ? err.message : "予期せぬエラーが発生しました。";
+      handleError(errorMessage);
     } finally {
       setIsLoading(false);
+      setLoadingMessage("");
     }
   };
 
@@ -365,7 +372,7 @@ export default function AiPlannerClient({
               </div>
 
               <Button
-                onClick={handleGenerate}
+                onClick={handleGeneratePlan}
                 disabled={
                   isLoading ||
                   filteredPosts.length === 0 ||
