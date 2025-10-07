@@ -131,7 +131,7 @@ export async function POST(req: NextRequest) {
       case 'extract_requirements': {
         const systemPrompt = buildExtractRequirementsPrompt();
         const { text } = await generateText({
-          model: google(process.env.GEMINI_MODEL_NAME || "gemini-1.5-flash"),
+          model: google(process.env.GEMINI_MODEL_NAME || "gemini-1.5-flash-latest"),
           system: systemPrompt,
           messages: userMessages,
         });
@@ -170,7 +170,7 @@ export async function POST(req: NextRequest) {
             : buildFleshOutPlanPrompt(previous_data, countryName, knowledgeBase);
 
         const result = await streamText({
-          model: google(process.env.GEMINI_MODEL_NAME || "gemini-1.5-flash"),
+          model: google(process.env.GEMINI_MODEL_NAME || "gemini-1.5-flash-latest"),
           system: systemPrompt,
           messages: [], // We are putting all context in the system prompt for these steps
         });
