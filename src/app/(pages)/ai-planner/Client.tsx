@@ -31,6 +31,7 @@ const destinationPresets = [
   "バンコク",
   "デリー",
 ];
+
 const interestPresets = [
   "グルメ旅",
   "芸術・建築巡り",
@@ -51,6 +52,7 @@ export default function AiPlannerClient({
 }: AiPlannerClientProps) {
   // 国の識別に使うのは name ではなく id/slug です
   const [selectedCountryId, setSelectedCountryId] = useState<string>("");
+  const [destinationSuggestions, setDestinationSuggestions] = useState<string[]>(destinationPresets);
   const [filteredPosts, setFilteredPosts] = useState<PostMetadata[]>([]);
 
   const [destination, setDestination] = useState("");
@@ -63,9 +65,27 @@ export default function AiPlannerClient({
   const [currentStep, setCurrentStep] = useState(1);
   const [isFeedbackModalOpen, setIsFeedbackModalOpen] = useState(false);
   const hasShownFeedbackModal = useRef(false);
+  const [hasEditedDestination, setHasEditedDestination] = useState(false);
+
+  useEffect(() => {
+    if (destination) {
+      setHasEditedDestination(true);
+      setCurrentStep(3);
+    }
+  }, [destination]);
 
   useEffect(() => {
     if (selectedCountryId) {
+      let suggestions = destinationPresets; // デフォルト値
+      for (const continent of continents) {
+        const country = continent.countries.find(c => c.slug === selectedCountryId);
+        if (country && country.children && country.children.length > 0) {
+          suggestions = country.children.map(city => city.name);
+          break;
+        }
+      }
+      setDestinationSuggestions(suggestions);
+
       // 選択された国の slug と、もしあればその子要素（都市）の slug も含める
       const allowedSlugs = (() => {
         const slugs = [selectedCountryId];
@@ -109,13 +129,6 @@ export default function AiPlannerClient({
     setDestination("");
     setInterests("");
   }, [selectedCountryId, allPosts, continents]);
-
-  const handleDestinationSubmit = (value: string) => {
-    if (value.trim()) {
-      setDestination(value.trim());
-      setCurrentStep(3);
-    }
-  };
 
   const handleDurationChange = (value: string) => {
     setDuration(value);
@@ -262,8 +275,10 @@ export default function AiPlannerClient({
       console.log("[CLIENT LOG] --- Plan Generation Finished ---");
 
       if (!hasShownFeedbackModal.current) {
-        setIsFeedbackModalOpen(true);
-        hasShownFeedbackModal.current = true;
+        setTimeout(() => {
+          setIsFeedbackModalOpen(true);
+          hasShownFeedbackModal.current = true;
+        }, 3000);
       }
     } catch (err) {
       console.error("[CLIENT LOG] An error occurred in handleGeneratePlan:", err);
@@ -323,12 +338,12 @@ export default function AiPlannerClient({
             <div>
               <Label htmlFor="destination">Step 2: 行き先</Label>
               <div className="flex flex-wrap gap-2 mt-2 mb-3">
-                {destinationPresets.map((preset) => (
+                {destinationSuggestions.map((preset) => (
                   <Button
                     key={preset}
                     variant="outline"
                     size="sm"
-                    onClick={() => handleDestinationSubmit(preset)}
+                    onClick={() => setDestination(preset)}
                   >
                     {preset}
                   </Button>
@@ -337,10 +352,10 @@ export default function AiPlannerClient({
               <Input
                 id="destination"
                 value={destination}
-                onChange={(e) => setDestination(e.target.value)}
-                onKeyDown={(e) => {
-                  if (e.key === "Enter") {
-                    handleDestinationSubmit(destination);
+                onChange={(e) => {
+                  setDestination(e.target.value);
+                  if (e.target.value) {
+                    setCurrentStep(3);
                   }
                 }}
                 placeholder="例: パリ、バンコク"
@@ -349,7 +364,7 @@ export default function AiPlannerClient({
             </div>
           )}
 
-          {currentStep >= 3 && (
+          {(currentStep >= 3 || hasEditedDestination) && (
             <div>
               <Label htmlFor="duration">Step 3: 期間</Label>
               <Select
