@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import { generateText, CoreMessage } from "ai";
+import { CoreMessage, streamText, generateText } from "ai";
 import { google } from "@ai-sdk/google";
 import fs from "fs/promises";
 import path from "path";
@@ -56,18 +56,33 @@ async function getPostsCache() {
   return postsCache;
 }
 
-// --- System Prompt Builder ---
-function buildSystemPrompt(country: string, kb: string) {
-  return `あなたはプロの旅行プランナーです。提示された「ブログ記事からの参考情報」とユーザーの「旅行の希望条件」に基づき、**${country}**のユニークな旅行プランを作成してください。
+// --- System Prompt Builders ---
+
+// Step 1: Extract Requirements
+function buildExtractRequirementsPrompt() {
+  return `ユーザーの入力から、旅行の重要な要素（目的地、期間、興味、予算など）をJSON形式で抽出しなさい。ユーザー入力に明示されていない項目は省略すること。
+出力はJSONオブジェクトのみとし、他のテキストは含めないこと。
+例:
+{
+  "destination": "東京",
+  "duration": "3日間",
+  "interests": "アート、美味しいもの",
+  "budget": "指定なし"
+}`;
+}
+
+// Step 2: Create Outline
+function buildCreateOutlinePrompt(requirements: string, country: string, kb: string) {
+  return `あなたはプロの旅行プランナーです。以下の「旅行の要件」と「ブログ記事からの参考情報」に基づき、**${country}**への旅行プランの骨子を**Markdown形式**で作成してください。
 
 ### 絶対的なルール:
-- **独自性:** ブログ記事のコピーは厳禁。あなた自身の言葉でプランを作成する。
-- **時系列:** 各日のプランには具体的な時間（例: 午前, 13:00）を入れる。
-- **理由と引用:** なぜその場所を推奨するのか、ブログの感想（例: 「感動した」）を引用しつつ、あなたの言葉で説明を加える。
-- **情報の補完:** プランをより良くするため、ブログにない情報も必要に応じて補う。
+- **骨子:** 各日の主要なアクティビティを1〜2個リストアップするのみ。詳細な説明は不要。
+- **簡潔さ:** 全体像がわかるように、ごく簡単な旅程を作成する。
 - **出力形式:** Markdown形式（見出し、リストなど）を必ず使用する。
-- **簡潔さ:** **各日の主要なアクティビティは3〜4つ**に絞り、全体のボリュームが大きくなりすぎないように調整する。
 
+---
+### 旅行の要件
+${requirements}
 ---
 ### ブログ記事からの参考情報
 ${kb}
@@ -75,57 +90,101 @@ ${kb}
 `;
 }
 
+// Step 3: Flesh out the plan
+function buildFleshOutPlanPrompt(outline: string, country: string, kb: string) {
+  return `あなたはプロの旅行プランナーです。以下の「プランの骨子」と「ブログ記事からの参考情報」に基づき、**${country}**への詳細な旅行プランを**Markdown形式**で完成させてください。
+
+### ルール:
+- **詳細なプラン:** 骨子の各項目に、具体的な説明、移動手段、食事の提案を追加してください。
+- **あなたの言葉で:** ブログ記事を参考にしつつも、あなた自身の表現で記述してください。コピー＆ペーストはしないでください。
+- **時間と具体性:** 各日のアクティビティには、時間（例: 午前, 13:00）を入れ、推奨する理由を簡潔に述べてください。
+- **形式:** 全てMarkdown形式で出力してください。
+
+---
+### プランの骨子
+${outline}
+---
+### ブログ記事からの参考情報
+${kb}
+---
+`;
+}
+
+
 interface ChatRequestBody {
     messages: CoreMessage[];
     articleSlugs: string[];
     countryName: string;
+    step: 'extract_requirements' | 'create_outline' | 'flesh_out_plan';
+    previous_data?: string;
 }
 
 export async function POST(req: NextRequest) {
   try {
-    const { messages, articleSlugs, countryName } = (await req.json()) as ChatRequestBody;
+    const { messages, articleSlugs, countryName, step, previous_data } = (await req.json()) as ChatRequestBody;
 
-    if (!messages || !articleSlugs || !countryName) {
-      return NextResponse.json({ error: "Request body is missing required fields." }, { status: 400 });
+    const userMessages = messages.filter((m) => m.role === "user");
+
+    switch (step) {
+      case 'extract_requirements': {
+        const systemPrompt = buildExtractRequirementsPrompt();
+        const { text } = await generateText({
+          model: google(process.env.GEMINI_MODEL_NAME || "gemini-1.5-flash"),
+          system: systemPrompt,
+          messages: userMessages,
+        });
+        return NextResponse.json({ response: text });
+      }
+
+      case 'create_outline':
+      case 'flesh_out_plan': {
+        if (!previous_data) {
+          return NextResponse.json({ error: `Step '${step}' requires 'previous_data'.` }, { status: 400 });
+        }
+
+        const cache = await getPostsCache();
+        if (!cache) {
+          return NextResponse.json({ error: "Server not ready: Could not load post cache." }, { status: 503 });
+        }
+
+        const lowerCasePostsCache: Record<string, string> = {};
+        for (const key in cache) {
+          lowerCasePostsCache[key.toLowerCase()] = cache[key];
+        }
+
+        const articleContents = articleSlugs
+          .map((slug) => lowerCasePostsCache[slug.toLowerCase()] || "")
+          .filter(Boolean);
+
+        if (articleContents.length === 0) {
+            return NextResponse.json({ error: "Could not load reference blog posts." }, { status: 400 });
+        }
+
+        const knowledgeBase = articleContents.join("\n\n---\n\n");
+
+        const systemPrompt =
+          step === 'create_outline'
+            ? buildCreateOutlinePrompt(previous_data, countryName, knowledgeBase)
+            : buildFleshOutPlanPrompt(previous_data, countryName, knowledgeBase);
+
+        const result = await streamText({
+          model: google(process.env.GEMINI_MODEL_NAME || "gemini-1.5-flash"),
+          system: systemPrompt,
+          // Add a dummy message to satisfy the SDK's non-empty requirement.
+          // The actual content is passed via the system prompt for this step.
+          messages: [{ role: 'user', content: 'Continue.' }],
+        });
+
+        return result.toTextStreamResponse();
+      }
+
+      default: {
+        return NextResponse.json({ error: `Invalid step: ${step}` }, { status: 400 });
+      }
     }
-
-    const cache = await getPostsCache();
-    if (!cache) {
-      return NextResponse.json({ error: "Server not ready: Could not load post cache." }, { status: 503 });
-    }
-
-    const lowerCasePostsCache: Record<string, string> = {};
-    for (const key in cache) {
-      lowerCasePostsCache[key.toLowerCase()] = cache[key];
-    }
-
-    const articleContents = articleSlugs
-      .map((slug) => lowerCasePostsCache[slug.toLowerCase()] || "")
-      .filter(Boolean);
-
-    if (articleContents.length === 0) {
-        return NextResponse.json({ error: "Could not load reference blog posts." }, { status: 400 });
-    }
-
-    const knowledgeBase = articleContents.join("\n\n---\n\n");
-    const systemPrompt = buildSystemPrompt(countryName, knowledgeBase);
-
-    const userMessages = messages.filter(
-      (message) => message.role === "user"
-    );
-
-    const { text } = await generateText({
-      model: google(process.env.GEMINI_MODEL_NAME || "gemini-1.5-flash"),
-      system: systemPrompt,
-      messages: userMessages,
-    });
-
-    return NextResponse.json({ response: text });
-
   } catch (error) {
-    console.error("❌ /api/chat: Error generating AI plan.", error);
-    const errorMessage =
-      error instanceof Error ? error.message : "Internal Server Error";
+    console.error("❌ /api/chat: Error in POST handler.", error);
+    const errorMessage = error instanceof Error ? error.message : "Internal Server Error";
     return NextResponse.json({ error: errorMessage }, { status: 500 });
   }
 }
