@@ -80,7 +80,7 @@ const Header = () => {
               >
                 {link.label}
                 {link.isNew && (
-                  <span className="ml-2 rounded-md bg-primary px-1.5 py-0.5 text-xs font-semibold leading-none text-primary-foreground">
+                  <span className="absolute -top-2 -left-2 opacity-80 rounded-md bg-primary px-1.5 py-0.5 text-xs font-semibold leading-none text-primary-foreground">
                     NEW
                   </span>
                 )}
