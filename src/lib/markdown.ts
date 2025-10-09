@@ -14,7 +14,7 @@ export function getRawPostsData(): PostMetadata[] {
     .filter((file) => file.endsWith(".md"));
 
   const allPostsData = fileNames.map((fileName) => {
-    const slug = fileName.replace(/\.md$/, "").toLowerCase();
+    const slug = fileName.replace(/\.md$/, "");
     const fullPath = path.join(postsDirectory, fileName);
     const fileContents = fs.readFileSync(fullPath, "utf8");
     const { data } = matter(fileContents);
