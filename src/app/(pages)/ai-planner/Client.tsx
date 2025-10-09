@@ -160,20 +160,6 @@ export default function AiPlannerClient({
     const aiResponsePlaceholder: Message = { role: "ai", content: "" };
     setMessages([initialUserMessage, aiResponsePlaceholder]);
 
-    const handleError = (errorMsg: string) => {
-      console.error("[CLIENT LOG] handleError called with:", errorMsg);
-      setMessages((prev) => {
-        const updated = [...prev];
-        const lastMessage = updated[updated.length - 1];
-        if (lastMessage && lastMessage.role === "ai") {
-          // Append error message instead of replacing content, preserving the outline
-          lastMessage.content += `\n\n---\n**エラー:** ${errorMsg}`;
-          lastMessage.isError = true;
-        }
-        return updated;
-      });
-    };
-
     const processStream = async (reader: ReadableStreamDefaultReader<Uint8Array>, initialContent: string = "") => {
       const decoder = new TextDecoder();
       let fullResponse = initialContent;
@@ -193,6 +179,8 @@ export default function AiPlannerClient({
       }
       return fullResponse;
     };
+
+    let outlineText = ""; // To make it available in the catch block
 
     try {
       console.log("[CLIENT LOG] --- Starting Plan Generation ---");
@@ -241,7 +229,7 @@ export default function AiPlannerClient({
         throw new Error(errorData.error);
       }
       console.log("[CLIENT LOG] Step 2: Starting to process stream...");
-      const outlineText = await processStream(outlineResponse.body.getReader());
+      outlineText = await processStream(outlineResponse.body.getReader());
       console.log("[CLIENT LOG] Step 2: Stream processed. Outline text:", outlineText);
 
       if (!outlineText || outlineText.trim() === "") {
@@ -271,7 +259,7 @@ export default function AiPlannerClient({
         throw new Error(errorData.error);
       }
       console.log("[CLIENT LOG] Step 3: Starting to process final stream...");
-      await processStream(finalPlanResponse.body.getReader(), outlineText);
+      await processStream(finalPlanResponse.body.getReader()); // No initial content
       console.log("[CLIENT LOG] --- Plan Generation Finished ---");
 
       if (!hasShownFeedbackModal.current) {
@@ -283,7 +271,17 @@ export default function AiPlannerClient({
     } catch (err) {
       console.error("[CLIENT LOG] An error occurred in handleGeneratePlan:", err);
       const errorMessage = err instanceof Error ? err.message : "予期せぬエラーが発生しました。";
-      handleError(errorMessage);
+      setMessages((prev) => {
+        const updated = [...prev];
+        const lastMessage = updated[updated.length - 1];
+        if (lastMessage && lastMessage.role === "ai") {
+          // If outline exists, restore it. Otherwise, use existing content.
+          const baseContent = outlineText || lastMessage.content;
+          lastMessage.content = baseContent + `\n\n---\n**エラー:** ${errorMessage}`;
+          lastMessage.isError = true;
+        }
+        return updated;
+      });
     } finally {
       console.log("[CLIENT LOG] Finalizing handleGeneratePlan.");
       setIsLoading(false);
@@ -448,7 +446,8 @@ export default function AiPlannerClient({
       {!isLoading &&
         messages.length > 0 &&
         messages[messages.length - 1].role === "ai" &&
-        messages[messages.length - 1].content && (
+        messages[messages.length - 1].content &&
+        !messages[messages.length - 1].isError && (
           <div className="mt-8 flex flex-col items-center gap-4">
             <Button onClick={handleReset} size="lg">
               別のプランを生成する
