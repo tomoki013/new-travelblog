@@ -251,34 +251,66 @@ export default function AiPlannerClient({
         throw new Error("AIがプランの骨子を生成できませんでした。条件を変えて再度お試しください。");
       }
 
-      // Step 3: Flesh out the plan
-      setLoadingMessage("詳細情報を追加中...");
-      updateLastMessage("骨子を作成しました。詳細を生成中です..."); // 中間メッセージを表示
-      const finalPlanBody = {
-        messages: [],
-        articleSlugs: filteredPosts.map((p) => p.slug),
-        countryName,
-        step: 'flesh_out_plan',
-        previous_data: outlineText,
-      };
-      console.log("[CLIENT LOG] Step 3: Sending flesh_out_plan request:", finalPlanBody);
-      const finalPlanResponse = await fetch("/api/chat", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(finalPlanBody),
-      });
-      console.log(`[CLIENT LOG] Step 3: Response status: ${finalPlanResponse.status}`);
-      if (!finalPlanResponse.ok || !finalPlanResponse.body) {
-        const errorData = await finalPlanResponse.json().catch(() => ({ error: "詳細プランの作成中にサーバーエラーが発生しました。" }));
-        console.error("[CLIENT LOG] Step 3: Error response data:", errorData);
-        throw new Error(errorData.error);
+      // Step 3: Flesh out the plan day by day
+      const dailyOutlines = outlineText
+        .split(/(^###\s*\d+日目.*$)/m)
+        .filter(Boolean);
+
+      const dailyChunks: string[] = [];
+      for (let i = 0; i < dailyOutlines.length; i += 2) {
+        if (dailyOutlines[i] && dailyOutlines[i+1]) {
+          dailyChunks.push(dailyOutlines[i] + dailyOutlines[i+1]);
+        }
       }
-      console.log("[CLIENT LOG] Step 3: Starting to process final stream...");
-      await processStream(
-        finalPlanResponse.body.getReader(),
-        "",
-        updateLastMessage
-      ); // UIを更新する
+      if (dailyChunks.length === 0 && dailyOutlines.length > 0) {
+        dailyChunks.push(outlineText); // Fallback for single-day plans without "### 1日目" heading
+      }
+
+
+      console.log(`[CLIENT LOG] Step 3: Split outline into ${dailyChunks.length} daily chunks.`);
+
+      // Clear the intermediate message and prepare for streaming the full plan
+      updateLastMessage("");
+      let accumulatedPlan = "";
+
+      for (let i = 0; i < dailyChunks.length; i++) {
+        const dayOutline = dailyChunks[i];
+        const dayNumber = i + 1;
+        setLoadingMessage(`プランを生成中 (${dayNumber}/${dailyChunks.length}日目)...`);
+        console.log(`[CLIENT LOG] Step 3.${dayNumber}: Fleshing out day ${dayNumber}...`);
+
+        const dailyPlanBody = {
+          messages: [],
+          articleSlugs: filteredPosts.map((p) => p.slug),
+          countryName,
+          step: 'flesh_out_plan_daily' as const,
+          previous_data: dayOutline,
+        };
+
+        const dailyPlanResponse = await fetch("/api/chat", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(dailyPlanBody),
+        });
+
+        if (!dailyPlanResponse.ok || !dailyPlanResponse.body) {
+            const errorData = await dailyPlanResponse.json().catch(() => ({ error: `詳細プラン(1日目)の作成中にサーバーエラーが発生しました。` }));
+            console.error(`[CLIENT LOG] Step 3.${dayNumber}: Error response data:`, errorData);
+            throw new Error(errorData.error);
+        }
+
+        const streamReader = dailyPlanResponse.body.getReader();
+        const decoder = new TextDecoder();
+        while (true) {
+            const { done, value } = await streamReader.read();
+            if (done) break;
+            accumulatedPlan += decoder.decode(value, { stream: true });
+            updateLastMessage(accumulatedPlan);
+        }
+        accumulatedPlan += "\n\n"; // Add spacing between days
+        updateLastMessage(accumulatedPlan); // Final update for the day
+      }
+
       console.log("[CLIENT LOG] --- Plan Generation Finished ---");
 
       if (!hasShownFeedbackModal.current) {
