@@ -36,15 +36,15 @@ export const FOOTER_CONTENTS_LIST: FooterContent[] = [
 export const FOOTER_SUPPORT_LIST: FooterContent[] = [
   { name: "お問い合わせ", pass: "/contact" },
   { name: "記事テーマ募集", pass: "/request" },
+  { name: "FAQ", pass: "/faq" },
 ];
 
-export const FOOTER_LEGAL_LIST: FooterContent[] = [
+export const FOOTER_ABOUT_LIST: FooterContent[] = [
   { name: "サイトについて", pass: "/about" },
   { name: "プライバシーポリシー", pass: "/privacy" },
   { name: "利用規約", pass: "/terms" },
   { name: "アフィリエイトポリシー", pass: "/affiliates" },
   { name: "サイトマップ", pass: "/sitemap" },
-  { name: "FAQ", pass: "/faq" },
 ];
 
 export const SOCIAL_LIST = [
