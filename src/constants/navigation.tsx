@@ -33,12 +33,18 @@ export const FOOTER_CONTENTS_LIST: FooterContent[] = [
   { name: "写真ギャラリー", pass: "/gallery" },
 ];
 
-export const FOOTER_LINK_LIST = [
+export const FOOTER_SUPPORT_LIST: FooterContent[] = [
+  { name: "お問い合わせ", pass: "/contact" },
+  { name: "記事テーマ募集", pass: "/request" },
+];
+
+export const FOOTER_LEGAL_LIST: FooterContent[] = [
   { name: "サイトについて", pass: "/about" },
   { name: "プライバシーポリシー", pass: "/privacy" },
   { name: "利用規約", pass: "/terms" },
   { name: "アフィリエイトポリシー", pass: "/affiliates" },
   { name: "サイトマップ", pass: "/sitemap" },
+  { name: "FAQ", pass: "/faq" },
 ];
 
 export const SOCIAL_LIST = [

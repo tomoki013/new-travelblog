@@ -1,11 +1,10 @@
 import {
   FOOTER_CONTENTS_LIST,
-  FOOTER_LINK_LIST,
+  FOOTER_LEGAL_LIST,
+  FOOTER_SUPPORT_LIST,
   SOCIAL_LIST,
 } from "@/constants/navigation";
-import { Mail } from "lucide-react";
 import Link from "next/link";
-import { FaBlog } from "react-icons/fa";
 
 const Footer = () => {
   return (
@@ -25,8 +24,8 @@ const Footer = () => {
         </p>
       </div>
       <div className="container py-10">
-        <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 md:grid-cols-5">
-          <div className="space-y-3">
+        <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 md:grid-cols-4">
+          <div className="space-y-3 md:col-span-1">
             <Link href="/" className="text-lg font-medium">
               ともきちの旅行日記
             </Link>
@@ -75,9 +74,9 @@ const Footer = () => {
             </ul>
           </div>
           <div className="space-y-3">
-            <h3 className="text-lg font-medium">リンク</h3>
+            <h3 className="text-lg font-medium">サポート</h3>
             <ul className="space-y-2 text-sm">
-              {FOOTER_LINK_LIST.map((link) => (
+              {FOOTER_SUPPORT_LIST.map((link) => (
                 <li key={link.name}>
                   <Link
                     href={link.pass}
@@ -90,57 +89,29 @@ const Footer = () => {
             </ul>
           </div>
           <div className="space-y-3">
-            <h3 className="text-lg font-medium">お問い合わせ</h3>
-            <p className="text-sm text-muted-foreground">
-              ご質問やお問い合わせは下記よりお願いします。
-            </p>
-            <Link
-              href="/contact"
-              className="inline-flex items-center text-sm text-muted-foreground hover:text-secondary"
-            >
-              <Mail className="mr-2 h-4 w-4" />
-              お問い合わせフォーム
-            </Link>
-          </div>
-          <div className="space-y-3">
-            <h3 className="text-lg font-medium">記事テーマをリクエスト</h3>
-            <p className="text-sm text-muted-foreground">
-              記事テーマを募集しています。興味のあるテーマがあれば、ぜひリクエストしてください。
-            </p>
-            <Link
-              href="/request"
-              className="inline-flex items-center text-sm text-muted-foreground hover:text-secondary"
-            >
-              <FaBlog className="mr-2 h-4 w-4" />
-              記事テーマ募集フォーム
-            </Link>
+            <h3 className="text-lg font-medium">サイト情報</h3>
+            <ul className="space-y-2 text-sm">
+              {FOOTER_LEGAL_LIST.map((link) => (
+                <li key={link.name}>
+                  <Link
+                    href={link.pass}
+                    className="text-muted-foreground hover:text-secondary"
+                  >
+                    {link.name}
+                  </Link>
+                </li>
+              ))}
+            </ul>
           </div>
         </div>
 
         <div className="my-6 h-px w-full bg-gradient-to-r from-transparent via-secondary to-transparent" />
 
-        <div className="flex flex-col sm:items-center justify-between gap-4 sm:flex-row">
-          <p className="text-sm text-muted-foreground">
+        <div className="text-center text-sm text-muted-foreground">
+          <p>
             &copy; 2024-{new Date().getFullYear()} ともきちの旅行日記. All
             rights reserved.
           </p>
-          <div className="hidden sm:flex flex-col md:flex-row justify-center md:justify-baseline md:items-center gap-2 text-sm text-muted-foreground">
-            <Link href="/privacy" className="hover:text-secondary">
-              プライバシーポリシー
-            </Link>
-            <span className="hidden md:block">｜</span>
-            <Link href="/terms" className="hover:text-secondary">
-              利用規約
-            </Link>
-            <span className="hidden md:block">｜</span>
-            <Link href="/sitemap" className="hover:text-secondary">
-              サイトマップ
-            </Link>
-            <span className="hidden md:block">｜</span>
-            <Link href="/faq" className="hover:text-secondary">
-              FAQ
-            </Link>
-          </div>
         </div>
       </div>
     </footer>
