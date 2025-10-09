@@ -160,27 +160,37 @@ export default function AiPlannerClient({
     const aiResponsePlaceholder: Message = { role: "ai", content: "" };
     setMessages([initialUserMessage, aiResponsePlaceholder]);
 
-    const processStream = async (reader: ReadableStreamDefaultReader<Uint8Array>, initialContent: string = "") => {
+    const processStream = async (
+      reader: ReadableStreamDefaultReader<Uint8Array>,
+      initialContent: string = "",
+      updateUICallback: ((content: string) => void) | null
+    ) => {
       const decoder = new TextDecoder();
       let fullResponse = initialContent;
       while (true) {
         const { done, value } = await reader.read();
         if (done) break;
         fullResponse += decoder.decode(value, { stream: true });
-        setMessages((prev) => {
-          const updated = [...prev];
-          const lastMessage = updated[updated.length - 1];
-          if (lastMessage && lastMessage.role === "ai") {
-            lastMessage.content = fullResponse;
-            lastMessage.isError = false;
-          }
-          return updated;
-        });
+        if (updateUICallback) {
+          updateUICallback(fullResponse);
+        }
       }
       return fullResponse;
     };
 
     let outlineText = ""; // To make it available in the catch block
+
+    const updateLastMessage = (content: string) => {
+      setMessages((prev) => {
+        const updated = [...prev];
+        const lastMessage = updated[updated.length - 1];
+        if (lastMessage && lastMessage.role === "ai") {
+          lastMessage.content = content;
+          lastMessage.isError = false;
+        }
+        return updated;
+      });
+    };
 
     try {
       console.log("[CLIENT LOG] --- Starting Plan Generation ---");
@@ -229,7 +239,11 @@ export default function AiPlannerClient({
         throw new Error(errorData.error);
       }
       console.log("[CLIENT LOG] Step 2: Starting to process stream...");
-      outlineText = await processStream(outlineResponse.body.getReader());
+      outlineText = await processStream(
+        outlineResponse.body.getReader(),
+        "",
+        null
+      ); // UIを更新しない
       console.log("[CLIENT LOG] Step 2: Stream processed. Outline text:", outlineText);
 
       if (!outlineText || outlineText.trim() === "") {
@@ -239,7 +253,8 @@ export default function AiPlannerClient({
 
       // Step 3: Flesh out the plan
       setLoadingMessage("詳細情報を追加中...");
-       const finalPlanBody = {
+      updateLastMessage("骨子を作成しました。詳細を生成中です..."); // 中間メッセージを表示
+      const finalPlanBody = {
         messages: [],
         articleSlugs: filteredPosts.map((p) => p.slug),
         countryName,
@@ -259,7 +274,11 @@ export default function AiPlannerClient({
         throw new Error(errorData.error);
       }
       console.log("[CLIENT LOG] Step 3: Starting to process final stream...");
-      await processStream(finalPlanResponse.body.getReader()); // No initial content
+      await processStream(
+        finalPlanResponse.body.getReader(),
+        "",
+        updateLastMessage
+      ); // UIを更新する
       console.log("[CLIENT LOG] --- Plan Generation Finished ---");
 
       if (!hasShownFeedbackModal.current) {
