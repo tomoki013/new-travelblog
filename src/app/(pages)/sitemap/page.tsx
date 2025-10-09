@@ -53,6 +53,8 @@ const mainList = [
   { pass: "/destination", name: "地域別" },
   { pass: "/gallery", name: "写真ギャラリー" },
   { pass: "/social", name: "SNSページ" },
+  { pass: "/ai-planner", name: "AI旅行プランナー" },
+  { pass: "/faq", name: "FAQ" },
   { pass: "/request", name: "記事テーマ募集ページ" },
   { pass: "/contact", name: "お問い合わせページ" },
   { pass: "/privacy", name: "プライバシーポリシー/免責事項" },

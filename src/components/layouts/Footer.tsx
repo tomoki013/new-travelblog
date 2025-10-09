@@ -136,6 +136,10 @@ const Footer = () => {
             <Link href="/sitemap" className="hover:text-secondary">
               サイトマップ
             </Link>
+            <span className="hidden md:block">｜</span>
+            <Link href="/faq" className="hover:text-secondary">
+              FAQ
+            </Link>
           </div>
         </div>
       </div>
