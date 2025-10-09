@@ -1,6 +1,6 @@
 import {
   FOOTER_CONTENTS_LIST,
-  FOOTER_LEGAL_LIST,
+  FOOTER_ABOUT_LIST,
   FOOTER_SUPPORT_LIST,
   SOCIAL_LIST,
 } from "@/constants/navigation";
@@ -89,9 +89,9 @@ const Footer = () => {
             </ul>
           </div>
           <div className="space-y-3">
-            <h3 className="text-lg font-medium">サイト情報</h3>
+            <h3 className="text-lg font-medium">このサイトについて</h3>
             <ul className="space-y-2 text-sm">
-              {FOOTER_LEGAL_LIST.map((link) => (
+              {FOOTER_ABOUT_LIST.map((link) => (
                 <li key={link.name}>
                   <Link
                     href={link.pass}
