@@ -19,13 +19,14 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 // PostMetadata と ContinentData を types/types.ts からインポートします
-import { PostMetadata, ContinentData } from "@/types/types";
+import { PostMetadata, ContinentData, TravelPlan } from "@/types/types";
 import FeedbackModal from "@/components/elements/FeedbackModal";
 
 interface Message {
   role: "user" | "ai";
   content: string;
   isError?: boolean;
+  data?: TravelPlan;
 }
 
 interface ShareableState {
@@ -34,6 +35,7 @@ interface ShareableState {
   duration: string;
   interests: string;
   messages: Message[];
+  planJson?: TravelPlan;
 }
 
 const destinationPresets = [
@@ -81,6 +83,7 @@ export default function AiPlannerClient({
   const [isFeedbackModalOpen, setIsFeedbackModalOpen] = useState(false);
   const hasShownFeedbackModal = useRef(false);
   const [hasEditedDestination, setHasEditedDestination] = useState(false);
+  const [planJson, setPlanJson] = useState<TravelPlan | null>(null);
 
   useEffect(() => {
     const planParam = searchParams.get("plan");
@@ -100,6 +103,9 @@ export default function AiPlannerClient({
         setDuration(restoredState.duration);
         setInterests(restoredState.interests);
         setMessages(restoredState.messages);
+        if (restoredState.planJson) {
+          setPlanJson(restoredState.planJson);
+        }
 
         toast.success("共有されたプランを復元しました。");
 
@@ -229,13 +235,16 @@ export default function AiPlannerClient({
 
     let outlineText = ""; // To make it available in the catch block
 
-    const updateLastMessage = (content: string) => {
+    const updateLastMessage = (content: string, data?: TravelPlan) => {
       setMessages((prev) => {
         const updated = [...prev];
         const lastMessage = updated[updated.length - 1];
         if (lastMessage && lastMessage.role === "ai") {
           lastMessage.content = content;
           lastMessage.isError = false;
+          if (data) {
+            lastMessage.data = data;
+          }
         }
         return updated;
       });
@@ -300,70 +309,37 @@ export default function AiPlannerClient({
         throw new Error("AIがプランの骨子を生成できませんでした。条件を変えて再度お試しください。");
       }
 
-      // Step 3: Flesh out the plan day by day
-      const dailyOutlines = outlineText
-        .split(/(^###\s*\d+日目.*$)/m)
-        .filter(Boolean);
+      // Step 3: Flesh out the plan as JSON
+      setLoadingMessage("旅行プランを生成中...");
+      const jsonPlanBody = {
+        messages: [],
+        articleSlugs: filteredPosts.map((p) => p.slug),
+        countryName,
+        step: 'flesh_out_plan_json' as const,
+        previous_data: outlineText,
+      };
 
-      const dailyChunks: string[] = [];
-      for (let i = 0; i < dailyOutlines.length; i += 2) {
-        if (dailyOutlines[i] && dailyOutlines[i+1]) {
-          dailyChunks.push(dailyOutlines[i] + dailyOutlines[i+1]);
-        }
+      console.log("[CLIENT LOG] Step 3: Sending flesh_out_plan_json request:", jsonPlanBody);
+      const jsonPlanResponse = await fetch("/api/chat", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(jsonPlanBody),
+      });
+      console.log(`[CLIENT LOG] Step 3: Response status: ${jsonPlanResponse.status}`);
+
+      if (!jsonPlanResponse.ok) {
+        const errorData = await jsonPlanResponse.json().catch(() => ({ error: "詳細プランの作成中にサーバーエラーが発生しました。" }));
+        console.error("[CLIENT LOG] Step 3: Error response data:", errorData);
+        throw new Error(errorData.error);
       }
-      if (dailyChunks.length === 0 && dailyOutlines.length > 0) {
-        dailyChunks.push(outlineText); // Fallback for single-day plans without "### 1日目" heading
-      }
 
+      const planJson = await jsonPlanResponse.json();
+      console.log("[CLIENT LOG] Step 3: Received plan JSON:", planJson);
 
-      console.log(`[CLIENT LOG] Step 3: Split outline into ${dailyChunks.length} daily chunks.`);
+      setPlanJson(planJson);
+      // The content can be a placeholder or summary, as the component will render the JSON data.
+      updateLastMessage("旅行プランが生成されました！", planJson);
 
-      // Clear the intermediate message and prepare for streaming the full plan
-      updateLastMessage("");
-      let accumulatedPlan = "";
-
-      for (let i = 0; i < dailyChunks.length; i++) {
-        const dayOutline = dailyChunks[i];
-        const dayNumber = i + 1;
-        setLoadingMessage(`プランを生成中 (${dayNumber}/${dailyChunks.length}日目)...`);
-        console.log(`[CLIENT LOG] Step 3.${dayNumber}: Fleshing out day ${dayNumber}...`);
-
-        const dailyPlanBody = {
-          messages: [],
-          articleSlugs: filteredPosts.map((p) => p.slug),
-          countryName,
-          step: 'flesh_out_plan_daily' as const,
-          previous_data: dayOutline,
-        };
-
-        const dailyPlanResponse = await fetch("/api/chat", {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify(dailyPlanBody),
-        });
-
-        if (!dailyPlanResponse.ok || !dailyPlanResponse.body) {
-            const errorData = await dailyPlanResponse.json().catch(() => ({ error: `詳細プラン(1日目)の作成中にサーバーエラーが発生しました。` }));
-            console.error(`[CLIENT LOG] Step 3.${dayNumber}: Error response data:`, errorData);
-            throw new Error(errorData.error);
-        }
-
-        const streamReader = dailyPlanResponse.body.getReader();
-        const decoder = new TextDecoder();
-        while (true) {
-            const { done, value } = await streamReader.read();
-            if (done) break;
-            accumulatedPlan += decoder.decode(value, { stream: true });
-            updateLastMessage(accumulatedPlan);
-        }
-        accumulatedPlan += "\n\n"; // Add spacing between days
-        updateLastMessage(accumulatedPlan); // Final update for the day
-
-        // If it's not the last day, show a loading message for the next day.
-        if (i < dailyChunks.length - 1) {
-          updateLastMessage(accumulatedPlan + "\n\n---\n\n次の日程を生成中...");
-        }
-      }
 
       console.log("[CLIENT LOG] --- Plan Generation Finished ---");
 
@@ -404,6 +380,7 @@ export default function AiPlannerClient({
         duration,
         interests,
         messages,
+        planJson,
       };
       const jsonString = JSON.stringify(state);
       const compressed = pako.deflate(jsonString);
@@ -420,7 +397,7 @@ export default function AiPlannerClient({
       console.error("Failed to create share link:", error);
       toast.error("共有URLの作成に失敗しました。");
     }
-  }, [selectedCountryId, destination, duration, interests, messages]);
+  }, [selectedCountryId, destination, duration, interests, messages, planJson]);
 
   const handleReset = () => {
     setMessages([]);
@@ -430,6 +407,7 @@ export default function AiPlannerClient({
     setInterests("");
     setCurrentStep(1);
     setIsLoading(false);
+    setPlanJson(null);
   };
 
   return (

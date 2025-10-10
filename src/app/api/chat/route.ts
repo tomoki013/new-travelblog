@@ -135,12 +135,74 @@ ${kb}
 `;
 }
 
+// Step 4: Flesh out the plan as a JSON object
+function buildFleshOutPlanJsonPrompt(outline: string, country: string, kb: string) {
+  return `あなたはプロの旅行プランナーです。以下の「プランの骨子」と「ブログ記事からの参考情報」に基づき、**${country}**への詳細な旅行プランを**指定されたJSON形式**で作成してください。
+
+### 絶対的なルール:
+- **JSON形式:** 出力は、指定されたJSONフォーマットに厳密に従う単一のJSONオブジェクトのみとします。他のテキスト（Markdownのバッククォート、説明文など）は一切含めないでください。
+- **会話不要:** 挨拶や自己紹介など、プラン以外の内容はJSONに含めないでください。
+- **地理座標:** 'location'オブジェクトには必ず'latitude'（緯度）と'longitude'（経度）を含めてください。不明な場合は最適な推定値を提供してください。
+- **予算:** 金額はすべて数値型（integer）で入力してください。
+- **自然な文章:** ブログ記事を参考にしつつも、あなた自身の言葉で自然な文章を作成してください。コピー＆ペーストは禁止です。
+
+---
+### 指定JSONフォーマット
+\`\`\`json
+{
+  "itinerary": {
+    "title": "旅行全体のタイトル",
+    "description": "旅行プランの簡単な説明",
+    "totalBudget": 123456,
+    "days": [
+      {
+        "day": 1,
+        "title": "1日目のテーマやタイトル",
+        "budget": 12345,
+        "schedule": [
+          {
+            "time": "HH:MM",
+            "activity": "アクティビティ名",
+            "details": "アクティビティの詳細説明",
+            "cost": 1234,
+            "location": {
+              "name": "場所の名前",
+              "latitude": 35.681236,
+              "longitude": 139.767125
+            }
+          }
+        ]
+      }
+    ]
+  },
+  "budgetSummary": {
+    "total": 123456,
+    "categories": [
+      { "category": "宿泊費", "amount": 12345 },
+      { "category": "食費", "amount": 12345 },
+      { "category": "交通費", "amount": 12345 },
+      { "category": "観光・アクティビティ", "amount": 12345 }
+    ]
+  }
+}
+\`\`\`
+
+---
+### プランの骨子
+${outline}
+---
+### ブログ記事からの参考情報
+${kb}
+---
+`;
+}
+
 
 interface ChatRequestBody {
     messages: CoreMessage[];
     articleSlugs: string[];
     countryName: string;
-    step: 'extract_requirements' | 'create_outline' | 'flesh_out_plan' | 'flesh_out_plan_daily';
+    step: 'extract_requirements' | 'create_outline' | 'flesh_out_plan' | 'flesh_out_plan_daily' | 'flesh_out_plan_json';
     previous_data?: string;
 }
 
@@ -159,6 +221,52 @@ export async function POST(req: NextRequest) {
           messages: userMessages,
         });
         return NextResponse.json({ response: text });
+      }
+
+      case 'flesh_out_plan_json': {
+        if (!previous_data) {
+          return NextResponse.json({ error: `Step '${step}' requires 'previous_data'.` }, { status: 400 });
+        }
+
+        const cache = await getPostsCache();
+        if (!cache) {
+          return NextResponse.json({ error: "Server not ready: Could not load post cache." }, { status: 503 });
+        }
+
+        const lowerCasePostsCache: Record<string, string> = {};
+        for (const key in cache) {
+          lowerCasePostsCache[key.toLowerCase()] = cache[key];
+        }
+
+        const articleContents = articleSlugs
+          .map((slug) => lowerCasePostsCache[slug.toLowerCase()] || "")
+          .filter(Boolean);
+
+        if (articleContents.length === 0) {
+            return NextResponse.json({ error: "Could not load reference blog posts." }, { status: 400 });
+        }
+
+        const knowledgeBase = articleContents.join("\n\n---\n\n");
+
+        const systemPrompt = buildFleshOutPlanJsonPrompt(previous_data, countryName, knowledgeBase);
+
+        const { text } = await generateText({
+            model: google(process.env.GEMINI_MODEL_NAME || "gemini-1.5-flash"),
+            system: systemPrompt,
+            messages: [{ role: 'user', content: 'Continue.' }],
+        });
+
+        try {
+            const parsedJson = JSON.parse(text);
+            console.log("✅ API Route: Successfully parsed JSON from AI response.", parsedJson);
+            return NextResponse.json(parsedJson);
+        } catch (parseError) {
+            console.error("❌ API Route: Failed to parse JSON from AI response.", {
+                error: parseError,
+                responseText: text,
+            });
+            return NextResponse.json({ error: "AI returned an invalid JSON format." }, { status: 500 });
+        }
       }
 
       case 'create_outline':
