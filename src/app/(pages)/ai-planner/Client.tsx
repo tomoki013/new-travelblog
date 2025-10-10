@@ -292,29 +292,75 @@ export default function AiPlannerClient({
       const { response: draftPlanJson } = await draftResponse.json();
       console.log("Step 3: 旅程の骨子作成が完了しました。");
 
-      // Step 4: Flesh out details
-      setLoadingMessage("プランの詳細を詰めています...");
-      console.log("Step 4: AIへのリクエストを開始します - プランの具体化");
-      const finalPlanBody = {
+      // Step 4: Flesh out details day by day
+      console.log("Step 4: 旅程の詳細化を1日ずつ開始します。");
+      // draftPlanJsonは文字列なので、まずJSONオブジェクトにパースします
+      const draftPlanData = JSON.parse(draftPlanJson);
+      // TravelPlanのスキーマに沿っていることを確認します
+      const draftPlan: TravelPlan = draftPlanData.itinerary ? draftPlanData : { itinerary: draftPlanData };
+
+      const detailedItinerary = JSON.parse(JSON.stringify(draftPlan.itinerary)); // Deep copy
+
+      for (let i = 0; i < detailedItinerary.days.length; i++) {
+        const day = detailedItinerary.days[i];
+        setLoadingMessage(`プランの詳細を作成中... (${i + 1}日目 / ${detailedItinerary.days.length}日目)`);
+        console.log(`  - (${i + 1}/${detailedItinerary.days.length}) ${day.title} の詳細を作成中...`);
+
+        const fleshOutDayBody = {
+          messages: [],
+          countryName,
+          step: 'flesh_out_one_day',
+          dayData: JSON.stringify(day),
+          requirementsData: requirementsJson,
+          summarizedKnowledgeBase: summarizedKnowledgeBase,
+        };
+
+        const fleshOutDayResponse = await fetch("/api/chat", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(fleshOutDayBody),
+        });
+
+        if (!fleshOutDayResponse.ok) {
+          const errorData = await fleshOutDayResponse.json().catch(() => ({ error: `${i + 1}日目の詳細作成中にサーバーエラーが発生しました。` }));
+          throw new Error(`サーバーエラー (ステータス: ${fleshOutDayResponse.status}): ${errorData.error || '詳細不明'}`);
+        }
+
+        const detailedDayData = await fleshOutDayResponse.json();
+        detailedItinerary.days[i] = detailedDayData; // Replace the draft day with the detailed one
+        console.log(`  - (${i + 1}/${detailedItinerary.days.length}) の詳細作成完了`);
+      }
+      console.log("Step 4: 全日程の詳細化が完了しました。");
+
+      // Step 5: Calculate final budget
+      setLoadingMessage("最終的な予算を計算中...");
+      console.log("Step 5: AIへのリクエストを開始します - 最終予算の計算");
+      const budgetBody = {
         messages: [],
-        articleSlugs: filteredPosts.map((p) => p.slug),
         countryName,
-        step: 'flesh_out_details',
-        previous_data: draftPlanJson,
-        summarizedKnowledgeBase: summarizedKnowledgeBase,
+        step: 'calculate_final_budget',
+        finalItinerary: JSON.stringify(detailedItinerary),
       };
-      const finalPlanResponse = await fetch("/api/chat", {
+
+      const budgetResponse = await fetch("/api/chat", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(finalPlanBody),
+        body: JSON.stringify(budgetBody),
       });
-      if (!finalPlanResponse.ok) {
-        const errorData = await finalPlanResponse.json().catch(() => ({ error: "プランの生成中にサーバーエラーが発生しました。" }));
-        throw new Error(`サーバーエラー (ステータス: ${finalPlanResponse.status}): ${errorData.error || '詳細不明'}`);
+
+      if (!budgetResponse.ok) {
+        const errorData = await budgetResponse.json().catch(() => ({ error: "最終予算の計算中にサーバーエラーが発生しました。" }));
+        throw new Error(`サーバーエラー (ステータス: ${budgetResponse.status}): ${errorData.error || '詳細不明'}`);
       }
-      const planData = await finalPlanResponse.json();
-      console.log("Step 4: プランの生成が完了しました。", planData);
-      setPlanJson(planData as TravelPlan);
+      const budgetSummary = await budgetResponse.json();
+      console.log("Step 5: 最終予算の計算が完了しました。", budgetSummary);
+
+      const finalPlan: TravelPlan = {
+        itinerary: detailedItinerary,
+        budgetSummary,
+      };
+
+      setPlanJson(finalPlan);
 
       if (!hasShownFeedbackModal.current) {
         setTimeout(() => {
