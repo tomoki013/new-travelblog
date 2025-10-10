@@ -2,13 +2,13 @@
 
 import { Post } from "@/types/types";
 type PostMetadata = Omit<Post, "content">;
-import PostCard from "@/components/elements/PostCard";
+import PostCard from "@/components/common/PostCard";
 import { motion } from "framer-motion";
 import {
   fadeIn,
   sectionVariants,
   staggerContainer,
-} from "@/components/animation";
+} from "@/components/common/animation";
 
 interface RelatedPostsProps {
   posts: PostMetadata[];

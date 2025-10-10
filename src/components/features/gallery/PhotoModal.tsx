@@ -4,7 +4,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import Image from "next/image";
 import Link from "next/link";
 import { X, ArrowLeft, ArrowRight, MapPin } from "lucide-react";
-import { modal } from "@/components/animation";
+import { modal } from "@/components/common/animation";
 import { Photo } from "@/types/types";
 import { getRegionBySlug } from "@/lib/regionUtil";
 

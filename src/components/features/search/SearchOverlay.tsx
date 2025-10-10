@@ -7,7 +7,7 @@ import { AnimatePresence, motion } from "framer-motion";
 import { ArrowRight, Loader2, SearchIcon, XIcon } from "lucide-react";
 import { useMemo } from "react";
 import { LoadingAnimation } from "../LoadingAnimation/LoadingAnimation";
-import { LinkCard } from "@/components/elements/LinkCard";
+import { LinkCard } from "@/components/common/LinkCard";
 import { useSearchOverlay } from "@/hooks/useSearchOverlay";
 import { SEARCH_CONFIG } from "@/constants/searchConfig";
 

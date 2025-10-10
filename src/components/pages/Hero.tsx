@@ -1,7 +1,7 @@
 import Image from "next/image";
-import { LoadingAnimation } from "../featured/LoadingAnimation/LoadingAnimation";
+import { LoadingAnimation } from "../features/LoadingAnimation/LoadingAnimation";
 import { allRegions } from "@/lib/regionUtil";
-import WorldMap from "../featured/worldMap/WorldMap";
+import WorldMap from "../features/worldMap/WorldMap";
 import { regionData } from "@/data/region";
 import { shuffleArray } from "@/lib/shuffleArray";
 

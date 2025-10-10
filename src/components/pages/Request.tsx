@@ -1,8 +1,8 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { sectionVariants } from "../animation";
-import Button from "../elements/Button";
+import { sectionVariants } from "../common/animation";
+import Button from "../common/Button";
 
 const Request = () => {
   return (

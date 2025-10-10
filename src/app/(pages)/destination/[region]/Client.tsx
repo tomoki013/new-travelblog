@@ -5,14 +5,14 @@ import Link from "next/link";
 import { motion } from "framer-motion";
 import { Region, Post, AllDestinationProps } from "@/types/types";
 type PostMetadata = Omit<Post, "content">;
-import PostCard from "@/components/elements/PostCard";
+import PostCard from "@/components/common/PostCard";
 import {
   sectionVariants,
   slideFadeIn,
   staggerContainer,
-} from "@/components/animation";
+} from "@/components/common/animation";
 import { Wind } from "lucide-react";
-import AllDestination from "@/components/featured/destination/allDestination";
+import AllDestination from "@/components/features/destination/allDestination";
 
 interface ClientProps extends AllDestinationProps {
   region: Region;

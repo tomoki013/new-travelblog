@@ -3,19 +3,19 @@
 import Image from "next/image";
 import Link from "next/link";
 import { motion } from "framer-motion";
-import { slideFadeIn } from "@/components/animation";
+import { slideFadeIn } from "@/components/common/animation";
 import { members } from "@/data/member";
 import { Post } from "@/types/types";
-import RelatedPosts from "@/components/featured/article/RelatedPosts";
-import TableOfContent from "@/components/featured/article/TableOfContent";
-import PostHeader from "@/components/featured/article/PostHeader";
-import PostNavigation from "@/components/featured/article/PostNavigation";
-import Button from "@/components/elements/Button";
-import ShareButtons from "@/components/featured/article/ShareButtons";
-import AffiliateCard from "@/components/elements/AffiliateCard";
+import RelatedPosts from "@/components/features/article/RelatedPosts";
+import TableOfContent from "@/components/features/article/TableOfContent";
+import PostHeader from "@/components/features/article/PostHeader";
+import PostNavigation from "@/components/features/article/PostNavigation";
+import Button from "@/components/common/Button";
+import ShareButtons from "@/components/features/article/ShareButtons";
+import AffiliateCard from "@/components/common/AffiliateCard";
 import { affiliates } from "@/constants/affiliates";
 import React from "react";
-import CostBreakdown from "@/components/featured/article/CostBreakdown";
+import CostBreakdown from "@/components/features/article/CostBreakdown";
 
 interface ClientProps {
   children: React.ReactNode;

@@ -3,14 +3,14 @@
 import { useMemo, useEffect } from "react";
 import { motion } from "framer-motion";
 import { Post } from "@/types/types";
-import PostCard from "@/components/elements/PostCard";
-import { sectionVariants, staggerContainer } from "@/components/animation";
-import { CustomSelect } from "@/components/elements/CustomSelect";
+import PostCard from "@/components/common/PostCard";
+import { sectionVariants, staggerContainer } from "@/components/common/animation";
+import { CustomSelect } from "@/components/common/CustomSelect";
 import { useSearchParams, useRouter } from "next/navigation";
-import HeroSection from "@/components/sections/HeroSection";
+import HeroSection from "@/components/pages/HeroSection";
 import { categories } from "@/data/categories";
-import { SearchInput } from "@/components/elements/SearchInput";
-import { LoadingAnimation } from "@/components/featured/LoadingAnimation/LoadingAnimation";
+import { SearchInput } from "@/components/common/SearchInput";
+import { LoadingAnimation } from "@/components/features/LoadingAnimation/LoadingAnimation";
 
 // Postのメタデータの型を定義
 type PostMetadata = Omit<Post, "content">;

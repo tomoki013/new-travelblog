@@ -1,9 +1,9 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { sectionVariants, staggerContainer } from "../animation";
+import { sectionVariants, staggerContainer } from "../common/animation";
 import { affiliates } from "@/constants/affiliates";
-import AffiliateCard from "../elements/AffiliateCard";
+import AffiliateCard from "../common/AffiliateCard";
 
 const Affiliates = () => {
   const appsToShow = affiliates.filter((aff) => aff.status === "ready");

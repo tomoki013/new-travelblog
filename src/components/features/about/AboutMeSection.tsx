@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import { motion } from "framer-motion";
-import { sectionVariants } from "@/components/animation";
+import { sectionVariants } from "@/components/common/animation";
 import WorldMap from "../worldMap/WorldMap";
 import { regionData } from "@/data/region";
 

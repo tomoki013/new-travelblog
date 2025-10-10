@@ -1,8 +1,8 @@
 "use client";
 
-import AboutJourneySection from "@/components/featured/about/AboutJourneySection";
-import AboutMeSection from "@/components/featured/about/AboutMeSection";
-import CommunitySection from "@/components/featured/about/CommunitySection";
+import AboutJourneySection from "@/components/features/about/AboutJourneySection";
+import AboutMeSection from "@/components/features/about/AboutMeSection";
+import CommunitySection from "@/components/features/about/CommunitySection";
 
 const Client = () => {
   return (

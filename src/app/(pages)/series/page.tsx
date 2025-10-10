@@ -2,7 +2,7 @@ import { Metadata } from "next";
 import Client from "./Client";
 import { getAllPosts } from "@/lib/posts";
 import { featuredSeries } from "@/data/series";
-import SeriesCard from "@/components/featured/series/SeriesCard";
+import SeriesCard from "@/components/features/series/SeriesCard";
 
 export const metadata: Metadata = {
   title: "テーマで旅を深掘り - Series",

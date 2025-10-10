@@ -3,10 +3,10 @@ import { Metadata } from "next";
 import { Post } from "@/types/types";
 type PostMetadata = Omit<Post, "content">;
 import { getAllPosts } from "@/lib/posts";
-import HeroSection from "@/components/sections/HeroSection";
+import HeroSection from "@/components/pages/HeroSection";
 import { featuredSeries } from "@/data/series";
 import { regionData } from "@/data/region";
-import AllDestination from "@/components/featured/destination/allDestination";
+import AllDestination from "@/components/features/destination/allDestination";
 
 export const metadata: Metadata = {
   title: "サイトマップ",

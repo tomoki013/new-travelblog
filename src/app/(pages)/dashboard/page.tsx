@@ -1,5 +1,5 @@
-import GalleryLength from "@/components/sections/GalleryLength";
-import PostsLength from "@/components/sections/PostsLength";
+import GalleryLength from "@/components/pages/GalleryLength";
+import PostsLength from "@/components/pages/PostsLength";
 import { getPhotos } from "@/lib/photo";
 import { getAllPosts } from "@/lib/posts";
 

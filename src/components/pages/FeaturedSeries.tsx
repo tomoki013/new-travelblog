@@ -1,10 +1,10 @@
 "use client";
 
 import { featuredSeries } from "@/data/series";
-import SeriesCard from "../elements/SeriesCard";
+import SeriesCard from "../common/SeriesCard";
+import Button from "../common/Button";
 import { motion } from "framer-motion";
-import Button from "../elements/Button";
-import { sectionVariants, staggerContainer } from "@/components/animation";
+import { sectionVariants, staggerContainer } from "@/components/common/animation";
 
 const FeaturedSeries = () => {
   return (

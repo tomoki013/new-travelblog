@@ -3,7 +3,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { motion } from "framer-motion";
-import { sectionVariants } from "@/components/animation";
+import { sectionVariants } from "@/components/common/animation";
 import {
   Castle,
   Sunset,

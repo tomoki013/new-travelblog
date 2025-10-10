@@ -3,10 +3,10 @@
 import { useState, useMemo, useEffect } from "react";
 import { Photo, Post } from "@/types/types";
 type PostMetadata = Omit<Post, "content">;
-import HeroSection from "@/components/sections/HeroSection";
-import PhotoFilter from "@/components/featured/gallery/PhotoFilter";
-import PhotoGrid from "@/components/featured/gallery/PhotoGrid";
-import PhotoModal from "@/components/featured/gallery/PhotoModal";
+import HeroSection from "@/components/pages/HeroSection";
+import PhotoFilter from "@/components/features/gallery/PhotoFilter";
+import PhotoGrid from "@/components/features/gallery/PhotoGrid";
+import PhotoModal from "@/components/features/gallery/PhotoModal";
 import { categoryMappings } from "@/data/photoCategories";
 
 const filterList: string[] = ["すべて", ...Object.keys(categoryMappings)];

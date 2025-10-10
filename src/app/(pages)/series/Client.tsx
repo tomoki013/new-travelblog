@@ -1,8 +1,8 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { staggerContainer } from "@/components/animation";
-import HeroSection from "@/components/sections/HeroSection";
+import { staggerContainer } from "@/components/common/animation";
+import HeroSection from "@/components/pages/HeroSection";
 
 interface ClientProps {
   children: React.ReactNode;
