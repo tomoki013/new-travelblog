@@ -57,8 +57,8 @@ export default function PlanDisplay({ plan }: PlanDisplayProps) {
       </div>
 
       {/* Desktop View (2-column) */}
-      <div className="hidden md:grid md:grid-cols-3 md:gap-6">
-        <div className="md:col-span-2 space-y-6">
+      <div className="hidden md:grid md:grid-cols-1 md:gap-6">
+        <div className="md:col-span-1 space-y-6">
           <Tabs defaultValue="itinerary" className="w-full">
             <TabsList className="grid w-full grid-cols-2">
               <TabsTrigger value="itinerary">

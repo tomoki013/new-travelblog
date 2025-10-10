@@ -91,17 +91,19 @@ ${articleContent}
 
 // Step 3: Draft a skeleton itinerary
 function buildDraftItineraryPrompt(requirements: string, summarizedKnowledgeBase: string) {
-  return `あなたは旅行プランナーです。以下の「旅行の要件」と「情報の要約」を基に、旅行プランの骨子をJSON形式で作成してください。
+  return `あなたは創造的な旅行プランナーです。あなたの仕事は、ユーザーの「旅行の要件」と、参考情報としての「情報の要約」を基に、ユニークで魅力的な旅行プランの骨子をJSON形式で作成することです。
 
 ### 絶対的なルール:
 - **出力はJSONのみ:** 会話や挨拶、その他のテキストは一切含めず、指定されたJSONオブジェクトのみを生成してください。
 - **スキーマの遵守:** 下記のJSON構造を厳密に守ってください。時間、費用、緯度経度などの詳細情報は**含めないでください**。
+- **文字数制限:** descriptionフィールドは最大100文字で記述してください。
+- **創造性の発揮:** 「情報の要約」はあくまでインスピレーションの源です。内容をそのままなぞるのではなく、あなた独自の視点で、創造的で魅力的なプランを提案してください。
 
 ---
-### 旅行の要件
+### 旅行の要異
 ${requirements}
 ---
-### 情報の要約
+### 参考情報（インスピレーション）
 ${summarizedKnowledgeBase}
 ---
 ### JSON出力形式
@@ -126,38 +128,23 @@ ${summarizedKnowledgeBase}
 `;
 }
 
-// --- Type definitions for budget calculation ---
-interface ScheduleItem {
-  activity: string;
-  cost?: number;
-}
-
-interface Day {
-  schedule: ScheduleItem[];
-}
-
-interface Itinerary {
-  days: Day[];
-}
-
-
 // Step 4: Flesh out details for a single day
 function buildFleshOutDayPrompt(dayData: string, requirementsData: string, summarizedKnowledgeBase: string) {
-    return `あなたはプロの旅行プランナーです。あなたの仕事は、提供された情報に基づいて1日分の旅行プランをJSON形式で詳細化することです。
+    return `あなたは創造的で経験豊富な旅行プランナーです。あなたの仕事は、提供された情報に独自の視点を加えて、1日分の旅行プランをJSON形式で詳細化することです。
 
 ### 指示
-1.  以下の「1日分の骨子データ」、「旅行全体の要件」、「参考情報」を注意深く読み込みます。
-2.  これらの情報だけを基にして、1日分のプランを詳細化します。
+1.  以下の「1日分の骨子データ」、「旅行全体の要件」、「参考情報（インスピレーション）」を注意深く読み込みます。
+2.  これらの情報を出発点として、あなた自身の創造性を発揮し、プランをより魅力的なものにしてください。
 3.  各アクティビティに、具体的な時間(time)、詳細な説明(details)、費用(cost)、場所(location)を追加します。
 4.  場所(location)には、必ず緯度(latitude)と経度(longitude)を含めます。不明な場合は、おおよその値を推定してください。
 5.  その日のすべてのアクティビティの費用を合計し、1日分の予算(budget)を計算します。
-6.  あなたの言葉で、自然で魅力的な説明文を作成します。
+6.  あなたの言葉で、ユーザーがわくわくするような、自然で魅力的な説明文を作成します。
 
 ### 絶対的なルール
 - **出力形式:** 生成するレスポンスは、**JSONオブジェクトのみ**でなければなりません。会話、挨拶、Markdownのバッククォート(\`)や \`json\` というプレフィックス、その他のテキストは**一切含めないでください**。
 - **スキーマの遵守:** 下記の「JSON出力形式」を**厳密に**守ってください。プロパティの追加や削除、データ型の変更は許可されません。
 - **値の保証:** すべてのプロパティに具体的な値を入れてください。特に\`cost\`や\`budget\`が不明な場合は \`0\` としてください。
-- **説明の簡潔さ:** "details"プロパティの文章は、**簡潔に2～3文（100文字程度）で**記述してください。これにより応答速度が向上します。
+- **説明の簡潔さ:** "details"プロパティの文章は、**最大100文字で**記述してください。これにより応答速度が向上します。
 
 ---
 ### 1日分の骨子データ (dayData)
@@ -166,7 +153,7 @@ ${dayData}
 ### 旅行全体の要件 (requirementsData)
 ${requirementsData}
 ---
-### 参考情報 (Summarized Knowledge Base)
+### 参考情報（インスピレーション）
 ${summarizedKnowledgeBase}
 ---
 ### JSON出力形式 (1日分のDayオブジェクト)
@@ -186,6 +173,38 @@ ${summarizedKnowledgeBase}
         "longitude": 139.767125
       }
     }
+  ]
+}
+`;
+}
+
+// Step 5: Calculate Final Budget
+function buildCalculateFinalBudgetPrompt(finalItinerary: string) {
+  return `あなたは旅行費用のアナリストです。以下の「最終旅程案」を分析し、費用の合計とカテゴリー別の内訳を計算してください。
+
+### 指示
+1.  旅程内のすべてのアクティビティの\`cost\`を合計し、全体の合計予算(\`total\`)を計算します。
+2.  各アクティビティを、内容に基づいて「宿泊費」「食費」「交通費」「観光・アクティビティ」のいずれかに分類します。
+3.  カテゴリーごとに費用の小計を計算します。
+4.  最終的な結果を、指定された「JSON出力形式」で返します。
+
+### 絶対的なルール
+- **出力形式:** 生成するレスポンスは、**JSONオブジェクトのみ**でなければなりません。会話、挨拶、その他のテキストは一切含めないでください。
+- **スキーマの遵守:** 下記のJSON構造を厳密に守ってください。
+- **不明な費用の扱い:** \`cost\`が0のアクティビティも計算に含めますが、最終的な合計には影響しません。
+
+---
+### 最終旅程案 (finalItinerary)
+${finalItinerary}
+---
+### JSON出力形式
+{
+  "total": 123456,
+  "categories": [
+    { "category": "宿泊費", "amount": 50000 },
+    { "category": "食費", "amount": 30000 },
+    { "category": "交通費", "amount": 20000 },
+    { "category": "観光・アクティビティ", "amount": 23456 }
   ]
 }
 `;
@@ -290,38 +309,12 @@ export async function POST(req: NextRequest) {
         if (!finalItinerary) {
           return NextResponse.json({ error: "Step 'calculate_final_budget' requires 'finalItinerary'." }, { status: 400 });
         }
-        console.log("    - Calculating final budget from client-provided itinerary.");
-        const itinerary = JSON.parse(finalItinerary) as Itinerary;
-        let total = 0;
-        const categories: Record<string, number> = {
-            "宿泊費": 0,
-            "食費": 0,
-            "交通費": 0,
-            "観光・アクティビティ": 0,
-        };
-        // This is a simplified categorization. A more robust solution might
-        // involve AI or more detailed cost tagging.
-        itinerary.days.forEach((day: Day) => {
-            day.schedule.forEach((item: ScheduleItem) => {
-                total += item.cost || 0;
-                if (item.activity.includes("泊") || item.activity.includes("ホテル")) {
-                    categories["宿泊費"] += item.cost || 0;
-                } else if (item.activity.includes("食") || item.activity.includes("レストラン") || item.activity.includes("カフェ")) {
-                    categories["食費"] += item.cost || 0;
-                } else if (item.activity.includes("鉄道") || item.activity.includes("バス") || item.activity.includes("タクシー")) {
-                    categories["交通費"] += item.cost || 0;
-                } else {
-                    categories["観光・アクティビティ"] += item.cost || 0;
-                }
-            });
-        });
-
-        const budgetSummary = {
-            total,
-            categories: Object.entries(categories).map(([category, amount]) => ({ category, amount })),
-        };
-        console.log("    - Calculation complete. Returning budget summary.");
-        return NextResponse.json(budgetSummary);
+        const systemPrompt = buildCalculateFinalBudgetPrompt(finalItinerary);
+        console.log("    - Calling Google AI for final budget calculation...");
+        const { text } = await generateText({ model, system: systemPrompt, messages: [{ role: 'user', content: 'Continue.' }] });
+        console.log("    - AI call successful. Parsing and returning budget summary JSON.");
+        const parsedJson = parseJsonResponse(text);
+        return NextResponse.json(parsedJson);
       }
 
       default: {
