@@ -233,34 +233,74 @@ export default function AiPlannerClient({
       console.log("Step 1: 要件の抽出が完了しました。", requirementsJson);
 
 
-      // Step 2: Flesh out the plan into JSON
-      setLoadingMessage("旅行プランを生成中...");
-      console.log("Step 2: AIへのリクエストを開始します - プランの具体化");
-      const planBody = {
-        messages: [], // Not needed for this step
+      // Step 2: Summarize Articles
+      setLoadingMessage("関連情報を記事から収集中...");
+      console.log("Step 2: AIへのリクエストを開始します - 記事の要約");
+      const summaryBody = {
+        messages: [],
         articleSlugs: filteredPosts.map((p) => p.slug),
         countryName,
-        step: 'flesh_out_plan_json',
+        step: 'summarize_articles',
         previous_data: requirementsJson,
       };
-      console.log("リクエストボディ:", JSON.stringify(planBody, null, 2));
-
-
-      const planResponse = await fetch("/api/chat", {
+      const summaryResponse = await fetch("/api/chat", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(planBody),
+        body: JSON.stringify(summaryBody),
       });
-
-      if (!planResponse.ok) {
-        const errorData = await planResponse.json().catch(() => ({ error: "プランの生成中にサーバーエラーが発生しました。" }));
-        console.error("プランの生成中にサーバーでエラーが発生しました。:", errorData);
-        throw new Error(`サーバーエラー (ステータス: ${planResponse.status}): ${errorData.error || '詳細不明'}`);
+      if (!summaryResponse.ok) {
+        const errorData = await summaryResponse.json().catch(() => ({ error: "記事の要約中にサーバーエラーが発生しました。" }));
+        throw new Error(`サーバーエラー (ステータス: ${summaryResponse.status}): ${errorData.error || '詳細不明'}`);
       }
+      const { response: summarizedKnowledgeBase } = await summaryResponse.json();
+      console.log("Step 2: 記事の要約が完了しました。");
 
-      const planData = await planResponse.json();
-      console.log("Step 2: プランの生成が完了しました。", planData);
-      setPlanJson(planData as TravelPlan); // Add type assertion
+      // Step 3: Draft Itinerary
+      setLoadingMessage("旅程の骨子を作成中...");
+      console.log("Step 3: AIへのリクエストを開始します - 旅程の骨子作成");
+      const draftBody = {
+        messages: [],
+        articleSlugs: filteredPosts.map((p) => p.slug),
+        countryName,
+        step: 'draft_itinerary',
+        previous_data: summarizedKnowledgeBase,
+        requirementsData: requirementsJson,
+      };
+      const draftResponse = await fetch("/api/chat", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(draftBody),
+      });
+      if (!draftResponse.ok) {
+        const errorData = await draftResponse.json().catch(() => ({ error: "旅程の骨子作成中にサーバーエラーが発生しました。" }));
+        throw new Error(`サーバーエラー (ステータス: ${draftResponse.status}): ${errorData.error || '詳細不明'}`);
+      }
+      const { response: draftPlanJson } = await draftResponse.json();
+      console.log("Step 3: 旅程の骨子作成が完了しました。");
+
+      // Step 4: Flesh out details
+      setLoadingMessage("プランの詳細を詰めています...");
+      console.log("Step 4: AIへのリクエストを開始します - プランの具体化");
+      const finalPlanBody = {
+        messages: [],
+        articleSlugs: filteredPosts.map((p) => p.slug),
+        countryName,
+        step: 'flesh_out_details',
+        previous_data: draftPlanJson,
+        summarizedKnowledgeBase: summarizedKnowledgeBase,
+      };
+      const finalPlanResponse = await fetch("/api/chat", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(finalPlanBody),
+      });
+      if (!finalPlanResponse.ok) {
+        const errorData = await finalPlanResponse.json().catch(() => ({ error: "プランの生成中にサーバーエラーが発生しました。" }));
+        throw new Error(`サーバーエラー (ステータス: ${finalPlanResponse.status}): ${errorData.error || '詳細不明'}`);
+      }
+      const planData = await finalPlanResponse.json();
+      console.log("Step 4: プランの生成が完了しました。", planData);
+      setPlanJson(planData as TravelPlan);
 
       if (!hasShownFeedbackModal.current) {
         setTimeout(() => {
