@@ -16,17 +16,20 @@ interface CustomTooltipProps {
   payload?: {
     name: string;
     value: number;
-    percent: number;
   }[];
+  total: number;
 }
 
-const CustomTooltip = ({ active, payload }: CustomTooltipProps) => {
+const CustomTooltip = ({ active, payload, total }: CustomTooltipProps) => {
   if (active && payload && payload.length) {
+    const data = payload[0];
+    const percentage = total > 0 ? (data.value / total) * 100 : 0;
+
     return (
       <div className="rounded-lg border bg-background p-2 shadow-sm">
-        <p className="font-bold">{`${payload[0].name}`}</p>
-        <p className="text-sm text-muted-foreground">{`金額: ${formatCurrency(payload[0].value)}`}</p>
-        <p className="text-sm text-muted-foreground">{`割合: ${(payload[0].percent * 100).toFixed(2)}%`}</p>
+        <p className="font-bold">{data.name}</p>
+        <p className="text-sm text-muted-foreground">{`金額: ${formatCurrency(data.value)}`}</p>
+        <p className="text-sm text-muted-foreground">{`割合: ${percentage.toFixed(0)}%`}</p>
       </div>
     );
   }
@@ -63,7 +66,7 @@ export default function BudgetTab({ budgetSummary }: BudgetTabProps) {
                   <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
                 ))}
               </Pie>
-              <Tooltip content={<CustomTooltip />} />
+              <Tooltip content={<CustomTooltip total={total} />} />
               <Legend />
             </PieChart>
           </ResponsiveContainer>
