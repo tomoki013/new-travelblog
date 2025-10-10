@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import { CoreMessage, streamText, generateText } from "ai";
+import { CoreMessage, generateText } from "ai";
 import { google } from "@ai-sdk/google";
 import fs from "fs/promises";
 import path from "path";
@@ -141,31 +141,43 @@ interface ChatRequestBody {
 }
 
 export async function POST(req: NextRequest) {
-  try {
-    const { messages, articleSlugs, countryName, step, previous_data } = (await req.json()) as ChatRequestBody;
+  const body = (await req.json()) as ChatRequestBody;
+  console.log("✅ /api/chat: Received request", { step: body.step, country: body.countryName });
 
+  try {
+    const { messages, articleSlugs, countryName, step, previous_data } = body;
     const userMessages = messages.filter((m) => m.role === "user");
 
     switch (step) {
       case 'extract_requirements': {
+        console.log("  -> Executing step: extract_requirements");
         const systemPrompt = buildExtractRequirementsPrompt();
+        const model = google(process.env.GEMINI_MODEL_NAME || "gemini-1.5-flash");
+
+        console.log("    - Calling Google AI...");
         const { text } = await generateText({
-          model: google(process.env.GEMINI_MODEL_NAME || "gemini-1.5-flash"),
+          model,
           system: systemPrompt,
           messages: userMessages,
         });
+        console.log("    - AI call successful. Returning extracted requirements.");
         return NextResponse.json({ response: text });
       }
 
       case 'flesh_out_plan_json': {
+        console.log("  -> Executing step: flesh_out_plan_json");
         if (!previous_data) {
+          console.error("  ❌ Error: 'previous_data' is required for this step.");
           return NextResponse.json({ error: `Step '${step}' requires 'previous_data'.` }, { status: 400 });
         }
 
+        console.log("    - Loading post cache...");
         const cache = await getPostsCache();
         if (!cache) {
+          console.error("  ❌ Error: Post cache is not available.");
           return NextResponse.json({ error: "Server not ready: Could not load post cache." }, { status: 503 });
         }
+        console.log("    - Post cache loaded successfully.");
 
         const lowerCasePostsCache: Record<string, string> = {};
         for (const key in cache) {
@@ -177,23 +189,29 @@ export async function POST(req: NextRequest) {
           .filter(Boolean);
 
         if (articleContents.length === 0) {
+            console.error("  ❌ Error: No reference blog posts could be loaded for the given slugs:", articleSlugs);
             return NextResponse.json({ error: "Could not load reference blog posts." }, { status: 400 });
         }
+        console.log(`    - Loaded ${articleContents.length} reference articles.`);
         const knowledgeBase = articleContents.join("\n\n---\n\n");
 
         const systemPrompt = buildFleshOutPlanJsonPrompt(previous_data, countryName, knowledgeBase);
+        const model = google(process.env.GEMINI_MODEL_NAME || "gemini-1.5-flash-latest");
 
+        console.log("    - Calling Google AI for final plan generation...");
         const { text } = await generateText({
-          model: google(process.env.GEMINI_MODEL_NAME || "gemini-1.5-flash-latest"),
+          model,
           system: systemPrompt,
           messages: [{ role: 'user', content: 'Continue.' }],
         });
+        console.log("    - AI call successful. Parsing JSON response.");
 
         try {
           // AIの出力からJSON部分を抽出する
           const jsonMatch = text.match(/```json\n([\s\S]*?)\n```/);
           const jsonString = jsonMatch ? jsonMatch[1] : text;
           const parsedJson = JSON.parse(jsonString);
+          console.log("    - JSON parsing successful. Sending response to client.");
           return NextResponse.json(parsedJson);
         } catch (e) {
           console.error("❌ API Route: Failed to parse JSON response from AI.", e);
@@ -203,11 +221,14 @@ export async function POST(req: NextRequest) {
       }
 
       default: {
+        // @ts-expect-error - step is `never` here, which is the intended behavior for exhaustive checking
+        console.error(`  ❌ Error: Invalid step provided: ${step}`);
+        // @ts-expect-error - step is `never` here, which is the intended behavior for exhaustive checking
         return NextResponse.json({ error: `Invalid step: ${step}` }, { status: 400 });
       }
     }
   } catch (error) {
-    console.error("❌ /api/chat: Error in POST handler.", error);
+    console.error("❌ /api/chat: Unhandled error in POST handler.", error);
     const errorMessage = error instanceof Error ? error.message : "Internal Server Error";
     return NextResponse.json({ error: errorMessage }, { status: 500 });
   }
