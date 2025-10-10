@@ -266,8 +266,9 @@ export async function POST(req: NextRequest) {
         }
         const systemPrompt = buildDraftItineraryPrompt(requirementsData, previous_data);
         const { text } = await generateText({ model, system: systemPrompt, messages: [{ role: 'user', content: 'Continue.' }] });
-        console.log("    - AI call successful. Returning draft plan.");
-        return NextResponse.json({ response: text });
+        console.log("    - AI call successful. Parsing and returning draft plan JSON.");
+        const parsedJson = parseJsonResponse(text);
+        return NextResponse.json(parsedJson);
       }
 
       case 'flesh_out_one_day': {

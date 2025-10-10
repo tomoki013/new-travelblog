@@ -289,13 +289,12 @@ export default function AiPlannerClient({
         const errorData = await draftResponse.json().catch(() => ({ error: "旅程の骨子作成中にサーバーエラーが発生しました。" }));
         throw new Error(`サーバーエラー (ステータス: ${draftResponse.status}): ${errorData.error || '詳細不明'}`);
       }
-      const { response: draftPlanJson } = await draftResponse.json();
-      console.log("Step 3: 旅程の骨子作成が完了しました。");
+      const draftPlanData = await draftResponse.json();
+      console.log("Step 3: 旅程の骨子作成が完了しました。", draftPlanData);
 
       // Step 4: Flesh out details day by day
       console.log("Step 4: 旅程の詳細化を1日ずつ開始します。");
-      // draftPlanJsonは文字列なので、まずJSONオブジェクトにパースします
-      const draftPlanData = JSON.parse(draftPlanJson);
+      // バックエンドが直接JSONオブジェクトを返すため、クライアントでのパースは不要です。
       // TravelPlanのスキーマに沿っていることを確認します
       const draftPlan: TravelPlan = draftPlanData.itinerary ? draftPlanData : { itinerary: draftPlanData };
 
