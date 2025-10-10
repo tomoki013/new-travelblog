@@ -14,3 +14,10 @@ export function ensureStringArray(value: string | string[] | undefined): string[
   }
   return [];
 }
+
+export function formatCurrency(amount: number) {
+  return new Intl.NumberFormat('ja-JP', {
+    style: 'currency',
+    currency: 'JPY',
+  }).format(amount);
+}

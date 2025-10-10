@@ -91,3 +91,36 @@ export interface AffiliatesProps {
   status: string;
   bannerHtml?: string;
 }
+
+// --- AI Planner Types ---
+
+export interface TravelPlan {
+  itinerary: {
+    title: string;
+    description: string;
+    totalBudget: number;
+    days: {
+      day: number;
+      title: string;
+      budget: number;
+      schedule: {
+        time: string;
+        activity: string;
+        details: string;
+        cost: number;
+        location: {
+          name: string;
+          latitude: number;
+          longitude: number;
+        };
+      }[];
+    }[];
+  };
+  budgetSummary: {
+    total: number;
+    categories: {
+      category: string;
+      amount: number;
+    }[];
+  };
+}
