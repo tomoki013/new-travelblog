@@ -10,7 +10,6 @@ import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { Loader2 } from "lucide-react";
 import { ShareIcon } from "@/components/Icons";
-import MessageComponent from "./MessageComponent";
 import {
   Select,
   SelectContent,
@@ -19,21 +18,16 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 // PostMetadata と ContinentData を types/types.ts からインポートします
-import { PostMetadata, ContinentData } from "@/types/types";
+import { PostMetadata, ContinentData, TravelPlan } from "@/types/types";
 import FeedbackModal from "@/components/elements/FeedbackModal";
-
-interface Message {
-  role: "user" | "ai";
-  content: string;
-  isError?: boolean;
-}
+import PlanDisplay from "./PlanDisplay";
 
 interface ShareableState {
   selectedCountryId: string;
   destination: string;
   duration: string;
   interests: string;
-  messages: Message[];
+  planJson: TravelPlan | null;
 }
 
 const destinationPresets = [
@@ -74,9 +68,11 @@ export default function AiPlannerClient({
   const [duration, setDuration] = useState("");
   const [interests, setInterests] = useState("");
 
-  const [messages, setMessages] = useState<Message[]>([]);
+  const [planJson, setPlanJson] = useState<TravelPlan | null>(null);
   const [isLoading, setIsLoading] = useState(false);
   const [loadingMessage, setLoadingMessage] = useState("");
+  const [error, setError] = useState<string | null>(null);
+
   const [currentStep, setCurrentStep] = useState(1);
   const [isFeedbackModalOpen, setIsFeedbackModalOpen] = useState(false);
   const hasShownFeedbackModal = useRef(false);
@@ -99,7 +95,7 @@ export default function AiPlannerClient({
         setDestination(restoredState.destination);
         setDuration(restoredState.duration);
         setInterests(restoredState.interests);
-        setMessages(restoredState.messages);
+        setPlanJson(restoredState.planJson);
 
         toast.success("共有されたプランを復元しました。");
 
@@ -190,11 +186,14 @@ export default function AiPlannerClient({
 
   const handleGeneratePlan = async () => {
     if (filteredPosts.length === 0) {
-      setMessages([{ role: "ai", content: "選択された国に関連する記事が見つかりません。別の国を選択してください。", isError: true }]);
+      setError("選択された国に関連する記事が見つかりません。別の国を選択してください。");
       return;
     }
 
     setIsLoading(true);
+    setError(null);
+    setPlanJson(null);
+
     let countryName = "";
     for (const continent of continents) {
       const country = continent.countries.find((c) => c.slug === selectedCountryId);
@@ -205,44 +204,9 @@ export default function AiPlannerClient({
     }
 
     const userMessageContent = `- **国:** ${countryName}\n- **行き先:** ${destination}\n- **期間:** ${duration}\n- **興味・関心:** ${interests}`;
-    const initialUserMessage: Message = { role: "user", content: userMessageContent };
-    const aiResponsePlaceholder: Message = { role: "ai", content: "" };
-    setMessages([initialUserMessage, aiResponsePlaceholder]);
-
-    const processStream = async (
-      reader: ReadableStreamDefaultReader<Uint8Array>,
-      initialContent: string = "",
-      updateUICallback: ((content: string) => void) | null
-    ) => {
-      const decoder = new TextDecoder();
-      let fullResponse = initialContent;
-      while (true) {
-        const { done, value } = await reader.read();
-        if (done) break;
-        fullResponse += decoder.decode(value, { stream: true });
-        if (updateUICallback) {
-          updateUICallback(fullResponse);
-        }
-      }
-      return fullResponse;
-    };
-
-    let outlineText = ""; // To make it available in the catch block
-
-    const updateLastMessage = (content: string) => {
-      setMessages((prev) => {
-        const updated = [...prev];
-        const lastMessage = updated[updated.length - 1];
-        if (lastMessage && lastMessage.role === "ai") {
-          lastMessage.content = content;
-          lastMessage.isError = false;
-        }
-        return updated;
-      });
-    };
+    const initialUserMessage = { role: "user", content: userMessageContent };
 
     try {
-      console.log("[CLIENT LOG] --- Starting Plan Generation ---");
       // Step 1: Extract Requirements
       setLoadingMessage("旅行のテーマを整理中...");
       const extractBody = {
@@ -251,121 +215,41 @@ export default function AiPlannerClient({
         countryName,
         step: 'extract_requirements',
       };
-      console.log("[CLIENT LOG] Step 1: Sending extract_requirements request:", extractBody);
       const extractResponse = await fetch("/api/chat", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(extractBody),
       });
-      console.log(`[CLIENT LOG] Step 1: Response status: ${extractResponse.status}`);
+
       if (!extractResponse.ok) {
         const errorData = await extractResponse.json().catch(() => ({ error: "要件の抽出中にサーバーエラーが発生しました。" }));
-        console.error("[CLIENT LOG] Step 1: Error response data:", errorData);
         throw new Error(errorData.error);
       }
       const { response: requirementsJson } = await extractResponse.json();
-      console.log("[CLIENT LOG] Step 1: Received requirements:", requirementsJson);
 
-      // Step 2: Create Outline
-      setLoadingMessage("プランの骨子を作成中...");
-      const outlineBody = {
-        messages: [],
+      // Step 2: Flesh out the plan into JSON
+      setLoadingMessage("旅行プランを生成中...");
+      const planBody = {
+        messages: [], // Not needed for this step
         articleSlugs: filteredPosts.map((p) => p.slug),
         countryName,
-        step: 'create_outline',
+        step: 'flesh_out_plan_json',
         previous_data: requirementsJson,
       };
-      console.log("[CLIENT LOG] Step 2: Sending create_outline request:", outlineBody);
-      const outlineResponse = await fetch("/api/chat", {
+
+      const planResponse = await fetch("/api/chat", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(outlineBody),
+        body: JSON.stringify(planBody),
       });
-      console.log(`[CLIENT LOG] Step 2: Response status: ${outlineResponse.status}`);
-      if (!outlineResponse.ok || !outlineResponse.body) {
-        const errorData = await outlineResponse.json().catch(() => ({ error: "骨子の作成中にサーバーエラーが発生しました。" }));
-        console.error("[CLIENT LOG] Step 2: Error response data:", errorData);
+
+      if (!planResponse.ok) {
+        const errorData = await planResponse.json().catch(() => ({ error: "プランの生成中にサーバーエラーが発生しました。" }));
         throw new Error(errorData.error);
       }
-      console.log("[CLIENT LOG] Step 2: Starting to process stream...");
-      outlineText = await processStream(
-        outlineResponse.body.getReader(),
-        "",
-        null
-      ); // UIを更新しない
-      console.log("[CLIENT LOG] Step 2: Stream processed. Outline text:", outlineText);
 
-      if (!outlineText || outlineText.trim() === "") {
-        console.error("[CLIENT LOG] Outline text is empty. Throwing error.");
-        throw new Error("AIがプランの骨子を生成できませんでした。条件を変えて再度お試しください。");
-      }
-
-      // Step 3: Flesh out the plan day by day
-      const dailyOutlines = outlineText
-        .split(/(^###\s*\d+日目.*$)/m)
-        .filter(Boolean);
-
-      const dailyChunks: string[] = [];
-      for (let i = 0; i < dailyOutlines.length; i += 2) {
-        if (dailyOutlines[i] && dailyOutlines[i+1]) {
-          dailyChunks.push(dailyOutlines[i] + dailyOutlines[i+1]);
-        }
-      }
-      if (dailyChunks.length === 0 && dailyOutlines.length > 0) {
-        dailyChunks.push(outlineText); // Fallback for single-day plans without "### 1日目" heading
-      }
-
-
-      console.log(`[CLIENT LOG] Step 3: Split outline into ${dailyChunks.length} daily chunks.`);
-
-      // Clear the intermediate message and prepare for streaming the full plan
-      updateLastMessage("");
-      let accumulatedPlan = "";
-
-      for (let i = 0; i < dailyChunks.length; i++) {
-        const dayOutline = dailyChunks[i];
-        const dayNumber = i + 1;
-        setLoadingMessage(`プランを生成中 (${dayNumber}/${dailyChunks.length}日目)...`);
-        console.log(`[CLIENT LOG] Step 3.${dayNumber}: Fleshing out day ${dayNumber}...`);
-
-        const dailyPlanBody = {
-          messages: [],
-          articleSlugs: filteredPosts.map((p) => p.slug),
-          countryName,
-          step: 'flesh_out_plan_daily' as const,
-          previous_data: dayOutline,
-        };
-
-        const dailyPlanResponse = await fetch("/api/chat", {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify(dailyPlanBody),
-        });
-
-        if (!dailyPlanResponse.ok || !dailyPlanResponse.body) {
-            const errorData = await dailyPlanResponse.json().catch(() => ({ error: `詳細プラン(1日目)の作成中にサーバーエラーが発生しました。` }));
-            console.error(`[CLIENT LOG] Step 3.${dayNumber}: Error response data:`, errorData);
-            throw new Error(errorData.error);
-        }
-
-        const streamReader = dailyPlanResponse.body.getReader();
-        const decoder = new TextDecoder();
-        while (true) {
-            const { done, value } = await streamReader.read();
-            if (done) break;
-            accumulatedPlan += decoder.decode(value, { stream: true });
-            updateLastMessage(accumulatedPlan);
-        }
-        accumulatedPlan += "\n\n"; // Add spacing between days
-        updateLastMessage(accumulatedPlan); // Final update for the day
-
-        // If it's not the last day, show a loading message for the next day.
-        if (i < dailyChunks.length - 1) {
-          updateLastMessage(accumulatedPlan + "\n\n---\n\n次の日程を生成中...");
-        }
-      }
-
-      console.log("[CLIENT LOG] --- Plan Generation Finished ---");
+      const planData = await planResponse.json();
+      setPlanJson(planData as TravelPlan); // Add type assertion
 
       if (!hasShownFeedbackModal.current) {
         setTimeout(() => {
@@ -373,29 +257,19 @@ export default function AiPlannerClient({
           hasShownFeedbackModal.current = true;
         }, 3000);
       }
+
     } catch (err) {
-      console.error("[CLIENT LOG] An error occurred in handleGeneratePlan:", err);
       const errorMessage = err instanceof Error ? err.message : "予期せぬエラーが発生しました。";
-      setMessages((prev) => {
-        const updated = [...prev];
-        const lastMessage = updated[updated.length - 1];
-        if (lastMessage && lastMessage.role === "ai") {
-          // If outline exists, restore it. Otherwise, use existing content.
-          const baseContent = outlineText || lastMessage.content;
-          lastMessage.content = baseContent + `\n\n---\n**エラー:** ${errorMessage}`;
-          lastMessage.isError = true;
-        }
-        return updated;
-      });
+      setError(errorMessage);
     } finally {
-      console.log("[CLIENT LOG] Finalizing handleGeneratePlan.");
       setIsLoading(false);
       setLoadingMessage("");
     }
   };
 
+
   const handleShare = useCallback(() => {
-    if (typeof window === "undefined") return;
+    if (typeof window === "undefined" || !planJson) return;
 
     try {
       const state: ShareableState = {
@@ -403,7 +277,7 @@ export default function AiPlannerClient({
         destination,
         duration,
         interests,
-        messages,
+        planJson,
       };
       const jsonString = JSON.stringify(state);
       const compressed = pako.deflate(jsonString);
@@ -420,10 +294,11 @@ export default function AiPlannerClient({
       console.error("Failed to create share link:", error);
       toast.error("共有URLの作成に失敗しました。");
     }
-  }, [selectedCountryId, destination, duration, interests, messages]);
+  }, [selectedCountryId, destination, duration, interests, planJson]);
 
   const handleReset = () => {
-    setMessages([]);
+    setPlanJson(null);
+    setError(null);
     setSelectedCountryId("");
     setDestination("");
     setDuration("");
@@ -434,7 +309,7 @@ export default function AiPlannerClient({
 
   return (
     <div className="space-y-6">
-      {messages.length === 0 && (
+      {!planJson && !isLoading && !error && (
         <>
           <div>
             <Label htmlFor="country">Step 1: 国を選択</Label>
@@ -568,19 +443,27 @@ export default function AiPlannerClient({
         </>
       )}
 
-      <div className="mt-6">
-        <MessageComponent
-          messages={messages}
-          isLoading={isLoading}
-          loadingMessage={loadingMessage}
-        />
-      </div>
+      {isLoading && (
+        <div className="flex flex-col items-center justify-center rounded-lg border border-dashed p-8">
+          <Loader2 className="h-12 w-12 animate-spin text-muted-foreground" />
+          <p className="mt-4 text-center text-muted-foreground">{loadingMessage || "プランを生成中..."}</p>
+        </div>
+      )}
 
-      {!isLoading &&
-        messages.length > 0 &&
-        messages[messages.length - 1].role === "ai" &&
-        messages[messages.length - 1].content &&
-        !messages[messages.length - 1].isError && (
+      {error && (
+        <div className="rounded-lg border border-destructive bg-destructive/10 p-4">
+          <h3 className="font-semibold text-destructive">エラーが発生しました</h3>
+          <p className="mt-2 text-sm text-destructive">{error}</p>
+          <Button onClick={handleReset} variant="destructive" className="mt-4">
+            やり直す
+          </Button>
+        </div>
+      )}
+
+      {planJson && !isLoading && (
+        <div>
+          <PlanDisplay plan={planJson} />
+
           <div className="mt-8 flex flex-col sm:flex-row items-center justify-center gap-4">
             <Button onClick={handleReset} size="lg">
               別のプランを生成する
@@ -589,13 +472,14 @@ export default function AiPlannerClient({
               onClick={handleShare}
               size="lg"
               variant="outline"
-              disabled={isLoading || messages.length === 0}
+              disabled={!planJson}
             >
               <ShareIcon className="mr-2 h-5 w-5" />
               このプランを共有する
             </Button>
           </div>
-        )}
+        </div>
+      )}
 
       <FeedbackModal
         isOpen={isFeedbackModalOpen}
