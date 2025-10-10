@@ -31,6 +31,7 @@ const destinationPresets = [
   "バンコク",
   "デリー",
 ];
+
 const interestPresets = [
   "グルメ旅",
   "芸術・建築巡り",
@@ -51,6 +52,7 @@ export default function AiPlannerClient({
 }: AiPlannerClientProps) {
   // 国の識別に使うのは name ではなく id/slug です
   const [selectedCountryId, setSelectedCountryId] = useState<string>("");
+  const [destinationSuggestions, setDestinationSuggestions] = useState<string[]>(destinationPresets);
   const [filteredPosts, setFilteredPosts] = useState<PostMetadata[]>([]);
 
   const [destination, setDestination] = useState("");
@@ -63,9 +65,27 @@ export default function AiPlannerClient({
   const [currentStep, setCurrentStep] = useState(1);
   const [isFeedbackModalOpen, setIsFeedbackModalOpen] = useState(false);
   const hasShownFeedbackModal = useRef(false);
+  const [hasEditedDestination, setHasEditedDestination] = useState(false);
+
+  useEffect(() => {
+    if (destination) {
+      setHasEditedDestination(true);
+      setCurrentStep(3);
+    }
+  }, [destination]);
 
   useEffect(() => {
     if (selectedCountryId) {
+      let suggestions = destinationPresets; // デフォルト値
+      for (const continent of continents) {
+        const country = continent.countries.find(c => c.slug === selectedCountryId);
+        if (country && country.children && country.children.length > 0) {
+          suggestions = country.children.map(city => city.name);
+          break;
+        }
+      }
+      setDestinationSuggestions(suggestions);
+
       // 選択された国の slug と、もしあればその子要素（都市）の slug も含める
       const allowedSlugs = (() => {
         const slugs = [selectedCountryId];
@@ -110,13 +130,6 @@ export default function AiPlannerClient({
     setInterests("");
   }, [selectedCountryId, allPosts, continents]);
 
-  const handleDestinationSubmit = (value: string) => {
-    if (value.trim()) {
-      setDestination(value.trim());
-      setCurrentStep(3);
-    }
-  };
-
   const handleDurationChange = (value: string) => {
     setDuration(value);
     setCurrentStep(4);
@@ -147,38 +160,36 @@ export default function AiPlannerClient({
     const aiResponsePlaceholder: Message = { role: "ai", content: "" };
     setMessages([initialUserMessage, aiResponsePlaceholder]);
 
-    const handleError = (errorMsg: string) => {
-      console.error("[CLIENT LOG] handleError called with:", errorMsg);
-      setMessages((prev) => {
-        const updated = [...prev];
-        const lastMessage = updated[updated.length - 1];
-        if (lastMessage && lastMessage.role === "ai") {
-          // Append error message instead of replacing content, preserving the outline
-          lastMessage.content += `\n\n---\n**エラー:** ${errorMsg}`;
-          lastMessage.isError = true;
-        }
-        return updated;
-      });
-    };
-
-    const processStream = async (reader: ReadableStreamDefaultReader<Uint8Array>, initialContent: string = "") => {
+    const processStream = async (
+      reader: ReadableStreamDefaultReader<Uint8Array>,
+      initialContent: string = "",
+      updateUICallback: ((content: string) => void) | null
+    ) => {
       const decoder = new TextDecoder();
       let fullResponse = initialContent;
       while (true) {
         const { done, value } = await reader.read();
         if (done) break;
         fullResponse += decoder.decode(value, { stream: true });
-        setMessages((prev) => {
-          const updated = [...prev];
-          const lastMessage = updated[updated.length - 1];
-          if (lastMessage && lastMessage.role === "ai") {
-            lastMessage.content = fullResponse;
-            lastMessage.isError = false;
-          }
-          return updated;
-        });
+        if (updateUICallback) {
+          updateUICallback(fullResponse);
+        }
       }
       return fullResponse;
+    };
+
+    let outlineText = ""; // To make it available in the catch block
+
+    const updateLastMessage = (content: string) => {
+      setMessages((prev) => {
+        const updated = [...prev];
+        const lastMessage = updated[updated.length - 1];
+        if (lastMessage && lastMessage.role === "ai") {
+          lastMessage.content = content;
+          lastMessage.isError = false;
+        }
+        return updated;
+      });
     };
 
     try {
@@ -228,7 +239,11 @@ export default function AiPlannerClient({
         throw new Error(errorData.error);
       }
       console.log("[CLIENT LOG] Step 2: Starting to process stream...");
-      const outlineText = await processStream(outlineResponse.body.getReader());
+      outlineText = await processStream(
+        outlineResponse.body.getReader(),
+        "",
+        null
+      ); // UIを更新しない
       console.log("[CLIENT LOG] Step 2: Stream processed. Outline text:", outlineText);
 
       if (!outlineText || outlineText.trim() === "") {
@@ -236,39 +251,88 @@ export default function AiPlannerClient({
         throw new Error("AIがプランの骨子を生成できませんでした。条件を変えて再度お試しください。");
       }
 
-      // Step 3: Flesh out the plan
-      setLoadingMessage("詳細情報を追加中...");
-       const finalPlanBody = {
-        messages: [],
-        articleSlugs: filteredPosts.map((p) => p.slug),
-        countryName,
-        step: 'flesh_out_plan',
-        previous_data: outlineText,
-      };
-      console.log("[CLIENT LOG] Step 3: Sending flesh_out_plan request:", finalPlanBody);
-      const finalPlanResponse = await fetch("/api/chat", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(finalPlanBody),
-      });
-      console.log(`[CLIENT LOG] Step 3: Response status: ${finalPlanResponse.status}`);
-      if (!finalPlanResponse.ok || !finalPlanResponse.body) {
-        const errorData = await finalPlanResponse.json().catch(() => ({ error: "詳細プランの作成中にサーバーエラーが発生しました。" }));
-        console.error("[CLIENT LOG] Step 3: Error response data:", errorData);
-        throw new Error(errorData.error);
+      // Step 3: Flesh out the plan day by day
+      const dailyOutlines = outlineText
+        .split(/(^###\s*\d+日目.*$)/m)
+        .filter(Boolean);
+
+      const dailyChunks: string[] = [];
+      for (let i = 0; i < dailyOutlines.length; i += 2) {
+        if (dailyOutlines[i] && dailyOutlines[i+1]) {
+          dailyChunks.push(dailyOutlines[i] + dailyOutlines[i+1]);
+        }
       }
-      console.log("[CLIENT LOG] Step 3: Starting to process final stream...");
-      await processStream(finalPlanResponse.body.getReader(), outlineText);
+      if (dailyChunks.length === 0 && dailyOutlines.length > 0) {
+        dailyChunks.push(outlineText); // Fallback for single-day plans without "### 1日目" heading
+      }
+
+
+      console.log(`[CLIENT LOG] Step 3: Split outline into ${dailyChunks.length} daily chunks.`);
+
+      // Clear the intermediate message and prepare for streaming the full plan
+      updateLastMessage("");
+      let accumulatedPlan = "";
+
+      for (let i = 0; i < dailyChunks.length; i++) {
+        const dayOutline = dailyChunks[i];
+        const dayNumber = i + 1;
+        setLoadingMessage(`プランを生成中 (${dayNumber}/${dailyChunks.length}日目)...`);
+        console.log(`[CLIENT LOG] Step 3.${dayNumber}: Fleshing out day ${dayNumber}...`);
+
+        const dailyPlanBody = {
+          messages: [],
+          articleSlugs: filteredPosts.map((p) => p.slug),
+          countryName,
+          step: 'flesh_out_plan_daily' as const,
+          previous_data: dayOutline,
+        };
+
+        const dailyPlanResponse = await fetch("/api/chat", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(dailyPlanBody),
+        });
+
+        if (!dailyPlanResponse.ok || !dailyPlanResponse.body) {
+            const errorData = await dailyPlanResponse.json().catch(() => ({ error: `詳細プラン(1日目)の作成中にサーバーエラーが発生しました。` }));
+            console.error(`[CLIENT LOG] Step 3.${dayNumber}: Error response data:`, errorData);
+            throw new Error(errorData.error);
+        }
+
+        const streamReader = dailyPlanResponse.body.getReader();
+        const decoder = new TextDecoder();
+        while (true) {
+            const { done, value } = await streamReader.read();
+            if (done) break;
+            accumulatedPlan += decoder.decode(value, { stream: true });
+            updateLastMessage(accumulatedPlan);
+        }
+        accumulatedPlan += "\n\n"; // Add spacing between days
+        updateLastMessage(accumulatedPlan); // Final update for the day
+      }
+
       console.log("[CLIENT LOG] --- Plan Generation Finished ---");
 
       if (!hasShownFeedbackModal.current) {
-        setIsFeedbackModalOpen(true);
-        hasShownFeedbackModal.current = true;
+        setTimeout(() => {
+          setIsFeedbackModalOpen(true);
+          hasShownFeedbackModal.current = true;
+        }, 3000);
       }
     } catch (err) {
       console.error("[CLIENT LOG] An error occurred in handleGeneratePlan:", err);
       const errorMessage = err instanceof Error ? err.message : "予期せぬエラーが発生しました。";
-      handleError(errorMessage);
+      setMessages((prev) => {
+        const updated = [...prev];
+        const lastMessage = updated[updated.length - 1];
+        if (lastMessage && lastMessage.role === "ai") {
+          // If outline exists, restore it. Otherwise, use existing content.
+          const baseContent = outlineText || lastMessage.content;
+          lastMessage.content = baseContent + `\n\n---\n**エラー:** ${errorMessage}`;
+          lastMessage.isError = true;
+        }
+        return updated;
+      });
     } finally {
       console.log("[CLIENT LOG] Finalizing handleGeneratePlan.");
       setIsLoading(false);
@@ -323,12 +387,12 @@ export default function AiPlannerClient({
             <div>
               <Label htmlFor="destination">Step 2: 行き先</Label>
               <div className="flex flex-wrap gap-2 mt-2 mb-3">
-                {destinationPresets.map((preset) => (
+                {destinationSuggestions.map((preset) => (
                   <Button
                     key={preset}
                     variant="outline"
                     size="sm"
-                    onClick={() => handleDestinationSubmit(preset)}
+                    onClick={() => setDestination(preset)}
                   >
                     {preset}
                   </Button>
@@ -337,10 +401,10 @@ export default function AiPlannerClient({
               <Input
                 id="destination"
                 value={destination}
-                onChange={(e) => setDestination(e.target.value)}
-                onKeyDown={(e) => {
-                  if (e.key === "Enter") {
-                    handleDestinationSubmit(destination);
+                onChange={(e) => {
+                  setDestination(e.target.value);
+                  if (e.target.value) {
+                    setCurrentStep(3);
                   }
                 }}
                 placeholder="例: パリ、バンコク"
@@ -349,7 +413,7 @@ export default function AiPlannerClient({
             </div>
           )}
 
-          {currentStep >= 3 && (
+          {(currentStep >= 3 || hasEditedDestination) && (
             <div>
               <Label htmlFor="duration">Step 3: 期間</Label>
               <Select
@@ -433,7 +497,8 @@ export default function AiPlannerClient({
       {!isLoading &&
         messages.length > 0 &&
         messages[messages.length - 1].role === "ai" &&
-        messages[messages.length - 1].content && (
+        messages[messages.length - 1].content &&
+        !messages[messages.length - 1].isError && (
           <div className="mt-8 flex flex-col items-center gap-4">
             <Button onClick={handleReset} size="lg">
               別のプランを生成する

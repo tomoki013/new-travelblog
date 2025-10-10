@@ -110,12 +110,33 @@ ${kb}
 `;
 }
 
+// Step 3.5: Flesh out one day of the plan
+function buildFleshOutPlanDailyPrompt(outline: string, country: string, kb: string) {
+    return `あなたはプロの旅行プランナーです。以下の「1日のプラン」と「ブログ記事からの参考情報」に基づき、**${country}**への**その日1日分**の詳細な旅行プランを**Markdown形式**で作成してください。
+
+### ルール:
+- **1日分のみ:** 与えられた日のプランだけを詳細にしてください。他の日の言及は不要です。
+- **詳細なプラン:** 骨子の各項目に、具体的な説明、移動手段、食事の提案を追加してください。
+- **あなたの言葉で:** ブログ記事を参考にしつつも、あなた自身の表現で記述してください。コピー＆ペーストはしないでください。
+- **時間と具体性:** 各アクティビティには、時間（例: 午前, 13:00）を入れ、推奨する理由を簡潔に述べてください。
+- **形式:** 全てMarkdown形式で出力してください。
+
+---
+### 1日のプラン
+${outline}
+---
+### ブログ記事からの参考情報
+${kb}
+---
+`;
+}
+
 
 interface ChatRequestBody {
     messages: CoreMessage[];
     articleSlugs: string[];
     countryName: string;
-    step: 'extract_requirements' | 'create_outline' | 'flesh_out_plan';
+    step: 'extract_requirements' | 'create_outline' | 'flesh_out_plan' | 'flesh_out_plan_daily';
     previous_data?: string;
 }
 
@@ -137,7 +158,8 @@ export async function POST(req: NextRequest) {
       }
 
       case 'create_outline':
-      case 'flesh_out_plan': {
+      case 'flesh_out_plan':
+      case 'flesh_out_plan_daily': {
         if (!previous_data) {
           return NextResponse.json({ error: `Step '${step}' requires 'previous_data'.` }, { status: 400 });
         }
@@ -162,10 +184,14 @@ export async function POST(req: NextRequest) {
 
         const knowledgeBase = articleContents.join("\n\n---\n\n");
 
-        const systemPrompt =
-          step === 'create_outline'
-            ? buildCreateOutlinePrompt(previous_data, countryName, knowledgeBase)
-            : buildFleshOutPlanPrompt(previous_data, countryName, knowledgeBase);
+        let systemPrompt = "";
+        if (step === 'create_outline') {
+            systemPrompt = buildCreateOutlinePrompt(previous_data, countryName, knowledgeBase);
+        } else if (step === 'flesh_out_plan') {
+            systemPrompt = buildFleshOutPlanPrompt(previous_data, countryName, knowledgeBase);
+        } else { // flesh_out_plan_daily
+            systemPrompt = buildFleshOutPlanDailyPrompt(previous_data, countryName, knowledgeBase);
+        }
 
         const result = await streamText({
           model: google(process.env.GEMINI_MODEL_NAME || "gemini-1.5-flash"),
