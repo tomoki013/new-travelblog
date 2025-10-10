@@ -2,11 +2,11 @@
 
 import { useState, useEffect } from "react";
 import { Post } from "@/types/types";
-import XButton from "@/components/elements/share-buttons/XButton";
-import FacebookButton from "@/components/elements/share-buttons/FacebookButton";
-import LineButton from "@/components/elements/share-buttons/LineButton";
-import CopyLinkButton from "@/components/elements/share-buttons/CopyLinkButton";
-import NativeShareButton from "@/components/elements/share-buttons/NativeShareButton";
+import XButton from "@/components/common/share-buttons/XButton";
+import FacebookButton from "@/components/common/share-buttons/FacebookButton";
+import LineButton from "@/components/common/share-buttons/LineButton";
+import CopyLinkButton from "@/components/common/share-buttons/CopyLinkButton";
+import NativeShareButton from "@/components/common/share-buttons/NativeShareButton";
 
 interface Props {
   post: Post;

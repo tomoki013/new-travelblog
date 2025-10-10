@@ -4,7 +4,7 @@ import React from "react";
 import { toString } from "mdast-util-to-string";
 import { Post } from "@/types/types";
 import { MoveHorizontal } from "lucide-react";
-import { LinkCard } from "@/components/elements/LinkCard";
+import { LinkCard } from "@/components/common/LinkCard";
 import fs from "fs";
 import sizeOf from "image-size";
 import path from "path";

@@ -1,6 +1,6 @@
 "use client"; // アニメーションのためClient Componentとします
 
-import { sectionVariants } from "@/components/animation";
+import { sectionVariants } from "@/components/common/animation";
 import { motion } from "framer-motion";
 import { Lightbulb, CheckCircle, FileText } from "lucide-react";
 

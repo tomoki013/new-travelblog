@@ -9,7 +9,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { Loader2 } from "lucide-react";
-import { ShareIcon } from "@/components/Icons";
+import { ShareIcon } from "@/components/common/Icons";
 import {
   Select,
   SelectContent,
@@ -19,7 +19,7 @@ import {
 } from "@/components/ui/select";
 // PostMetadata と ContinentData を types/types.ts からインポートします
 import { PostMetadata, ContinentData, TravelPlan } from "@/types/types";
-import FeedbackModal from "@/components/elements/FeedbackModal";
+import FeedbackModal from "@/components/common/FeedbackModal";
 import PlanDisplay from "./PlanDisplay";
 
 interface ShareableState {

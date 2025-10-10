@@ -3,8 +3,8 @@
 import Link from "next/link";
 import { motion } from "framer-motion";
 import { FaYoutube, FaTiktok, FaGithub } from "react-icons/fa";
-import { sectionVariants } from "@/components/animation";
-import HeroSection from "@/components/sections/HeroSection";
+import { sectionVariants } from "@/components/common/animation";
+import HeroSection from "@/components/pages/HeroSection";
 
 // --- Data ---
 const socialAccounts = [

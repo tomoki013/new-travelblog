@@ -1,14 +1,14 @@
 "use client";
 
-import { MenuIcon, XIcon } from "@/components/Icons";
+import { MenuIcon, XIcon } from "@/components/common/Icons";
 import { NAV_LINKS } from "@/constants/navigation";
 import { useMobileMenu } from "@/hooks/useMobileMenu";
 import { AnimatePresence, motion } from "framer-motion";
 import { SearchIcon } from "lucide-react";
 import Link from "next/link";
 import { useEffect, useRef, useState } from "react"; // 変更点: useRef をインポート
-import ModeToggle from "../elements/mode-toggle";
-import SearchOverlay from "../featured/search/SearchOverlay";
+import ModeToggle from "../common/mode-toggle";
+import SearchOverlay from "../features/search/SearchOverlay";
 
 const Header = () => {
   const { isMenuOpen, toggleMenu, closeMenu } = useMobileMenu();

@@ -1,6 +1,6 @@
 import { getAllPosts, getPostBySlug, getPostData } from "@/lib/posts";
 import Client from "./Client";
-import ArticleContent from "@/components/featured/article/Article";
+import ArticleContent from "@/components/features/article/Article";
 import { Metadata } from "next";
 import { notFound } from "next/navigation";
 

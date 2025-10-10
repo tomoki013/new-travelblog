@@ -1,8 +1,8 @@
 "use client";
 
 import { useRef } from "react";
-import { sectionVariants } from "../animation";
-import WorldMap, { WorldMapHandle } from "../featured/worldMap/WorldMap";
+import { sectionVariants } from "../common/animation";
+import WorldMap, { WorldMapHandle } from "../features/worldMap/WorldMap";
 import { motion } from "framer-motion";
 import { regionData } from "@/data/region";
 

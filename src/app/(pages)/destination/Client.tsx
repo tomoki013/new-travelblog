@@ -1,8 +1,8 @@
 "use client";
 
-import AllDestination from "@/components/featured/destination/allDestination";
-import WorldMap from "@/components/featured/worldMap/WorldMap";
-import Destination from "@/components/sections/Destination";
+import AllDestination from "@/components/features/destination/allDestination";
+import WorldMap from "@/components/features/worldMap/WorldMap";
+import Destination from "@/components/pages/Destination";
 import { AllDestinationProps } from "@/types/types";
 import Image from "next/image";
 

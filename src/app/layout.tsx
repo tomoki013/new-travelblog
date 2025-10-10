@@ -6,12 +6,12 @@ import {
   Noto_Sans_JP,
 } from "next/font/google";
 import "./globals.css";
-import { ThemeProvider } from "@/components/providers/theme-provider";
+import { ThemeProvider } from "@/components/common/theme-provider";
 import Header from "@/components/layouts/Header";
 import Footer from "@/components/layouts/Footer";
 import Script from "next/script";
 import { Toaster } from "@/components/ui/sonner";
-import CookieBanner from "@/components/elements/CookieBanner";
+import CookieBanner from "@/components/common/CookieBanner";
 import FloatingAIPlannerButton from "@/components/common/FloatingAIPlannerButton";
 
 const montserrat = Montserrat({

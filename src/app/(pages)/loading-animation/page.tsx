@@ -1,6 +1,6 @@
 // app/loading-showcase/page.tsx など
 
-import { LoadingAnimation } from "@/components/featured/LoadingAnimation/LoadingAnimation";
+import { LoadingAnimation } from "@/components/features/LoadingAnimation/LoadingAnimation";
 
 export default function LoadingShowcase() {
   const allVariants = [

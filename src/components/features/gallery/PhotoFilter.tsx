@@ -1,5 +1,5 @@
 "use client";
-import { sectionVariants } from "@/components/animation";
+import { sectionVariants } from "@/components/common/animation";
 import { motion } from "framer-motion";
 
 interface PhotoFilterProps {

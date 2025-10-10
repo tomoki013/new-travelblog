@@ -1,8 +1,8 @@
 "use client";
 
-import PostCard from "@/components/elements/PostCard";
+import PostCard from "@/components/common/PostCard";
 import { motion } from "framer-motion";
-import { sectionVariants, staggerContainer } from "@/components/animation";
+import { sectionVariants, staggerContainer } from "@/components/common/animation";
 import { Post } from "@/types/types";
 type PostMetadata = Omit<Post, "content">;
 

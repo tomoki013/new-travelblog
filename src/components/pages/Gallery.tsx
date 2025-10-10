@@ -9,9 +9,9 @@ import { Autoplay } from "swiper/modules";
 
 // 変更点 2: Grid用のCSSインポートを削除
 import "swiper/css";
-import Button from "../elements/Button";
+import Button from "../common/Button";
 
-import { sectionVariants } from "../animation";
+import { sectionVariants } from "../common/animation";
 import { shuffleArray } from "@/lib/shuffleArray";
 
 const photos = [

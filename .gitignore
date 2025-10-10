@@ -58,3 +58,6 @@ public/sitemap-*.xml
 
 # Local Netlify folder
 .netlify
+
+# Log files
+*.log

@@ -5,10 +5,10 @@ import { useRouter, useSearchParams } from "next/navigation";
 import { motion } from "framer-motion";
 import { Post, Series } from "@/types/types";
 type PostMetadata = Omit<Post, "content">;
-import PostCard from "@/components/elements/PostCard";
-import { sectionVariants, staggerContainer } from "@/components/animation";
-import HeroSection from "@/components/sections/HeroSection";
-import Button from "@/components/elements/Button";
+import PostCard from "@/components/common/PostCard";
+import { sectionVariants, staggerContainer } from "@/components/common/animation";
+import HeroSection from "@/components/pages/HeroSection";
+import Button from "@/components/common/Button";
 
 interface SeriesPageProps {
   allPosts: PostMetadata[];

@@ -1,16 +1,16 @@
-import AIPlannerHero from "@/components/sections/AIPlannerHero";
-import Hero from "@/components/sections/Hero";
-import NewPosts from "@/components/sections/NewPosts";
-import FeaturedSeries from "@/components/sections/FeaturedSeries";
-import PopularPosts from "@/components/sections/PopularPosts";
-import Gallery from "@/components/sections/Gallery";
-import Request from "@/components/sections/Request";
+import AIPlannerHero from "@/components/pages/AIPlannerHero";
+import Hero from "@/components/pages/Hero";
+import NewPosts from "@/components/pages/NewPosts";
+import FeaturedSeries from "@/components/pages/FeaturedSeries";
+import PopularPosts from "@/components/pages/PopularPosts";
+import Gallery from "@/components/pages/Gallery";
+import Request from "@/components/pages/Request";
 import { getAllPosts } from "@/lib/posts";
-import Destination from "@/components/sections/Destination";
-import PostsLength from "@/components/sections/PostsLength";
-import GalleryLength from "@/components/sections/GalleryLength";
+import Destination from "@/components/pages/Destination";
+import PostsLength from "@/components/pages/PostsLength";
+import GalleryLength from "@/components/pages/GalleryLength";
 import { getPhotos } from "@/lib/photo";
-import Affiliates from "@/components/sections/Affiliates";
+import Affiliates from "@/components/pages/Affiliates";
 
 export default async function HomePage() {
   const allPosts = await getAllPosts();

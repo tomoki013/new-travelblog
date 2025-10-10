@@ -1,7 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { sectionVariants } from "@/components/animation";
+import { sectionVariants } from "@/components/common/animation";
 import { AllDestinationProps } from "@/types/types";
 import ContinentSection from "./ContinentSection";
 

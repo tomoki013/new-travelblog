@@ -2,7 +2,7 @@ import { getAllPosts } from "@/lib/posts";
 import BlogClient from "./Client";
 import { Suspense } from "react";
 import { Metadata } from "next";
-import { LoadingAnimation } from "@/components/featured/LoadingAnimation/LoadingAnimation";
+import { LoadingAnimation } from "@/components/features/LoadingAnimation/LoadingAnimation";
 import { POSTS_PER_PAGE } from "@/constants/constants";
 import { filterPostsBySearch, calculateScores } from "@/lib/search";
 
