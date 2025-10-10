@@ -221,9 +221,7 @@ export async function POST(req: NextRequest) {
       }
 
       default: {
-        // @ts-expect-error - step is `never` here, which is the intended behavior for exhaustive checking
         console.error(`  ❌ Error: Invalid step provided: ${step}`);
-        // @ts-expect-error - step is `never` here, which is the intended behavior for exhaustive checking
         return NextResponse.json({ error: `Invalid step: ${step}` }, { status: 400 });
       }
     }
