@@ -233,27 +233,41 @@ export default function AiPlannerClient({
       console.log("Step 1: 要件の抽出が完了しました。", requirementsJson);
 
 
-      // Step 2: Summarize Articles
-      setLoadingMessage("関連情報を記事から収集中...");
-      console.log("Step 2: AIへのリクエストを開始します - 記事の要約");
-      const summaryBody = {
-        messages: [],
-        articleSlugs: filteredPosts.map((p) => p.slug),
-        countryName,
-        step: 'summarize_articles',
-        previous_data: requirementsJson,
-      };
-      const summaryResponse = await fetch("/api/chat", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(summaryBody),
-      });
-      if (!summaryResponse.ok) {
-        const errorData = await summaryResponse.json().catch(() => ({ error: "記事の要約中にサーバーエラーが発生しました。" }));
-        throw new Error(`サーバーエラー (ステータス: ${summaryResponse.status}): ${errorData.error || '詳細不明'}`);
+      // Step 2: Summarize Articles Iteratively
+      const articleSlugs = filteredPosts.map((p) => p.slug);
+      let summarizedKnowledgeBase = "";
+      console.log(`Step 2: AIへのリクエストを開始します - ${articleSlugs.length}件の記事を1件ずつ要約`);
+
+      for (let i = 0; i < articleSlugs.length; i++) {
+        const slug = articleSlugs[i];
+        setLoadingMessage(`記事を分析中... (${i + 1} / ${articleSlugs.length})`);
+        console.log(`  - (${i + 1}/${articleSlugs.length}) ${slug} を要約中...`);
+
+        const summaryBody = {
+          messages: [],
+          countryName,
+          step: 'summarize_one_article',
+          articleSlug: slug,
+          requirementsData: requirementsJson, // requirementsJson を渡す
+        };
+
+        const summaryResponse = await fetch("/api/chat", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(summaryBody),
+        });
+
+        if (!summaryResponse.ok) {
+          const errorData = await summaryResponse.json().catch(() => ({ error: `記事「${slug}」の要約中にサーバーエラーが発生しました。` }));
+          throw new Error(`サーバーエラー (ステータス: ${summaryResponse.status}): ${errorData.error || '詳細不明'}`);
+        }
+
+        const { summary } = await summaryResponse.json();
+        summarizedKnowledgeBase += summary + "\n\n---\n\n";
+        console.log(`  - (${i + 1}/${articleSlugs.length}) ${slug} の要約完了`);
       }
-      const { response: summarizedKnowledgeBase } = await summaryResponse.json();
-      console.log("Step 2: 記事の要約が完了しました。");
+      console.log("Step 2: すべての記事の要約が完了しました。");
+
 
       // Step 3: Draft Itinerary
       setLoadingMessage("旅程の骨子を作成中...");

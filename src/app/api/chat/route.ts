@@ -190,9 +190,10 @@ ${summarizedKnowledgeBase}
 
 interface ChatRequestBody {
     messages: CoreMessage[];
-    articleSlugs: string[];
+    articleSlugs?: string[]; // Made optional as it's not needed for single summary
+    articleSlug?: string; // New field for single article summarization
     countryName: string;
-    step: 'extract_requirements' | 'summarize_articles' | 'draft_itinerary' | 'flesh_out_details';
+    step: 'extract_requirements' | 'summarize_articles' | 'summarize_one_article' | 'draft_itinerary' | 'flesh_out_details';
     previous_data?: string;
     requirementsData?: string; // For draft_itinerary and flesh_out_details
     summarizedKnowledgeBase?: string; // For flesh_out_details
@@ -203,7 +204,7 @@ export async function POST(req: NextRequest) {
   console.log("✅ /api/chat: Received request", { step: body.step, country: body.countryName });
 
   try {
-    const { messages, articleSlugs, step, previous_data, requirementsData, summarizedKnowledgeBase } = body;
+    const { messages, articleSlugs, articleSlug, step, previous_data, requirementsData, summarizedKnowledgeBase } = body;
     const userMessages = messages.filter((m) => m.role === "user");
     const model = google(process.env.GEMINI_MODEL_NAME || "gemini-1.5-flash-latest");
 
@@ -218,39 +219,38 @@ export async function POST(req: NextRequest) {
         return NextResponse.json({ response: text });
       }
 
-      case 'summarize_articles': {
-        console.log("  -> Executing step: summarize_articles");
-        if (!previous_data) {
-            return NextResponse.json({ error: "Step 'summarize_articles' requires 'previous_data' (requirements)."}, { status: 400 });
+      case 'summarize_one_article': {
+        console.log("  -> Executing step: summarize_one_article");
+        if (!articleSlug || !requirementsData) {
+          return NextResponse.json({ error: "Step 'summarize_one_article' requires 'articleSlug' and 'requirementsData'." }, { status: 400 });
         }
 
-        console.log("    - Loading post cache...");
+        console.log(`    - Summarizing article: ${articleSlug}`);
         const cache = await getPostsCache();
         if (!cache) {
           return NextResponse.json({ error: "Server not ready: Could not load post cache." }, { status: 503 });
         }
-        console.log("    - Post cache loaded.");
 
         const lowerCasePostsCache = Object.fromEntries(Object.entries(cache).map(([k, v]) => [k.toLowerCase(), v]));
-        const articleContents = articleSlugs.map(slug => lowerCasePostsCache[slug.toLowerCase()] || "").filter(Boolean);
+        const articleContent = lowerCasePostsCache[articleSlug.toLowerCase()];
 
-        if (articleContents.length === 0) {
-            return NextResponse.json({ error: "Could not load reference blog posts." }, { status: 400 });
-        }
-        console.log(`    - Loaded ${articleContents.length} reference articles.`);
-
-        const summaries: string[] = [];
-        for (const content of articleContents) {
-          console.log("      - Summarizing one article...");
-          const systemPrompt = buildSummarizeArticlesPrompt(previous_data, content);
-          const { text } = await generateText({ model, system: systemPrompt, messages: [{ role: 'user', content: 'Continue.' }] });
-          summaries.push(text);
-          console.log("      - Article summarized.");
+        if (!articleContent) {
+          console.error(`    - Article with slug '${articleSlug}' not found in cache.`);
+          return NextResponse.json({ error: `Article '${articleSlug}' not found.` }, { status: 404 });
         }
 
-        const combinedSummary = summaries.join("\n\n---\n\n");
-        console.log("    - All articles summarized. Returning combined summary.");
-        return NextResponse.json({ response: combinedSummary });
+        const systemPrompt = buildSummarizeArticlesPrompt(requirementsData, articleContent);
+        console.log("    - Calling Google AI for single article summary...");
+        const { text } = await generateText({ model, system: systemPrompt, messages: [{ role: 'user', content: 'Continue.' }] });
+        console.log("    - AI call successful. Returning summary.");
+        return NextResponse.json({ summary: text });
+      }
+
+      case 'summarize_articles': {
+        // This case is now disabled and will be removed later.
+        // For now, it returns an error to prevent accidental use.
+        console.warn("  -> WARNING: Deprecated 'summarize_articles' step was called.");
+        return NextResponse.json({ error: "The 'summarize_articles' step is deprecated. Use 'summarize_one_article' instead." }, { status: 410 }); // 410 Gone
       }
 
       case 'draft_itinerary': {
