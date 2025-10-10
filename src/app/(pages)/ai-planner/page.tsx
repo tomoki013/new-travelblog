@@ -1,4 +1,5 @@
 import { Metadata } from "next";
+import { Suspense } from "react";
 import { getAllPosts } from "@/lib/posts";
 import { regionData } from "@/data/region";
 import AiPlannerClient from "./Client";
@@ -22,7 +23,9 @@ export default async function AiPlannerPage() {
           <br />
           この機能は現在ベータ版です。お気づきの点や改善のご提案がございましたら、ぜひフィードバックをお寄せください。
         </p>
-        <AiPlannerClient allPosts={allPosts} continents={regionData} />
+        <Suspense fallback={<div>読み込み中...</div>}>
+          <AiPlannerClient allPosts={allPosts} continents={regionData} />
+        </Suspense>
       </div>
     </div>
   );
