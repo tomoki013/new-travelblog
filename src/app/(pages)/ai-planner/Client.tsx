@@ -1,11 +1,15 @@
 "use client";
 
-import { useEffect, useState, useRef } from "react";
+import { useEffect, useState, useRef, useCallback } from "react";
+import { useSearchParams, useRouter } from "next/navigation";
+import { toast } from "sonner";
+import pako from "pako";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { Loader2 } from "lucide-react";
+import { ShareIcon } from "@/components/Icons";
 import MessageComponent from "./MessageComponent";
 import {
   Select,
@@ -22,6 +26,14 @@ interface Message {
   role: "user" | "ai";
   content: string;
   isError?: boolean;
+}
+
+interface ShareableState {
+  selectedCountryId: string;
+  destination: string;
+  duration: string;
+  interests: string;
+  messages: Message[];
 }
 
 const destinationPresets = [
@@ -50,6 +62,9 @@ export default function AiPlannerClient({
   allPosts,
   continents,
 }: AiPlannerClientProps) {
+  const router = useRouter();
+  const searchParams = useSearchParams();
+
   // 国の識別に使うのは name ではなく id/slug です
   const [selectedCountryId, setSelectedCountryId] = useState<string>("");
   const [destinationSuggestions, setDestinationSuggestions] = useState<string[]>(destinationPresets);
@@ -66,6 +81,40 @@ export default function AiPlannerClient({
   const [isFeedbackModalOpen, setIsFeedbackModalOpen] = useState(false);
   const hasShownFeedbackModal = useRef(false);
   const [hasEditedDestination, setHasEditedDestination] = useState(false);
+
+  useEffect(() => {
+    const planParam = searchParams.get("plan");
+    if (planParam) {
+      try {
+        const binaryString = atob(planParam);
+        const bytes = new Uint8Array(binaryString.length);
+        for (let i = 0; i < binaryString.length; i++) {
+          bytes[i] = binaryString.charCodeAt(i);
+        }
+
+        const decompressed = pako.inflate(bytes, { to: "string" });
+        const restoredState: ShareableState = JSON.parse(decompressed);
+
+        setSelectedCountryId(restoredState.selectedCountryId);
+        setDestination(restoredState.destination);
+        setDuration(restoredState.duration);
+        setInterests(restoredState.interests);
+        setMessages(restoredState.messages);
+
+        toast.success("共有されたプランを復元しました。");
+
+        // Clean the URL
+        const url = new URL(window.location.href);
+        url.searchParams.delete("plan");
+        router.replace(url.toString(), { scroll: false });
+
+      } catch (error) {
+        console.error("Failed to restore plan from URL:", error);
+        toast.error("URLからのプランの復元に失敗しました。");
+      }
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   useEffect(() => {
     if (destination) {
@@ -345,6 +394,34 @@ export default function AiPlannerClient({
     }
   };
 
+  const handleShare = useCallback(() => {
+    if (typeof window === "undefined") return;
+
+    try {
+      const state: ShareableState = {
+        selectedCountryId,
+        destination,
+        duration,
+        interests,
+        messages,
+      };
+      const jsonString = JSON.stringify(state);
+      const compressed = pako.deflate(jsonString);
+
+      const binaryString = Array.from(compressed, byte => String.fromCharCode(byte)).join('');
+      const encoded = btoa(binaryString);
+
+      const url = new URL(window.location.href);
+      url.searchParams.set("plan", encoded);
+
+      navigator.clipboard.writeText(url.toString());
+      toast.success("共有URLをクリップボードにコピーしました！");
+    } catch (error) {
+      console.error("Failed to create share link:", error);
+      toast.error("共有URLの作成に失敗しました。");
+    }
+  }, [selectedCountryId, destination, duration, interests, messages]);
+
   const handleReset = () => {
     setMessages([]);
     setSelectedCountryId("");
@@ -504,9 +581,18 @@ export default function AiPlannerClient({
         messages[messages.length - 1].role === "ai" &&
         messages[messages.length - 1].content &&
         !messages[messages.length - 1].isError && (
-          <div className="mt-8 flex flex-col items-center gap-4">
+          <div className="mt-8 flex flex-col sm:flex-row items-center justify-center gap-4">
             <Button onClick={handleReset} size="lg">
               別のプランを生成する
+            </Button>
+            <Button
+              onClick={handleShare}
+              size="lg"
+              variant="outline"
+              disabled={isLoading || messages.length === 0}
+            >
+              <ShareIcon className="mr-2 h-5 w-5" />
+              このプランを共有する
             </Button>
           </div>
         )}
