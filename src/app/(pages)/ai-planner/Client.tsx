@@ -309,6 +309,11 @@ export default function AiPlannerClient({
         }
         accumulatedPlan += "\n\n"; // Add spacing between days
         updateLastMessage(accumulatedPlan); // Final update for the day
+
+        // If it's not the last day, show a loading message for the next day.
+        if (i < dailyChunks.length - 1) {
+          updateLastMessage(accumulatedPlan + "\n\n---\n\n次の日程を生成中...");
+        }
       }
 
       console.log("[CLIENT LOG] --- Plan Generation Finished ---");
