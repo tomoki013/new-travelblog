@@ -71,23 +71,79 @@ function buildExtractRequirementsPrompt() {
 }`;
 }
 
-// Final Step: Flesh out the plan into JSON
-function buildFleshOutPlanJsonPrompt(requirements: string, country: string, kb: string) {
-  return `あなたはプロの旅行プランナーです。以下の「旅行の要件」と「ブログ記事からの参考情報」に基づき、**${country}**への旅行プランを**厳格なJSON形式**で作成してください。
+// Step 2: Summarize relevant articles
+function buildSummarizeArticlesPrompt(requirements: string, articleContent: string) {
+  return `あなたはアシスタントです。以下の「旅行の要件」を考慮して、「記事のコンテンツ」から関連情報のみを抽出し、簡潔に要約してください。
+
+### 旅行の要件
+${requirements}
+
+### 記事のコンテンツ
+${articleContent}
+
+### 指示
+- 記事の中から、旅行の要件に合致する場所、アクティビティ、レストラン、交通手段、ヒントなどを具体的に抜き出してください。
+- 各情報は箇条書きなどの分かりやすい形式でまとめてください。
+- 元の記事にない情報は含めないでください。
+- 全体として、後の旅行プラン作成の参考資料となるように、要点をまとめてください。
+`;
+}
+
+// Step 3: Draft a skeleton itinerary
+function buildDraftItineraryPrompt(requirements: string, summarizedKnowledgeBase: string) {
+  return `あなたは旅行プランナーです。以下の「旅行の要件」と「情報の要約」を基に、旅行プランの骨子をJSON形式で作成してください。
+
+### 絶対的なルール:
+- **出力はJSONのみ:** 会話や挨拶、その他のテキストは一切含めず、指定されたJSONオブジェクトのみを生成してください。
+- **スキーマの遵守:** 下記のJSON構造を厳密に守ってください。時間、費用、緯度経度などの詳細情報は**含めないでください**。
+
+---
+### 旅行の要件
+${requirements}
+---
+### 情報の要約
+${summarizedKnowledgeBase}
+---
+### JSON出力形式
+\`\`\`json
+{
+  "itinerary": {
+    "title": "（例：アートとグルメを巡る東京3日間の旅）",
+    "description": "（旅行プランの簡単な説明）",
+    "days": [
+      {
+        "day": 1,
+        "title": "（例：上野・浅草エリア散策）",
+        "schedule": [
+          { "activity": "（例：上野の森美術館でアート鑑賞）" },
+          { "activity": "（例：浅草で食べ歩きと浅草寺参拝）" }
+        ]
+      }
+    ]
+  }
+}
+\`\`\`
+`;
+}
+
+
+// Step 4: Flesh out details for the final plan
+function buildFleshOutDetailsPrompt(draftPlan: string, summarizedKnowledgeBase: string) {
+  return `あなたはプロの旅行プランナーです。以下の「旅程の骨子」に詳細情報を追加し、最終的な旅行プランを完成させてください。情報は「参考情報の要約」を基にしてください。
 
 ### 絶対的なルール:
 - **出力はJSONのみ:** 会話、挨拶、Markdown、その他のテキストは一切含めず、指定されたJSONオブジェクトのみを生成してください。
 - **スキーマの遵守:** 下記のJSON構造を**厳密に**守ってください。プロパティの追加や削除、データ型の変更は許可されません。
 - **緯度経度の追加:** 各アクティビティの\`location\`には、必ず緯度(latitude)と経度(longitude)を含めてください。不明な場合はおおよその値を推定してください。
 - **予算の計算:** 各日の予算(\`days.budget\`)と全体の合計予算(\`itinerary.totalBudget\`, \`budgetSummary.total\`)、カテゴリ別予算(\`budgetSummary.categories\`)を必ず計算して含めてください。
-- **自然な文章:** ブログ記事を参考にしつつも、あなた自身の言葉で自然な文章を作成してください。コピー＆ペーストは禁止です。
+- **自然な文章:** 参考情報を基に、あなた自身の言葉で自然な文章を作成してください。
 
 ---
-### 旅行の要件
-${requirements}
+### 旅程の骨子 (Draft Plan)
+${draftPlan}
 ---
-### ブログ記事からの参考情報
-${kb}
+### 参考情報の要約 (Summarized Knowledge Base)
+${summarizedKnowledgeBase}
 ---
 ### JSON出力形式
 \`\`\`json
@@ -136,8 +192,10 @@ interface ChatRequestBody {
     messages: CoreMessage[];
     articleSlugs: string[];
     countryName: string;
-    step: 'extract_requirements' | 'flesh_out_plan_json';
+    step: 'extract_requirements' | 'summarize_articles' | 'draft_itinerary' | 'flesh_out_details';
     previous_data?: string;
+    requirementsData?: string; // For draft_itinerary and flesh_out_details
+    summarizedKnowledgeBase?: string; // For flesh_out_details
 }
 
 export async function POST(req: NextRequest) {
@@ -145,84 +203,95 @@ export async function POST(req: NextRequest) {
   console.log("✅ /api/chat: Received request", { step: body.step, country: body.countryName });
 
   try {
-    const { messages, articleSlugs, countryName, step, previous_data } = body;
+    const { messages, articleSlugs, step, previous_data, requirementsData, summarizedKnowledgeBase } = body;
     const userMessages = messages.filter((m) => m.role === "user");
+    const model = google(process.env.GEMINI_MODEL_NAME || "gemini-1.5-flash-latest");
 
     switch (step) {
       case 'extract_requirements': {
         console.log("  -> Executing step: extract_requirements");
         const systemPrompt = buildExtractRequirementsPrompt();
-        const model = google(process.env.GEMINI_MODEL_NAME || "gemini-1.5-flash");
 
         console.log("    - Calling Google AI...");
-        const { text } = await generateText({
-          model,
-          system: systemPrompt,
-          messages: userMessages,
-        });
+        const { text } = await generateText({ model, system: systemPrompt, messages: userMessages });
         console.log("    - AI call successful. Returning extracted requirements.");
         return NextResponse.json({ response: text });
       }
 
-      case 'flesh_out_plan_json': {
-        console.log("  -> Executing step: flesh_out_plan_json");
+      case 'summarize_articles': {
+        console.log("  -> Executing step: summarize_articles");
         if (!previous_data) {
-          console.error("  ❌ Error: 'previous_data' is required for this step.");
-          return NextResponse.json({ error: `Step '${step}' requires 'previous_data'.` }, { status: 400 });
+            return NextResponse.json({ error: "Step 'summarize_articles' requires 'previous_data' (requirements)."}, { status: 400 });
         }
 
         console.log("    - Loading post cache...");
         const cache = await getPostsCache();
         if (!cache) {
-          console.error("  ❌ Error: Post cache is not available.");
           return NextResponse.json({ error: "Server not ready: Could not load post cache." }, { status: 503 });
         }
-        console.log("    - Post cache loaded successfully.");
+        console.log("    - Post cache loaded.");
 
-        const lowerCasePostsCache: Record<string, string> = {};
-        for (const key in cache) {
-          lowerCasePostsCache[key.toLowerCase()] = cache[key];
-        }
-
-        const articleContents = articleSlugs
-          .map((slug) => lowerCasePostsCache[slug.toLowerCase()] || "")
-          .filter(Boolean);
+        const lowerCasePostsCache = Object.fromEntries(Object.entries(cache).map(([k, v]) => [k.toLowerCase(), v]));
+        const articleContents = articleSlugs.map(slug => lowerCasePostsCache[slug.toLowerCase()] || "").filter(Boolean);
 
         if (articleContents.length === 0) {
-            console.error("  ❌ Error: No reference blog posts could be loaded for the given slugs:", articleSlugs);
             return NextResponse.json({ error: "Could not load reference blog posts." }, { status: 400 });
         }
         console.log(`    - Loaded ${articleContents.length} reference articles.`);
-        const knowledgeBase = articleContents.join("\n\n---\n\n");
 
-        const systemPrompt = buildFleshOutPlanJsonPrompt(previous_data, countryName, knowledgeBase);
-        const model = google(process.env.GEMINI_MODEL_NAME || "gemini-1.5-flash-latest");
+        const summaries: string[] = [];
+        for (const content of articleContents) {
+          console.log("      - Summarizing one article...");
+          const systemPrompt = buildSummarizeArticlesPrompt(previous_data, content);
+          const { text } = await generateText({ model, system: systemPrompt, messages: [{ role: 'user', content: 'Continue.' }] });
+          summaries.push(text);
+          console.log("      - Article summarized.");
+        }
 
+        const combinedSummary = summaries.join("\n\n---\n\n");
+        console.log("    - All articles summarized. Returning combined summary.");
+        return NextResponse.json({ response: combinedSummary });
+      }
+
+      case 'draft_itinerary': {
+        console.log("  -> Executing step: draft_itinerary");
+        if (!previous_data || !requirementsData) {
+            return NextResponse.json({ error: "Step 'draft_itinerary' requires 'previous_data' (summary) and 'requirementsData'."}, { status: 400 });
+        }
+
+        const systemPrompt = buildDraftItineraryPrompt(requirementsData, previous_data);
+        console.log("    - Calling Google AI for draft itinerary...");
+        const { text } = await generateText({ model, system: systemPrompt, messages: [{ role: 'user', content: 'Continue.' }] });
+        console.log("    - AI call successful. Returning draft plan.");
+        return NextResponse.json({ response: text });
+      }
+
+      case 'flesh_out_details': {
+        console.log("  -> Executing step: flesh_out_details");
+        if (!previous_data || !summarizedKnowledgeBase) {
+            return NextResponse.json({ error: "Step 'flesh_out_details' requires 'previous_data' (draft plan) and 'summarizedKnowledgeBase'."}, { status: 400 });
+        }
+
+        const systemPrompt = buildFleshOutDetailsPrompt(previous_data, summarizedKnowledgeBase);
         console.log("    - Calling Google AI for final plan generation...");
-        const { text } = await generateText({
-          model,
-          system: systemPrompt,
-          messages: [{ role: 'user', content: 'Continue.' }],
-        });
-        console.log("    - AI call successful. Parsing JSON response.");
+        const { text } = await generateText({ model, system: systemPrompt, messages: [{ role: 'user', content: 'Continue.' }] });
+        console.log("    - AI call successful. Parsing and returning final JSON.");
 
         try {
-          // AIの出力からJSON部分を抽出する
           const jsonMatch = text.match(/```json\n([\s\S]*?)\n```/);
           const jsonString = jsonMatch ? jsonMatch[1] : text;
           const parsedJson = JSON.parse(jsonString);
-          console.log("    - JSON parsing successful. Sending response to client.");
           return NextResponse.json(parsedJson);
         } catch (e) {
-          console.error("❌ API Route: Failed to parse JSON response from AI.", e);
-          console.error("AI Response Body:", text);
+          console.error("❌ API Route: Failed to parse JSON response from AI.", e, "AI Response:", text);
           return NextResponse.json({ error: "AIからの応答が不正なJSON形式でした。" }, { status: 500 });
         }
       }
 
       default: {
-        console.error(`  ❌ Error: Invalid step provided: ${step}`);
-        return NextResponse.json({ error: `Invalid step: ${step}` }, { status: 400 });
+        const exhaustiveCheck: never = step;
+        console.error(`  ❌ Error: Invalid step provided: ${exhaustiveCheck}`);
+        return NextResponse.json({ error: `Invalid step: ${exhaustiveCheck}` }, { status: 400 });
       }
     }
   } catch (error) {
