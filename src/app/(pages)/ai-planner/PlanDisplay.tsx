@@ -23,22 +23,26 @@ export default function PlanDisplay({ plan }: PlanDisplayProps) {
         <p className="mt-2 text-muted-foreground">{itinerary.description}</p>
         <div className="mt-4 rounded-md bg-primary/10 p-4 text-center text-primary">
           <span className="text-sm">合計予算</span>
-          <p className="text-2xl font-bold">{formatCurrency(budgetSummary.total)}</p>
+          <p className="text-2xl font-bold">
+            {budgetSummary ? formatCurrency(budgetSummary.total) : '計算中...'}
+          </p>
         </div>
       </div>
 
       {/* Mobile View (Tabs) */}
       <div className="block md:hidden">
         <Tabs defaultValue="itinerary" className="w-full">
-          <TabsList className="grid w-full grid-cols-3">
+          <TabsList className={`grid w-full ${budgetSummary ? 'grid-cols-3' : 'grid-cols-2'}`}>
             <TabsTrigger value="itinerary">
               <CalendarDaysIcon className="mr-2 h-4 w-4" />
               日程
             </TabsTrigger>
-            <TabsTrigger value="budget">
-              <PiggyBankIcon className="mr-2 h-4 w-4" />
-              予算
-            </TabsTrigger>
+            {budgetSummary && (
+              <TabsTrigger value="budget">
+                <PiggyBankIcon className="mr-2 h-4 w-4" />
+                予算
+              </TabsTrigger>
+            )}
             <TabsTrigger value="map">
               <MapIcon className="mr-2 h-4 w-4" />
               地図
@@ -47,9 +51,11 @@ export default function PlanDisplay({ plan }: PlanDisplayProps) {
           <TabsContent value="itinerary" className="mt-4">
             <ItineraryTab days={itinerary.days} />
           </TabsContent>
-          <TabsContent value="budget" className="mt-4">
-            <BudgetTab budgetSummary={budgetSummary} />
-          </TabsContent>
+          {budgetSummary && (
+            <TabsContent value="budget" className="mt-4">
+              <BudgetTab budgetSummary={budgetSummary} />
+            </TabsContent>
+          )}
           <TabsContent value="map" className="mt-4">
             <MapPlaceholder />
           </TabsContent>
@@ -60,22 +66,26 @@ export default function PlanDisplay({ plan }: PlanDisplayProps) {
       <div className="hidden md:grid md:grid-cols-5 md:gap-6">
         <div className="md:col-span-3 space-y-6">
           <Tabs defaultValue="itinerary" className="w-full">
-            <TabsList className="grid w-full grid-cols-2">
+          <TabsList className={`grid w-full ${budgetSummary ? 'grid-cols-2' : 'grid-cols-1'}`}>
               <TabsTrigger value="itinerary">
                 <CalendarDaysIcon className="mr-2 h-4 w-4" />
                 日程
               </TabsTrigger>
-              <TabsTrigger value="budget">
-                <PiggyBankIcon className="mr-2 h-4 w-4" />
-                予算
-              </TabsTrigger>
+              {budgetSummary && (
+                <TabsTrigger value="budget">
+                  <PiggyBankIcon className="mr-2 h-4 w-4" />
+                  予算
+                </TabsTrigger>
+              )}
             </TabsList>
             <TabsContent value="itinerary" className="mt-4">
               <ItineraryTab days={itinerary.days} />
             </TabsContent>
-            <TabsContent value="budget" className="mt-4">
-              <BudgetTab budgetSummary={budgetSummary} />
-            </TabsContent>
+            {budgetSummary && (
+              <TabsContent value="budget" className="mt-4">
+                <BudgetTab budgetSummary={budgetSummary} />
+              </TabsContent>
+            )}
           </Tabs>
         </div>
         <div className="md:col-span-2">
