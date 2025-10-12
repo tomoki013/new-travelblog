@@ -14,7 +14,7 @@ export default async function AiPlannerPage() {
 
   return (
     <div className="container mx-auto p-4">
-      <div className="max-w-2xl mx-auto">
+      <div>
         <h1 className="text-2xl font-bold mb-4">
           AI旅行プランナー（ベータ版）
         </h1>
