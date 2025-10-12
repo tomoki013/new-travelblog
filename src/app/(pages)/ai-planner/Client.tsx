@@ -314,6 +314,10 @@ export default function AiPlannerClient({
 
       draftPlan = draftPlanData.itinerary ? draftPlanData : { itinerary: draftPlanData };
 
+      if (!draftPlan || !draftPlan.itinerary || !draftPlan.itinerary.days) {
+        throw new Error("旅程の骨子の生成に失敗しました。");
+      }
+
       // Step 4: Flesh out details with Promise.all
       const days = draftPlan.itinerary.days;
       setLoadingMessage(`プランの詳細を作成中... (全${days.length}日分)`);
