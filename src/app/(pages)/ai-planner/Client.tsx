@@ -25,8 +25,9 @@ import PlanDisplay from "./PlanDisplay";
 interface ShareableState {
   selectedCountryId: string;
   destination: string;
-  duration: string;
+  duration:string;
   interests: string;
+  budget: string;
   planJson: TravelPlan | null;
 }
 
@@ -67,6 +68,7 @@ export default function AiPlannerClient({
   const [destination, setDestination] = useState("");
   const [duration, setDuration] = useState("");
   const [interests, setInterests] = useState("");
+  const [budget, setBudget] = useState("");
 
   const [planJson, setPlanJson] = useState<TravelPlan | null>(null);
   const [isLoading, setIsLoading] = useState(false);
@@ -95,6 +97,7 @@ export default function AiPlannerClient({
         setDestination(restoredState.destination);
         setDuration(restoredState.duration);
         setInterests(restoredState.interests);
+        setBudget(restoredState.budget);
         setPlanJson(restoredState.planJson);
 
         toast.success("共有されたプランを復元しました。");
@@ -203,7 +206,7 @@ export default function AiPlannerClient({
       }
     }
 
-    const userMessageContent = `- **国:** ${countryName}\n- **行き先:** ${destination}\n- **期間:** ${duration}\n- **興味・関心:** ${interests}`;
+    const userMessageContent = `- **国:** ${countryName}\n- **行き先:** ${destination}\n- **期間:** ${duration}\n- **興味・関心:** ${interests}\n- **予算:** ${budget || '指定なし'}`;
     const initialUserMessage = { role: "user", content: userMessageContent };
 
     try {
@@ -215,6 +218,7 @@ export default function AiPlannerClient({
         articleSlugs: filteredPosts.map((p) => p.slug),
         countryName,
         step: 'extract_requirements',
+        budget: budget,
       };
       console.log("リクエストボディ:", JSON.stringify(extractBody, null, 2));
 
@@ -399,6 +403,7 @@ export default function AiPlannerClient({
         destination,
         duration,
         interests,
+        budget,
         planJson,
       };
       const jsonString = JSON.stringify(state);
@@ -416,7 +421,7 @@ export default function AiPlannerClient({
       console.error("Failed to create share link:", error);
       toast.error("共有URLの作成に失敗しました。");
     }
-  }, [selectedCountryId, destination, duration, interests, planJson]);
+  }, [selectedCountryId, destination, duration, interests, budget, planJson]);
 
   const handleReset = () => {
     setPlanJson(null);
@@ -425,6 +430,7 @@ export default function AiPlannerClient({
     setDestination("");
     setDuration("");
     setInterests("");
+    setBudget("");
     setCurrentStep(1);
     setIsLoading(false);
   };
@@ -539,6 +545,23 @@ export default function AiPlannerClient({
                   placeholder="例: 寺院巡りがしたい"
                   disabled={isLoading}
                 />
+              </div>
+              <div>
+                <Label htmlFor="budget">Step 5: 予算</Label>
+                <Select
+                  value={budget}
+                  onValueChange={(value) => setBudget(value)}
+                  disabled={isLoading}
+                >
+                  <SelectTrigger id="budget" className="mt-2">
+                    <SelectValue placeholder="予算感を選択してください" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="economy">経済的</SelectItem>
+                    <SelectItem value="standard">標準</SelectItem>
+                    <SelectItem value="luxury">豪華</SelectItem>
+                  </SelectContent>
+                </Select>
               </div>
 
               <Button
