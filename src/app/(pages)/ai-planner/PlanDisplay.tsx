@@ -23,7 +23,7 @@ export default function PlanDisplay({ plan }: PlanDisplayProps) {
         <p className="mt-2 text-muted-foreground">{itinerary.description}</p>
         <div className="mt-4 rounded-md bg-primary/10 p-4 text-center text-primary">
           <span className="text-sm">合計予算</span>
-          <p className="text-2xl font-bold">{formatCurrency(itinerary.totalBudget)}</p>
+          <p className="text-2xl font-bold">{formatCurrency(budgetSummary.total)}</p>
         </div>
       </div>
 
@@ -57,8 +57,8 @@ export default function PlanDisplay({ plan }: PlanDisplayProps) {
       </div>
 
       {/* Desktop View (2-column) */}
-      <div className="hidden md:grid md:grid-cols-1 md:gap-6">
-        <div className="md:col-span-1 space-y-6">
+      <div className="hidden md:grid md:grid-cols-5 md:gap-6">
+        <div className="md:col-span-3 space-y-6">
           <Tabs defaultValue="itinerary" className="w-full">
             <TabsList className="grid w-full grid-cols-2">
               <TabsTrigger value="itinerary">
@@ -78,7 +78,7 @@ export default function PlanDisplay({ plan }: PlanDisplayProps) {
             </TabsContent>
           </Tabs>
         </div>
-        <div className="md:col-span-1">
+        <div className="md:col-span-2">
           <MapPlaceholder />
         </div>
       </div>
