@@ -167,7 +167,7 @@ export default function AiPlannerClient({
         // 記事の locations に allowedSlugs のいずれかが含まれていれば true
         return locations.some((l) => allowedSlugs.includes(l));
       });
-      setFilteredPosts(postsInCountry);
+      setFilteredPosts(postsInCountry.slice(0, 7));
       setCurrentStep(2);
     } else {
       setFilteredPosts([]);
@@ -512,7 +512,7 @@ export default function AiPlannerClient({
                 <SelectContent>
                   <SelectItem value="半日間">半日間</SelectItem>
                   <SelectItem value="日帰り">日帰り</SelectItem>
-                  {Array.from({ length: 9 }, (_, i) => i + 2).map((days) => (
+                  {Array.from({ length: 6 }, (_, i) => i + 2).map((days) => (
                     <SelectItem key={days} value={`${days}日間`}>
                       {`${days}日間`}
                     </SelectItem>
