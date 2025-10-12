@@ -90,7 +90,9 @@ ${articleContent}
 }
 
 // Step 3: Draft a skeleton itinerary
-function buildDraftItineraryPrompt(requirements: string, summarizedKnowledgeBase: string) {
+function buildDraftItineraryPrompt(requirements: string, summarizedKnowledgeBase: string, budget: string) {
+  const budgetInstruction = budget ? `**予算:** ユーザーは「${budget}」レベルの予算感を希望しています。高価なアクティビティばかりにならないよう、予算に合った場所やアクティビティを提案してください。` : "";
+
   return `あなたは創造的な旅行プランナーです。あなたの仕事は、ユーザーの「旅行の要件」と、参考情報としての「情報の要約」を基に、ユニークで魅力的な旅行プランの骨子をJSON形式で作成することです。
 
 ### 絶対的なルール:
@@ -98,9 +100,10 @@ function buildDraftItineraryPrompt(requirements: string, summarizedKnowledgeBase
 - **スキーマの遵守:** 下記のJSON構造を厳密に守ってください。時間、費用、緯度経度などの詳細情報は**含めないでください**。
 - **文字数制限:** descriptionフィールドは最大100文字で記述してください。
 - **創造性の発揮:** 「情報の要約」はあくまでインスピレーションの源です。内容をそのままなぞるのではなく、あなた独自の視点で、創造的で魅力的なプランを提案してください。
+${budgetInstruction}
 
 ---
-### 旅行の要異
+### 旅行の要件
 ${requirements}
 ---
 ### 参考情報（インスピレーション）
@@ -129,7 +132,9 @@ ${summarizedKnowledgeBase}
 }
 
 // Step 4: Flesh out details for a single day
-function buildFleshOutDayPrompt(dayData: string, requirementsData: string, summarizedKnowledgeBase: string) {
+function buildFleshOutDayPrompt(dayData: string, requirementsData: string, summarizedKnowledgeBase: string, budget: string) {
+    const budgetInstruction = budget ? `**重要:** ユーザーの希望予算は「${budget}」レベルです。この日のアクティビティ全体の費用が、この予算感から大きく外れないように、費用の見積もり(\`cost\`)を調整してください。` : "";
+
     return `あなたは創造的で経験豊富な旅行プランナーです。あなたの仕事は、提供された情報に独自の視点を加えて、1日分の旅行プランをJSON形式で詳細化することです。
 
 ### 指示
@@ -139,6 +144,7 @@ function buildFleshOutDayPrompt(dayData: string, requirementsData: string, summa
 4.  場所(location)には、必ず緯度(latitude)と経度(longitude)を含めます。不明な場合は、おおよその値を推定してください。
 5.  その日のすべてのアクティビティの費用を合計し、1日分の予算(budget)を計算します。
 6.  あなたの言葉で、ユーザーがわくわくするような、自然で魅力的な説明文を作成します。
+${budgetInstruction}
 
 ### 絶対的なルール
 - **出力形式:** 生成するレスポンスは、**JSONオブジェクトのみ**でなければなりません。会話、挨拶、Markdownのバッククォート(\`)や \`json\` というプレフィックス、その他のテキストは**一切含めないでください**。
@@ -179,19 +185,23 @@ ${summarizedKnowledgeBase}
 }
 
 // Step 5: Calculate Final Budget
-function buildCalculateFinalBudgetPrompt(finalItinerary: string) {
-  return `あなたは旅行費用のアナリストです。以下の「最終旅程案」を分析し、費用の合計とカテゴリー別の内訳を計算してください。
+function buildCalculateFinalBudgetPrompt(finalItinerary: string, budget: string) {
+  const budgetInstruction = budget ? `ユーザーの希望予算は「${budget}」レベルでした。算出された合計費用とこの希望を比較し、簡単なコメント(\`comment\`)を追加してください。` : "";
+
+  return `あなたは旅行費用のアナリストです。以下の「最終旅程案」のJSONデータを分析し、費用の合計とカテゴリー別の内訳を計算してください。
 
 ### 指示
-1.  旅程内のすべてのアクティビティの\`cost\`を合計し、全体の合計予算(\`total\`)を計算します。
-2.  各アクティビティを、内容に基づいて「宿泊費」「食費」「交通費」「観光・アクティビティ」のいずれかに分類します。
-3.  カテゴリーごとに費用の小計を計算します。
-4.  最終的な結果を、指定された「JSON出力形式」で返します。
+1.  **合計予算の計算:** 旅程内の各日の\`budget\`プロパティの値を単純に合計し、全体の合計予算(\`total\`)としてください。**個々のアクティビティ費用(\`cost\`)から再計算しないでください。**
+2.  **カテゴリー分類:** 旅程内のすべての\`schedule\`に含まれるアクティビティを分析し、各アクティビティの\`cost\`を「宿泊費」「食費」「交通費」「観光・アクティビティ」「その他」のいずれかに分類します。
+3.  **カテゴリー別小計:** 分類したカテゴリーごとに費用の小計(\`amount\`)を計算します。
+4.  **整合性チェック:** カテゴリー別の小計をすべて合計した金額が、ステップ1で計算した合計予算(\`total\`)と完全に一致することを確認してください。
+5.  **出力:** 最終的な結果を、指定された「JSON出力形式」で返します。
+${budgetInstruction}
 
 ### 絶対的なルール
 - **出力形式:** 生成するレスポンスは、**JSONオブジェクトのみ**でなければなりません。会話、挨拶、その他のテキストは一切含めないでください。
 - **スキーマの遵守:** 下記のJSON構造を厳密に守ってください。
-- **不明な費用の扱い:** \`cost\`が0のアクティビティも計算に含めますが、最終的な合計には影響しません。
+- **計算の正確性:** 指示に厳密に従い、計算間違いがないようにしてください。
 
 ---
 ### 最終旅程案 (finalItinerary)
@@ -204,8 +214,10 @@ ${finalItinerary}
     { "category": "宿泊費", "amount": 50000 },
     { "category": "食費", "amount": 30000 },
     { "category": "交通費", "amount": 20000 },
-    { "category": "観光・アクティビティ", "amount": 23456 }
-  ]
+    { "category": "観光・アクティビティ", "amount": 23456 },
+    { "category": "その他", "amount": 10000 }
+  ],
+  "comment": "（例：ご希望の「標準」的な予算内に収まるプランです。現地でのショッピングなども楽しめるでしょう。）"
 }
 `;
 }
@@ -222,6 +234,7 @@ interface ChatRequestBody {
     summarizedKnowledgeBase?: string;
     dayData?: string; // For flesh_out_one_day
     finalItinerary?: string; // For calculate_final_budget
+    budget?: string;
 }
 
 export async function POST(req: NextRequest) {
@@ -229,7 +242,7 @@ export async function POST(req: NextRequest) {
   console.log("✅ /api/chat: Received request", { step: body.step, country: body.countryName });
 
   try {
-    const { messages, step, requirementsData, summarizedKnowledgeBase, dayData, finalItinerary, articleSlug, previous_data } = body;
+    const { messages, step, requirementsData, summarizedKnowledgeBase, dayData, finalItinerary, articleSlug, previous_data, budget } = body;
     const userMessages = messages.filter((m) => m.role === "user");
     const model = google(process.env.GEMINI_MODEL_NAME || "gemini-1.5-flash-latest");
 
@@ -284,7 +297,7 @@ export async function POST(req: NextRequest) {
         if (!previous_data || !requirementsData) {
             return NextResponse.json({ error: "Step 'draft_itinerary' requires 'previous_data' (summary) and 'requirementsData'."}, { status: 400 });
         }
-        const systemPrompt = buildDraftItineraryPrompt(requirementsData, previous_data);
+        const systemPrompt = buildDraftItineraryPrompt(requirementsData, previous_data, budget || "");
         const { text } = await generateText({ model, system: systemPrompt, messages: [{ role: 'user', content: 'Continue.' }] });
         console.log("    - AI call successful. Parsing and returning draft plan JSON.");
         const parsedJson = parseJsonResponse(text);
@@ -296,7 +309,7 @@ export async function POST(req: NextRequest) {
         if (!dayData || !requirementsData || !summarizedKnowledgeBase) {
           return NextResponse.json({ error: "Step 'flesh_out_one_day' requires 'dayData', 'requirementsData', and 'summarizedKnowledgeBase'." }, { status: 400 });
         }
-        const systemPrompt = buildFleshOutDayPrompt(dayData, requirementsData, summarizedKnowledgeBase);
+        const systemPrompt = buildFleshOutDayPrompt(dayData, requirementsData, summarizedKnowledgeBase, budget || "");
         console.log("    - Calling Google AI for single day detail...");
         const { text } = await generateText({ model, system: systemPrompt, messages: [{ role: 'user', content: 'Continue.' }] });
         console.log("    - AI call successful. Parsing and returning day JSON.");
@@ -309,7 +322,7 @@ export async function POST(req: NextRequest) {
         if (!finalItinerary) {
           return NextResponse.json({ error: "Step 'calculate_final_budget' requires 'finalItinerary'." }, { status: 400 });
         }
-        const systemPrompt = buildCalculateFinalBudgetPrompt(finalItinerary);
+        const systemPrompt = buildCalculateFinalBudgetPrompt(finalItinerary, budget || "");
         console.log("    - Calling Google AI for final budget calculation...");
         const { text } = await generateText({ model, system: systemPrompt, messages: [{ role: 'user', content: 'Continue.' }] });
         console.log("    - AI call successful. Parsing and returning budget summary JSON.");
