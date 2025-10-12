@@ -209,6 +209,8 @@ export default function AiPlannerClient({
     const userMessageContent = `- **国:** ${countryName}\n- **行き先:** ${destination}\n- **期間:** ${duration}\n- **興味・関心:** ${interests}\n- **予算:** ${budget || '指定なし'}`;
     const initialUserMessage = { role: "user", content: userMessageContent };
 
+    let draftPlan: TravelPlan | null = null;
+
     try {
       // Step 1: Extract Requirements
       setLoadingMessage("旅行のテーマを整理中...");
@@ -310,8 +312,9 @@ export default function AiPlannerClient({
       const draftPlanData = await draftResponse.json();
       console.log("Step 3: 旅程の骨子作成が完了しました。", draftPlanData);
 
+      draftPlan = draftPlanData.itinerary ? draftPlanData : { itinerary: draftPlanData };
+
       // Step 4: Flesh out details with Promise.all
-      const draftPlan: TravelPlan = draftPlanData.itinerary ? draftPlanData : { itinerary: draftPlanData };
       const days = draftPlan.itinerary.days;
       setLoadingMessage(`プランの詳細を作成中... (全${days.length}日分)`);
       console.log(`Step 4: AIへのリクエストを開始します - 全${days.length}日分の日程を並列で詳細化`);
@@ -386,7 +389,13 @@ export default function AiPlannerClient({
     } catch (err) {
       const errorMessage = err instanceof Error ? err.message : "予期せぬエラーが発生しました。";
       console.error("旅行プランの生成中にエラーが発生しました。", err);
-      setError(errorMessage);
+      if (draftPlan) {
+        setPlanJson(draftPlan);
+        toast.warning("詳細プランの生成中にエラーが発生しました。代わりにプランの骨子を表示します。");
+        setError(null);
+      } else {
+        setError(errorMessage);
+      }
     } finally {
       setIsLoading(false);
       setLoadingMessage("");
