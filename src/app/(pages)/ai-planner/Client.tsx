@@ -79,6 +79,7 @@ export default function AiPlannerClient({
   const [isFeedbackModalOpen, setIsFeedbackModalOpen] = useState(false);
   const hasShownFeedbackModal = useRef(false);
   const [hasEditedDestination, setHasEditedDestination] = useState(false);
+  const [isFallbackMode, setIsFallbackMode] = useState(false);
 
   useEffect(() => {
     const planParam = searchParams.get("plan");
@@ -382,6 +383,7 @@ export default function AiPlannerClient({
       };
 
       setPlanJson(finalPlan);
+      setIsFallbackMode(false); // 成功時は明確にfalseに設定
 
       if (!hasShownFeedbackModal.current) {
         setTimeout(() => {
@@ -394,10 +396,56 @@ export default function AiPlannerClient({
       const errorMessage = err instanceof Error ? err.message : "予期せぬエラーが発生しました。";
       console.error("旅行プランの生成中にエラーが発生しました。", err);
       if (draftPlan) {
-        setPlanJson(draftPlan);
-        toast.warning("詳細プランの生成中にエラーが発生しました。代わりにプランの骨子を表示します。");
-        setError(null);
+        // Fallback logic starts here
+        console.log("詳細プランの生成に失敗しました。フォールバック処理を開始します。");
+        setIsFallbackMode(true);
+        toast.warning("詳細プランの生成に失敗しました。プランの骨子と概算予算を表示します。");
+
+        try {
+          // New step: Calculate brief budget
+          setLoadingMessage("概算の予算を計算中...");
+          console.log("Fallback Step: AIへのリクエストを開始します - 概算予算の計算");
+          const briefBudgetBody = {
+            step: 'calculate_brief_budget',
+            // finalItinerary というキーを再利用して骨子プランを渡す
+            finalItinerary: JSON.stringify(draftPlan.itinerary),
+            budget: budget,
+            countryName: countryName,
+            messages: [],
+          };
+
+          const briefBudgetResponse = await fetch("/api/chat", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(briefBudgetBody),
+          });
+
+          if (!briefBudgetResponse.ok) {
+            const errorData = await briefBudgetResponse.json().catch(() => ({ error: "概算予算の計算中にサーバーエラーが発生しました。" }));
+            throw new Error(`サーバーエラー (ステータス: ${briefBudgetResponse.status}): ${errorData.error || '詳細不明'}`);
+          }
+
+          const briefBudgetSummary = await briefBudgetResponse.json();
+          console.log("Fallback Step: 概算予算の計算が完了しました。", briefBudgetSummary);
+
+          const fallbackPlan: TravelPlan = {
+            ...draftPlan,
+            budgetSummary: briefBudgetSummary,
+          };
+          setPlanJson(fallbackPlan);
+
+        } catch (fallbackErr) {
+          const fallbackErrorMessage = fallbackErr instanceof Error ? fallbackErr.message : "予期せぬエラーが発生しました。";
+          console.error("フォールバック中の概算予算の計算にも失敗しました。", fallbackErr);
+          toast.error(`概算予算の計算に失敗しました: ${fallbackErrorMessage}。プランの骨子のみを表示します。`);
+          // Display the draft plan without any budget
+          setPlanJson(draftPlan);
+        } finally {
+          setError(null);
+        }
+
       } else {
+        // No draft plan, so it's a fatal error
         setError(errorMessage);
       }
     } finally {
@@ -620,7 +668,7 @@ export default function AiPlannerClient({
 
       {planJson && !isLoading && (
         <div>
-          <PlanDisplay plan={planJson} />
+          <PlanDisplay plan={planJson} isFallbackMode={isFallbackMode}/>
 
           <div className="mt-8 flex flex-col sm:flex-row items-center justify-center gap-4">
             <Button onClick={handleReset} size="lg">

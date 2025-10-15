@@ -201,6 +201,37 @@ ${summarizedKnowledgeBase}
 }
 
 // Step 5: Calculate Final Budget
+function buildCalculateBriefBudgetPrompt(draftItinerary: string, budget: string) {
+  const budgetInstruction = budget
+    ? `ユーザーの希望予算は「${budget}」レベルです。この予算感を考慮して、費用の見積もりを行ってください。`
+    : "ユーザーは予算を指定していません。";
+
+  return `あなたは旅行費用のアナリストです。以下の「旅程の骨子」のJSONデータを分析し、非常に大まかな費用の合計と簡単なコメントを計算してください。
+
+### 指示
+1.  **アクティビティ数のカウント:** 旅程内のすべての日（days）に含まれるアクティビティ（schedule）の総数を数えます。
+2.  **期間の把握:** 旅程の日数（daysの数）を把握します。
+3.  **概算予算の算出:** アクティビティ数、日数、およびユーザーの希望予算レベル（${budgetInstruction}）を基に、全体の合計予算(\`total\`)をざっくりと見積もってください。これは非常にラフな推定で構いません。
+4.  **コメントの生成:** なぜその予算になったのか、非常に簡単な理由を\`comment\`として記述してください。
+5.  **出力:** 最終的な結果を、指定された「JSON出力形式」で返します。
+
+### 絶対的なルール
+- **出力形式:** 生成するレスポンスは、**JSONオブジェクトのみ**でなければなりません。会話、挨拶、その他のテキストは一切含めないでください。
+- **スキーマの遵守:** 下記のJSON構造を厳密に守ってください。カテゴリー分けは不要です。
+- **計算の単純化:** 詳細な計算は不要です。あくまで概算を提示してください。
+
+---
+### 旅程の骨子 (draftItinerary)
+${draftItinerary}
+---
+### JSON出力形式
+{
+  "total": 123456,
+  "comment": "（例：X日間の旅行でY個のアクティビティを考慮し、[経済的/標準/豪華]レベルの予算として概算しました。）"
+}
+`;
+}
+
 function buildCalculateFinalBudgetPrompt(
   finalItinerary: string,
   budget: string
@@ -254,7 +285,8 @@ interface ChatRequestBody {
     | "summarize_one_article"
     | "draft_itinerary"
     | "flesh_out_one_day"
-    | "calculate_final_budget";
+    | "calculate_final_budget"
+    | "calculate_brief_budget";
   previous_data?: string;
   requirementsData?: string;
   summarizedKnowledgeBase?: string;
@@ -454,6 +486,26 @@ export async function POST(req: NextRequest) {
         console.log(
           "    - AI call successful. Parsing and returning budget summary JSON."
         );
+        const parsedJson = parseJsonResponse(text);
+        return NextResponse.json(parsedJson);
+      }
+
+      case "calculate_brief_budget": {
+        console.log("  -> Executing step: calculate_brief_budget");
+        if (!finalItinerary) { // Reusing finalItinerary to pass the draft
+          return NextResponse.json(
+            { error: "Step 'calculate_brief_budget' requires 'finalItinerary' (containing the draft plan)." },
+            { status: 400 }
+          );
+        }
+        const systemPrompt = buildCalculateBriefBudgetPrompt(finalItinerary, budget || "");
+        console.log("    - Calling Google AI for brief budget calculation...");
+        const { text } = await generateText({
+          model,
+          system: systemPrompt,
+          messages: [{ role: "user", content: "Continue." }],
+        });
+        console.log("    - AI call successful. Parsing and returning brief budget summary JSON.");
         const parsedJson = parseJsonResponse(text);
         return NextResponse.json(parsedJson);
       }

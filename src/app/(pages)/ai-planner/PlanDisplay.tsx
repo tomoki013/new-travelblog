@@ -6,18 +6,28 @@ import ItineraryTab from "./ItineraryTab";
 import BudgetTab from "./BudgetTab";
 import MapPlaceholder from "./MapPlaceholder";
 import { formatCurrency } from "@/lib/utils";
-import { CalendarDaysIcon, PiggyBankIcon, MapIcon } from "lucide-react";
+import { CalendarDaysIcon, PiggyBankIcon, MapIcon, TriangleAlert } from "lucide-react";
+import { Alert, AlertDescription } from "@/components/ui/alert"
 
 
 interface PlanDisplayProps {
   plan: TravelPlan;
+  isFallbackMode: boolean;
 }
 
-export default function PlanDisplay({ plan }: PlanDisplayProps) {
+export default function PlanDisplay({ plan, isFallbackMode }: PlanDisplayProps) {
   const { itinerary, budgetSummary } = plan;
 
   return (
     <div className="space-y-6">
+       {isFallbackMode && (
+        <Alert variant="default" className="bg-yellow-100 border-yellow-400 text-yellow-800">
+          <TriangleAlert className="h-4 w-4" color="#c8a30a"/>
+          <AlertDescription>
+            詳細なプランの生成中に問題が発生しました。代わりにプランの骨子と概算の予算を表示しています。内容が簡略化されている点にご注意ください。
+          </AlertDescription>
+        </Alert>
+      )}
       <div className="rounded-lg border bg-card text-card-foreground shadow-sm p-6">
         <h1 className="text-3xl font-bold tracking-tight">{itinerary.title}</h1>
         <p className="mt-2 text-muted-foreground">{itinerary.description}</p>
