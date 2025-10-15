@@ -58,7 +58,7 @@ export default function ItineraryTab({ days }: ItineraryTabProps) {
                       <TableCell className="font-medium">{item.time}</TableCell>
                       <TableCell>{item.activity}</TableCell>
                       <TableCell className="text-sm text-muted-foreground whitespace-pre-wrap">{item.details}</TableCell>
-                      <TableCell>{item.location.name}</TableCell>
+                      <TableCell>{item.location?.name || '詳細未定'}</TableCell>
                       <TableCell className="text-right">{formatCurrency(item.cost)}</TableCell>
                     </TableRow>
                   ))}
