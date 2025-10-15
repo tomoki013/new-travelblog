@@ -188,6 +188,21 @@ export default function AiPlannerClient({
     setInterests((prev) => (prev ? `${prev}, ${preset}` : preset));
   };
 
+  // A utility to safely extract error messages from a server response
+  const getErrorMessageJson = async (response: Response) => {
+    // Read the response body as text first, as it can only be consumed once.
+    const text = await response.text();
+    try {
+      // Try to parse the text as JSON
+      const data = JSON.parse(text);
+      // Return the parsed data (which should have an .error property)
+      return data;
+    } catch (error) {
+      // If JSON parsing fails, the error is the text content itself.
+      return { error: text || "An unknown server error occurred." };
+    }
+  };
+
   const handleGeneratePlan = async () => {
     if (filteredPosts.length === 0) {
       setError("選択された国に関連する記事が見つかりません。別の国を選択してください。");
@@ -232,7 +247,7 @@ export default function AiPlannerClient({
       });
 
       if (!extractResponse.ok) {
-        const errorData = await extractResponse.json().catch(() => ({ error: "要件の抽出中にサーバーエラーが発生しました。" }));
+        const errorData = await getErrorMessageJson(extractResponse);
         console.error("要件の抽出中にサーバーでエラーが発生しました。:", errorData);
         throw new Error(`サーバーエラー (ステータス: ${extractResponse.status}): ${errorData.error || '詳細不明'}`);
       }
@@ -257,12 +272,11 @@ export default function AiPlannerClient({
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify(summaryBody),
-        }).then(res => {
+        }).then(async res => {
           if (!res.ok) {
             // エラーレスポンスからも情報を引き出して、リジェクト理由として渡す
-            return res.json().then(errorData => {
-              throw new Error(`記事「${slug}」の要約失敗: ${errorData.error || res.statusText}`);
-            });
+            const errorData = await getErrorMessageJson(res);
+            throw new Error(`記事「${slug}」の要約失敗: ${errorData.error || res.statusText}`);
           }
           return res.json();
         });
@@ -307,7 +321,7 @@ export default function AiPlannerClient({
         body: JSON.stringify(draftBody),
       });
       if (!draftResponse.ok) {
-        const errorData = await draftResponse.json().catch(() => ({ error: "旅程の骨子作成中にサーバーエラーが発生しました。" }));
+        const errorData = await getErrorMessageJson(draftResponse);
         throw new Error(`サーバーエラー (ステータス: ${draftResponse.status}): ${errorData.error || '詳細不明'}`);
       }
       const draftPlanData = await draftResponse.json();
@@ -337,12 +351,11 @@ export default function AiPlannerClient({
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify(fleshOutDayBody),
-        }).then(res => {
+        }).then(async res => {
           if (!res.ok) {
-            return res.json().then(errorData => {
-              // どの日の作成で失敗したか分かるように、エラーメッセージを具体的にします
-              throw new Error(`「${dayData.title}」の詳細作成中にエラーが発生しました: ${errorData.error || res.statusText}`);
-            });
+            const errorData = await getErrorMessageJson(res);
+            // どの日の作成で失敗したか分かるように、エラーメッセージを具体的にします
+            throw new Error(`「${dayData.title}」の詳細作成中にエラーが発生しました: ${errorData.error || res.statusText}`);
           }
           return res.json();
         });
@@ -371,7 +384,7 @@ export default function AiPlannerClient({
       });
 
       if (!budgetResponse.ok) {
-        const errorData = await budgetResponse.json().catch(() => ({ error: "最終予算の計算中にサーバーエラーが発生しました。" }));
+        const errorData = await getErrorMessageJson(budgetResponse);
         throw new Error(`サーバーエラー (ステータス: ${budgetResponse.status}): ${errorData.error || '詳細不明'}`);
       }
       const budgetSummary = await budgetResponse.json();
@@ -421,7 +434,7 @@ export default function AiPlannerClient({
           });
 
           if (!briefBudgetResponse.ok) {
-            const errorData = await briefBudgetResponse.json().catch(() => ({ error: "概算予算の計算中にサーバーエラーが発生しました。" }));
+            const errorData = await getErrorMessageJson(briefBudgetResponse);
             throw new Error(`サーバーエラー (ステータス: ${briefBudgetResponse.status}): ${errorData.error || '詳細不明'}`);
           }
 
