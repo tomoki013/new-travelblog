@@ -72,7 +72,10 @@ function buildExtractRequirementsPrompt() {
 }
 
 // Step 2: Summarize relevant articles
-function buildSummarizeArticlesPrompt(requirements: string, articleContent: string) {
+function buildSummarizeArticlesPrompt(
+  requirements: string,
+  articleContent: string
+) {
   return `あなたはアシスタントです。以下の「旅行の要件」を考慮して、「記事のコンテンツ」から関連情報のみを抽出し、簡潔に要約してください。
 
 ### 旅行の要件
@@ -90,8 +93,14 @@ ${articleContent}
 }
 
 // Step 3: Draft a skeleton itinerary
-function buildDraftItineraryPrompt(requirements: string, summarizedKnowledgeBase: string, budget: string) {
-  const budgetInstruction = budget ? `**予算:** ユーザーは「${budget}」レベルの予算感を希望しています。高価なアクティビティばかりにならないよう、予算に合った場所やアクティビティを提案してください。` : "";
+function buildDraftItineraryPrompt(
+  requirements: string,
+  summarizedKnowledgeBase: string,
+  budget: string
+) {
+  const budgetInstruction = budget
+    ? `**予算:** ユーザーは「${budget}」レベルの予算感を希望しています。高価なアクティビティばかりにならないよう、予算に合った場所やアクティビティを提案してください。`
+    : "";
 
   return `あなたは創造的な旅行プランナーです。あなたの仕事は、ユーザーの「旅行の要件」と、参考情報としての「情報の要約」を基に、ユニークで魅力的な旅行プランの骨子をJSON形式で作成することです。
 
@@ -132,10 +141,17 @@ ${summarizedKnowledgeBase}
 }
 
 // Step 4: Flesh out details for a single day
-function buildFleshOutDayPrompt(dayData: string, requirementsData: string, summarizedKnowledgeBase: string, budget: string) {
-    const budgetInstruction = budget ? `**重要:** ユーザーの希望予算は「${budget}」レベルです。この日のアクティビティ全体の費用が、この予算感から大きく外れないように、費用の見積もり(\`cost\`)を調整してください。` : "";
+function buildFleshOutDayPrompt(
+  dayData: string,
+  requirementsData: string,
+  summarizedKnowledgeBase: string,
+  budget: string
+) {
+  const budgetInstruction = budget
+    ? `**重要:** ユーザーの希望予算は「${budget}」レベルです。この日のアクティビティ全体の費用が、この予算感から大きく外れないように、費用の見積もり(\`cost\`)を調整してください。`
+    : "";
 
-    return `あなたは創造的で経験豊富な旅行プランナーです。あなたの仕事は、提供された情報に独自の視点を加えて、1日分の旅行プランをJSON形式で詳細化することです。
+  return `あなたは創造的で経験豊富な旅行プランナーです。あなたの仕事は、提供された情報に独自の視点を加えて、1日分の旅行プランをJSON形式で詳細化することです。
 
 ### 指示
 1.  以下の「1日分の骨子データ」、「旅行全体の要件」、「参考情報（インスピレーション）」を注意深く読み込みます。
@@ -185,8 +201,13 @@ ${summarizedKnowledgeBase}
 }
 
 // Step 5: Calculate Final Budget
-function buildCalculateFinalBudgetPrompt(finalItinerary: string, budget: string) {
-  const budgetInstruction = budget ? `ユーザーの希望予算は「${budget}」レベルでした。算出された合計費用とこの希望を比較し、簡単なコメント(\`comment\`)を追加してください。` : "";
+function buildCalculateFinalBudgetPrompt(
+  finalItinerary: string,
+  budget: string
+) {
+  const budgetInstruction = budget
+    ? `ユーザーの希望予算は「${budget}」レベルでした。算出された合計費用とこの希望を比較し、簡単なコメント(\`comment\`)を追加してください。`
+    : "";
 
   return `あなたは旅行費用のアナリストです。以下の「最終旅程案」のJSONデータを分析し、費用の合計とカテゴリー別の内訳を計算してください。
 
@@ -222,29 +243,49 @@ ${finalItinerary}
 `;
 }
 
-
 interface ChatRequestBody {
-    messages: CoreMessage[];
-    articleSlugs?: string[];
-    articleSlug?: string;
-    countryName: string;
-    step: 'extract_requirements' | 'summarize_articles' | 'summarize_one_article' | 'draft_itinerary' | 'flesh_out_one_day' | 'calculate_final_budget';
-    previous_data?: string;
-    requirementsData?: string;
-    summarizedKnowledgeBase?: string;
-    dayData?: string; // For flesh_out_one_day
-    finalItinerary?: string; // For calculate_final_budget
-    budget?: string;
+  messages: CoreMessage[];
+  articleSlugs?: string[];
+  articleSlug?: string;
+  countryName: string;
+  step:
+    | "extract_requirements"
+    | "summarize_articles"
+    | "summarize_one_article"
+    | "draft_itinerary"
+    | "flesh_out_one_day"
+    | "calculate_final_budget";
+  previous_data?: string;
+  requirementsData?: string;
+  summarizedKnowledgeBase?: string;
+  dayData?: string; // For flesh_out_one_day
+  finalItinerary?: string; // For calculate_final_budget
+  budget?: string;
 }
 
 export async function POST(req: NextRequest) {
   const body = (await req.json()) as ChatRequestBody;
-  console.log("✅ /api/chat: Received request", { step: body.step, country: body.countryName });
+  console.log("✅ /api/chat: Received request", {
+    step: body.step,
+    country: body.countryName,
+  });
 
   try {
-    const { messages, step, requirementsData, summarizedKnowledgeBase, dayData, finalItinerary, articleSlug, previous_data, budget } = body;
+    const {
+      messages,
+      step,
+      requirementsData,
+      summarizedKnowledgeBase,
+      dayData,
+      finalItinerary,
+      articleSlug,
+      previous_data,
+      budget,
+    } = body;
     const userMessages = messages.filter((m) => m.role === "user");
-    const model = google(process.env.GEMINI_MODEL_NAME || "gemini-1.5-flash-latest");
+    const model = google(
+      process.env.GEMINI_MODEL_NAME || "gemini-1.5-flash-latest"
+    );
 
     // A utility to safely parse JSON from AI response
     const parseJsonResponse = (aiResponse: string) => {
@@ -253,79 +294,166 @@ export async function POST(req: NextRequest) {
         const jsonString = jsonMatch ? jsonMatch[1] : aiResponse;
         return JSON.parse(jsonString);
       } catch (e) {
-        console.error("❌ API Route: Failed to parse JSON response from AI.", e, "AI Response:", aiResponse);
+        console.error(
+          "❌ API Route: Failed to parse JSON response from AI.",
+          e,
+          "AI Response:",
+          aiResponse
+        );
         throw new Error("AIからの応答が不正なJSON形式でした。");
       }
     };
 
     switch (step) {
-      case 'extract_requirements': {
+      case "extract_requirements": {
         console.log("  -> Executing step: extract_requirements");
         const systemPrompt = buildExtractRequirementsPrompt();
-        const { text } = await generateText({ model, system: systemPrompt, messages: userMessages });
-        console.log("    - AI call successful. Returning extracted requirements.");
+        const { text } = await generateText({
+          model,
+          system: systemPrompt,
+          messages: userMessages,
+        });
+        console.log(
+          "    - AI call successful. Returning extracted requirements."
+        );
         return NextResponse.json({ response: text });
       }
 
-      case 'summarize_one_article': {
+      case "summarize_one_article": {
         console.log("  -> Executing step: summarize_one_article");
         if (!articleSlug || !requirementsData) {
-          return NextResponse.json({ error: "Step 'summarize_one_article' requires 'articleSlug' and 'requirementsData'." }, { status: 400 });
+          return NextResponse.json(
+            {
+              error:
+                "Step 'summarize_one_article' requires 'articleSlug' and 'requirementsData'.",
+            },
+            { status: 400 }
+          );
         }
         const cache = await getPostsCache();
         if (!cache) {
-          return NextResponse.json({ error: "Server not ready: Could not load post cache." }, { status: 503 });
+          return NextResponse.json(
+            { error: "Server not ready: Could not load post cache." },
+            { status: 503 }
+          );
         }
-        const lowerCasePostsCache = Object.fromEntries(Object.entries(cache).map(([k, v]) => [k.toLowerCase(), v]));
+        const lowerCasePostsCache = Object.fromEntries(
+          Object.entries(cache).map(([k, v]) => [k.toLowerCase(), v])
+        );
         const articleContent = lowerCasePostsCache[articleSlug.toLowerCase()];
         if (!articleContent) {
-          return NextResponse.json({ error: `Article '${articleSlug}' not found.` }, { status: 404 });
+          return NextResponse.json(
+            { error: `Article '${articleSlug}' not found.` },
+            { status: 404 }
+          );
         }
-        const systemPrompt = buildSummarizeArticlesPrompt(requirementsData, articleContent);
-        const { text } = await generateText({ model, system: systemPrompt, messages: [{ role: 'user', content: 'Continue.' }] });
+        const systemPrompt = buildSummarizeArticlesPrompt(
+          requirementsData,
+          articleContent
+        );
+        const { text } = await generateText({
+          model,
+          system: systemPrompt,
+          messages: [{ role: "user", content: "Continue." }],
+        });
         console.log("    - AI call successful. Returning summary.");
         return NextResponse.json({ summary: text });
       }
 
-      case 'summarize_articles': {
-        console.warn("  -> WARNING: Deprecated 'summarize_articles' step was called.");
-        return NextResponse.json({ error: "This step is deprecated. Use 'summarize_one_article' instead." }, { status: 410 });
+      case "summarize_articles": {
+        console.warn(
+          "  -> WARNING: Deprecated 'summarize_articles' step was called."
+        );
+        return NextResponse.json(
+          {
+            error:
+              "This step is deprecated. Use 'summarize_one_article' instead.",
+          },
+          { status: 410 }
+        );
       }
 
-      case 'draft_itinerary': {
+      case "draft_itinerary": {
         console.log("  -> Executing step: draft_itinerary");
         if (!previous_data || !requirementsData) {
-            return NextResponse.json({ error: "Step 'draft_itinerary' requires 'previous_data' (summary) and 'requirementsData'."}, { status: 400 });
+          return NextResponse.json(
+            {
+              error:
+                "Step 'draft_itinerary' requires 'previous_data' (summary) and 'requirementsData'.",
+            },
+            { status: 400 }
+          );
         }
-        const systemPrompt = buildDraftItineraryPrompt(requirementsData, previous_data, budget || "");
-        const { text } = await generateText({ model, system: systemPrompt, messages: [{ role: 'user', content: 'Continue.' }] });
-        console.log("    - AI call successful. Parsing and returning draft plan JSON.");
+        const systemPrompt = buildDraftItineraryPrompt(
+          requirementsData,
+          previous_data,
+          budget || ""
+        );
+        const { text } = await generateText({
+          model,
+          system: systemPrompt,
+          messages: [{ role: "user", content: "Continue." }],
+        });
+        console.log(
+          "    - AI call successful. Parsing and returning draft plan JSON."
+        );
         const parsedJson = parseJsonResponse(text);
         return NextResponse.json(parsedJson);
       }
 
-      case 'flesh_out_one_day': {
+      case "flesh_out_one_day": {
         console.log("  -> Executing step: flesh_out_one_day");
         if (!dayData || !requirementsData || !summarizedKnowledgeBase) {
-          return NextResponse.json({ error: "Step 'flesh_out_one_day' requires 'dayData', 'requirementsData', and 'summarizedKnowledgeBase'." }, { status: 400 });
+          return NextResponse.json(
+            {
+              error:
+                "Step 'flesh_out_one_day' requires 'dayData', 'requirementsData', and 'summarizedKnowledgeBase'.",
+            },
+            { status: 400 }
+          );
         }
-        const systemPrompt = buildFleshOutDayPrompt(dayData, requirementsData, summarizedKnowledgeBase, budget || "");
+        const systemPrompt = buildFleshOutDayPrompt(
+          dayData,
+          requirementsData,
+          summarizedKnowledgeBase,
+          budget || ""
+        );
         console.log("    - Calling Google AI for single day detail...");
-        const { text } = await generateText({ model, system: systemPrompt, messages: [{ role: 'user', content: 'Continue.' }] });
-        console.log("    - AI call successful. Parsing and returning day JSON.");
+        const { text } = await generateText({
+          model,
+          system: systemPrompt,
+          messages: [{ role: "user", content: "Continue." }],
+        });
+        console.log(
+          "    - AI call successful. Parsing and returning day JSON."
+        );
         const parsedJson = parseJsonResponse(text);
         return NextResponse.json(parsedJson);
       }
 
-      case 'calculate_final_budget': {
+      case "calculate_final_budget": {
         console.log("  -> Executing step: calculate_final_budget");
         if (!finalItinerary) {
-          return NextResponse.json({ error: "Step 'calculate_final_budget' requires 'finalItinerary'." }, { status: 400 });
+          return NextResponse.json(
+            {
+              error: "Step 'calculate_final_budget' requires 'finalItinerary'.",
+            },
+            { status: 400 }
+          );
         }
-        const systemPrompt = buildCalculateFinalBudgetPrompt(finalItinerary, budget || "");
+        const systemPrompt = buildCalculateFinalBudgetPrompt(
+          finalItinerary,
+          budget || ""
+        );
         console.log("    - Calling Google AI for final budget calculation...");
-        const { text } = await generateText({ model, system: systemPrompt, messages: [{ role: 'user', content: 'Continue.' }] });
-        console.log("    - AI call successful. Parsing and returning budget summary JSON.");
+        const { text } = await generateText({
+          model,
+          system: systemPrompt,
+          messages: [{ role: "user", content: "Continue." }],
+        });
+        console.log(
+          "    - AI call successful. Parsing and returning budget summary JSON."
+        );
         const parsedJson = parseJsonResponse(text);
         return NextResponse.json(parsedJson);
       }
@@ -333,12 +461,16 @@ export async function POST(req: NextRequest) {
       default: {
         const exhaustiveCheck: never = step;
         console.error(`  ❌ Error: Invalid step provided: ${exhaustiveCheck}`);
-        return NextResponse.json({ error: `Invalid step: ${exhaustiveCheck}` }, { status: 400 });
+        return NextResponse.json(
+          { error: `Invalid step: ${exhaustiveCheck}` },
+          { status: 400 }
+        );
       }
     }
   } catch (error) {
     console.error("❌ /api/chat: Unhandled error in POST handler.", error);
-    const errorMessage = error instanceof Error ? error.message : "Internal Server Error";
+    const errorMessage =
+      error instanceof Error ? error.message : "Internal Server Error";
     return NextResponse.json({ error: errorMessage }, { status: 500 });
   }
 }

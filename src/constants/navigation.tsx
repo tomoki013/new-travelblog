@@ -15,14 +15,14 @@ export interface FooterContent {
 export const NAV_LINKS: NavLink[] = [
   {
     href: "/ai-planner",
-    label: "AI Travel Planner",
+    label: "AI旅行プランナー",
     isNew: true,
   },
-  { href: "/destination", label: "Destination" },
-  { href: "/series", label: "Series" },
-  { href: "/posts", label: "Blog" },
-  { href: "/gallery", label: "Gallery" },
-  { href: "/about", label: "About" },
+  { href: "/destination", label: "地域" },
+  { href: "/series", label: "シリーズ" },
+  { href: "/posts", label: "ブログ" },
+  { href: "/gallery", label: "ギャラリー" },
+  { href: "/about", label: "サイトについて" },
 ];
 
 export const FOOTER_CONTENTS_LIST: FooterContent[] = [
