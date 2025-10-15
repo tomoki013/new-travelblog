@@ -21,10 +21,11 @@ export default function PlanDisplay({ plan, isFallbackMode }: PlanDisplayProps) 
   return (
     <div className="space-y-6">
        {isFallbackMode && (
-        <Alert variant="default" className="bg-yellow-100 border-yellow-400 text-yellow-800">
-          <TriangleAlert className="h-4 w-4" color="#c8a30a"/>
+        <Alert variant="destructive">
+          <TriangleAlert className="h-4 w-4" />
           <AlertDescription>
-            詳細なプランの生成中に問題が発生しました。代わりにプランの骨子と概算の予算を表示しています。内容が簡略化されている点にご注意ください。
+            <strong>プランの生成に失敗しました</strong><br />
+            AIが詳細なプランを作成できなかったため、予算などの詳細情報は利用できません。現在表示されているプランは下書きであり、旅程のみが記載されています。
           </AlertDescription>
         </Alert>
       )}
@@ -34,7 +35,7 @@ export default function PlanDisplay({ plan, isFallbackMode }: PlanDisplayProps) 
         <div className="mt-4 rounded-md bg-primary/10 p-4 text-center text-primary">
           <span className="text-sm">合計予算</span>
           <p className="text-2xl font-bold">
-            {budgetSummary ? formatCurrency(budgetSummary.total) : '計算中...'}
+            {budgetSummary && !isFallbackMode ? formatCurrency(budgetSummary.total) : '概算...'}
           </p>
         </div>
       </div>
@@ -42,12 +43,12 @@ export default function PlanDisplay({ plan, isFallbackMode }: PlanDisplayProps) 
       {/* Mobile View (Tabs) */}
       <div className="block md:hidden">
         <Tabs defaultValue="itinerary" className="w-full">
-          <TabsList className={`grid w-full ${budgetSummary ? 'grid-cols-3' : 'grid-cols-2'}`}>
+          <TabsList className={`grid w-full ${budgetSummary && !isFallbackMode ? 'grid-cols-3' : 'grid-cols-2'}`}>
             <TabsTrigger value="itinerary">
               <CalendarDaysIcon className="mr-2 h-4 w-4" />
               日程
             </TabsTrigger>
-            {budgetSummary && (
+            {budgetSummary && !isFallbackMode && (
               <TabsTrigger value="budget">
                 <PiggyBankIcon className="mr-2 h-4 w-4" />
                 予算
@@ -61,7 +62,7 @@ export default function PlanDisplay({ plan, isFallbackMode }: PlanDisplayProps) 
           <TabsContent value="itinerary" className="mt-4">
             <ItineraryTab days={itinerary.days} />
           </TabsContent>
-          {budgetSummary && (
+          {budgetSummary && !isFallbackMode && (
             <TabsContent value="budget" className="mt-4">
               <BudgetTab budgetSummary={budgetSummary} />
             </TabsContent>
@@ -76,12 +77,12 @@ export default function PlanDisplay({ plan, isFallbackMode }: PlanDisplayProps) 
       <div className="hidden md:grid md:grid-cols-5 md:gap-6">
         <div className="md:col-span-3 space-y-6">
           <Tabs defaultValue="itinerary" className="w-full">
-          <TabsList className={`grid w-full ${budgetSummary ? 'grid-cols-2' : 'grid-cols-1'}`}>
+          <TabsList className={`grid w-full ${budgetSummary && !isFallbackMode ? 'grid-cols-2' : 'grid-cols-1'}`}>
               <TabsTrigger value="itinerary">
                 <CalendarDaysIcon className="mr-2 h-4 w-4" />
                 日程
               </TabsTrigger>
-              {budgetSummary && (
+              {budgetSummary && !isFallbackMode && (
                 <TabsTrigger value="budget">
                   <PiggyBankIcon className="mr-2 h-4 w-4" />
                   予算
@@ -91,7 +92,7 @@ export default function PlanDisplay({ plan, isFallbackMode }: PlanDisplayProps) 
             <TabsContent value="itinerary" className="mt-4">
               <ItineraryTab days={itinerary.days} />
             </TabsContent>
-            {budgetSummary && (
+            {budgetSummary && !isFallbackMode && (
               <TabsContent value="budget" className="mt-4">
                 <BudgetTab budgetSummary={budgetSummary} />
               </TabsContent>
