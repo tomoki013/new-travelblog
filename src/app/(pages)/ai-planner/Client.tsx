@@ -8,7 +8,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
-import { Loader2 } from "lucide-react";
+import { Loader2, Info } from "lucide-react";
 import { ShareIcon } from "@/components/common/Icons";
 import {
   Select,
@@ -17,6 +17,13 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from '@/components/ui/accordion';
+import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 // PostMetadata と ContinentData を types/types.ts からインポートします
 import { PostMetadata, ContinentData, TravelPlan } from "@/types/types";
 import FeedbackModal from "@/components/common/FeedbackModal";
@@ -30,6 +37,24 @@ interface ShareableState {
   budget: string;
   planJson: TravelPlan | null;
 }
+
+const PLANNER_FAQS = [
+    {
+    question: 'どのような情報に基づいてプランを作成しますか？',
+    answer:
+      'このブログに掲載されている旅行記の情報を主な知識ベースとしています。そのため、管理人が実際に訪れた場所や経験に基づいた、より実践的な提案が可能です。',
+  },
+  {
+    question: 'プランの結果が期待と違う場合はどうすればいいですか？',
+    answer:
+      'AIへの指示（興味・関心など）をより具体的にすることで、結果が改善されることがあります。例えば、「美味しいものが食べたい」だけでなく「シーフードが美味しいレストランに行きたい」のように入力してみてください。何度か試すことで、より理想に近いプランが作成できます。',
+  },
+  {
+    question: '生成されたプランを保存・共有できますか？',
+    answer:
+      'はい、プラン生成後に表示される「このプランを共有する」ボタンをクリックすると、プランが保存された特別なURLが生成されます。そのURLをコピーして、後から見返したり、友人と共有したりすることができます。',
+  },
+]
 
 const destinationPresets = [
   "マドリード",
@@ -513,6 +538,21 @@ export default function AiPlannerClient({
     <div className="space-y-6">
       {!planJson && !isLoading && !error && (
         <>
+          <Alert className="mb-6">
+            <Info className="h-4 w-4" />
+            <AlertTitle>ご利用の前に</AlertTitle>
+            <AlertDescription>
+               <Accordion type="single" collapsible className="w-full mt-2">
+                {PLANNER_FAQS.map((faq, index) => (
+                  <AccordionItem value={`item-${index}`} key={index} className="border-b-0">
+                    <AccordionTrigger className="text-sm py-2">{faq.question}</AccordionTrigger>
+                    <AccordionContent className="text-xs">{faq.answer}</AccordionContent>
+                  </AccordionItem>
+                ))}
+              </Accordion>
+            </AlertDescription>
+          </Alert>
+
           <div>
             <Label htmlFor="country">Step 1: 国を選択</Label>
             <Select
