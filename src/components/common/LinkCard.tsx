@@ -18,7 +18,8 @@ export const LinkCard = ({
   imageUrl,
   variant,
 }: LinkCardProps) => {
-  const domain = new URL(href, "https://tomokichidiary.com/posts/").hostname;
+  const domain = new URL(href, "https://travel.tomokichidiary.com/posts/")
+    .hostname;
 
   // ===== スタンダード型 =====
   if (variant === "standard") {

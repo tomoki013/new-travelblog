@@ -3,7 +3,7 @@ User-agent: *
 Allow: /
 
 # Host
-Host: https://tomokichidiary.netlify.app/
+Host: https://travel.tomokichidiary.com/
 
 # Sitemaps
-Sitemap: https://tomokichidiary.netlify.app/sitemap.xml
+Sitemap: https://travel.tomokichidiary.com/sitemap.xml

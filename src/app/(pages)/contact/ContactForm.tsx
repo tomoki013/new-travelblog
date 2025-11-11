@@ -228,7 +228,9 @@ const ContactForm = () => {
                         />
                       </FormControl>
                       <div className="space-y-1 leading-none">
-                        <FormLabel>プライバシーポリシーに同意します</FormLabel>
+                        <FormLabel>
+                          プライバシーポリシーと利用規約に同意します
+                        </FormLabel>
                         <FormDescription>
                           お問い合わせいただいた内容は、お問い合わせへの回答のみに使用します。
                         </FormDescription>

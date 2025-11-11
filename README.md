@@ -1,6 +1,6 @@
 # ともきちの旅行日記 - A Next.js Travel Blog
 
-[Deploy with Netlify](https://tomokichidiary.netlify.app)
+[Deploy with Netlify](https://travel.tomokichidiary.com)
 
 **ともきちの旅行日記**は、「旅に出るワクワク感」をコンセプトにした、モダンな技術で構築された個人旅行ブログです。インタラクティブな世界地図やテーマ別のシリーズ記事を通じて、読者の冒険心を刺激するユニークな視覚体験を提供します。
 
@@ -73,7 +73,7 @@ yarn dev
 
 プロジェクトの主要なディレクトリ構成です。
 
-```
+```text
 .
 ├── src
 │ ├── app/ # App Routerのルートとページ
@@ -128,11 +128,11 @@ Markdown記法で自由に記事を記述できます。
 
 このプロジェクトへの貢献に興味がある場合は、以下の手順でプルリクエストを送ってください。
 
-1.  このリポジトリをフォークします。
-2.  新しいブランチを作成します (`git checkout -b feature/your-feature-name`)。
-3.  変更をコミットします (`git commit -m 'Add some feature'`)。
-4.  ブランチにプッシュします (`git push origin feature/your-feature-name`)。
-5.  プルリクエストを作成します。
+1. このリポジトリをフォークします。
+2. 新しいブランチを作成します (`git checkout -b feature/your-feature-name`)。
+3. 変更をコミットします (`git commit -m 'Add some feature'`)。
+4. ブランチにプッシュします (`git push origin feature/your-feature-name`)。
+5. プルリクエストを作成します。
 
 ---
 
