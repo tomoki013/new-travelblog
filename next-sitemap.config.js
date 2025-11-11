@@ -48,7 +48,7 @@ function getAllPostTypes() {
 
 /** @type {import('next-sitemap').IConfig} */
 const config = {
-  siteUrl: "https://tomokichidiary.netlify.app/",
+  siteUrl: "https://travel.tomokichidiary.com/",
   changefreq: "weekly",
   generateRobotsTxt: true,
   sitemapSize: 7000,

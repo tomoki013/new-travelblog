@@ -5,6 +5,7 @@ import { sectionVariants } from "../common/animation";
 import WorldMap, { WorldMapHandle } from "../features/worldMap/WorldMap";
 import { motion } from "framer-motion";
 import { regionData } from "@/data/region";
+import Button from "../common/Button";
 
 // Icon Components
 const ZoomInIcon = ({ className }: { className?: string }) => (
@@ -129,6 +130,7 @@ const Destination = () => {
           </button>
         </div>
       </div>
+      <Button href={`/destination`}>地域別一覧を見る</Button>
     </motion.section>
   );
 };

@@ -38,7 +38,6 @@ const notoSansJp = Noto_Sans_JP({
   variable: "--font-noto-sans-jp",
 });
 
-
 export const metadata: Metadata = {
   title: {
     default: "ともきちの旅行日記 | Travel Diary",
@@ -70,7 +69,7 @@ export const metadata: Metadata = {
       "日本と世界の美しい風景、文化、食べ物を通じて、新しい旅の発見をお届けする旅行ブログ。",
     images: ["favicon.ico"],
   },
-  metadataBase: new URL("https://tomokichidiary.netlify.app"),
+  metadataBase: new URL("https://travel.tomokichidiary.com"),
   manifest: "/manifest.json",
 };
 
@@ -87,15 +86,6 @@ export default function RootLayout({
   return (
     <html lang="ja" suppressHydrationWarning>
       <head>
-        {/* Google Search Console */}
-        <meta
-          name="google-site-verification"
-          content="qd9h_oeUkXKK0F-u4U5Z-c540MUq_Agst3K0rF8ERdM"
-        />
-
-        {/* Google Adsense */}
-        <meta name="google-adsense-account" content="ca-pub-8687520805381056" />
-
         {/* impact */}
         <meta
           name="impact-site-verification"
@@ -104,30 +94,6 @@ export default function RootLayout({
 
         {/* Agoda */}
         <meta name="agd-partner-manual-verification" />
-
-        {/* 自動広告 */}
-        <Script
-          async
-          src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8687520805381056"
-          crossOrigin="anonymous"
-          strategy="afterInteractive"
-        ></Script>
-
-        {/* Google tag (gtag.js) */}
-        <Script
-          async
-          src="https://www.googletagmanager.com/gtag/js?id=G-XYSW6RY98H"
-        ></Script>
-
-        {/* Google Analytics */}
-        <Script id="google-analytics">
-          {`
-						window.dataLayer = window.dataLayer || [];
-						function gtag(){dataLayer.push(arguments);}
-						gtag('js', new Date());
-						gtag('config', 'G-XYSW6RY98H');
-					`}
-        </Script>
 
         {/* GetYourGuide Analytics */}
         <Script

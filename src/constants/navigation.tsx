@@ -18,10 +18,9 @@ export const NAV_LINKS: NavLink[] = [
     label: "AI旅行プランナー",
     isNew: true,
   },
-  { href: "/destination", label: "地域" },
-  { href: "/series", label: "シリーズ" },
   { href: "/posts", label: "ブログ" },
   { href: "/gallery", label: "ギャラリー" },
+  { href: "/contact", label: "お問い合わせ" },
   { href: "/about", label: "サイトについて" },
 ];
 
