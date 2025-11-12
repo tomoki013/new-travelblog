@@ -5,7 +5,7 @@
   "scripts": {
     "dev": "next dev --webpack",
     "prebuild": "node scripts/generate-image-index.js && node scripts/generate-post-cache.js",
-    "build": "next build --webpack",
+    "build": "git submodule update --init --recursive && next build --webpack",
     "postbuild": "next-sitemap --config next-sitemap.config.js",
     "start": "next start",
     "lint": "next lint"
