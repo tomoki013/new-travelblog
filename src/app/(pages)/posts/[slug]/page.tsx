@@ -89,7 +89,9 @@ const PostPage = async (props: { params: Promise<{ slug: string }> }) => {
         />
       </Client>
     );
-  } catch {
+  } catch (e) {
+    // エラーの内容をサーバーコンソールに出力する
+    console.error("Failed to get post data:", e);
     return notFound();
   }
 };
