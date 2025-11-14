@@ -55,14 +55,14 @@ export const getAllPosts = cache(
     }
 
     return sortedPosts;
-  },
+  }
 );
 
 /**
  * Gets a single post data (including raw Markdown content) based on the slug.
  */
 export const getPostBySlug = cache(async (slug: string): Promise<Post> => {
-  const postsDirectory = path.join(process.cwd(), "src/posts");
+  const postsDirectory = path.join(process.cwd(), "posts/travel-posts");
   const fullPath = path.join(postsDirectory, `${slug}.md`);
 
   // Check if the file exists
@@ -98,6 +98,12 @@ export const getPostBySlug = cache(async (slug: string): Promise<Post> => {
  */
 export const getPostData = cache(async (slug: string) => {
   const post = await getPostBySlug(slug);
+
+  if (!post) {
+    // 意図的にエラーを発生させ、page.tsxのcatchに渡す
+    throw new Error(`Post with slug "${slug}" not found.`);
+  }
+
   const allPosts = await getAllPosts();
 
   // --- Category-specific navigation ---
@@ -110,7 +116,7 @@ export const getPostData = cache(async (slug: string) => {
     const categoryPosts = postFilters.filterByCategory(allPosts, post.category);
     const previousCategoryPostData = postFilters.getPreviousPost(
       slug,
-      categoryPosts,
+      categoryPosts
     );
     const nextCategoryPostData = postFilters.getNextPost(slug, categoryPosts);
 
@@ -134,7 +140,7 @@ export const getPostData = cache(async (slug: string) => {
     const seriesPosts = allPosts.filter((p) => p.series === post.series);
     const previousSeriesPostData = postFilters.getPreviousPost(
       slug,
-      seriesPosts,
+      seriesPosts
     );
     const nextSeriesPostData = postFilters.getNextPost(slug, seriesPosts);
 
