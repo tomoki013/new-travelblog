@@ -91,10 +91,12 @@ const PostCard = ({
                   ))}
                 </div>
               )}
-              <h3 className="font-heading text-3xl font-bold mb-4">
+              <h3 className="font-heading text-3xl font-bold mb-4 line-clamp-2 h-24">
                 {post.title}
               </h3>
-              <p className="font-body leading-relaxed">{post.excerpt}</p>
+              <p className="font-body leading-relaxed line-clamp-3 h-24">
+                {post.excerpt}
+              </p>
               <span className="mt-4 text-teal-600 hover:text-teal-700 text-xl font-semibold inline-flex items-center">
                 続きを読む
                 <ArrowRight className="inline-block ml-2" size={20} />
