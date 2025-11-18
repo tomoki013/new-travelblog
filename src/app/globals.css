@@ -423,6 +423,66 @@ body {
   }
 }
 
+/* --- New 404 Not Found Animation --- */
+.map-container {
+  width: 250px;
+  height: 250px;
+  position: relative;
+}
+
+.unfolding-map {
+  width: 100%;
+  height: 100%;
+}
+
+.map-background {
+  fill: #f3f4f6; /* gray-100 */
+}
+
+.map-fold {
+  fill: #e5e7eb; /* gray-200 */
+  transform-origin: center;
+  animation: unfold 3s ease-out infinite;
+}
+
+@keyframes unfold {
+  0% {
+    transform: scale(0);
+    opacity: 0;
+  }
+  50% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+.question-mark {
+  font-size: 80px;
+  font-family: var(--font-playfair-display), serif;
+  fill: var(--primary);
+  opacity: 0;
+  animation: show-marker 3s ease-out infinite;
+  animation-delay: 1s;
+}
+
+@keyframes show-marker {
+  0% {
+    opacity: 0;
+    transform: scale(0.5);
+  }
+  70% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
 .loader-airplane-window {
   width: 120px;
   height: 150px;
@@ -452,6 +512,82 @@ body {
   }
   to {
     transform: translateX(-50%);
+  }
+}
+
+/* --- New Loading Animation --- */
+.loader-container {
+  width: 200px;
+  height: 100px;
+  position: relative;
+  overflow: hidden;
+}
+
+.paper-plane {
+  width: 50px;
+  height: 50px;
+  position: absolute;
+  top: 50%;
+  left: 0;
+  transform: translateY(-50%);
+  animation: flight-path 4s ease-in-out infinite;
+}
+
+.plane-body {
+  fill: var(--primary);
+  transition: all 0.3s ease-in-out;
+}
+
+@keyframes flight-path {
+  0% {
+    left: 0;
+    transform: translateY(-50%) rotate(0deg);
+    opacity: 1;
+  }
+  20% {
+    left: 40%;
+    transform: translateY(-100%) rotate(20deg);
+  }
+  80% {
+    left: 60%;
+    transform: translateY(0) rotate(-10deg);
+    opacity: 1;
+  }
+  100% {
+    left: 100%;
+    transform: translateY(-50%) rotate(0deg);
+    opacity: 0;
+  }
+}
+
+.trail {
+  position: absolute;
+  top: 50%;
+  left: 0;
+  width: 0;
+  height: 2px;
+  background: linear-gradient(to right, transparent, var(--primary));
+  opacity: 0;
+  animation: trail-effect 4s ease-in-out infinite;
+  transform-origin: left center;
+}
+
+@keyframes trail-effect {
+  0% {
+    width: 0;
+    left: 0;
+    opacity: 0;
+  }
+  20% {
+    opacity: 0.5;
+  }
+  80% {
+    opacity: 0.5;
+  }
+  100% {
+    width: 100%;
+    left: 0;
+    opacity: 0;
   }
 }
 
