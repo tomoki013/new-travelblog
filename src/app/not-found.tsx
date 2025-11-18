@@ -1,6 +1,5 @@
 import Link from "next/link";
 import type { Metadata } from "next";
-import { Compass, Map } from "lucide-react";
 
 export const metadata: Metadata = {
   title: "404: Not Found",
@@ -9,16 +8,33 @@ export const metadata: Metadata = {
 export default function NotFound() {
   return (
     <div className="flex min-h-[calc(100vh-10rem)] flex-col items-center justify-center space-y-8 text-center">
-      <div className="relative flex h-48 w-48 items-center justify-center">
-        <Map
-          className="absolute h-40 w-40 animate-pulse text-muted"
-          strokeWidth={1}
-        />
-        <Compass
-          className="relative h-24 w-24 animate-spin text-primary/70"
-          style={{ animationDuration: "10s" }}
-          strokeWidth={1.5}
-        />
+      <div className="map-container">
+        <svg className="unfolding-map" viewBox="0 0 100 100">
+          <rect className="map-background" width="100" height="100" />
+          <path
+            className="map-fold"
+            d="M0 0 H50 V50 H0Z"
+            style={{ animationDelay: "0s" }}
+          />
+          <path
+            className="map-fold"
+            d="M50 0 H100 V50 H50Z"
+            style={{ animationDelay: "0.2s" }}
+          />
+          <path
+            className="map-fold"
+            d="M0 50 H50 V100 H0Z"
+            style={{ animationDelay: "0.4s" }}
+          />
+          <path
+            className="map-fold"
+            d="M50 50 H100 V100 H50Z"
+            style={{ animationDelay: "0.6s" }}
+          />
+          <text x="50" y="68" textAnchor="middle" className="question-mark">
+            ?
+          </text>
+        </svg>
       </div>
       <div className="space-y-4">
         <h1 className="font-heading text-4xl font-bold text-foreground">
