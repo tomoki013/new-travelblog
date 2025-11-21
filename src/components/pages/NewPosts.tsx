@@ -3,7 +3,10 @@
 import PostCard from "@/components/common/PostCard";
 import Button from "../common/Button";
 import { motion } from "framer-motion";
-import { sectionVariants, staggerContainer } from "@/components/common/animation";
+import {
+  sectionVariants,
+  staggerContainer,
+} from "@/components/common/animation";
 import { Post } from "@/types/types";
 type PostMetadata = Omit<Post, "content">;
 
@@ -32,7 +35,7 @@ const NewPosts = ({ posts }: NewPostsProps) => {
       {/* 記事一覧 */}
       <motion.div
         variants={staggerContainer()}
-        className="flex flex-col gap-16 md:gap-20 mb-12"
+        className="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-10 mb-12"
       >
         {posts.slice(0, 3).map((post, index) => (
           <motion.div
@@ -42,11 +45,7 @@ const NewPosts = ({ posts }: NewPostsProps) => {
             viewport={{ once: true, amount: 0.1 }}
             variants={sectionVariants}
           >
-            <PostCard
-              post={post}
-              isReversed={index % 2 !== 0}
-              showMetadata={false}
-            />
+            <PostCard post={post} />
           </motion.div>
         ))}
       </motion.div>

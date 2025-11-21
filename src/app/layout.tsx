@@ -119,7 +119,6 @@ export default function RootLayout({
           </div>
           <CookieBanner />
           <Toaster />
-          <FloatingAIPlannerButton />
         </ThemeProvider>
       </body>
     </html>
