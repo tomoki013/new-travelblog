@@ -66,11 +66,11 @@ const Header = () => {
     <>
       <header
         className={cn(
-          "fixed top-0 z-50 w-full transition-all duration-500 ease-in-out",
+          "top-0 z-50 w-full transition-all duration-500 ease-in-out",
           // 変更点: 透明時は上から黒のグラデーションをかけて視認性確保。スクロール時は強めのブラー。
           isTransparent
-            ? "bg-gradient-to-b from-black/60 via-black/30 to-transparent py-6 border-transparent"
-            : "bg-background/70 py-2 border-b border-border/40 backdrop-blur-xl supports-[backdrop-filter]:bg-background/50 shadow-sm"
+            ? "fixed bg-gradient-to-b from-black/60 via-black/30 to-transparent py-6 border-transparent"
+            : "sticky bg-background/70 py-2 border-b border-border/40 backdrop-blur-xl supports-[backdrop-filter]:bg-background/50 shadow-sm"
         )}
       >
         <div className="container mx-auto flex h-12 items-center justify-between px-4 sm:px-6 lg:px-8">
