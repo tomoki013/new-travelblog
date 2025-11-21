@@ -1,53 +1,55 @@
 "use client";
 
 import Link from "next/link";
-import { Button } from "@/components/ui/button";
-import { motion } from "framer-motion";
-import { ArrowRight } from "lucide-react";
-import Image from "next/image";
+import { Sparkles, Plane } from "lucide-react";
 
 const AIPlannerHero = () => {
   return (
-    <section className="relative h-[50vh] flex items-center justify-center text-center text-white overflow-hidden">
-      {/* Background Image */}
-      <Image
-        src="/images/Greece/oia-castle-sunset-view.jpg"
-        alt="Oia Castle Sunset View"
-        fill
-        className="object-cover -z-10"
-        priority
-      />
-      <div className="absolute inset-0 bg-black/50 -z-10" />
-
-      <div className="z-10 max-w-4xl px-4">
-        <motion.h1
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.2 }}
-          className="font-heading text-5xl md:text-7xl font-bold mb-4 leading-tight text-shadow-[2px_2px_10px_rgba(0,0,0,0.5)]"
-        >
-          AIと創る、あなただけの旅
-        </motion.h1>
-        <motion.p
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.4 }}
-          className="text-lg md:text-xl font-medium mb-8 max-w-2xl mx-auto"
-        >
-          面倒な旅行計画はAIにおまかせ。あなたの希望を伝えるだけで、オリジナルの旅行プランを数秒で作成します。
-        </motion.p>
-        <motion.div
-          initial={{ opacity: 0, scale: 0.8 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{ duration: 0.5, delay: 0.6 }}
-        >
-          <Button asChild size="lg" className="text-lg">
-            <Link href="/ai-planner">
-              今すぐ無料でプランを作成
-              <ArrowRight className="ml-2 h-5 w-5" />
+    <section className="relative z-30 -mt-10 py-20">
+      <div className="container mx-auto px-4">
+        <div className="flex flex-col items-center gap-12 rounded-none border border-border/50 bg-muted/30 p-8 shadow-sm md:flex-row md:rounded-3xl md:p-12">
+          <div className="flex-1 text-center md:text-left">
+            <div className="mb-4 inline-flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-primary">
+              <Sparkles size={14} /> New Feature
+            </div>
+            <h2 className="mb-4 font-heading text-3xl font-bold text-foreground md:text-4xl">
+              AIと創る、あなただけの旅
+            </h2>
+            <p className="mb-8 leading-loose text-muted-foreground">
+              面倒な旅行計画はAIにおまかせ。あなたの希望を伝えるだけで、オリジナルの旅行プランを数秒で作成します。
+            </p>
+            <Link
+              href="/ai-planner"
+              className="mx-auto flex w-fit items-center gap-2 rounded-full bg-primary px-8 py-4 font-bold text-primary-foreground shadow-lg shadow-primary/20 transition-all hover:scale-105 md:mx-0"
+            >
+              <Plane size={18} /> 今すぐ無料でプランを作成
             </Link>
-          </Button>
-        </motion.div>
+          </div>
+
+          {/* AI Chat UI Mockup */}
+          <div className="w-full max-w-md flex-1">
+            <div className="transform space-y-4 rounded-2xl border border-border/50 bg-card p-6 shadow-xl transition-transform duration-500 rotate-2 hover:rotate-0">
+              <div className="flex gap-4">
+                <div className="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-full bg-primary/10">
+                  <Sparkles size={20} className="text-primary" />
+                </div>
+                <div className="w-full rounded-2xl rounded-tl-none bg-muted/50 p-4 text-sm text-foreground">
+                  <p>
+                    次の旅行の計画をお手伝いします。行き先や期間、予算を教えてください。
+                  </p>
+                </div>
+              </div>
+              <div className="flex flex-row-reverse gap-4">
+                <div className="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-full bg-foreground text-xs font-bold text-background">
+                  ME
+                </div>
+                <div className="rounded-2xl rounded-tr-none bg-primary p-4 text-sm text-primary-foreground shadow-md shadow-primary/20">
+                  <p>来月、3泊4日で京都に行きたいです。予算は5万円くらい。</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </section>
   );

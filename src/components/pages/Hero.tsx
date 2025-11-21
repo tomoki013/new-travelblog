@@ -11,7 +11,7 @@ const Hero = () => {
     continent.countries.map((country) => country.slug)
   );
   return (
-    <section className="relative h-[85vh] flex flex-col md:flex-row items-center justify-center text-center text-white">
+    <section className="relative h-[85vh] flex flex-col md:flex-row items-center justify-center text-center text-white pt-30">
       <Image
         src={`/images/Turkey/balloons-in-cappadocia.jpg`}
         alt="Man looking at a globe"
