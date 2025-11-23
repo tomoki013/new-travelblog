@@ -148,7 +148,7 @@
 }
 
 .font-heading {
-  font-family: var(--font-playfair-display), var(--font-noto-sans-jp), serif;
+  font-family: var(--font-playfair-display), serif;
 }
 .font-code {
   font-family: var(--font-caveat), cursive;
