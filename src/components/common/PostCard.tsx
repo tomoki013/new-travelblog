@@ -4,6 +4,7 @@ import Image from "next/image";
 import { Post } from "@/types/types";
 import Link from "next/link";
 import { ChevronRight } from "lucide-react";
+import { categories } from "@/data/categories";
 
 type PostMetadata = Omit<Post, "content">;
 
@@ -27,6 +28,8 @@ const PostCard = ({ post, variant = "default" }: PostCardProps) => {
     // Let's apply the new design to the default variant.
   }
 
+  const categoryTitle = categories.find((c) => c.slug === post.category)?.title;
+
   return (
     <Link href={`/posts/${post.slug}`} className="block group h-full">
       <article className="flex flex-col group cursor-pointer h-full p-4 rounded-2xl border border-slate-100 shadow-sm hover:shadow-md transition-shadow duration-300 bg-white">
@@ -40,7 +43,7 @@ const PostCard = ({ post, variant = "default" }: PostCardProps) => {
             />
           )}
           <div className="absolute top-4 left-4 bg-white/90 backdrop-blur-sm text-slate-900 text-xs font-bold px-3 py-1 rounded-full">
-            {post.category}
+            {categoryTitle}
           </div>
         </div>
         <div className="flex flex-col flex-grow">
