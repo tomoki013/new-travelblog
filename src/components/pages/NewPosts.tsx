@@ -37,7 +37,7 @@ const NewPosts = ({ posts }: NewPostsProps) => {
         variants={staggerContainer()}
         className="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-10 mb-12"
       >
-        {posts.slice(0, 3).map((post, index) => (
+        {posts.slice(0, 6).map((post) => (
           <motion.div
             key={post.slug}
             initial="hidden"

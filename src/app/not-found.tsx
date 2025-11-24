@@ -10,7 +10,7 @@ export default function NotFound() {
       {/* Next.jsのImageコンポーネントを使う場合は差し替えてください */}
       <div className="absolute inset-0 z-0">
         <Image
-          src="https://images.unsplash.com/photo-1469854523086-cc02fe5d8800?q=80&w=2021&auto=format&fit=crop"
+          src="/images/Greece/oia-castle-sunset-view.jpg"
           alt="Travel Landscape"
           fill
           className="h-full w-full object-cover opacity-40 transition-transform duration-1000 hover:scale-105"
@@ -41,7 +41,8 @@ export default function NotFound() {
                 strokeWidth="1.5"
                 strokeLinecap="round"
                 strokeLinejoin="round"
-                className="text-sky-200"
+                className="text-sky-200 animate-spin"
+                style={{ animationDuration: "4s" }}
               >
                 <circle cx="12" cy="12" r="10" />
                 <polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76" />

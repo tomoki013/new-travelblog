@@ -3,7 +3,12 @@
 import { MenuIcon, XIcon } from "@/components/common/Icons";
 import { NAV_LINKS } from "@/constants/navigation";
 import { useMobileMenu } from "@/hooks/useMobileMenu";
-import { AnimatePresence, motion } from "framer-motion";
+import {
+  AnimatePresence,
+  motion,
+  useScroll,
+  useTransform,
+} from "framer-motion";
 import { SearchIcon, Sparkles } from "lucide-react";
 import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
@@ -19,6 +24,22 @@ const Header = () => {
   const menuRef = useRef<HTMLDivElement>(null);
   const pathname = usePathname();
   const isHomePage = pathname === "/";
+
+  // スムーズなスクロールベースのアニメーション用
+  const { scrollY } = useScroll();
+  const bgOpacity = useTransform(scrollY, [0, 200], [0, 1]);
+  const blurAmount = useTransform(scrollY, [0, 200], [0, 16]);
+
+  // 背景色のアニメーション（ライト/ダークモード対応）
+  const headerBg = useTransform(bgOpacity, (opacity) => {
+    if (opacity === 0) {
+      return "linear-gradient(to bottom, rgba(0,0,0,0.6), rgba(0,0,0,0.3), transparent)";
+    }
+    // ダークモードとライトモードで背景色を切り替え
+    return `rgba(var(--background), ${opacity * 0.8})`;
+  });
+
+  const backdropBlur = useTransform(blurAmount, (blur) => `blur(${blur}px)`);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -64,14 +85,18 @@ const Header = () => {
 
   return (
     <>
-      <header
+      <motion.header
         className={cn(
           "top-0 z-50 w-full transition-all duration-500 ease-in-out",
-          // 変更点: 透明時は上から黒のグラデーションをかけて視認性確保。スクロール時は強めのブラー。
           isTransparent
-            ? "fixed bg-gradient-to-b from-black/60 via-black/30 to-transparent py-6 border-transparent"
-            : "sticky bg-background/70 py-2 border-b border-border/40 backdrop-blur-xl supports-[backdrop-filter]:bg-background/50 shadow-sm"
+            ? "fixed py-6 border-transparent"
+            : "sticky py-2 border-b border-border/40 shadow-sm"
         )}
+        style={{
+          background: isHomePage ? headerBg : undefined,
+          backdropFilter: isHomePage ? backdropBlur : undefined,
+          WebkitBackdropFilter: isHomePage ? backdropBlur : undefined,
+        }}
       >
         <div className="container mx-auto flex h-12 items-center justify-between px-4 sm:px-6 lg:px-8">
           {/* Logo Area */}
@@ -207,7 +232,7 @@ const Header = () => {
             </button>
           </div>
         </div>
-      </header>
+      </motion.header>
 
       {/* Mobile Menu Overlay */}
       <AnimatePresence>

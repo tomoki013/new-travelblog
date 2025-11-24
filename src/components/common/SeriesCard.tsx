@@ -36,10 +36,10 @@ const SeriesCard = ({ series }: SeriesCardProps) => {
           </div>
         </div>
       </div>
-      <h3 className="text-2xl font-bold text-slate-900 mb-2 group-hover:text-slate-600 transition-colors">
+      <h3 className="text-2xl font-bold text-foreground mb-2 group-hover:text-primary transition-colors">
         {series.title}
       </h3>
-      <p className="text-slate-500 text-sm">{series.description}</p>
+      <p className="text-muted-foreground text-sm">{series.description}</p>
     </Link>
   );
 };

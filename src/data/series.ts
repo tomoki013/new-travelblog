@@ -3,18 +3,18 @@ import { Series } from "@/types/types";
 export const featuredSeries: Series[] = [
   {
     id: 1,
-    slug: "travel-history",
-    title: "ともきちの海外旅行遍歴",
-    description: "これまでに訪れた国々との出会いと別れの物語",
-    imageUrl: "/images/Introduce/introduce.jpg",
-    IconComponent: "Globe2",
-  },
-  {
-    id: 2,
     slug: "travel-diary",
     title: "旅行日記",
     description: "私が旅した各地の旅行記",
     imageUrl: "/images/Thai/thai-streetscape.jpg",
+    IconComponent: "Globe2",
+  },
+  {
+    id: 2,
+    slug: "travel-history",
+    title: "ともきちの海外旅行遍歴",
+    description: "これまでに訪れた国々との出会いと別れの物語",
+    imageUrl: "/images/Introduce/introduce.jpg",
     IconComponent: "Globe2",
   },
   {

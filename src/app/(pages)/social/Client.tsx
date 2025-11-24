@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { motion } from "framer-motion";
-import { FaYoutube, FaTiktok, FaGithub } from "react-icons/fa";
+import { FaYoutube, FaTiktok, FaGithub, FaPenNib } from "react-icons/fa";
 import { sectionVariants } from "@/components/common/animation";
 import HeroSection from "@/components/pages/HeroSection";
 
@@ -29,6 +29,16 @@ const socialAccounts = [
     ctaText: "TikTokでフォローする",
   },
   {
+    name: "note",
+    url: "https://note.com/tomokichidiary",
+    IconComponent: FaPenNib,
+    iconColor: "text-teal-600",
+    conceptTitle: "旅の記録とエッセイ",
+    description:
+      "旅先での出来事や感じたことを、文章でじっくり綴っています。訪れた場所の歴史や文化、現地の人々との交流、旅を通じて考えたことなど、テキストベースで深掘りした記事を投稿しています。写真や動画では伝えきれない、旅の本質的な魅力をお届けします。",
+    ctaText: "noteでフォローする",
+  },
+  {
     name: "GitHub",
     url: "https://github.com/tomoki013/new-travelblog",
     IconComponent: FaGithub,
@@ -45,7 +55,7 @@ export default function Client() {
     <div>
       {/* ==================== Hero Section ==================== */}
       <HeroSection
-        src="https://images.unsplash.com/photo-1523961131990-5ea7c61b2107?w=1920"
+        src="/images/Introduce/introduce.jpg"
         alt="Social Media Hero Image"
         pageTitle="Follow Me"
         pageMessage="各SNSの活動内容やコンセプトをご紹介します"
