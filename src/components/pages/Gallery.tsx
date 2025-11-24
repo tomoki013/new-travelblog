@@ -12,7 +12,6 @@ import "swiper/css";
 import Button from "../common/Button";
 
 import { sectionVariants } from "../common/animation";
-import { shuffleArray } from "@/lib/shuffleArray";
 
 const photos = [
   { path: "/images/Belgium/chez-leon-carbonade.jpg", title: "カルボナード" },
@@ -96,12 +95,10 @@ const photos = [
   },
 ];
 
-const shuffledPhoto = shuffleArray(photos);
-
 const Gallery = () => {
   // 変更点 3: ギャラリーデータを上段用（偶数インデックス）と下段用（奇数インデックス）に分割
-  const topRowGallery = shuffledPhoto.filter((_, index) => index % 2 === 0);
-  const bottomRowGallery = shuffledPhoto.filter((_, index) => index % 2 !== 0);
+  const topRowGallery = photos.filter((_, index) => index % 2 === 0);
+  const bottomRowGallery = photos.filter((_, index) => index % 2 !== 0);
 
   return (
     <motion.section
@@ -170,6 +167,7 @@ const Gallery = () => {
                   width={400}
                   height={300}
                   className="w-full h-full object-cover"
+                  priority={topRowGallery.indexOf(item) < 3}
                 />
               </motion.div>
             </SwiperSlide>
@@ -222,6 +220,7 @@ const Gallery = () => {
                   width={400}
                   height={300}
                   className="w-full h-full object-cover"
+                  priority={bottomRowGallery.indexOf(item) < 3}
                 />
               </motion.div>
             </SwiperSlide>
