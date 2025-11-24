@@ -1,4 +1,4 @@
-import { FaGithub, FaTiktok, FaYoutube } from "react-icons/fa";
+import { FaGithub, FaPenSquare, FaTiktok, FaYoutube } from "react-icons/fa";
 
 export interface NavLink {
   href: string;
@@ -52,6 +52,11 @@ export const SOCIAL_LIST = [
     name: "TikTok",
     pass: "https://www.tiktok.com/@tomokichitravel",
     icon: <FaTiktok />,
+  },
+  {
+    name: "note",
+    pass: "https://note.com/tomokichidiary",
+    icon: <FaPenSquare />,
   },
   {
     name: "GitHub",
