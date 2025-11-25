@@ -12,6 +12,7 @@ import Footer from "@/components/layouts/Footer";
 import Script from "next/script";
 import { Toaster } from "@/components/ui/sonner";
 import CookieBanner from "@/components/common/CookieBanner";
+import Background from "@/components/common/Background";
 import FloatingAIPlannerButton from "@/components/common/FloatingAIPlannerButton";
 
 const montserrat = Montserrat({
@@ -112,6 +113,7 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
+          <Background />
           <div className="flex flex-col min-h-screen">
             <Header />
             <main className="flex-1 text-sm md:text-base">{children}</main>
