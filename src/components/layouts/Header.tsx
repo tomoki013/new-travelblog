@@ -248,8 +248,8 @@ const Header = () => {
           >
             <div className="absolute inset-0 bg-gradient-to-b from-background/90 to-background/50 pointer-events-none" />
 
-            <div className="container relative mx-auto mt-28 flex flex-col items-center gap-8 px-6 overflow-y-auto pb-10 h-full justify-center">
-              <nav className="flex flex-col items-center gap-6 w-full">
+            <div className="container relative mx-auto flex h-full flex-col gap-4 px-6 overflow-y-auto pt-24 pb-8 justify-between">
+              <nav className="flex flex-col items-center gap-4 w-full">
                 {NAV_LINKS.map((link, index) => (
                   <motion.div
                     key={link.label}
@@ -260,7 +260,7 @@ const Header = () => {
                   >
                     <Link
                       href={link.href}
-                      className="relative inline-block text-3xl font-heading font-bold text-foreground/80 hover:text-foreground transition-colors py-2"
+                      className="relative inline-block text-2xl font-heading font-bold text-foreground/80 hover:text-foreground transition-colors py-2"
                       onClick={closeMenu}
                     >
                       {link.label}
@@ -270,23 +270,18 @@ const Header = () => {
               </nav>
 
               <motion.div
-                initial={{ opacity: 0, width: 0 }}
-                animate={{ opacity: 1, width: "100px" }}
-                transition={{ delay: 0.4 }}
-                className="h-px bg-border/50 my-4"
-              />
-
-              <motion.div
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.5 }}
-                className="flex flex-col items-center gap-6"
+                className="flex flex-col items-center gap-y-6"
               >
-                <ModeToggle />
+                <div className="flex items-center gap-x-4">
+                  <ModeToggle />
+                </div>
                 <Link
                   href="/ai-planner"
                   onClick={closeMenu}
-                  className="flex items-center gap-2 rounded-full bg-primary px-8 py-3 text-base font-bold text-primary-foreground shadow-lg hover:bg-primary/90 transition-colors"
+                  className="flex w-full max-w-xs items-center justify-center gap-2 rounded-full bg-primary px-8 py-3 text-base font-bold text-primary-foreground shadow-lg transition-colors hover:bg-primary/90"
                 >
                   <Sparkles className="h-4 w-4" />
                   AIプランナーを使う
