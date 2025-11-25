@@ -1,9 +1,9 @@
 import Image from "next/image";
 import { LoadingAnimation } from "../features/LoadingAnimation/LoadingAnimation";
 import { allRegions } from "@/lib/regionUtil";
-import WorldMap from "../features/worldMap/WorldMap";
 import { regionData } from "@/data/region";
 import { shuffleArray } from "@/lib/shuffleArray";
+import Background from "@/components/common/Background";
 
 const Hero = () => {
   // すべての国名を小文字の配列として抽出
@@ -12,14 +12,15 @@ const Hero = () => {
   );
   return (
     <section className="relative h-[85vh] flex flex-col md:flex-row items-center justify-center text-center text-white pt-30">
+      <Background />
       <Image
         src={`/images/Turkey/balloons-in-cappadocia.jpg`}
         alt="Man looking at a globe"
         fill
-        className="object-cover -z-10"
+        className="object-cover -z-60"
         priority
       />
-      <div className="absolute inset-0 bg-black/35 -z-10" />
+      <div className="absolute inset-0 bg-black/35 -z-60" />
       <div className="max-w-4xl px-8">
         <h1 className="font-heading text-5xl md:text-7xl font-bold mb-4 leading-tight text-shadow-[2px_2px_10px_rgba(0,0,0,0.5)]">
           次の冒険は、どこへ？
@@ -37,7 +38,6 @@ const Hero = () => {
           flapBG=""
         />
       </div>
-      <WorldMap highlightedRegions={allCountryNames} isClickable={false} />
     </section>
   );
 };
