@@ -27,8 +27,16 @@ const Header = () => {
 
   // スムーズなスクロールベースのアニメーション用
   const { scrollY } = useScroll();
-  const bgOpacity = useTransform(scrollY, [0, 200], [0, 1]);
-  const blurAmount = useTransform(scrollY, [0, 200], [0, 16]);
+  const bgOpacity = useTransform(
+    scrollY,
+    [0, 200],
+    [isHomePage ? 0 : 1, 1]
+  );
+  const blurAmount = useTransform(
+    scrollY,
+    [0, 200],
+    [isHomePage ? 0 : 16, 16]
+  );
 
   // 背景色のアニメーション（ライト/ダークモード対応）
   const headerBg = useTransform(bgOpacity, (opacity) => {

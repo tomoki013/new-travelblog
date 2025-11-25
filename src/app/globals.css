@@ -1,6 +1,27 @@
 @import "tailwindcss";
 @import "tw-animate-css";
 
+@layer base {
+  @keyframes particle-animation {
+    from {
+      transform: translate(var(--x-start), var(--y-start));
+      opacity: 0;
+    }
+    50% {
+      opacity: 1;
+    }
+    to {
+      transform: translate(var(--x-end), var(--y-end));
+      opacity: 0;
+    }
+  }
+
+  .animate-particle {
+    animation: particle-animation var(--duration) linear infinite;
+    animation-delay: var(--delay);
+  }
+}
+
 @plugin "@tailwindcss/typography";
 
 @custom-variant dark (&:is(.dark *));
