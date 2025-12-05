@@ -14,9 +14,9 @@ export interface FooterContent {
 
 export const NAV_LINKS: NavLink[] = [
   { href: "/", label: "Home" },
-  { href: "/destination", label: "Destination" },
   { href: "/posts", label: "Blog" },
   { href: "/gallery", label: "Gallery" },
+  { href: "/destination", label: "Destination" },
   { href: "/contact", label: "Contact" },
   { href: "/about", label: "About" },
 ];

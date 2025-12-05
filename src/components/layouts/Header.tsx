@@ -117,7 +117,7 @@ const Header = () => {
           "top-0 z-50 w-full transition-all duration-500 ease-in-out",
           isTransparent
             ? "fixed py-6 border-transparent"
-            : "sticky py-2 border-b border-border/40 shadow-sm bg-background/80 backdrop-blur-md supports-[backdrop-filter]:bg-background/60"
+            : "sticky py-2 border-b border-border/40 shadow-sm bg-background/95 backdrop-blur-md supports-[backdrop-filter]:bg-background/80"
         )}
         style={{
           background: isHomePage ? headerBg : undefined,
@@ -275,7 +275,7 @@ const Header = () => {
           >
             <div className="absolute inset-0 bg-gradient-to-b from-background/50 to-background pointer-events-none" />
 
-            <div className="container relative mx-auto flex h-full flex-col gap-8 px-6 pt-28 pb-8 justify-between overflow-hidden">
+            <div className="container relative mx-auto flex h-full flex-col gap-4 px-6 pt-20 pb-8 justify-between overflow-hidden">
               <nav className="flex flex-col gap-2 w-full max-w-sm mx-auto">
                 {NAV_LINKS.map((link, index) => {
                   const Icon = NAV_ICONS[link.label] || Sparkles;
@@ -288,7 +288,7 @@ const Header = () => {
                     >
                       <Link
                         href={link.href}
-                        className="group flex items-center gap-4 rounded-xl p-4 text-foreground/80 transition-all hover:bg-accent hover:text-foreground"
+                        className="group flex items-center gap-4 rounded-xl p-3 text-foreground/80 transition-all hover:bg-accent hover:text-foreground"
                         onClick={closeMenu}
                       >
                         <div className="flex h-10 w-10 items-center justify-center rounded-full bg-secondary/50 text-foreground transition-colors group-hover:bg-primary group-hover:text-primary-foreground">
@@ -307,7 +307,7 @@ const Header = () => {
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.4 }}
-                className="flex flex-col items-center gap-y-6 w-full max-w-sm mx-auto"
+                className="flex flex-col items-center gap-y-4 w-full max-w-sm mx-auto"
               >
                 <div className="w-full h-px bg-border/50" />
                 <div className="flex w-full items-center justify-between px-4">
