@@ -9,7 +9,15 @@ import {
   useScroll,
   useTransform,
 } from "framer-motion";
-import { SearchIcon, Sparkles } from "lucide-react";
+import {
+  SearchIcon,
+  Sparkles,
+  Home,
+  BookOpen,
+  Image as ImageIcon,
+  Mail,
+  Info,
+} from "lucide-react";
 import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
 import ModeToggle from "../common/mode-toggle";
@@ -91,6 +99,15 @@ const Header = () => {
   // 透過状態かどうか
   const isTransparent = isHomePage && !isScrolled;
 
+  // Icon mapping for mobile menu
+  const NAV_ICONS: Record<string, React.ElementType> = {
+    Home: Home,
+    Blog: BookOpen,
+    Gallery: ImageIcon,
+    Contact: Mail,
+    About: Info,
+  };
+
   return (
     <>
       <motion.header
@@ -117,7 +134,7 @@ const Header = () => {
               <span
                 className={cn(
                   "font-heading font-bold text-xl leading-none transition-colors duration-300",
-                  isTransparent
+                  isTransparent && !isMenuOpen
                     ? "text-white drop-shadow-[0_2px_4px_rgba(0,0,0,0.5)]" // Heroの文字と同様のシャドウ感
                     : "text-foreground"
                 )}
@@ -127,7 +144,7 @@ const Header = () => {
               <span
                 className={cn(
                   "text-[10px] font-code tracking-[0.2em] uppercase transition-colors duration-300 mt-0.5",
-                  isTransparent
+                  isTransparent && !isMenuOpen
                     ? "text-white/80 drop-shadow-md"
                     : "text-muted-foreground group-hover:text-primary"
                 )}
@@ -213,7 +230,7 @@ const Header = () => {
               onClick={openSearch}
               className={cn(
                 "p-2 rounded-full transition-all",
-                isTransparent
+                isTransparent && !isMenuOpen
                   ? "text-white hover:bg-white/20"
                   : "text-foreground hover:bg-background shadow-sm"
               )}
@@ -252,46 +269,57 @@ const Header = () => {
             animate={{ opacity: 1, backdropFilter: "blur(16px)" }}
             exit={{ opacity: 0, backdropFilter: "blur(0px)" }}
             transition={{ duration: 0.3 }}
-            className="fixed inset-0 z-40 bg-background/80 md:hidden flex flex-col supports-[backdrop-filter]:bg-background/60"
+            className="fixed inset-0 z-40 bg-background/95 md:hidden flex flex-col touch-none"
           >
-            <div className="absolute inset-0 bg-gradient-to-b from-background/90 to-background/50 pointer-events-none" />
+            <div className="absolute inset-0 bg-gradient-to-b from-background/50 to-background pointer-events-none" />
 
-            <div className="container relative mx-auto flex h-full flex-col gap-4 px-6 overflow-y-auto pt-24 pb-8 justify-between">
-              <nav className="flex flex-col items-center gap-4 w-full">
-                {NAV_LINKS.map((link, index) => (
-                  <motion.div
-                    key={link.label}
-                    initial={{ opacity: 0, y: 20, scale: 0.9 }}
-                    animate={{ opacity: 1, y: 0, scale: 1 }}
-                    transition={{ delay: 0.1 + index * 0.05, type: "spring" }}
-                    className="w-full text-center"
-                  >
-                    <Link
-                      href={link.href}
-                      className="relative inline-block text-2xl font-heading font-bold text-foreground/80 hover:text-foreground transition-colors py-2"
-                      onClick={closeMenu}
+            <div className="container relative mx-auto flex h-full flex-col gap-8 px-6 pt-28 pb-8 justify-between overflow-hidden">
+              <nav className="flex flex-col gap-2 w-full max-w-sm mx-auto">
+                {NAV_LINKS.map((link, index) => {
+                  const Icon = NAV_ICONS[link.label] || Sparkles;
+                  return (
+                    <motion.div
+                      key={link.label}
+                      initial={{ opacity: 0, x: -20 }}
+                      animate={{ opacity: 1, x: 0 }}
+                      transition={{ delay: 0.1 + index * 0.05, type: "spring" }}
                     >
-                      {link.label}
-                    </Link>
-                  </motion.div>
-                ))}
+                      <Link
+                        href={link.href}
+                        className="group flex items-center gap-4 rounded-xl p-4 text-foreground/80 transition-all hover:bg-accent hover:text-foreground"
+                        onClick={closeMenu}
+                      >
+                        <div className="flex h-10 w-10 items-center justify-center rounded-full bg-secondary/50 text-foreground transition-colors group-hover:bg-primary group-hover:text-primary-foreground">
+                          <Icon className="h-5 w-5" />
+                        </div>
+                        <span className="text-xl font-bold font-heading tracking-wide">
+                          {link.label}
+                        </span>
+                      </Link>
+                    </motion.div>
+                  );
+                })}
               </nav>
 
               <motion.div
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.5 }}
-                className="flex flex-col items-center gap-y-6"
+                transition={{ delay: 0.4 }}
+                className="flex flex-col items-center gap-y-6 w-full max-w-sm mx-auto"
               >
-                <div className="flex items-center gap-x-4">
+                <div className="w-full h-px bg-border/50" />
+                <div className="flex w-full items-center justify-between px-4">
+                  <span className="text-sm font-bold text-muted-foreground">
+                    Theme
+                  </span>
                   <ModeToggle />
                 </div>
                 <Link
                   href="/ai-planner"
                   onClick={closeMenu}
-                  className="flex w-full max-w-xs items-center justify-center gap-2 rounded-full bg-primary px-8 py-3 text-base font-bold text-primary-foreground shadow-lg transition-colors hover:bg-primary/90"
+                  className="flex w-full items-center justify-center gap-2 rounded-xl bg-primary py-4 text-base font-bold text-primary-foreground shadow-lg transition-all hover:scale-[1.02] hover:bg-primary/90"
                 >
-                  <Sparkles className="h-4 w-4" />
+                  <Sparkles className="h-5 w-5" />
                   AIプランナーを使う
                 </Link>
               </motion.div>
