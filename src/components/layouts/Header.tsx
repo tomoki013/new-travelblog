@@ -13,6 +13,7 @@ import {
   SearchIcon,
   Sparkles,
   Home,
+  Map,
   BookOpen,
   Image as ImageIcon,
   Mail,
@@ -102,6 +103,7 @@ const Header = () => {
   // Icon mapping for mobile menu
   const NAV_ICONS: Record<string, React.ElementType> = {
     Home: Home,
+    Destination: Map,
     Blog: BookOpen,
     Gallery: ImageIcon,
     Contact: Mail,
@@ -115,7 +117,7 @@ const Header = () => {
           "top-0 z-50 w-full transition-all duration-500 ease-in-out",
           isTransparent
             ? "fixed py-6 border-transparent"
-            : "sticky py-2 border-b border-border/40 shadow-sm"
+            : "sticky py-2 border-b border-border/40 shadow-sm bg-background/80 backdrop-blur-md supports-[backdrop-filter]:bg-background/60"
         )}
         style={{
           background: isHomePage ? headerBg : undefined,
