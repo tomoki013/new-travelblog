@@ -11,7 +11,7 @@ import { defaultCache } from "@serwist/next/worker";
 
 declare global {
   interface WorkerGlobalScope extends SerwistGlobalConfig {
-    __SW_MANIFEST: (PrecacheEntry | string)[] | undefined;
+    __RSC_MANIFEST: (PrecacheEntry | string)[] | undefined;
   }
 }
 
