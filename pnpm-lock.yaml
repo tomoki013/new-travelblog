@@ -47,12 +47,18 @@ importers:
       '@radix-ui/react-tabs':
         specifier: ^1.1.13
         version: 1.1.13(@types/react-dom@19.2.3(@types/react@19.2.4))(@types/react@19.2.4)(react-dom@19.2.0(react@19.2.0))(react@19.2.0)
+      '@serwist/core':
+        specifier: ^9.2.3
+        version: 9.2.3(typescript@5.9.3)
       '@serwist/next':
         specifier: ^9.2.1
         version: 9.2.1(next@16.0.2(@babel/core@7.28.5)(@opentelemetry/api@1.9.0)(react-dom@19.2.0(react@19.2.0))(react@19.2.0))(typescript@5.9.3)
       '@serwist/precaching':
         specifier: ^9.2.1
         version: 9.2.1(typescript@5.9.3)
+      '@serwist/strategies':
+        specifier: ^9.2.3
+        version: 9.2.3(typescript@5.9.3)
       '@serwist/sw':
         specifier: ^9.2.1
         version: 9.2.1(typescript@5.9.3)
@@ -140,6 +146,9 @@ importers:
       remark-toc:
         specifier: ^9.0.0
         version: 9.0.0
+      serwist:
+        specifier: ^9.2.3
+        version: 9.2.3(typescript@5.9.3)
       sonner:
         specifier: ^2.0.7
         version: 2.0.7(react-dom@19.2.0(react@19.2.0))(react@19.2.0)
@@ -1972,6 +1981,14 @@ packages:
       typescript:
         optional: true
 
+  '@serwist/core@9.2.3':
+    resolution: {integrity: sha512-cGHsauA9mmNuFwLBaiATgcWPDcP3ji9hdZkQ4IjzkeFhEUynhBT66BcrPo+s7HijnT6xkjjA25jP7EQree9Qtw==}
+    peerDependencies:
+      typescript: '>=5.0.0'
+    peerDependenciesMeta:
+      typescript:
+        optional: true
+
   '@serwist/next@9.2.1':
     resolution: {integrity: sha512-CCTvZYSWK1hCmANViGLd7LvVc9r9wd4aaVX4Uk0F6fC0/Xn05GY52di7LGZ2NveGr1g+NjQvQSBhfxCQK95NIg==}
     engines: {node: '>=18.0.0'}
@@ -1984,6 +2001,14 @@ packages:
 
   '@serwist/precaching@9.2.1':
     resolution: {integrity: sha512-n3Atq6QcOvycj1CanC/kDvhRssb1Tx4IvXNbf3o3iQ6qGL2XYsxe8E6dKtr+XTf13mEvvmZLQJWAh+haNAJN9Q==}
+    peerDependencies:
+      typescript: '>=5.0.0'
+    peerDependenciesMeta:
+      typescript:
+        optional: true
+
+  '@serwist/strategies@9.2.3':
+    resolution: {integrity: sha512-6Sb9I0ElY2ZXrJDSFP5qhDsW+DBpfdK9CHDjSvMZ6fo+fI5wLgTBBVf+mq5wFCXpOwR1jPP0PDOQ6o6ujwQ8Bw==}
     peerDependencies:
       typescript: '>=5.0.0'
     peerDependenciesMeta:
@@ -6426,6 +6451,14 @@ packages:
       typescript:
         optional: true
 
+  serwist@9.2.3:
+    resolution: {integrity: sha512-menorUH09SpLvU7R25TvG0TuQ12MUDpQ5NKGohbtREF8YI+0D++Abn59XCmvvMp2n740rBizIkeqWq0m6U+++g==}
+    peerDependencies:
+      typescript: '>=5.0.0'
+    peerDependenciesMeta:
+      typescript:
+        optional: true
+
   set-cookie-parser@2.7.2:
     resolution: {integrity: sha512-oeM1lpU/UvhTxw+g3cIfxXHyJRc/uidd3yK1P242gzHds0udQBYzs3y8j4gCCW+ZJ7ad0yctld8RYO+bdurlvw==}
 
@@ -9361,6 +9394,12 @@ snapshots:
     optionalDependencies:
       typescript: 5.9.3
 
+  '@serwist/core@9.2.3(typescript@5.9.3)':
+    dependencies:
+      serwist: 9.2.3(typescript@5.9.3)
+    optionalDependencies:
+      typescript: 5.9.3
+
   '@serwist/next@9.2.1(next@16.0.2(@babel/core@7.28.5)(@opentelemetry/api@1.9.0)(react-dom@19.2.0(react@19.2.0))(react@19.2.0))(typescript@5.9.3)':
     dependencies:
       '@serwist/build': 9.2.1(typescript@5.9.3)
@@ -9379,6 +9418,12 @@ snapshots:
   '@serwist/precaching@9.2.1(typescript@5.9.3)':
     dependencies:
       serwist: 9.2.1(typescript@5.9.3)
+    optionalDependencies:
+      typescript: 5.9.3
+
+  '@serwist/strategies@9.2.3(typescript@5.9.3)':
+    dependencies:
+      serwist: 9.2.3(typescript@5.9.3)
     optionalDependencies:
       typescript: 5.9.3
 
@@ -14553,6 +14598,12 @@ snapshots:
       - supports-color
 
   serwist@9.2.1(typescript@5.9.3):
+    dependencies:
+      idb: 8.0.3
+    optionalDependencies:
+      typescript: 5.9.3
+
+  serwist@9.2.3(typescript@5.9.3):
     dependencies:
       idb: 8.0.3
     optionalDependencies:
