@@ -16,6 +16,7 @@ import AffiliateCard from "@/components/common/AffiliateCard";
 import { affiliates } from "@/constants/affiliates";
 import React from "react";
 import CostBreakdown from "@/components/features/article/CostBreakdown";
+import GlobePromo from "@/components/features/promo/GlobePromo";
 
 interface ClientProps {
   children: React.ReactNode;
@@ -54,6 +55,8 @@ const Client = ({
         <div className="max-w-none mt-12">
           <article>{children}</article>
         </div>
+
+        <GlobePromo className="my-12" />
 
         {post.isPromotion && post.promotionPG && (
           <div className="my-12">

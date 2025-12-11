@@ -13,6 +13,7 @@ import {
 } from "@/components/common/animation";
 import { Wind } from "lucide-react";
 import AllDestination from "@/components/features/destination/allDestination";
+import GlobePromo from "@/components/features/promo/GlobePromo";
 
 interface ClientProps extends AllDestinationProps {
   region: Region;
@@ -290,6 +291,8 @@ const Client = ({
           </div>
         )}
       </div>
+      <GlobePromo className="max-w-5xl mx-auto" />
+
       <div className="mt-16 max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
         <h2 className="text-3xl font-bold text-center mb-12">
           全ての旅行先を見る
