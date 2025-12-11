@@ -16,6 +16,7 @@ import AffiliateCard from "@/components/common/AffiliateCard";
 import { affiliates } from "@/constants/affiliates";
 import React from "react";
 import CostBreakdown from "@/components/features/article/CostBreakdown";
+import GlobePromo from "@/components/features/promo/GlobePromo";
 
 interface ClientProps {
   children: React.ReactNode;
@@ -128,6 +129,7 @@ const Client = ({
                   </Link>
                 </div>
               </div>
+              <GlobePromo className="py-4 px-0" />
               {regionRelatedPosts && (
                 <RelatedPosts posts={regionRelatedPosts} />
               )}
@@ -169,6 +171,7 @@ const Client = ({
                 </Link>
               </div>
             </div>
+            <GlobePromo className="py-4 px-0" />
             {/* Area 2: Core Engagement */}
             {regionRelatedPosts && <RelatedPosts posts={regionRelatedPosts} />}
             {/* Area 3: Monetization & Navigation */}

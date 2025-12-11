@@ -11,6 +11,7 @@ import PostsLength from "@/components/pages/PostsLength";
 import GalleryLength from "@/components/pages/GalleryLength";
 import { getPhotos } from "@/lib/photo";
 import Affiliates from "@/components/pages/Affiliates";
+import GlobePromo from "@/components/features/promo/GlobePromo";
 
 export default async function HomePage() {
   const allPosts = await getAllPosts();
@@ -21,6 +22,7 @@ export default async function HomePage() {
       <Hero />
       <AIPlannerHero />
       <NewPosts posts={allPosts} />
+      <GlobePromo />
       <Destination />
       <FeaturedSeries />
       <PopularPosts posts={allPosts} />
