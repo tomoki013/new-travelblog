@@ -37,9 +37,9 @@ const GlobePromo = ({ className }: { className?: string }) => {
                 Globe Diary
               </h2>
               <p className="mt-4 text-lg text-indigo-200/90 leading-relaxed">
-                あなたの旅の軌跡を、美しい3D地球儀の上で振り返りませんか？
+                ともきちが訪れた場所を、美しい3D地球儀の上で振り返りませんか？
                 <br className="hidden md:block" />
-                訪れた場所を記録して、あなただけの地球儀を作りましょう。
+                旅の軌跡を地球儀で確認してみましょう。
               </p>
             </motion.div>
 

@@ -56,8 +56,6 @@ const Client = ({
           <article>{children}</article>
         </div>
 
-        <GlobePromo className="my-12" />
-
         {post.isPromotion && post.promotionPG && (
           <div className="my-12">
             <h2 className="text-2xl font-bold mb-6 text-center">
@@ -131,6 +129,7 @@ const Client = ({
                   </Link>
                 </div>
               </div>
+              <GlobePromo className="py-4 px-0" />
               {regionRelatedPosts && (
                 <RelatedPosts posts={regionRelatedPosts} />
               )}
@@ -172,6 +171,7 @@ const Client = ({
                 </Link>
               </div>
             </div>
+            <GlobePromo className="py-4 px-0" />
             {/* Area 2: Core Engagement */}
             {regionRelatedPosts && <RelatedPosts posts={regionRelatedPosts} />}
             {/* Area 3: Monetization & Navigation */}

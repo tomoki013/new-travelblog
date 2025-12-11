@@ -21,8 +21,8 @@ export default async function HomePage() {
     <>
       <Hero />
       <AIPlannerHero />
-      <GlobePromo />
       <NewPosts posts={allPosts} />
+      <GlobePromo />
       <Destination />
       <FeaturedSeries />
       <PopularPosts posts={allPosts} />
