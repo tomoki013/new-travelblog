@@ -1,26 +1,61 @@
 "use client";
 
-import React from "react";
 import { motion } from "framer-motion";
 import { Globe, Map as MapIcon, ArrowRight, ExternalLink } from "lucide-react";
 import Link from "next/link";
 import { cn } from "@/lib/utils";
 
-const GlobePromo = ({ className }: { className?: string }) => {
+interface GlobePromoProps {
+  className?: string;
+  queryParams?: {
+    country?: string;
+    region?: string;
+    spot?: string;
+    trip?: string;
+  };
+}
+
+const GlobePromo = ({ className, queryParams }: GlobePromoProps) => {
+  const getMapUrl = () => {
+    const baseUrl = "https://map.tomokichidiary.com/";
+    if (!queryParams) return baseUrl;
+
+    const params = new URLSearchParams();
+    if (queryParams.country) params.append("country", queryParams.country);
+    if (queryParams.region) params.append("region", queryParams.region);
+    if (queryParams.spot) params.append("spot", queryParams.spot);
+    if (queryParams.trip) params.append("trip", queryParams.trip);
+
+    const queryString = params.toString();
+    return queryString ? `${baseUrl}?${queryString}` : baseUrl;
+  };
+
+  const mapUrl = getMapUrl();
+
   return (
     <section className={cn("w-full py-8 md:py-12 px-4", className)}>
       <div className="relative mx-auto max-w-4xl overflow-hidden rounded-3xl bg-gradient-to-br from-indigo-900 via-slate-800 to-indigo-950 shadow-2xl">
-
         {/* Animated Background Particles/Stars */}
         <div className="absolute inset-0 opacity-30">
-          <div className="absolute top-10 left-10 h-2 w-2 rounded-full bg-white animate-pulse" style={{ animationDuration: '3s' }} />
-          <div className="absolute top-1/4 right-1/4 h-1 w-1 rounded-full bg-blue-200 animate-pulse" style={{ animationDuration: '4s' }} />
-          <div className="absolute bottom-20 left-1/3 h-1.5 w-1.5 rounded-full bg-indigo-300 animate-pulse" style={{ animationDuration: '2.5s' }} />
-          <div className="absolute bottom-10 right-10 h-2 w-2 rounded-full bg-white animate-pulse" style={{ animationDuration: '5s' }} />
+          <div
+            className="absolute top-10 left-10 h-2 w-2 rounded-full bg-white animate-pulse"
+            style={{ animationDuration: "3s" }}
+          />
+          <div
+            className="absolute top-1/4 right-1/4 h-1 w-1 rounded-full bg-blue-200 animate-pulse"
+            style={{ animationDuration: "4s" }}
+          />
+          <div
+            className="absolute bottom-20 left-1/3 h-1.5 w-1.5 rounded-full bg-indigo-300 animate-pulse"
+            style={{ animationDuration: "2.5s" }}
+          />
+          <div
+            className="absolute bottom-10 right-10 h-2 w-2 rounded-full bg-white animate-pulse"
+            style={{ animationDuration: "5s" }}
+          />
         </div>
 
         <div className="grid gap-8 md:grid-cols-2 md:gap-12 p-8 md:p-12 items-center relative z-10">
-
           {/* Text Content */}
           <div className="space-y-6 text-center md:text-left">
             <motion.div
@@ -50,7 +85,7 @@ const GlobePromo = ({ className }: { className?: string }) => {
               transition={{ duration: 0.6, delay: 0.2 }}
             >
               <Link
-                href="https://map.tomokichidiary.com/"
+                href={mapUrl}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="group inline-flex items-center gap-2 rounded-full bg-white px-8 py-3 text-base font-semibold text-indigo-900 shadow-lg shadow-indigo-900/20 transition-all hover:bg-indigo-50 hover:scale-105 active:scale-95"
@@ -77,44 +112,71 @@ const GlobePromo = ({ className }: { className?: string }) => {
 
               {/* Globe Icon Wrapper */}
               <div className="relative h-48 w-48 md:h-64 md:w-64">
-                 <motion.div
-                   animate={{ rotate: 360 }}
-                   transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
-                   className="w-full h-full text-indigo-300/20"
-                 >
-                    {/* Abstract Globe Lines using SVG */}
-                    <svg viewBox="0 0 100 100" className="w-full h-full fill-none stroke-current stroke-[0.5]">
-                        <circle cx="50" cy="50" r="48" strokeWidth="1" className="stroke-indigo-400/50" />
-                        <path d="M50 2 A 48 48 0 0 1 50 98" />
-                        <path d="M50 2 A 48 48 0 0 0 50 98" />
-                        <path d="M2 50 A 48 48 0 0 1 98 50" className="stroke-indigo-400/50"/>
-                        <ellipse cx="50" cy="50" rx="20" ry="48" />
-                        <ellipse cx="50" cy="50" rx="35" ry="48" />
-                        <path d="M10 30 Q 50 40 90 30" />
-                        <path d="M10 70 Q 50 60 90 70" />
-                    </svg>
-                 </motion.div>
+                <motion.div
+                  animate={{ rotate: 360 }}
+                  transition={{
+                    duration: 20,
+                    repeat: Infinity,
+                    ease: "linear",
+                  }}
+                  className="w-full h-full text-indigo-300/20"
+                >
+                  {/* Abstract Globe Lines using SVG */}
+                  <svg
+                    viewBox="0 0 100 100"
+                    className="w-full h-full fill-none stroke-current stroke-[0.5]"
+                  >
+                    <circle
+                      cx="50"
+                      cy="50"
+                      r="48"
+                      strokeWidth="1"
+                      className="stroke-indigo-400/50"
+                    />
+                    <path d="M50 2 A 48 48 0 0 1 50 98" />
+                    <path d="M50 2 A 48 48 0 0 0 50 98" />
+                    <path
+                      d="M2 50 A 48 48 0 0 1 98 50"
+                      className="stroke-indigo-400/50"
+                    />
+                    <ellipse cx="50" cy="50" rx="20" ry="48" />
+                    <ellipse cx="50" cy="50" rx="35" ry="48" />
+                    <path d="M10 30 Q 50 40 90 30" />
+                    <path d="M10 70 Q 50 60 90 70" />
+                  </svg>
+                </motion.div>
 
-                 {/* Central Highlight/Content */}
-                 <div className="absolute inset-0 flex items-center justify-center">
-                    <motion.div
-                      animate={{ y: [0, -10, 0] }}
-                      transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
-                    >
-                        <Globe className="h-24 w-24 md:h-32 md:w-32 text-indigo-100 drop-shadow-[0_0_15px_rgba(255,255,255,0.3)]" strokeWidth={1} />
-                    </motion.div>
-                 </div>
+                {/* Central Highlight/Content */}
+                <div className="absolute inset-0 flex items-center justify-center">
+                  <motion.div
+                    animate={{ y: [0, -10, 0] }}
+                    transition={{
+                      duration: 4,
+                      repeat: Infinity,
+                      ease: "easeInOut",
+                    }}
+                  >
+                    <Globe
+                      className="h-24 w-24 md:h-32 md:w-32 text-indigo-100 drop-shadow-[0_0_15px_rgba(255,255,255,0.3)]"
+                      strokeWidth={1}
+                    />
+                  </motion.div>
+                </div>
 
-                 {/* Orbiting Elements */}
-                 <motion.div
-                    className="absolute inset-0"
-                    animate={{ rotate: -360 }}
-                    transition={{ duration: 15, repeat: Infinity, ease: "linear" }}
-                 >
-                    <div className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-2">
-                        <div className="h-3 w-3 bg-yellow-400 rounded-full shadow-[0_0_10px_rgba(250,204,21,0.8)]" />
-                    </div>
-                 </motion.div>
+                {/* Orbiting Elements */}
+                <motion.div
+                  className="absolute inset-0"
+                  animate={{ rotate: -360 }}
+                  transition={{
+                    duration: 15,
+                    repeat: Infinity,
+                    ease: "linear",
+                  }}
+                >
+                  <div className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-2">
+                    <div className="h-3 w-3 bg-yellow-400 rounded-full shadow-[0_0_10px_rgba(250,204,21,0.8)]" />
+                  </div>
+                </motion.div>
               </div>
             </motion.div>
           </div>

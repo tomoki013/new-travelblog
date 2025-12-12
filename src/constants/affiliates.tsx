@@ -96,4 +96,16 @@ export const affiliates: AffiliatesProps[] = [
     status: "pending",
     bannerHtml: `<a href="YOUR_AFFILIATE_LINK_HERE" target="_blank" rel="noopener noreferrer"><img src="https://via.placeholder.com/1200x400.png?text=Trifa+Banner" alt="Trifa Banner"/></a>`,
   },
+  {
+    name: "一休.com",
+    affiliateUrl:
+      "//ck.jp.ap.valuecommerce.com/servlet/referral?sid=3759091&pid=892355798",
+    homeUrl: "https://www.ikyu.com/",
+    type: "card",
+    icon: <BedDouble className="w-10 h-10 text-primary" />,
+    description:
+      "全国約7,000の厳選した高級ホテル・旅館、またワンランク上のビジネスホテルを",
+    status: "ready",
+    bannerHtml: `<a href="//ck.jp.ap.valuecommerce.com/servlet/referral?sid=3759091&pid=892355798" rel="nofollow">自由テキスト</a><amp-img src="//ad.jp.ap.valuecommerce.com/servlet/gifbanner?sid=3759091&pid=892355798" height="1" width="1"></amp-img>`,
+  },
 ];
