@@ -291,7 +291,14 @@ const Client = ({
           </div>
         )}
       </div>
-      <GlobePromo className="max-w-5xl mx-auto" />
+      <GlobePromo
+        className="max-w-5xl mx-auto"
+        queryParams={
+          country
+            ? { country: region.slug }
+            : { region: region.slug }
+        }
+      />
 
       <div className="mt-16 max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
         <h2 className="text-3xl font-bold text-center mb-12">

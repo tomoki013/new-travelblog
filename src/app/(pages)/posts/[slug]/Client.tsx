@@ -30,6 +30,16 @@ interface ClientProps {
   nextSeriesPost?: { href: string; title: string };
 }
 
+const ITINERARY_SLUG_MAP: Record<string, string> = {
+  "europe-itinerary": "europe-trip-2025",
+  "thai-itinerary": "bangkok-trip-2024",
+};
+
+const TRIP_ID_MAP: Record<string, string> = {
+  "europe-trip": "europe-trip-2025",
+  "bangkok-trip": "bangkok-trip-2024",
+};
+
 const Client = ({
   children,
   post,
@@ -42,6 +52,21 @@ const Client = ({
   nextSeriesPost,
 }: ClientProps) => {
   const author = members.find((m) => m.name === post.author);
+
+  // GlobePromo用のパラメータ設定
+  let queryParams: { trip?: string; spot?: string } | undefined = undefined;
+
+  // Itineraryの場合のみTripパラメータを付与
+  if (post.category === "itinerary") {
+    // 1. スラッグから直接マッピング (シリーズ未設定の場合など)
+    if (ITINERARY_SLUG_MAP[post.slug]) {
+      queryParams = { trip: ITINERARY_SLUG_MAP[post.slug] };
+    }
+    // 2. シリーズIDからマッピング
+    else if (post.series && TRIP_ID_MAP[post.series]) {
+      queryParams = { trip: TRIP_ID_MAP[post.series] };
+    }
+  }
 
   return (
     <div>
@@ -129,7 +154,7 @@ const Client = ({
                   </Link>
                 </div>
               </div>
-              <GlobePromo className="py-4 px-0" />
+              <GlobePromo className="py-4 px-0" queryParams={queryParams} />
               {regionRelatedPosts && (
                 <RelatedPosts posts={regionRelatedPosts} />
               )}
@@ -171,7 +196,7 @@ const Client = ({
                 </Link>
               </div>
             </div>
-            <GlobePromo className="py-4 px-0" />
+            <GlobePromo className="py-4 px-0" queryParams={queryParams} />
             {/* Area 2: Core Engagement */}
             {regionRelatedPosts && <RelatedPosts posts={regionRelatedPosts} />}
             {/* Area 3: Monetization & Navigation */}
