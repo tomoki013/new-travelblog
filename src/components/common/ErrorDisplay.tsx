@@ -13,7 +13,7 @@ export default function ErrorDisplay({ reset }: ErrorDisplayProps) {
       {/* Background Image (Same as not-found) */}
       <div className="absolute inset-0 z-0">
         <Image
-          src="https://images.unsplash.com/photo-1469854523086-cc02fe5d8800?q=80&w=2021&auto=format&fit=crop"
+          src="/images/India/tajmahal.jpg"
           alt="Travel Landscape"
           fill
           className="h-full w-full object-cover opacity-40 transition-transform duration-1000 hover:scale-105"

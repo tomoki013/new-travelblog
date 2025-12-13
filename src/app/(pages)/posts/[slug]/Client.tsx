@@ -54,7 +54,9 @@ const Client = ({
   const author = members.find((m) => m.name === post.author);
 
   // GlobePromo用のパラメータ設定
-  let queryParams: { trip?: string; spot?: string } | undefined = undefined;
+  let queryParams:
+    | { trip?: string; country?: string; region?: string }
+    | undefined = undefined;
 
   // Itineraryの場合のみTripパラメータを付与
   if (post.category === "itinerary") {
@@ -65,6 +67,46 @@ const Client = ({
     // 2. シリーズIDからマッピング
     else if (post.series && TRIP_ID_MAP[post.series]) {
       queryParams = { trip: TRIP_ID_MAP[post.series] };
+    }
+  } else if (post.location && post.location.length > 0) {
+    // Other posts: map location to params
+    for (const loc of post.location) {
+      const normalizedLoc = loc.toLowerCase().trim();
+      // Manual mapping table
+      const LOCATION_MAP: Record<
+        string,
+        { country?: string; region?: string }
+      > = {
+        paris: { region: "paris" },
+        france: { country: "france" },
+        bangkok: { region: "bangkok" },
+        thai: { country: "thailand" },
+        thailand: { country: "thailand" },
+        spain: { country: "spain" },
+        barcelona: { region: "barcelona" },
+        madrid: { region: "madrid" },
+        toledo: { region: "toledo" },
+        italy: { country: "italy" },
+        roma: { region: "rome" },
+        rome: { region: "rome" },
+        greece: { country: "greece" },
+        athens: { region: "athens" },
+        santorini: { region: "santorini" },
+        japan: { country: "japan" },
+        hokkaido: { region: "hokkaido" },
+        kyoto: { region: "kyoto" },
+        tokyo: { region: "tokyo" },
+        vietnam: { country: "vietnam" },
+        india: { country: "india" },
+        delhi: { region: "new-delhi" }, // Assuming slugs, verify if crucial
+        varanasi: { region: "varanasi" },
+        europe: { region: "europe" }, // Assuming invalid broadly but maybe useful?
+      };
+
+      if (LOCATION_MAP[normalizedLoc]) {
+        queryParams = LOCATION_MAP[normalizedLoc];
+        break;
+      }
     }
   }
 
@@ -80,6 +122,9 @@ const Client = ({
         <div className="max-w-none mt-12">
           <article>{children}</article>
         </div>
+        {post.category === "itinerary" && (
+          <GlobePromo className="py-8 px-0" queryParams={queryParams} />
+        )}
 
         {post.isPromotion && post.promotionPG && (
           <div className="my-12">
@@ -154,7 +199,9 @@ const Client = ({
                   </Link>
                 </div>
               </div>
-              <GlobePromo className="py-4 px-0" queryParams={queryParams} />
+              {post.category !== "itinerary" && (
+                <GlobePromo className="py-4 px-0" queryParams={queryParams} />
+              )}
               {regionRelatedPosts && (
                 <RelatedPosts posts={regionRelatedPosts} />
               )}
